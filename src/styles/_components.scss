@@ -1,0 +1,117 @@
+/* 
+-------------------------------------------
+----------------- CUSTOM INPUT -------------------
+-------------------------------------------
+*/
+
+.custom_input {
+  @apply column;
+
+  label {
+    @apply txt-sm f-b text-gray-600 capitalize;
+  }
+
+  input {
+    @apply mt-2 border border-gray-200 rounded-lg px-4 p-3 txt-sm f-s text-gray-700;
+    &:focus {
+      outline: none;
+      box-shadow: 0px 0px 8px 0px #d2cec5, 0px 0px 8px 0px #d2cec50d;
+    }
+
+    &::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
+      @apply text-gray-300 txt-sm f-m;
+    }
+
+    &:-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
+      @apply text-gray-300 txt-sm f-m;
+    }
+
+    &::-ms-input-placeholder {
+      /* Microsoft Edge */
+      @apply text-gray-300 txt-sm f-m;
+    }
+  }
+}
+
+/* 
+-------------------------------------------
+----------------- Button -------------------
+-------------------------------------------
+*/
+
+.btn {
+  @apply rounded-lg px-8 p-3 txt-md f-s text-white bg-gray-900;
+
+  &:disabled {
+    @apply bg-gray-200 text-gray-50 border border-gray-50 cursor-not-allowed;
+  }
+
+  &.primary {
+    @apply text-white bg-[#FF4B00];
+  }
+
+  &.ghost {
+    @apply text-gray-600 txt-md f-s  bg-white border-gray-200 border;
+  }
+}
+
+/* 
+-------------------------------------------
+----------------- Dropdown -------------------
+-------------------------------------------
+*/
+
+.dropdown {
+  .carret {
+    &.active {
+      transform: rotate(180deg);
+    }
+  }
+
+  &_filter {
+    .carret {
+      &.active {
+        transform: rotate(180deg);
+      }
+    }
+
+    .dropdown_body {
+      @apply bg-white z-[];
+    }
+  }
+}
+
+/* 
+-------------------------------------------
+----------------- Notificaion -------------
+-------------------------------------------
+*/
+.notification_list {
+  height: calc(100vh - 102px);
+}
+
+/* 
+-------------------------------------------
+----------------- Typography -------------
+-------------------------------------------
+*/
+
+.t {
+  &-subtitle {
+    @apply txt-sm f-m  text-gray-700;
+  }
+
+  &-xs-subtitle {
+    @apply txt-xs f-m  text-gray-400;
+  }
+
+  &-header {
+    @apply txt-xl f-b text-gray-700;
+  }
+
+  &-header1 {
+    @apply txt-md f-b text-gray-900;
+  }
+}

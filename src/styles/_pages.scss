@@ -1,0 +1,101 @@
+/* 
+-------------------------------------------
+-----------------AUTH----------------------
+-------------------------------------------
+*/
+.auth {
+  // auth page
+  // @apply bg-green-400 w-full h-screen;
+  &_google {
+    background-image: url("/images/auth_google.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+
+    &-card {
+      @apply bg-white p-16 rounded-xl;
+      box-shadow: 0px 8px 8px -4px #10182808, 0px 20px 24px -4px #10182814;
+    }
+  }
+
+  &_banner {
+    &.login_banner {
+      background-image: url("/images/login-banner.png");
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      object-fit: cover;
+    }
+
+    &.sign_banner {
+      background-image: url("/images/auth-banner.png");
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      object-fit: cover;
+    }
+
+    &-content {
+      @apply absolute w-full;
+      transition: all 0.4s linear;
+      &.login {
+        @apply top-[0%] left-0 w-full pl-[90px] pt-[80px];
+      }
+
+      &.signIn {
+        @apply bottom-[0%] left-0 w-full pl-[90px] pb-[80px];
+      }
+    }
+  }
+}
+
+/* 
+-------------------------------------------
+----------------DASHBOARD-----------------
+-------------------------------------------
+*/
+
+.dashboard {
+
+  height:  calc( 100vh - 56px);
+  .main_page{
+    width: calc(100% - 240px);
+  }
+
+
+  &_home{
+    &-content{
+      background-image: url("/images/home/banner.png");
+     
+      background-position: center;
+     
+      background-size: cover;
+     
+      background-repeat: no-repeat;
+     
+      object-fit: cover;
+    }
+  }
+}
+
+
+/* 
+-------------------------------------------
+----------------HOME-----------------
+-------------------------------------------
+*/
+
+.home{
+
+}
+
+/* 
+-------------------------------------------
+----------------My Wallet-----------------
+-------------------------------------------
+*/
+
+.my-wallet{
+  
+}

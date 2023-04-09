@@ -1,0 +1,238 @@
+/* 
+-------------------------------------------
+----------------- MEDIA QUERIES -------------------
+-------------------------------------------
+*/
+
+@mixin smallPhone {
+  @media screen and (max-width: 640px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: 1280px) {
+    @content;
+  }
+}
+
+@mixin largeScreen {
+  @media screen and (min-width: 1400px) {
+    @content;
+  }
+}
+
+/* 
+-------------------------------------------
+----------------- UTILS -------------------
+-------------------------------------------
+*/
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.middle {
+  display: flex;
+  align-items: center;
+}
+
+.stack {
+  @apply space-y-3;
+}
+
+.column {
+  @apply flex flex-col;
+}
+
+.row {
+  @apply flex items-center;
+}
+
+.row-between {
+  @apply flex items-center justify-between;
+}
+
+.row-center {
+  @apply flex items-center justify-center;
+}
+.col-center {
+  @apply flex flex-col items-center justify-center;
+}
+
+.grid-center {
+  @apply grid place-content-center;
+}
+
+.br {
+  @apply border border-red-400;
+}
+
+.bg {
+  @apply border border-green-400;
+}
+
+.bb {
+  @apply border border-blue-400;
+}
+
+.f {
+  &-n {
+    @apply font-normal;
+  }
+
+  &-m {
+    @apply font-medium;
+  }
+
+  &-s {
+    @apply font-semibold;
+  }
+
+  &-b {
+    @apply font-bold;
+  }
+
+  &-eb {
+    @apply font-extrabold;
+  }
+
+  &-bk {
+    @apply font-black;
+  }
+}
+
+/* 
+-------------------------------------------
+----------------- ANIMATIONS -------------
+-------------------------------------------
+*/
+
+.fadeIn {
+  animation: slideUpIn;
+  animation-duration: 400ms;
+  animation-timing-function: ease;
+  animation-iteration-count: 1;
+}
+
+.slideInLeft {
+  animation: slideLeft;
+  animation-duration: 400ms;
+  animation-timing-function: ease;
+  animation-iteration-count: 1;
+}
+
+.strictFadeIn {
+  animation: fadingIn;
+  animation-duration: 400ms;
+  animation-timing-function: ease;
+  animation-iteration-count: 1;
+}
+
+.flash {
+  animation: flash-blink 500ms ease 0ms infinite normal none;
+}
+
+@keyframes fadingIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpIn {
+  0% {
+    opacity: 0.6;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    opacity: 0.6;
+    transform: translateX(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes flash-blink {
+  0% {
+    opacity: 0.2;
+    transform: scale(1.2);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 
+-------------------------------------------
+----------------- typography -------------------
+-------------------------------------------
+*/
+
+.display {
+  font-family: "Inter";
+
+  &-sm {
+    font-size: 30px;
+    line-height: 38px;
+  }
+
+  &-md {
+    font-size: 36px;
+    line-height: 44px;
+    letter-spacing: -0.02em;
+  }
+}
+
+.txt {
+  font-family: "Inter";
+
+  &-sm {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  &-xs {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  &-md {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &-xl {
+    font-size: 20px;
+    line-height: 30px;
+    /* identical to box height, or 150% */
+  }
+
+  &-lg {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
