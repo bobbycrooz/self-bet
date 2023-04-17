@@ -1,6 +1,7 @@
 {
   "name": "safebet-app",
   "version": "0.1.0",
+  "license": "mit",
   "private": true,
   "scripts": {
     "dev": "next dev",

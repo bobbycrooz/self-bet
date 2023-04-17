@@ -47,7 +47,7 @@ const TwoThumbs: React.FC<{
                 borderRadius: "4px",
                 background: getTrackBackground({
                   values,
-                  colors: ["#ccc", "#548BF4", "#ccc"],
+                  colors: ["#F3F4F6", "#111827", "#F3F4F6"],
                   min: MIN,
                   max: MAX,
                   rtl,
@@ -64,23 +64,14 @@ const TwoThumbs: React.FC<{
             {...props}
             style={{
               ...props.style,
-              height: "42px",
-              width: "42px",
-              borderRadius: "4px",
+              height: "24px",
+              width: "24px",
+              borderRadius: "100%",
               backgroundColor: "#FFF",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              boxShadow: "0px 2px 6px #AAA",
+              border: "1px solid #111827",
             }}
           >
-            <div
-              style={{
-                height: "16px",
-                width: "5px",
-                backgroundColor: isDragged ? "#548BF4" : "#CCC",
-              }}
-            />
+         
           </div>
         )}
       />

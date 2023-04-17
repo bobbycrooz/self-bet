@@ -41,7 +41,7 @@ const Process = ({
         ref={cardRef}
         className="modal_card relative p-12 px-8 bg-white rounded-lg shadow-soft w-[400px] min-h-[244px]"
       >
-        <Prompt  handleClose={handleClose} context={""} status={""} />
+        <Prompt  handleClose={handleClose}  />
       </div>
     </div>
   ) : null;

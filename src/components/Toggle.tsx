@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Switch } from "@headlessui/react";
 
-export default function Toggle() {
+export default function Toggle({text} : {text?:string}) {
   const [enabled, setEnabled] = useState(false);
 
   return (
@@ -20,7 +20,7 @@ export default function Toggle() {
         />
       </Switch>
 
-      <h1 className="save capitalize t-subtitle text-[##344054]">save account</h1>
+     {text && <h1 className="save capitalize t-subtitle text-[##344054]">{text}</h1>}
     </div>
   );
 }

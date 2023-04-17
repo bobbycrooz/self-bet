@@ -96,7 +96,7 @@ function Home() {
         <div className="bg-gray-50 w-full h-[112px] middle p-12 relative">
           <div className="space-x-4 middle ">
             <Image
-              src={"/icons/dashboard/cog.svg"}
+              src={"/icons/dashboard/settings.svg"}
               alt={""}
               width={48}
               height={48}

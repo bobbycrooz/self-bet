@@ -72,8 +72,8 @@ const Notification = ({ toggle, showNoti }: PropTypes) => {
 
   return (
     showNoti ? (
-      <div className="betInfo overlay z-10 fixed top-0 flex justify-end left-0 strictFadeIn w-full h-full bg-[#0000005c]">
-        <div className="info_panel  relative w-[40%] h-screen bg-white rounded-l-lg">
+      <div className="betInfo overlay z-20 fixed top-0 flex justify-end left-0 strictFadeIn w-full h-full bg-[#0000005c]">
+        <div className=" overlay_pane info_panel  relative w-[40%] h-screen bg-white rounded-l-lg slideInLeft">
           <div
            
             className="cancle_btn absolute -left-16 top-1/2 -translate-y-1/2"
@@ -108,7 +108,7 @@ const Notification = ({ toggle, showNoti }: PropTypes) => {
             </div>
           </div>
 
-          <div className="notification_list p-11 overflow-y-scroll  ">
+          <div className="notification_list p-11 overflow-y-scroll  custom-scrollbar">
             <div className="w-full space-y-6 ">
               {notificationArray.map((i, k) => (
                 <div

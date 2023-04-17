@@ -50,7 +50,7 @@ export default function ForgotPassword() {
     }
   }
 
-  function stepHandler(params: string) {}
+  // function stepHandler(params: string) {}
 
   return (
     <>
@@ -76,6 +76,7 @@ function EmailSent({
 }: {
   setCurrentStep: Dispatch<SetStateAction<string>>;
 }) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function handleRedirect() {
     setTimeout(() => {
       setCurrentStep(stepNames.NEWPASSWORD);
@@ -84,7 +85,7 @@ function EmailSent({
 
   useEffect(() => {
     handleRedirect();
-  }, []);
+  }, [handleRedirect]);
 
   return (
     <div className="w-full column items-center">

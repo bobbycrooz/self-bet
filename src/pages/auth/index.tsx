@@ -5,11 +5,12 @@ import { Button, InputField } from "@components";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [loginMode, setLoginMode] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
   const { push, query, pathname } = useRouter();
+
 
   const fetures = [
     "Take your in-person bets online.",
@@ -36,6 +37,19 @@ export default function Home() {
   function handleForgotPassword() {
     push("/auth/forgot-password");
   }
+
+
+  function handleOnChange() {
+    setIsAuth(true)
+  }
+
+  
+  function handleSubmit(e: { preventDefault: () => void; }) {
+    e.preventDefault()
+    push("/dashboard");
+    
+  }
+
 
   // useEffects -------------
   useEffect(() => {
@@ -148,19 +162,22 @@ export default function Home() {
             </div>
 
             {/* form */}
-            <form onSubmit={() => true} className="w-full space-y-6">
+            <form onSubmit={handleSubmit} className="w-full space-y-6">
               <div className="space-y-4">
                 <InputField
                   type={"text"}
                   label="username"
                   required
                   place={"Enter a username"}
+                  change={handleOnChange}
+
                 />
                 {!loginMode && (
                   <InputField
                     type={"email"}
                     label="Email"
                     place={"***@gmail.com"}
+                    change={handleOnChange}
                   />
                 )}
 
@@ -213,7 +230,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <Button text={"continue"} type={"submit"} full disabled={true} />
+              <Button click={handleSubmit} text={"continue"} type={"submit"} full disabled={!isAuth} />
 
               <div className="flex w-full justify-center mt-8">
                 {!loginMode ? (

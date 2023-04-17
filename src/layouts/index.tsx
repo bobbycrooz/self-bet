@@ -18,7 +18,7 @@ export default function DashboardLayout({ children }: { children: any }) {
 
       <div className="flex h-full">
         <Sidebar />
-        <main className="main_page overflow-y-scroll">{children}</main>
+        <main className="main_page overflow-y-scroll custom-scrollbar">{children}</main>
       </div>
     </main>
   );

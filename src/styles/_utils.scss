@@ -193,7 +193,7 @@
 */
 
 .display {
-  font-family: "Inter";
+ 
 
   &-sm {
     font-size: 30px;
@@ -205,10 +205,16 @@
     line-height: 44px;
     letter-spacing: -0.02em;
   }
+
+  &-xs {
+    line-height: 32px;
+    font-size: 24px;
+    letter-spacing: 0em;
+  }
 }
 
 .txt {
-  font-family: "Inter";
+
 
   &-sm {
     font-size: 14px;
@@ -235,4 +241,14 @@
     font-size: 18px;
     line-height: 28px;
   }
+}
+
+.inner_shadow {
+  box-shadow: 0px 2px 4px -2px #1018280f inset, 0px 4px 8px -2px #1018281a inset;
+}
+
+.linear_g-bet {
+  background: rgb(17,24,39);
+  background: linear-gradient(0deg, rgba(17,24,39,1) 0%, rgba(17,24,39,0.12377450980392157) 100%);
+  
 }

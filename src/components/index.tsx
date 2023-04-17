@@ -13,6 +13,8 @@ import Toggle from "./Toggle";
 import ConfirmationModal from "./ConfirmationModal";
 import DropDown from "./DropBtn";
 import ConfirmLogout from "./ConfirmLogout"
+import PlaceBetLoader from "./PlaceBetLoader";
+import AddCondition from "./AddCondition";
 
 export {
   DropDown,
@@ -29,5 +31,7 @@ export {
   TwoThumbs,
   Notification,
   Withdraw,
-  ConfirmLogout
+  ConfirmLogout,
+  PlaceBetLoader,
+  AddCondition
 };

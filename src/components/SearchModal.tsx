@@ -11,7 +11,13 @@ export default function SearchModal({
   isSearching: boolean;
   setIsSearching: any;
 }) {
-  //   let [isSearching, setIsSearching] = useState(true);
+    const  [searchMode, setSearchMode] = useState({
+      team: true,
+      name: false,
+      league:false,
+      percent: false,
+      range: false
+    });
 
   return (
     <>
@@ -68,23 +74,20 @@ export default function SearchModal({
 
                   {/* filter tab */}
                   <div className="filters middle space-x-3">
-                    <DropDown type={"byTeam"} lists={[]} title="Team" />
-                    <DropDown type={"byName"} lists={[]} title={"League"} />
+                    <DropDown type={"byTeam"} lists={[]} title="Team" show={searchMode.team} toggleShow={setSearchMode} />
+                    <DropDown type={"byLeague"} lists={[]} title={"League"} show={searchMode.league} toggleShow={setSearchMode} />
+                    <DropDown
+                      type={"byName"}
+                      lists={[]}
+                      title={"Creator"} show={searchMode.name} toggleShow={setSearchMode}                    />
                     <DropDown
                       type={"byRange"}
                       lists={[]}
-                      title={"Creator"}
-                    />
+                      title={"Bet Amount"} show={searchMode.range} toggleShow={setSearchMode}                    />
                     <DropDown
                       type={"byPercent"}
                       lists={[]}
-                      title={"Bet Amount"}
-                    />
-                    <DropDown
-                      type={"byLeague"}
-                      lists={[]}
-                      title={"Bet Discount"}
-                    />
+                      title={"Bet Discount"} show={searchMode.percent} toggleShow={setSearchMode}                    />
                   </div>
 
                   {/* search result */}

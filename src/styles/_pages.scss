@@ -77,6 +77,15 @@
       object-fit: cover;
     }
   }
+
+
+  &_create{
+
+    &-inner{
+      height: calc(100vh - 100px );
+
+    }
+  }
 }
 
 
@@ -98,4 +107,20 @@
 
 .my-wallet{
   
+}
+
+
+
+
+.create_aside{
+  .header{
+    background-image: url('/images/create/aside_banner.png');
+    // background-position: center;
+     
+    background-size: cover;
+   
+    background-repeat: no-repeat;
+   
+    // object-fit: cover;
+  }
 }

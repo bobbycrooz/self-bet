@@ -21,7 +21,7 @@
     &::placeholder {
       /* Chrome, Firefox, Opera, Safari 10.1+ */
       @apply text-gray-300 txt-sm f-m;
-    }
+    } 
 
     &:-ms-input-placeholder {
       /* Internet Explorer 10-11 */
@@ -78,7 +78,7 @@
     }
 
     .dropdown_body {
-      @apply bg-white z-[];
+      @apply bg-white z-[9999];
     }
   }
 }
@@ -113,5 +113,46 @@
 
   &-header1 {
     @apply txt-md f-b text-gray-900;
+  }
+
+  &-headerb7 {
+    @apply txt-md f-b text-gray-700;
+  }
+}
+
+/* 
+-------------------------------------------
+-------------------Bet details-----------
+-------------------------------------------
+*/
+
+.bet-details-dropdown {
+  transition: all 0.4s ease-in-out;
+
+  .card-header {
+  }
+
+  .card_body {
+    height: 0;
+    display: none;
+  }
+
+  .card-footer-toggle {
+  }
+
+  &.active {
+    .card-header {
+    }
+
+    .card_body {
+      height: auto;
+      display: block;
+    }
+
+    .card-footer-toggle {
+      .carret {
+        transform: rotate(180deg);
+      }
+    }
   }
 }

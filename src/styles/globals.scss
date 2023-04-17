@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
 @import "utils.scss";
 @import "pages.scss";
 @import "components.scss";
@@ -10,22 +12,89 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  // font-family: 'Inter', 'sans-serif';
 }
 
-html,
+
 body {
+  font-family: "Inter", sans-serif !important;
+  @apply overflow-x-hidden;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-gray-300;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-600 outline-1 outline-gray-600;
+  }
 }
 
+.custom-scrollbar{
+    &::-webkit-scrollbar {
+    width: 4px;
+  }
 
+  &::-webkit-scrollbar-track {
+    @apply bg-gray-300;
+  }
 
-.bet_card{
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 outline-1 outline-gray-400;
+  }
+}
 
-  .dots{
+.bet_card {
+  .dots {
     visibility: hidden;
   }
-  &:hover{
-    .dots{
+  &:hover {
+    .dots {
       visibility: visible;
     }
   }
+}
+
+.creators_card {
+  .header {
+    background-image: url("/icons/creator_header.png");
+    // background-position: center;
+
+    background-size: cover;
+
+    background-repeat: no-repeat;
+
+    // object-fit: cover;
+  }
+}
+
+.teams_display_matches {
+  .selector {
+    display: none;
+  }
+
+  &:hover {
+    .selector {
+      display: block;
+    }
+  }
+}
+
+.bet_details {
+  height: calc(100vh - 56px);
+}
+
+
+.overlay{
+  &.active{
+
+  }
+}
+
+input[type="search"]{
+  border-color: transparent !important;
+
 }

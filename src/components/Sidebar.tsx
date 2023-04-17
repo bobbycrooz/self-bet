@@ -42,11 +42,16 @@ const navItemArray = [
 ];
 
 const Sidebar = () => {
-  const { push } = useRouter();
+  const { push, pathname } = useRouter();
 
   function linkHandler(link: string) {
     return push(link);
   }
+
+
+
+ console.log(pathname);
+ 
 
   return (
     <aside className="sidebar h-full border-r flex flex-col justify-between   bg-white w-[240px] p-3 pt-4">
@@ -58,7 +63,7 @@ const Sidebar = () => {
             onClick={() => linkHandler(i.link)}
             key={k}
             className={`nav_item w-full hover:bg-gray-50 middle p-3 space-x-4 rounded-lg ${
-              i.name == "home" && "bg-gray-50"
+              i.link == pathname && "bg-gray-50"
             }`}
           >
             <Image
@@ -77,30 +82,32 @@ const Sidebar = () => {
       </ul>
 
       <div className="w-full">
-        <div className="middle justify-between border-t py-4">
-          <Image
-            src={"/icons/dashboard/olivia.svg"}
-            alt="logo"
-            width={40}
-            height={40}
-            className=""
-          />
+        <Link href={"/auth"}>
+          <div className="middle  justify-between border-t py-4">
+            <Image
+              src={"/icons/dashboard/olivia.svg"}
+              alt="logo"
+              width={40}
+              height={40}
+              className=""
+            />
 
-          <div className="name_box">
-            <h1 className="name txt-sm text-gray-800 f-s">Olivia Rhye</h1>
-            <p className="sub_name text-xs f-n text-gray-400">
-              olivia@untitledui.com
-            </p>
+            <div className="name_box ">
+              <h1 className="name txt-sm text-gray-800 f-s">Olivia Rhye</h1>
+              <p className="sub_name text-xs f-n text-gray-400">
+                olivia@untitledui.com
+              </p>
+            </div>
+
+            <Image
+              src={"/icons/dashboard/logout.svg"}
+              alt="logo"
+              width={36}
+              height={36}
+              className=""
+            />
           </div>
-
-          <Image
-            src={"/icons/dashboard/logout.svg"}
-            alt="logo"
-            width={36}
-            height={36}
-            className=""
-          />
-        </div>
+        </Link>
       </div>
     </aside>
   );

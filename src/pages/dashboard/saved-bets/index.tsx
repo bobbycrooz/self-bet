@@ -49,7 +49,7 @@ function Home() {
 
       <main className="dashboard_home bg-white w-full h-auto ">
         {/* header------ */}
-        <div className="bg-gray-50 w-full space-y-4 pt-6 px-12 column h-[auto] middle  sticky top-0 left-0 z-20">
+        <div className="bg-gray-50 w-full space-y-4 pt-6 px-12 column h-[auto] middle  sticky top-0 left-0 z-10">
           <div className="w-full">
             <div className="space-x-4 middle ">
               <Image
@@ -60,7 +60,7 @@ function Home() {
               />
 
               <h1 className="notify display-xs f-b text-gray-700  ">
-                My Bets
+                Saved Bets
               </h1>
             </div>
           </div>

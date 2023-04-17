@@ -44,7 +44,7 @@ const Deposite = ({ toggle, showNoti }: PropTypes) => {
   return showNoti ? (
     <div className="betInfo overlay z-10 fixed top-0 flex justify-end left-0 strictFadeIn w-full h-full bg-[#0000005c]">
       {/* ----Notification Card---------  */}
-      <div className="info_panel  relative w-[35%] h-screen bg-white rounded-l-lg">
+      <div className="info_panel slideInLeft relative w-[35%] h-screen bg-white rounded-l-lg">
         {/* -------cancle button-------- */}
         <div className="cancle_btn absolute -left-16 top-1/2 -translate-y-1/2">
           <Image

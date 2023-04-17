@@ -9,6 +9,8 @@ interface DropDownBtnProps {
   title: string;
   lists: Array<string>;
   handler?: (value: string) => void;
+  show: boolean,
+  toggleShow: any
 }
 
 export default function DropdownBtn({
@@ -16,11 +18,75 @@ export default function DropdownBtn({
   type,
   lists,
   handler,
+  show,
+  toggleShow
 }: DropDownBtnProps) {
   const [showList, setShowList] = useState(false);
 
-  function handleShowList() {
-    setShowList((p) => !p);
+  function handleShowList(type: string) {
+
+    switch (type) {
+      case 'byTeam':
+        return  toggleShow({
+          team: !show,
+          name: false,
+          league:false,
+          percent: false,
+          range: false
+        });
+
+        case 'byName':
+          return  toggleShow({
+            team: false,
+            name: !show,
+            league:false,
+            percent: false,
+            range: false
+          });
+          case 'byRange':
+            return  toggleShow({
+              team: false,
+              name: false,
+              league:false,
+              percent: false,
+              range: !show
+            });
+
+            case 'byPercent':
+              return  toggleShow({
+                team: false,
+                name: false,
+                league:false,
+                percent: !show,
+                range: false
+              });
+
+              case 'byLeague':
+                return  toggleShow({
+                  team: false,
+                  name: false,
+                  league:!show,
+                  percent: false,
+                  range: false
+                });
+
+              
+
+              
+        
+        
+    
+      default:
+       
+          return  toggleShow({
+            team: false,
+            name: false,
+            league:false,
+            percent: false,
+            range: false
+          });
+    }
+   
   }
 
   function dropDownCardHandler(type: string) {
@@ -48,11 +114,13 @@ export default function DropdownBtn({
     }
   }
 
+
+
   return (
     <div className="dropdown_filter relative">
       <div
         role="button"
-        onClick={handleShowList}
+        onClick={() => handleShowList(type)}
         className={` px-4 p-[10px] row-between border space-x-4  border-gray-100 rounded-lg`}
       >
         <h1 className="bet_condition_name txt-sm f-m text-gray-500">{title}</h1>
@@ -66,7 +134,7 @@ export default function DropdownBtn({
         />
       </div>
 
-      {showList && <div className="z-[9999999]">{dropDownCardHandler(type)}</div>}
+      {show && <div className=" bg-white">{dropDownCardHandler(type)}</div>}
     </div>
   );
 }
@@ -107,7 +175,7 @@ function SearchByTeamCard(props: any) {
     <div
       ref={cardRef}
       onClick={handleCardClick}
-      className="absolute  dropdown_body space-y-4 column transform w-[328px] shadow-soft left-0 top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
+      className="absolute  dropdown_body bg-white  space-y-4 column transform w-[328px] shadow-soft left-0 top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
     >
       {/* search component */}
       <div className="search">
@@ -134,7 +202,7 @@ function SearchByTeamCard(props: any) {
         </div>
       </div>
 
-      <ol className="team_options w-full">
+      <ol className="team_options w-full bg-white z-[9999999]">
         {teamsArray.map((i, k) => (
           <li key={k} role="button" className="option middle space-x-4">
             <Image
@@ -356,7 +424,7 @@ function CustomSearchCard({
     console.log(cardEle, cardEleRef);
 
     if (cardEle !== cardEleRef) {
-      props.handleShowList();
+      handler();
     }
   }
 

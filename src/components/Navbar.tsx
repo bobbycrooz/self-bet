@@ -36,6 +36,7 @@ const Navbar = () => {
   }
 
   function handleLogout() {
+    setShowProfile(!showProfile)
     toggleConfirmLogout((p) => !p);
   }
 
@@ -130,7 +131,7 @@ const Navbar = () => {
           />
           {/*  */}
 
-          <div className="border  middle rounded-lg p space-x-3 pr-3 border-gray-200">
+          <Link className="border  middle rounded-lg p space-x-3 pr-3 border-gray-200" href={"/dashboard/my-wallet"}>
             <Image
               src={"/icons/dashboard/wallet.svg"}
               alt="wallet"
@@ -140,7 +141,7 @@ const Navbar = () => {
             />
 
             <h1 className="balance text-gray-700 txt-sm f-b">40,000 NGN</h1>
-          </div>
+          </Link>
 
           {/*  */}
           <div className="profile h-8 middle space-x-2 relative">
@@ -164,7 +165,8 @@ const Navbar = () => {
 
             {showProfile && (
               <div className="dropdown_profile z-50 absolute right-0 top-10 bg-white  w-48 rounded-lg p-6 space-y-[18px] shadow-light strictFadeIn">
-                <div role="button" onClick={handleLogout} className="profile_item middle space-x-4">
+
+                  <Link role="button" onClick={() => setShowProfile(false)} className="profile_item middle space-x-4" href={"/dashboard/profile"}>
                   <Image
                     src={"/icons/dashboard/profile.svg"}
                     alt="wallet"
@@ -174,10 +176,13 @@ const Navbar = () => {
                   />
 
                   <p className="item_name txt-sm f-s text-gray-700">Profile</p>
-                </div>
+                </Link>
 
-                <div role="button" className="profile_item middle space-x-4">
-                  <Image
+
+              
+
+                <div role="button" onClick={handleLogout} className="profile_item middle space-x-4">
+                <Image
                     src={"/icons/dashboard/logout-2.svg"}
                     alt="wallet"
                     width={24}

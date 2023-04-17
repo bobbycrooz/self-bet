@@ -73,7 +73,7 @@ const InputField = ({
             onChange={change || onChangeHandler}
             onBlur={blur}
             className={`textarea ${
-              filedValue.length > 0 || (value?.length > 0 && "active")
+              filedValue.length > 0 || (String(value).length > 0 && "active")
             } ${touched && error && "error"}`}
             {...rest}
           />

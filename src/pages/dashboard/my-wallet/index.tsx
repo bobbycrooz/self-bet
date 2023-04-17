@@ -162,7 +162,7 @@ function Home() {
 
             {/* --------tab_body----- */}
 
-            {true ? (
+            {!true ? (
               <div className="h-auto border border-gray-100 centered">
                 <div className="column col-center p-6">
                   <div className="bg-gray-400 w-20 h-20 rounded-lg"></div>

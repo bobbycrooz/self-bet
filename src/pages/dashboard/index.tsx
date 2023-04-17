@@ -6,6 +6,9 @@ import { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { NextPageWithLayout } from "../_app";
+import { betCardType } from "@/components/BetCard";
+import Link from "next/link";
+// import {betCardType}
 
 function Home() {
   const [loginMode, setLoginMode] = useState(true);
@@ -49,22 +52,21 @@ function Home() {
 
       <main className="dashboard_home bg-white w-full h-auto px-12 py-16 ">
         {/*  */}
-        <div className="dashboard_home-content w-full h-[240px] rounded-2xl pl-24 pt-10">
+        <div className="dashboard_home-content w-full h-[260px] rounded-2xl pl-24 pt-10">
           {/*  */}
           <div className="banneer_text w-[690px]">
             <h1 className=" display-sm f-eb text-white">
               Revolutionize Your Sports Betting Experience
             </h1>
-            <p className="text-white txt-md f-m mt-[9px] mb-6">
+            <p className="text-white txt-md f-m mt-[9px] mb-6  w-[90%]">
               Get your friends together for a thrilling betting experience.
               Create custom bets, track your progress, and win big.
             </p>
-            <Button text={"Create your own bet now"} type={"button"} primary />
+           <Link href={"/dashboard/create-bet"}> <Button text={"Create your bet now"} type={"button"} primary /></Link>
           </div>
         </div>
 
         {/* active bet listing */}
-
         <div className="active_tab w-full  h-[30px] mt-8 border-b middle space-x-3">
           {tabs.map((i, k) => (
             <div
@@ -84,7 +86,7 @@ function Home() {
             .fill(1)
             .map((i, k) => (
              <div className=""  key={k}>
-              <BetCard betType={(k % 2) == 0 ? "kolo" : "point"} />
+              <BetCard betType={'KOLO'} />
              </div>
             ))}
         </div>
