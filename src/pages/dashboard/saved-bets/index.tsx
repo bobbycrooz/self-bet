@@ -5,7 +5,6 @@ import { BetCard, Button, InputField } from "@components";
 import { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
-import { NextPageWithLayout } from "../_app";
 
 function Home() {
   const [loginMode, setLoginMode] = useState(true);
@@ -90,7 +89,7 @@ function Home() {
               .fill(1)
               .map((i, k) => (
                 <div className="" key={k}>
-                  <BetCard betType={k % 2 == 0 ? "kolo" : "point"} />
+                  <BetCard betType={k % 2 == 0 ? "KOLO" : "POINT"} />
                 </div>
               ))}
           </div>
