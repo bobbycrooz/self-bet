@@ -246,7 +246,7 @@ function NewPassword({
         Set new password
       </h1>
 
-      <p className="text-md text-gray-500 mt-3 text-center">
+      <p className="text-md text-gray-500 mt-3 text-center w-[80%]">
         You should choose a new password that you have not used before.
       </p>
 

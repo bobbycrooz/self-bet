@@ -40,9 +40,6 @@ const tabs = [
 ];
 
 const BetCard = ({ betType }: PropTypes) => {
-
-
-
   const [showDetails, setShowDetails] = useState<{
     show: boolean;
     mode: string | undefined;
@@ -74,13 +71,11 @@ const BetCard = ({ betType }: PropTypes) => {
       case tabMode.BET:
         return <Bets />;
       case tabMode.CREATOR:
-        return <Creator />; 
+        return <Creator />;
       default:
         break;
     }
   }
-
-
 
   return (
     <>
@@ -103,7 +98,7 @@ const BetCard = ({ betType }: PropTypes) => {
           <div className="badge_container space-y-2 tex">
             <div className="row-between">
               {showDetails.mode == betCardType.KOLO ? (
-                <div className="badge uppercase p-2 w-[76px] bg-cyan-50 rounded txt-xs f-b text-cyan-600">
+                <div className="badge uppercase p-2 w-[86px] bg-cyan-50 rounded txt-xs f-b text-cyan-600">
                   KOLO bet
                 </div>
               ) : (
@@ -186,73 +181,81 @@ const BetCard = ({ betType }: PropTypes) => {
             <div className="content relative overflow-y-scroll custom-scrollbar h-screen">
               <div className="h-auto">
                 {/*  */}
-                <div className="panel_content p-12 space-y-6  w-full">
-                  <div className="bet_banner w-full h-[192px] relative">
-                    {showDetails.mode === betCardType.KOLO ? (
-                      <Image
-                        src={"/images/home/kolo_banner.png"}
-                        alt={""}
-                        fill
-                        className="r"
-                        // width={300}
-                        // height={128}
-                      />
-                    ) : (
-                      <Image
-                        src={"/images/home/point_banner.png"}
-                        alt={""}
-                        fill
-                        className="r"
-                        // width={300}
-                        // height={128}
-                      />
-                    )}
+                <div className="panel_content  space-y-6  w-full">
+                  <div className="px-12 w-full">
+                    <div className="bet_banner w-full h-[192px] relative">
+                      {showDetails.mode === betCardType.KOLO ? (
+                        <Image
+                          src={"/images/home/kolo_banner.png"}
+                          alt={""}
+                          fill
+                          className="r"
+                          // width={300}
+                          // height={128}
+                        />
+                      ) : (
+                        <Image
+                          src={"/images/home/point_banner.png"}
+                          alt={""}
+                          fill
+                          className="r"
+                          // width={300}
+                          // height={128}
+                        />
+                      )}
+                    </div>
                   </div>
+
                   {/* -----------second badge row-------- */}
-                  <div className="badge_container row-between ">
-                    <div className="col">
-                      <div className="row-between ">
-                        {showDetails.mode === betCardType.KOLO  ? (
-                          <div className="badge uppercase p-2 w-[76px] bg-cyan-50 rounded txt-xs f-b text-cyan-600">
-                            KOLO bet
-                          </div>
-                        ) : (
-                          <div className="badge uppercase p-2 w-[80px] bg-yellow-100 rounded txt-xs f-b text-yellow-600">
-                            point bet
-                          </div>
-                        )}
+                  <div className="w-full px-12 sticky top-0   bg-white shadow pt-4 z-20">
+                    <div className="badge_container row-between ">
+                      <div className="col">
+                        <div className="row-between ">
+                          {showDetails.mode === betCardType.KOLO ? (
+                            <div className="badge uppercase p-2 w-[86px] bg-cyan-50 rounded txt-xs f-b text-cyan-600">
+                              KOLO bet
+                            </div>
+                          ) : (
+                            <div className="badge uppercase p-2 w-[80px] bg-yellow-100 rounded txt-xs f-b text-yellow-600">
+                              point bet
+                            </div>
+                          )}
+                        </div>
+
+                        <h1 className="bet_name txt-lg f-eb text-gray-600">
+                          Battle of best banterers
+                        </h1>
+
+                        <Image
+                          src={"/images/home/users.png"}
+                          alt={""}
+                          className="mt-4"
+                          width={144}
+                          height={24}
+                        />
                       </div>
 
-                      <h1 className="bet_name txt-lg f-eb text-gray-600">
-                        Battle of best banterers
-                      </h1>
-
-                      <Image
-                        src={"/images/home/users.png"}
-                        alt={""}
-                        className="mt-4"
-                        width={144}
-                        height={24}
-                      />
+                      <div className="col">
+                        <h1 className="amount text-gray-400 txt-xs f-b">
+                          bet amount
+                        </h1>
+                        <h1 className="txt-md f-b text-gray-700 mt-2 mb-4">
+                          N5000
+                        </h1>
+                        <Link href={"/dashboard/create-bet/bet-details"}>
+                          <Button text={"Join bet"} type={"button"} primary />
+                        </Link>
+                      </div>
                     </div>
 
-                    <div className="col">
-                      <h1 className="amount text-gray-400 txt-xs f-b">
-                        bet amount
-                      </h1>
-                      <h1 className="txt-md f-b text-gray-700 mt-2 mb-4">
-                        N5000
-                      </h1>
-                      <Link href={"/dashboard/create-bet/bet-details"}><Button text={"Join bet"} type={"button"} primary /></Link>
-                    </div>
-                  </div>
-                  {/*  --------action tab row*/}
-                  <div className="active_tab w-full  h-[30px] mt-8 border-b middle space-x-3">
+                   {/*  --------action tab row*/}
+
+                    <div className="active_tab w-full   h-[35px] mt-8  middle space-x-3">
                     {tabs.map((i, k) => (
                       <div
                         role="button"
                         onClick={() => setBetTabMode(i.tabMode)}
-                        className={`tab_item px-3 hover:text-gray-700 hover:border-gray-200 border-b-2 space-x-2 ${
+                        className={`tab_item px-3  hover:text-gray-700 hover:border-gray-200 border-b-2 space-x-2 ${
                           betTabMode == i.tabMode
                             ? "text-gray-700 border-gray-700  "
                             : "border-transparent text-gry-500"
@@ -268,11 +271,20 @@ const BetCard = ({ betType }: PropTypes) => {
                       </div>
                     ))}
                   </div>
+                  </div>
+
+
+                 
+
+                 <div className="px-12 w-full space-y-4">
+                 
+
                   {/* ------be list --------for each tab */}
                   <div className="det_details   grid grid-cols-2 gap-6">
                     {tabModeHandler()}
                   </div>
                   {/*  */}
+                 </div>
                 </div>
               </div>
             </div>
@@ -330,11 +342,7 @@ function Matches() {
   );
 }
 
-
-
-
 function Bets() {
-  
   return (
     <>
       <div className="teams_display border border-gray-200 rounded-lg px-4 p-5 ">
@@ -422,8 +430,6 @@ function Bets() {
   );
 }
 
-
-
 function Creator() {
   return (
     <>
@@ -478,7 +484,5 @@ function Creator() {
     </>
   );
 }
-
-
 
 export default BetCard;

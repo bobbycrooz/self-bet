@@ -44,14 +44,14 @@ const Navbar = () => {
     <nav className=" w-full h-14 bg-white flex items-center justify-between px-6 p-1 border-b">
       {/* logo */}
       <div className="menu_logo middle space-x-4">
-        <Image
+        {/* <Image
           src={"/icons/dashboard/menu.svg"}
           alt="logo"
           width={40}
           height={40}
           role="button"
           className=""
-        />
+        /> */}
 
         <Image
           src={"/icons/logo-2.svg"}

@@ -5,6 +5,7 @@ import { BetCard, Button, Deposite, InputField, Withdraw } from "@components";
 import { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
+import { PlusSvg } from "@/assets";
 
 function Home() {
   const [isWithdrawing, setIsWithdrawing] = useState(false);
@@ -97,7 +98,7 @@ function Home() {
           {/* ----side card */}
           <div className="absolute row-between p-8 amount_box w-[557px] h-[148px] bg-white shadow-light right-[105px] rounded-lg -bottom-1/2">
             <div className="">
-              <p className="text-gray-500 txt-sm f-m ">Wallet balance</p>
+              <p className="text-gray-400 txt-sm f-m ">Wallet balance</p>
               <h1 className="notify display-sm f-eb text-gray-700  ">
                 N 40,000
               </h1>
@@ -106,7 +107,11 @@ function Home() {
             {/* 0--------------- */}
 
             <div className="col-center  space-y-3">
-              <Button text="+" type={"button"} primary click={handleDeposite} />
+             
+
+              <div role="button" onClick={handleDeposite} className="rounded-lg bg-sec p-3">
+                <PlusSvg/>
+              </div>
               <p className="text-gray-700 txt-md f-m ">Deposit</p>
             </div>
 
@@ -114,14 +119,15 @@ function Home() {
 
             <div className="col-center  space-y-3">
               <Image
-                src={"/icons/notify/withdraw.svg"}
+                src={"/icons/dashboard/wallet-sq.svg"}
                 alt={""}
                 width={48}
                 height={48}
                 role={"button"}
                 onClick={handleWithdrawal}
               />
-              <p className="t-subtitle">Withdraw</p>
+
+              <p className="txt-md f-m text-gray-700">Withdraw</p>
             </div>
           </div>
 
@@ -148,14 +154,14 @@ function Home() {
             <div className="active_tab w-full  h-[30px] mt-8 border-b middle space-x-3">
               {tabs.map((i, k) => (
                 <div
-                  className={`tab_item px-3 hover:text-gray-700 hover:border-gray-700 border-b-2  ${
-                    k == 0
-                      ? "text-gray-700 border-gray-700  "
-                      : "border-transparent text-gry-500"
+                  className={`tab_item px-3 hover:text-gray-700 hover:border-gray-700 border-b-2 ${
+                    k == 2
+                      ? "text-gray-700 border-gray-700 f-b "
+                      : "border-transparent text-gray-500 f-m"
                   } h-full middle`}
                   key={k}
                 >
-                  <p className={`txt-sm  f-m`}> {i}</p>
+                  <p className={`txt-sm`}> {i}</p>
                 </div>
               ))}
             </div>
