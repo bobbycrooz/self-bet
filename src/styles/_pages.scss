@@ -57,37 +57,46 @@
 */
 
 .dashboard {
-
-  height:  calc( 100vh - 56px);
-  .main_page{
+  height: calc(100vh - 56px);
+  .main_page {
     width: calc(100% - 240px);
-  }
 
-
-  &_home{
-    &-content{
-      background-image: url("/images/home/banner.png");
-     
-      background-position: center;
-     
-      background-size: cover;
-     
-      background-repeat: no-repeat;
-     
-      object-fit: cover;
+    @include smallPhone {
+      width: 100%;
     }
   }
 
+  &_home {
+    &-content {
+      background-image: url("/images/home/banner.png");
 
-  &_create{
+      background-position: center;
 
-    &-inner{
-      height: calc(100vh - 100px );
+      background-size: cover;
 
+      background-repeat: no-repeat;
+
+      object-fit: cover;
+
+      &-sm {
+        background-image: url("/images/home/banner-sm.png");
+        background-position: center;
+
+      background-size: cover;
+
+      background-repeat: no-repeat;
+
+      object-fit: cover;
+      }
+    }
+  }
+
+  &_create {
+    &-inner {
+      height: calc(100vh - 100px);
     }
   }
 }
-
 
 /* 
 -------------------------------------------
@@ -95,8 +104,7 @@
 -------------------------------------------
 */
 
-.home{
-
+.home {
 }
 
 /* 
@@ -105,22 +113,18 @@
 -------------------------------------------
 */
 
-.my-wallet{
-  
+.my-wallet {
 }
 
-
-
-
-.create_aside{
-  .header{
-    background-image: url('/images/create/aside_banner.png');
+.create_aside {
+  .header {
+    background-image: url("/images/create/aside_banner.png");
     // background-position: center;
-     
+
     background-size: cover;
-   
+
     background-repeat: no-repeat;
-   
+
     // object-fit: cover;
   }
 }

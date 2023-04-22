@@ -50,15 +50,31 @@ function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="dashboard_home bg-white w-full h-auto px-12 py-16 ">
-        {/*  */}
-        <div className="dashboard_home-content w-full h-[260px] rounded-2xl pl-24 pt-10">
+      <main className="dashboard_home  bg-white w-full h-auto p-4 md:px-12 md:py-16 ">
+       
+        <div className=" dashboard_home-content hidden md:block  w-full h-[126px] md:h-[260px] rounded-2xl md:pl-24 pt-10">
           {/*  */}
-          <div className="banneer_text w-[690px]">
-            <h1 className=" display-sm f-eb text-white">
+          <div className="banneer_text w-full md:w-[690px]">
+            <h1 className="txt-sm f-b m:display-sm md:f-eb text-white">
               Revolutionize Your Sports Betting Experience
             </h1>
-            <p className="text-white txt-md f-m mt-[9px] mb-6  w-[90%]">
+            <p className="text-white text-[8px]  md:txt-md f-m mt-[9px] mb-6  w-[90%]">
+              Get your friends together for a thrilling betting experience.
+              Create custom bets, track your progress, and win big.
+            </p>
+           <Link href={"/dashboard/create-bet"}> <Button text={"Create your bet now"} type={"button"} primary /></Link>
+          </div>
+        </div>
+
+
+        <div className="md:hidden h-[126px]  dashboard_home-content-sm w-full  rounded-2xl pl-[28px] pt-[13px]">
+          {/*  */}
+          <div className="banneer_text  w-[85%] ">
+
+            <h1 className="txt-sm f-b  text-white">
+              Revolutionize Your Sports Betting Experience
+            </h1>
+            <p className="text-white text-[8px] mt-[2px] mb-2  md:txt-md f-m w-[90%]">
               Get your friends together for a thrilling betting experience.
               Create custom bets, track your progress, and win big.
             </p>
@@ -81,7 +97,7 @@ function Home() {
             </div>
           ))}
         </div> */}
-        <div className="active_bet_wrapper grid grid-cols-3 gap-6 w-full  h-auto mt-6 ">
+        <div className="active_bet_wrapper grid md:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
           {Array(9)
             .fill(1)
             .map((i, k) => (

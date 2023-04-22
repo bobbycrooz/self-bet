@@ -117,7 +117,7 @@ function Home() {
           Create new bet
         </h1>
 
-        <div className="bet_type-select dashboard_create-inner relative inner_shadow space-y-8 p-8  rounded-lg">
+        <div className="bet_type-select dashboard_create-inner relative inner_shadow space-y-8 md:p-8  rounded-lg">
           {handleBetCreationStep(step)}
 
           {step >= 2 && (
@@ -184,14 +184,14 @@ function CreateBet({ stepHandler }: { stepHandler: any }) {
 
   return (
     <>
-      <div className="details">
+      <div className="details hidden md:flex">
         <h1 className="display-xs f-b text-gray-900">Select Bet Type</h1>
 
         <p className="subtitle">Please select your desired bet below</p>
       </div>
 
       {/* card--types */}
-      <div className="bet_types grid grid-cols-2 gap-8">
+      <div className="bet_types grid md:grid-cols-2 gap-8">
         {/* ----kolo banner */}
         <div className=" w-full h-[520px] relative rounded-lg ">
           <Image
@@ -201,7 +201,7 @@ function CreateBet({ stepHandler }: { stepHandler: any }) {
             className="rounded-lg"
           />
           {/* ---bet overlay */}
-          <div className="absolute w-full h-full linear_g-bet top-0 left-0 p-12 flex items-end pb-24 rounded-lg">
+          <div className="absolute w-full h-full linear_g-bet top-0 left-0 md:p-12 flex items-end pb-24 rounded-lg">
             <div className="content w-full space-y-4">
               <div className="row-between">
                 <h1 className="display-md f-b text-gray-50 capitalize">

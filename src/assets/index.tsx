@@ -128,3 +128,157 @@ export function PlusSvg() {
     </svg>
   );
 }
+
+export function SearchSvg() {
+  return (
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="40" height="40" rx="20" fill="#F9FAFB" />
+      <path
+        d="M19.5 29C24.7467 29 29 24.7467 29 19.5C29 14.2533 24.7467 10 19.5 10C14.2533 10 10 14.2533 10 19.5C10 24.7467 14.2533 29 19.5 29Z"
+        stroke="#111827"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M30 30L28 28"
+        stroke="#111827"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function BellSvg() {
+  return (
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="40" height="40" rx="20" fill="#F9FAFB" />
+      <path
+        d="M20.0196 10.9102C16.7096 10.9102 14.0196 13.6002 14.0196 16.9102V19.8002C14.0196 20.4102 13.7596 21.3402 13.4496 21.8602L12.2996 23.7702C11.5896 24.9502 12.0796 26.2602 13.3796 26.7002C17.6896 28.1402 22.3396 28.1402 26.6496 26.7002C27.8596 26.3002 28.3896 24.8702 27.7296 23.7702L26.5796 21.8602C26.2796 21.3402 26.0196 20.4102 26.0196 19.8002V16.9102C26.0196 13.6102 23.3196 10.9102 20.0196 10.9102Z"
+        stroke="#111827"
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+      />
+      <path
+        d="M21.8699 11.1999C21.5599 11.1099 21.2399 11.0399 20.9099 10.9999C19.9499 10.8799 19.0299 10.9499 18.1699 11.1999C18.4599 10.4599 19.1799 9.93994 20.0199 9.93994C20.8599 9.93994 21.5799 10.4599 21.8699 11.1999Z"
+        stroke="#111827"
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M23.0195 27.0601C23.0195 28.7101 21.6695 30.0601 20.0195 30.0601C19.1995 30.0601 18.4395 29.7201 17.8995 29.1801C17.3595 28.6401 17.0195 27.8801 17.0195 27.0601"
+        stroke="#111827"
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+      />
+    </svg>
+  );
+}
+
+export function MobileAdd() {
+  return (
+    <svg
+      width="124"
+      height="84"
+      viewBox="0 0 124 84"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g filter="url(#filter0_d_2305_352018)">
+        <rect x="38" y="4" width="48" height="48" rx="24" fill="#FF4B00" />
+        <g clip-path="url(#clip0_2305_352018)">
+          <path
+            d="M56 28H68"
+            stroke="white"
+            stroke-width="2.25"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M62 34V22"
+            stroke="white"
+            stroke-width="2.25"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </g>
+        <rect
+          x="37"
+          y="3"
+          width="50"
+          height="50"
+          rx="25"
+          stroke="#F9FAFB"
+          stroke-width="2"
+        />
+      </g>
+      <defs>
+        <filter
+          id="filter0_d_2305_352018"
+          x="0"
+          y="-10"
+          width="124"
+          height="124"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feMorphology
+            radius="12"
+            operator="erode"
+            in="SourceAlpha"
+            result="effect1_dropShadow_2305_352018"
+          />
+          <feOffset dy="24" />
+          <feGaussianBlur stdDeviation="24" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.0625882 0 0 0 0 0.0926346 0 0 0 0 0.15702 0 0 0 0.18 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_2305_352018"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_2305_352018"
+            result="shape"
+          />
+        </filter>
+        <clipPath id="clip0_2305_352018">
+          <rect
+            width="24"
+            height="24"
+            fill="white"
+            transform="translate(50 16)"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}

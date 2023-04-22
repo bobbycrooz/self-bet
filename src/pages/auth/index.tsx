@@ -68,10 +68,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="auth w-screen h-[882px] row">
+      <main className="auth w-screen h-auto md:h-[882px] row">
         {/* auth banner */}
         <div
-          className={`auth_banner ${
+          className={`auth_banner hidden md:block ${
             loginMode ? "login_banner" : "sign_banner"
           } w-[60%] text-white h-full relative`}
         >
@@ -114,8 +114,8 @@ export default function Home() {
         </div>
 
         {/* ACTION  */}
-        <div className="auth_content w-[40%] h-full px-16">
-          <div className="w-full  column mt-20 space-y-6">
+        <div className="auth_content  w-full  md:w-[40%] h-full p-4 md:px-16">
+          <div className="w-full  column md:mt-20 space-y-6 pb-8 md:pb-0">
             {/* logo */}
             <Image
               src={"/icons/logo-2.svg"}
