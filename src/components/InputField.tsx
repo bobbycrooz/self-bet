@@ -125,7 +125,7 @@ const InputField = ({
           </div>
         )}
 
-        <label className="" htmlFor={label}>
+        <label className="text-red-400" htmlFor={label}>
           {label} {required && "*"}
         </label>
 

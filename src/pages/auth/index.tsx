@@ -230,7 +230,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <Button click={handleSubmit} text={"continue"} type={"submit"} full disabled={!isAuth} />
+              <Button auth click={handleSubmit} text={"continue"} type={"submit"} full disabled={!isAuth} />
 
               <div className="flex w-full justify-center mt-8">
                 {!loginMode ? (

@@ -10,6 +10,7 @@ interface InputProps {
   isLoading?: boolean;
   primary?: boolean;
   ghost?: boolean;
+  auth?: boolean;
   type: "button" | "submit" | "reset" | undefined;
   click?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
@@ -24,6 +25,7 @@ const Button = ({
   full,
   primary,
   ghost,
+  auth,
   ...rest
 }: InputProps) => {
  
@@ -34,7 +36,7 @@ const Button = ({
       onClick={click}
       {...rest}
       type={type}
-      className={`btn ${full && "w-full"} ${primary && "primary"} ${ghost && "ghost"} `}
+      className={`btn ${full && "w-full"} ${auth && "auth"} ${primary && "primary"} ${ghost && "ghost"} `}
     >
       {isLoading && (
         <div className="loader-body">

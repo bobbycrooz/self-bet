@@ -18,7 +18,7 @@ const DynamicModal = ({ cardContent }: ModalProps) => {
     <div className="modal_overlay fixed top-0 left-0 w-full h-full bg-[#00000083] grid-center">
       <div
         ref={cardRef}
-        className="modal_card p-12 px-8 bg-white rounded-lg shadow-soft w-[400px] min-h-[244px]"
+        className="modal_card p-12 px-8 bg-white rounded-lg shadow-soft mx-auto w-[90%] md:w-[400px] min-h-[244px]"
       >
         <div className="modal_card-content w-full h-auto ">
           {cardContent || DefaultModalContent()}
