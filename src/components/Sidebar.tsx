@@ -161,7 +161,7 @@ const Sidebar = () => {
 			</aside>
 			{/* ---------------mobile */}
 
-			<div className="md:hidden mobile_menu  shadow-bet-card-v absolute bottom-0 left-0 w-full    z-50">
+			<div className="md:hidden mobile_menu   shadow-bet-card-v absolute bottom-0 left-0 w-full z-[99999]">
 				{showMobileBetSlip && (
 					<div className="betslip ">
 						<BetSlip
@@ -170,7 +170,7 @@ const Sidebar = () => {
 						/>
 					</div>
 				)}
-				<ul className="nav_container w-full bg-white z-50  flex  h-[84px]">
+				<ul className="nav_container w-full bg-white   flex  h-[84px]">
 					{mobileNavItemArray.map((i, k) => (
 						<>
 							{i.add ? (
@@ -223,7 +223,7 @@ function BetSlip({ handleShowBet, showBetList }) {
 			{/* --wrapperr--- */}
 			<div
 				className={`create_aside     ${
-					showBetList ?  "h-[500px]" : "h-[50px]"
+					showBetList ? "h-[380px]" : "h-[50px]"
 				} transition-all relative  border-gray-200 w-full rounded-lg bg-white`}
 			>
 				{/* header */}
@@ -243,10 +243,9 @@ function BetSlip({ handleShowBet, showBetList }) {
 					</div>
 				</div>
 
-
-{/* betslip ---body */}
+				{/* betslip ---body */}
 				<div
-					className={`scroll_bar w-full bg--400 h-[450px]  ${
+					className={`scroll_bar   w-full bg--400 h-[250px]   ${
 						showBetList ? "block" : "hidden"
 					}  overflow-y-scroll   custom-scrollbar pb-[100px] `}
 				>
@@ -257,9 +256,8 @@ function BetSlip({ handleShowBet, showBetList }) {
 						<BetSlipDetails />
 					</div>
 
-
 					{/* ----price -box */}
-					<div
+					{true && <div
 						className="price_box space-y-2 mt-6 bg-white p-2 text-gray-500  absolute bottom-0 left-0 w-full
 "
 					>
@@ -286,8 +284,7 @@ function BetSlip({ handleShowBet, showBetList }) {
 							// 	handlePlaceBet
 							// }
 						/>
-					</div>
-					
+					</div>}
 				</div>
 			</div>
 		</aside>

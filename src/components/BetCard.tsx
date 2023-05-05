@@ -84,8 +84,8 @@ const BetCard = ({ betType }: PropTypes) => {
         onClick={() => handleShowDetails(betType)}
         className="bet_card shadow-bet-card bg-white border border-gray-200 rounded-lg "
       >
-        <div className="p-6 space-y-4">
-          <div className="bet_banner w-full h-32 relative">
+        <div className=" p-3 md:p-6 space-y-4">
+          <div className="bet_banner w-full h-32  relative">
             <Image
               src={"/images/home/bet_banner-1.png"}
               alt={""}

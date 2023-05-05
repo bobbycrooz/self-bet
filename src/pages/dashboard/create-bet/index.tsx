@@ -118,7 +118,7 @@ function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<main className="dashboard_create bg-white w-full h-auto pb-[100px]  p-4 md:p-8 space-y-6">
+			<main className="dashboard_create bg-white w-full h-auto pb-[160px]  md:pb-[100px]  p-4 md:p-8 space-y-6">
 				<h1 className="txt-xl f-b t-g7  md:t-header1 w-full text-left pb-[13px] border-b">
 					Create new bet
 				</h1>
@@ -220,7 +220,8 @@ function CreateBet({ stepHandler }: { stepHandler: any }) {
 			</div>
 
 			{/* card--types */}
-			<div className="bet_types grid md:grid-cols-2 gap-4 md:gap-8">
+			<div className="bet_types grid md:grid-cols-2 gap-4 md:gap-8 pb-20">
+
 				{/* ----kolo banner */}
 				<div className=" w-full h-[311px] md:h-[520px] relative rounded-lg ">
 					<Image

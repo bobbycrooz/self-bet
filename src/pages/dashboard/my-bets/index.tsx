@@ -52,7 +52,7 @@ function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<main className="dashboard_home bg-white w-full h-auto ">
+			<main className="dashboard_home bg-white w-full h-auto">
 				{/* header------ */}
 				<div className="bg-gray-50 w-full space-y-4 pt-6 px-6 md:px-12 column h-[auto] middle  sticky top-0 left-0 z-10">
 					<div className="w-full">
@@ -94,7 +94,7 @@ function Home() {
 				<div className="w-full h-auto px-4 md:px-12 pt-1/2 ">
 					{/* -----bet list------ */}
 					{true ? (
-						<div className="active_bet_wrapper grid md:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
+						<div className="active_bet_wrapper grid md:grid-cols-3 gap-6 w-full  h-auto mt-6  pb-[200px]nmd:pb-0">
 							{Array(9)
 								.fill(1)
 								.map((i, k) => (

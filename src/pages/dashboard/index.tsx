@@ -97,7 +97,7 @@ function Home() {
 						</p>
 						<Link href={"/dashboard/create-bet"}>
 							{" "}
-							<button className="bg-sec p-3 px-4 txt-xs text-gray-50 rounded-lg f-b">
+							<button className="bg-sec p-2 px-4 txt-xs text-gray-50 rounded-lg f-b">
 								Create your bet now
 							</button>
 						</Link>

@@ -57,7 +57,7 @@ function Home() {
 			<main className="bet_details bg-gray-50 w-full overflow-y-scroll custom-scrollbar">
 				<div className="h-  p-3 md:p-8 w-full h-auto space-x-6 flex items-start">
 					{/* --- */}
-					<main className=" w-[100%] space-y-6">
+					<main className=" w-[100%] space-y-6 pb-20 ">
 						{/* bet type banner */}
 						<div className="bet_banner w-full h-[124px] md:h-[224px] relative">
 							{!true ? (
@@ -92,7 +92,7 @@ function Home() {
 							<BetConditionDropdown />
 							<BetConditionDropdown />
 						</div>
-            <div className="md:hidden w-full h-28"></div>
+						<div className="md:hidden w-full h-28"></div>
 					</main>
 
 					<aside className="hidden md:flex  w-[286px] h-auto sticky top-6">
