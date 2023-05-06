@@ -53,7 +53,7 @@ function Home() {
 			</Head>
 
 			<main className="dashboard_home bg-white w-full h-auto">
-				{/* header------ */}
+				{/* ----header------ */}
 				<div className="bg-gray-50 w-full space-y-4 pt-6 px-6 md:px-12 column h-[auto] middle  sticky top-0 left-0 z-10">
 					<div className="w-full">
 						<div className="space-x-4 middle ">

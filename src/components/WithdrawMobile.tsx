@@ -11,7 +11,7 @@ import ConfirmationModal from "./ConfirmationModal";
 
 interface PropTypes {
   toggle: any;
-  showNoti: boolean;
+  visibility: boolean;
 }
 
 const statusConst = {
@@ -19,7 +19,7 @@ const statusConst = {
   failed: "FAILED",
 };
 
-const Deposite = ({ toggle, showNoti }: PropTypes) => {
+const WithdrawMobile = ({ toggle, visibility }: PropTypes) => {
   const [show, toggleShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState(statusConst.failed);
@@ -28,6 +28,8 @@ const Deposite = ({ toggle, showNoti }: PropTypes) => {
     toggleShow((p) => !p);
   }
 
+
+
   function formHandler(e: any) {
     e.preventDefault();
     toggleShow((p) => !p);
@@ -35,27 +37,34 @@ const Deposite = ({ toggle, showNoti }: PropTypes) => {
 
     setTimeout(() => {
       setIsLoading(false);
-      setStatus(statusConst.success);
+    setStatus(statusConst.success)
+
     }, 5000);
   }
 
   const bankArray = ["Zenith", "Kuda bank", "First Bank"];
 
-  return showNoti ? (
-    <div className="betInfo overlay z-10 fixed top-0 flex justify-end left-0 strictFadeIn w-full h-full bg-[#0000005c]">
+  
+
+  return visibility ? (
+    <div className="betInfo overlay z-[999999999999] fixed top-0 flex items-end left-0  w-full h-full bg-[#0000005c]">
       {/* ----Notification Card---------  */}
-      <div className="info_panel slideInLeft relative w-[35%] h-screen bg-white rounded-l-lg">
+      <div className={`overlay_pane-mobile-withdraw  info_panel relative w-full fadeIn-w   ${visibility ? 'active' : '' }  bg-white`}>
         {/* -------cancle button-------- */}
-        <div className="cancle_btn absolute -left-16 top-1/2 -translate-y-1/2">
-          <Image
-            src={"/icons/dashboard/cancleBtn.svg"}
-            alt={""}
-            width={48}
-            height={48}
-            onClick={toggle}
+          <div
+           
+            className="cancle_btn absolute left-1/2 -top-16 -translate-x-1/2"
+          >
+            <Image
+              src={"/icons/dashboard/cancleBtn.svg"}
+              alt={""}
+              width={48}
+              height={48}
+              onClick={toggle}
             role="button"
-          />
-        </div>
+
+            />
+          </div>
 
         {/* -----------content----------- */}
 
@@ -70,11 +79,10 @@ const Deposite = ({ toggle, showNoti }: PropTypes) => {
               className=""
             />
 
-            <h1 className="t-header mt-4">Deposite funds</h1>
+            <h1 className="t-header mt-4">Withdraw</h1>
 
-            <p className="t-subtitle mt-2 w-[430px]">
-              Quickly add funds to your wallet. Fill in the details and deposit
-              with ease.
+            <p className="t-subtitle mt-2">
+              Please provide your bank details below
             </p>
           </div>
 
@@ -85,28 +93,24 @@ const Deposite = ({ toggle, showNoti }: PropTypes) => {
             onSubmit={formHandler}
             className=" w-full space-y-6 mt-6"
           >
-            <InputField type={"text"} label="Amount" place={"Enter amount"} />
+            <div className="bank_list">
+              <h1 className="header">Bank</h1>
+
+              <DropdownBtn type={"custom"} title={"bank"} lists={bankArray} show={false} toggleShow={undefined} />
+            </div>
 
             <InputField
               type={"text"}
-              label="Card Number"
-              place={"1234   7412   3412   3456"}
+              label="Account Number"
+              place={"2118718321"}
             />
 
-            <InputField
-              type={"text"}
-              label="Expiry date"
-              place={""}
-            />
+            <InputField type={"text"} label="Amount" place={"5000"} />
 
-            <InputField
-              type={"text"}
-              label="Card Holder name"
-              place={"e.g Lazy bones"}
-            />
+            <Toggle text="Save account" />
 
             <Button
-              text={"Deposit"}
+              text={"Proceed"}
               type={"submit"}
               full
               // disabled={isLoading}
@@ -117,11 +121,11 @@ const Deposite = ({ toggle, showNoti }: PropTypes) => {
         </div>
       </div>
 
-      {/* ------process confirmation modal ------- */}
+      
       <ConfirmationModal
         show={show}
         handleClose={processHandler}
-        context={"Deposite"}
+        context={"withdrawal"}
         isLoading={isLoading}
         toggleLoader={setIsLoading}
         status={status}
@@ -131,7 +135,4 @@ const Deposite = ({ toggle, showNoti }: PropTypes) => {
   ) : null;
 };
 
-
-
-
-export default Deposite;
+export default WithdrawMobile;

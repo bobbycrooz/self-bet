@@ -94,6 +94,11 @@
 */
 .notification_list {
 	height: calc(100vh - 102px);
+
+	@include smallPhone{
+		height: calc(100vh - 90%);
+
+	}
 }
 
 /* 

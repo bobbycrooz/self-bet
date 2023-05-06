@@ -11,7 +11,7 @@ import ConfirmationModal from "./ConfirmationModal";
 
 interface PropTypes {
   toggle: any;
-  showNoti: boolean;
+  visibility: boolean;
 }
 
 const statusConst = {
@@ -19,7 +19,7 @@ const statusConst = {
   failed: "FAILED",
 };
 
-const Deposite = ({ toggle, showNoti }: PropTypes) => {
+const Deposite = ({ toggle, visibility }: PropTypes) => {
   const [show, toggleShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState(statusConst.failed);
@@ -41,25 +41,29 @@ const Deposite = ({ toggle, showNoti }: PropTypes) => {
 
   const bankArray = ["Zenith", "Kuda bank", "First Bank"];
 
-  return showNoti ? (
-    <div className="betInfo overlay z-10 fixed top-0 flex justify-end left-0 strictFadeIn w-full h-full bg-[#0000005c]">
+  return visibility ? (
+    <div className="betInfo overlay z-[999999999999] fixed top-0 flex items-end left-0  w-full h-full bg-[#0000005c]">
       {/* ----Notification Card---------  */}
-      <div className="info_panel slideInLeft relative w-[35%] h-screen bg-white rounded-l-lg">
+      <div className={`overlay_pane-mobile-deposite  info_panel relative w-full fadeIn-d   ${visibility ? 'active' : '' }  bg-white`}>
         {/* -------cancle button-------- */}
-        <div className="cancle_btn absolute -left-16 top-1/2 -translate-y-1/2">
-          <Image
-            src={"/icons/dashboard/cancleBtn.svg"}
-            alt={""}
-            width={48}
-            height={48}
-            onClick={toggle}
-            role="button"
-          />
-        </div>
+        <div
+           
+           className="cancle_btn absolute left-1/2 -top-16 -translate-x-1/2"
+         >
+           <Image
+             src={"/icons/dashboard/cancleBtn.svg"}
+             alt={""}
+             width={48}
+             height={48}
+             onClick={toggle}
+           role="button"
+
+           />
+         </div>
 
         {/* -----------content----------- */}
 
-        <div className="  w-full p-8">
+        <div className="  w-full p-4">
           {/* -----info----- */}
           <div className="w-full column">
             <Image
@@ -70,9 +74,9 @@ const Deposite = ({ toggle, showNoti }: PropTypes) => {
               className=""
             />
 
-            <h1 className="t-header mt-4">Deposite funds</h1>
+            <h1 className="txt-lg f-b mt-4 tg-9" >Deposite funds</h1>
 
-            <p className="t-subtitle mt-2 w-[430px]">
+            <p className="txt-sm  t-g5 mt-2 ">
               Quickly add funds to your wallet. Fill in the details and deposit
               with ease.
             </p>
@@ -130,8 +134,5 @@ const Deposite = ({ toggle, showNoti }: PropTypes) => {
     </div>
   ) : null;
 };
-
-
-
 
 export default Deposite;

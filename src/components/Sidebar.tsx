@@ -72,7 +72,7 @@ const mobileNavItemArray = [
 
 	{
 		name: "profile",
-		link: "/dashboard/settings",
+		link: "/dashboard/profile",
 		icon: "/icons/dashboard/cog.svg",
 	},
 ];
@@ -189,10 +189,10 @@ const Sidebar = () => {
 										linkHandler(i.link)
 									}
 									key={k}
-									className={`col-center w-full   hover:bg-gray-50 rounded-lg ${
+									className={`col-center w-full txt-sm f-m text-gray-500 capitalize   hover:bg-gray-50 rounded-lg ${
 										i.link ==
 											pathname &&
-										"bg-gray-50"
+										"bg-gray-50 text-sec"
 									}`}
 								>
 									<Image
@@ -203,7 +203,7 @@ const Sidebar = () => {
 										className=""
 									/>
 
-									<p className="link_name txt-sm f-m text-gray-500 capitalize">
+									<p className="link_name ">
 										{i.name}
 									</p>
 								</li>

@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect, useRef, ChangeEventHandler } from "react";
-import Button from "./Button";
-import SearchModal from "./SearchModal";
-import Notification from "./Notification";
-import ConfirmLogout from "./ConfirmLogout";
+import Button from "../Button";
+import SearchModal from "../SearchModal";
+import Notification from "../Notification";
+import ConfirmLogout from "../ConfirmLogout";
 import { BellSvg, SearchSvg } from "@/assets";
+import Nav from ".";
+import MobileNotification from "../MobileNotification";
 
 interface InputProps {
   icon?: string;
@@ -22,6 +24,7 @@ const Navbar = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [notification, toggleNoti] = useState(false);
+  const [showMobileNotification, setMobileNotification] = useState(true);
   const [confirmLogout, toggleConfirmLogout] = useState(false);
 
   function handleShowProfile() {
@@ -41,27 +44,33 @@ const Navbar = () => {
     toggleConfirmLogout((p) => !p);
   }
 
+  function handleMobileNotification() {
+    setMobileNotification((p) => !p);
+  }
+
   return (
     <nav className=" w-full md:h-14 h-[76px] bg-white flex items-center justify-between px-6 p-1 border-b">
       {/* logo */}
-      <div className="menu_logo middle space-x-4 hidden">
-        <Image
-          src={"/icons/logo-2.svg"}
-          alt="logo"
-          width={120}
-          height={26}
-          className="block md:hidden"
-        />
+      <Link href={'/'}>
+    <div className="menu_logo middle space-x-4 hidden">
+      <Image
+        src={"/icons/logo-2.svg"}
+        alt="logo"
+        width={120}
+        height={26}
+        className="block md:hidden"
+      />
 
-        <Image
-          src={"/icons/logo-2.svg"}
-          alt="logo"
-          width={140}
-          height={46}
-          className="hidden md:block"
-        />
-      </div>
-
+      <Image
+        src={"/icons/logo-2.svg"}
+        alt="logo"
+        width={140}
+        height={46}
+        className="hidden md:block"
+      />
+    </div>
+   </Link>
+    
       {/* search */}
 
       {!true && (
@@ -88,7 +97,7 @@ const Navbar = () => {
         </div>
       )}
 
-      {/*  */}
+      {/* not logged in user  */}
       {!true ? (
         <div className="auth_container space-x-4 md:middle hidden md:flex">
           <Button text={"sign up"} primary type={"button"} />
@@ -210,11 +219,14 @@ const Navbar = () => {
         <div className="search space-x-2 middle">
           <SearchSvg />
 
-          <BellSvg />
+<div role="button" onClick={handleMobileNotification} className="notification">
+          <BellSvg/>
+
+</div>
 {/* 
           <Image
             src={"/icons/dashboard/menu.svg"}
-            alt="logo"
+            alt="logo"role
             width={18}
             height={12}
             role="button"
@@ -231,6 +243,7 @@ const Navbar = () => {
       />
       <SearchModal isSearching={isSearching} setIsSearching={searchToggle} />
       <Notification toggle={handleShowNotification} showNoti={notification} />
+      <MobileNotification toggle={handleMobileNotification} visibility={showMobileNotification} />
     </nav>
   );
 };

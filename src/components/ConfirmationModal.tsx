@@ -41,10 +41,10 @@ const Process = ({
   }
 
   return show ? (
-    <div className="modal_overlay fixed top-0 left-0 w-full h-full bg-[#00000083] grid-center">
+    <div className="modal_overlay fixed top-0 p-4 left-0 w-full h-full bg-[#00000083] grid-center">
       <div
         ref={cardRef}
-        className="modal_card relative p-12 px-8 bg-white rounded-lg shadow-soft w-[400px] min-h-[244px]"
+        className="modal_card relative p-4 px-12 bg-white rounded-lg shadow-soft w-full min-h-[244px]"
       >
         <div className="modal_card-content w-full h-auto ">
           {isLoading ? (

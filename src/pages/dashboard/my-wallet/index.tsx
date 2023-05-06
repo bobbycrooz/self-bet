@@ -6,6 +6,8 @@ import { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { PlusSvg } from "@/assets";
+import WithdrawMobile from "@/components/WithdrawMobile";
+import DepositeMobile from "@/components/DepositeMobile";
 
 function Home() {
 	const [isWithdrawing, setIsWithdrawing] = useState(false);
@@ -326,10 +328,19 @@ function Home() {
 					showNoti={isWithdrawing}
 				/>
 
+<WithdrawMobile
+					toggle={handleWithdrawal}
+					visibility={isWithdrawing}
+				/>
 				{/* -----deposite pane------- */}
 				<Deposite
 					toggle={handleDeposite}
 					showNoti={isDepositing}
+				/>
+
+<DepositeMobile
+					toggle={handleDeposite}
+					visibility={isDepositing}
 				/>
 			</main>
 		</>

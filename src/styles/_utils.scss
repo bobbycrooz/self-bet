@@ -5,27 +5,27 @@
 */
 
 @mixin smallPhone {
-  @media screen and (max-width: 640px) {
-    @content;
-  }
+	@media screen and (max-width: 640px) {
+		@content;
+	}
 }
 
 @mixin tablet {
-  @media screen and (max-width: 768px) {
-    @content;
-  }
+	@media screen and (max-width: 768px) {
+		@content;
+	}
 }
 
 @mixin desktop {
-  @media screen and (min-width: 1280px) {
-    @content;
-  }
+	@media screen and (min-width: 1280px) {
+		@content;
+	}
 }
 
 @mixin largeScreen {
-  @media screen and (min-width: 1400px) {
-    @content;
-  }
+	@media screen and (min-width: 1400px) {
+		@content;
+	}
 }
 
 /* 
@@ -34,55 +34,54 @@
 -------------------------------------------
 */
 .centered {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .middle {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .stack {
-  @apply space-y-3;
+	@apply space-y-3;
 }
 
 .column {
-  @apply flex flex-col;
+	@apply flex flex-col;
 }
 
 .row {
-  @apply flex items-center;
+	@apply flex items-center;
 }
 
 .row-between {
-  @apply flex items-center justify-between;
+	@apply flex items-center justify-between;
 }
 
 .row-center {
-  @apply flex items-center justify-center;
+	@apply flex items-center justify-center;
 }
 .col-center {
-  @apply flex flex-col items-center justify-center;
+	@apply flex flex-col items-center justify-center;
 }
 
 .grid-center {
-  @apply grid place-content-center;
+	@apply grid place-content-center;
 }
 
 .br {
-  @apply border border-red-400;
+	@apply border border-red-400;
 }
 
 .bg {
-  @apply border border-green-400;
+	@apply border border-green-400;
 }
 
 .bb {
-  @apply border border-blue-400;
+	@apply border border-blue-400;
 }
-
 
 /* 
 -------------------------------------------
@@ -91,74 +90,112 @@
 */
 
 .fadeIn {
-  animation: slideUpIn;
-  animation-duration: 400ms;
-  animation-timing-function: ease;
-  animation-iteration-count: 1;
+	animation: slideUpIn;
+	animation-duration: 400ms;
+	animation-timing-function: ease;
+	animation-iteration-count: 1;
+}
+
+.fadeIn-w {
+	animation: slideUpIn-w;
+	animation-duration: 400ms;
+	animation-timing-function: ease;
+	animation-iteration-count: 1;
+}
+
+.fadeIn-d{
+	animation: slideUpIn-d;
+	animation-duration: 400ms;
+	animation-timing-function: ease;
+	animation-iteration-count: 1;
 }
 
 .slideInLeft {
-  animation: slideLeft;
-  animation-duration: 400ms;
-  animation-timing-function: ease;
-  animation-iteration-count: 1;
+	animation: slideLeft;
+	animation-duration: 400ms;
+	animation-timing-function: ease;
+	animation-iteration-count: 1;
 }
 
 .strictFadeIn {
-  animation: fadingIn;
-  animation-duration: 400ms;
-  animation-timing-function: ease;
-  animation-iteration-count: 1;
+	animation: fadingIn;
+	animation-duration: 400ms;
+	animation-timing-function: ease;
+	animation-iteration-count: 1;
 }
 
 .flash {
-  animation: flash-blink 500ms ease 0ms infinite normal none;
+	animation: flash-blink 500ms ease 0ms infinite normal none;
 }
 
 @keyframes fadingIn {
-  0% {
-    opacity: 0;
-  }
+	0% {
+		opacity: 0;
+	}
 
-  100% {
-    opacity: 1;
-  }
+	100% {
+		opacity: 1;
+	}
 }
 
 @keyframes slideUpIn {
-  0% {
-    opacity: 0.6;
-    transform: translateY(20px);
-  }
+	0% {
+		opacity: 0.6;
+		height: 0;
+	}
 
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+	100% {
+		opacity: 1;
+		height: 60%;
+	}
+}
+
+@keyframes slideUpIn-w {
+	0% {
+		opacity: 0.6;
+		height: 0;
+	}
+
+	100% {
+		opacity: 1;
+		height: 70%;
+	}
+}
+
+@keyframes slideUpIn-d {
+	0% {
+		opacity: 0.6;
+		height: 0;
+	}
+
+	100% {
+		opacity: 1;
+		height: 80%;
+	}
 }
 
 @keyframes slideLeft {
-  0% {
-    opacity: 0.6;
-    transform: translateX(20px);
-  }
+	0% {
+		opacity: 0.6;
+		transform: translateX(20px);
+	}
 
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
 }
 
 @keyframes flash-blink {
-  0% {
-    opacity: 0.2;
-    transform: scale(1.2);
-  }
+	0% {
+		opacity: 0.2;
+		transform: scale(1.2);
+	}
 
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 
 /* 
@@ -167,13 +204,40 @@
 -------------------------------------------
 */
 
-
 .inner_shadow {
-  box-shadow: 0px 2px 4px -2px #1018280f inset, 0px 4px 8px -2px #1018281a inset;
+	box-shadow: 0px 2px 4px -2px #1018280f inset,
+		0px 4px 8px -2px #1018281a inset;
 }
 
 .linear_g-bet {
-  background: rgb(17,24,39);
-  background: linear-gradient(0deg, rgba(17,24,39,1) 0%, rgba(17,24,39,0.12377450980392157) 100%);
-  
+	background: rgb(17, 24, 39);
+	background: linear-gradient(
+		0deg,
+		rgba(17, 24, 39, 1) 0%,
+		rgba(17, 24, 39, 0.12377450980392157) 100%
+	);
+}
+
+.overlay_pane-mobile {
+	transition: 0.2s all ease-in;
+	height: 0px;
+	// @apply bg-red-400;
+
+	&.active {
+		transition: 0.2s all ease-in;
+		height: 60%;
+		transition-delay: 1s;
+	}
+
+	&-withdraw {
+		&.active {
+      height: 70%;
+    }
+	}
+
+	&-deposite {
+    &.active {
+      height: 80%;
+    }
+	}
 }
