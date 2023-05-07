@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState, useEffect, useRef, ChangeEventHandler } from "react";
 import Button from "./Button";
 import DropDown from "./DropDown";
+import useScreen from "@/hooks/useScreen";
 
 interface PropTypes {
 	betType: "KOLO" | "POINT" | undefined;
@@ -48,7 +49,8 @@ const BetCard = ({ betType }: PropTypes) => {
 		mode: betType,
 	});
 	const [betTabMode, setBetTabMode] = useState(tabMode.CREATOR);
-
+	const {width, isMobile} = useScreen()
+    
 	function handleShowDetails(cardType?: "KOLO" | "POINT") {
 		if (showDetails.show) {
 			setShowDetails({
@@ -152,7 +154,7 @@ const BetCard = ({ betType }: PropTypes) => {
 			{/* bet side bar  */}
 			{showDetails.show && (
 				<div className="__">
-					{true ? (
+					{isMobile ? (
 						<div className="betInfo overlay z-[999999999999] fixed top-0 flex items-end left-0  w-full h-full bg-[#0000005c]">
 							<div
 								className={`overlay_pane-mobile-deposite  info_panel relative w-full fadeIn-d   ${
@@ -300,7 +302,7 @@ const BetCard = ({ betType }: PropTypes) => {
 									<div className="h-auto">
 										{/*  */}
 										<div className="panel_content  space-y-6  w-full">
-											<div className="px-12 w-full">
+											<div className="px-12 w-full p-4">
 												<div className="bet_banner w-full h-[192px] relative">
 													{showDetails.mode === betCardType.KOLO ? (
 														<Image

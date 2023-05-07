@@ -42,10 +42,10 @@
 */
 
 .btn {
-	@apply rounded-lg px-[15.03px]  md:px-8 p-3 text-[15px] md:text-[16px] f-s text-white bg-gray-900;
+	@apply rounded-lg px-[15.03px]  md:px-8 p-3 text-[15px] md:text-[16px] justify-center middle f-s text-white bg-gray-900;
 
 	&:disabled {
-		@apply bg-gray-200 text-gray-50 border border-gray-50 cursor-not-allowed;
+		@apply bg-gray-200 text-gray-50 border border-gray-50  space-x-6  cursor-not-allowed;
 	}
 
 	&.primary {

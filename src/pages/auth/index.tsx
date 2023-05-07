@@ -5,11 +5,19 @@ import { Button, InputField } from "@components";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
+interface UserDetailsTypes {
+  username?: string,
+  email?: string,
+  password?: string
+}
 
 export default function Home() {
   const [loginMode, setLoginMode] = useState(true);
   const [isAuth, setIsAuth] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { push, query, pathname } = useRouter();
+  const [userDetails, setUserDetails] = useState<UserDetailsTypes>({})
+
 
 
   const fetures = [
@@ -39,14 +47,29 @@ export default function Home() {
   }
 
 
-  function handleOnChange() {
+  function handleOnChange(e:any, fieldName: string) {
+
+    setUserDetails({
+      ...userDetails,
+      [fieldName]: e.target.value
+
+    })
     setIsAuth(true)
+
+ 
   }
 
   
   function handleSubmit(e: { preventDefault: () => void; }) {
     e.preventDefault()
+    setIsLoading(true)
+
+    setTimeout(() => {
+    setIsLoading(false)
     push("/dashboard");
+      
+    }, 2000);
+    
     
   }
 
@@ -168,16 +191,20 @@ export default function Home() {
                   type={"text"}
                   label="username"
                   required
+                  filedName="username"
                   place={"Enter a username"}
                   change={handleOnChange}
+                  value={userDetails?.username}
 
                 />
                 {!loginMode && (
                   <InputField
+                  filedName="email"
                     type={"email"}
                     label="Email"
                     place={"***@gmail.com"}
                     change={handleOnChange}
+                    value={userDetails.email}
                   />
                 )}
 
@@ -185,6 +212,11 @@ export default function Home() {
                   type={"password"}
                   label="Password"
                   place={"********"}
+                  change={handleOnChange}
+                  filedName="password"
+                  value={userDetails.password}
+
+
                 />
 
                 <div className="terms row-between">
@@ -230,7 +262,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <Button auth click={handleSubmit} text={"continue"} type={"submit"} full disabled={!isAuth} />
+              <Button isLoading={isLoading} auth click={handleSubmit} text={"continue"} type={"submit"} full disabled={!isAuth} />
 
               <div className="flex w-full justify-center mt-8">
                 {!loginMode ? (

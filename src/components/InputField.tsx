@@ -6,6 +6,7 @@ interface InputProps {
   icon?: string;
   disabled?: boolean;
   label: string;
+  filedName?: string;
   change?: any;
   value?: string | number;
   place?: any;
@@ -23,6 +24,7 @@ const InputField = ({
   icon,
   disabled,
   label,
+  filedName,
   change,
   value,
   place,
@@ -70,7 +72,7 @@ const InputField = ({
             ref={inputRef}
             disabled={disabled}
             value={value || filedValue}
-            onChange={change || onChangeHandler}
+            onChange={(e) => change(e, name) || onChangeHandler}
             onBlur={blur}
             className={`textarea ${
               filedValue.length > 0 || (String(value).length > 0 && "active")
@@ -80,7 +82,7 @@ const InputField = ({
 
           <label
             className="absolute body-sm text-txt-subdued-alt"
-            htmlFor={"name"}
+            htmlFor={label}
           >
             {label}
           </label>
@@ -133,7 +135,8 @@ const InputField = ({
           ref={inputRef}
           type={typeHandler(type)}
           value={value || filedValue}
-          onChange={change || onChangeHandler}
+          onChange={(e) => change(e, filedName) || onChangeHandler}
+
           onBlur={blur}
           className={``}
           {...rest}

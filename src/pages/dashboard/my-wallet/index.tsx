@@ -89,14 +89,8 @@ function Home() {
 		<>
 			<Head>
 				<title>my wallet</title>
-				<meta
-					name="description"
-					content="welcome to selfbet home"
-				/>
-				<meta
-					name="viewport"
-					content="width=device-width, initial-scale=1"
-				/>
+				<meta name="description" content="welcome to selfbet home" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
@@ -106,36 +100,24 @@ function Home() {
 					{/* ----side card --desktop view */}
 					<div className="absolute md:flex  md:justify-between hidden  p-8 amount_box md:w-[557px] h-[148px] bg-white shadow-light md:right-[105px] rounded-lg md:-bottom-1/2 -bottom-[90%]">
 						<div className="">
-							<p className="text-gray-400 txt-sm f-m ">
-								Wallet balance
-							</p>
-							<h1 className="notify display-sm f-eb text-gray-700  ">
-								N 40,000
-							</h1>
+							<p className="text-gray-400 txt-sm f-m ">Wallet balance</p>
+							<h1 className="notify display-sm f-eb text-gray-700  ">N 40,000</h1>
 						</div>
 
 						{/* 0--------------- */}
 
 						<div className="col-center  space-y-3">
-							<div
-								role="button"
-								onClick={handleDeposite}
-								className="rounded-lg bg-sec p-3"
-							>
+							<div role="button" onClick={handleDeposite} className="rounded-lg bg-sec p-3">
 								<PlusSvg />
 							</div>
-							<p className="text-gray-700 txt-md f-m ">
-								Deposit
-							</p>
+							<p className="text-gray-700 txt-md f-m ">Deposit</p>
 						</div>
 
 						{/* 0---------------- */}
 
 						<div className="col-center  space-y-3">
 							<Image
-								src={
-									"/icons/dashboard/wallet-sq.svg"
-								}
+								src={"/icons/dashboard/wallet-sq.svg"}
 								alt={""}
 								width={48}
 								height={48}
@@ -143,21 +125,15 @@ function Home() {
 								onClick={handleWithdrawal}
 							/>
 
-							<p className="txt-md f-m text-gray-700">
-								Withdraw
-							</p>
+							<p className="txt-md f-m text-gray-700">Withdraw</p>
 						</div>
 					</div>
 
 					{/* ----side card --phone view */}
 					<div className="absolute coulumn md:hidden p-4 space-y-6 amount_box w-[90%] h-auto bg-white shadow-light  left-1/2 -translate-x-1/2 rounded-lg -bottom-[140%]">
 						<div className=" text-center">
-							<p className="text-gray-400 txt-sm f-m">
-								Wallet balance
-							</p>
-							<h1 className="notify display-sm f-eb text-gray-700  ">
-								N 40,000
-							</h1>
+							<p className="text-gray-400 txt-sm f-m">Wallet balance</p>
+							<h1 className="notify display-sm f-eb text-gray-700  ">N 40,000</h1>
 						</div>
 
 						{/* 0--------------- */}
@@ -165,23 +141,15 @@ function Home() {
 						{/* action columns */}
 						<div className="w-full flex justify-around  ">
 							<div className="col-center  space-y-3">
-								<div
-									role="button"
-									onClick={handleDeposite}
-									className="rounded-lg bg-sec p-2"
-								>
+								<div role="button" onClick={handleDeposite} className="rounded-lg bg-sec p-2">
 									<PlusSvg />
 								</div>
-								<p className="text-gray-700 txt-md  f-b md:f-m ">
-									Deposit
-								</p>
+								<p className="text-gray-700 txt-md  f-b md:f-m ">Deposit</p>
 							</div>
 
 							<div className="col-center  space-y-3">
 								<Image
-									src={
-										"/icons/dashboard/wallet-sq.svg"
-									}
+									src={"/icons/dashboard/wallet-sq.svg"}
 									alt={""}
 									width={40}
 									height={40}
@@ -189,9 +157,7 @@ function Home() {
 									onClick={handleWithdrawal}
 								/>
 
-								<p className="txt-md f-m text-gray-700">
-									Withdraw
-								</p>
+								<p className="txt-md f-m text-gray-700">Withdraw</p>
 							</div>
 						</div>
 					</div>
@@ -199,16 +165,9 @@ function Home() {
 					{/* -------end--------- */}
 
 					<div className="space-x-4 middle mx-auto md:mx-0   justify-center">
-						<Image
-							src={"/icons/dashboard/wallet.svg"}
-							alt={""}
-							width={48}
-							height={48}
-						/>
+						<Image src={"/icons/dashboard/wallet.svg"} alt={""} width={48} height={48} />
 
-						<h1 className="notify display-xs f-b text-gray-700  ">
-							My wallet
-						</h1>
+						<h1 className="notify display-xs f-b text-gray-700  ">My wallet</h1>
 					</div>
 				</div>
 
@@ -222,16 +181,11 @@ function Home() {
 							{tabs.map((i, k) => (
 								<div
 									className={`tab_item px-3 hover:text-gray-700 hover:border-gray-700 border-b-2 ${
-										k == 2
-											? "text-gray-700 border-gray-700 f-b "
-											: "border-transparent text-gray-500 f-m"
+										k == 2 ? "text-gray-700 border-gray-700 f-b " : "border-transparent text-gray-500 f-m"
 									} h-full middle`}
 									key={k}
 								>
-									<p className={`txt-sm`}>
-										{" "}
-										{i}
-									</p>
+									<p className={`txt-sm`}> {i}</p>
 								</div>
 							))}
 						</div>
@@ -243,78 +197,38 @@ function Home() {
 								<div className="column col-center p-6">
 									<div className="bg-gray-400 w-20 h-20 rounded-lg"></div>
 
-									<h1 className="t-header mt-4">
-										No transactions to
-										show!
-									</h1>
-									<p className="t-subtitle mt-2">
-										Your transaction
-										history will appear
-										here
-									</p>
+									<h1 className="t-header mt-4">No transactions to show!</h1>
+									<p className="t-subtitle mt-2">Your transaction history will appear here</p>
 								</div>
 							</div>
 						) : (
 							<>
 								<div className="w-full  py-6 ">
-									<h1 className="t-subtitle">
-										Tuesday
-									</h1>
+									<h1 className="t-subtitle">Tuesday</h1>
 
 									{/* ----transaction-list */}
 									<div className="w-full space-y-6 mt-6 ">
-										{notificationArray.map(
-											(i, k) => (
-												<div
-													key={
-														k
-													}
-													className="notification_list-item flex items-center justify-between "
-												>
-													<div className="space-x-4 md:space-x-6  middle">
-														<Image
-															src={iconTypeHandler(
-																i.type
-															)}
-															alt={
-																""
-															}
-															width={
-																40
-															}
-															height={
-																40
-															}
-														/>
+										{notificationArray.map((i, k) => (
+											<div key={k} className="notification_list-item flex items-center justify-between ">
+												<div className="space-x-4 md:space-x-6  middle">
+													<Image src={iconTypeHandler(i.type)} alt={""} width={40} height={40} />
 
-														<div className="noti_text w-[90%] md:w-full">
-															<h1 className="notify t-header1 ">
-																{
-																	i.header
-																}
-															</h1>
+													<div className="noti_text w-[90%] md:w-full">
+														<h1 className="notify t-header1 ">{i.header}</h1>
 
-															<p className="t-xs-subtitle w-[80%] md:w-full">
-																{
-																	i.body
-																}
-															</p>
-														</div>
+														<p className="t-xs-subtitle w-[80%] md:w-full">{i.body}</p>
 													</div>
-
-													<p
-														className={`txt-sm md:txt-md f-eb  w-[100px] text-right ${
-															i.type ===
-															"add"
-																? "text-gray-700"
-																: "text-green-500"
-														}`}
-													>
-														-N5,000
-													</p>
 												</div>
-											)
-										)}
+
+												<p
+													className={`txt-sm md:txt-md f-eb  w-[100px] text-right ${
+														i.type === "add" ? "text-gray-700" : "text-green-500"
+													}`}
+												>
+													-N5,000
+												</p>
+											</div>
+										))}
 									</div>
 								</div>
 							</>
@@ -323,25 +237,19 @@ function Home() {
 				</div>
 
 				{/* -----withdrawal pane------- */}
-				<Withdraw
-					toggle={handleWithdrawal}
-					showNoti={isWithdrawing}
-				/>
+				<Withdraw toggle={handleWithdrawal} showNoti={isWithdrawing} />
 
-<WithdrawMobile
+				{/* <WithdrawMobile
 					toggle={handleWithdrawal}
 					visibility={isWithdrawing}
-				/>
+				/> */}
 				{/* -----deposite pane------- */}
-				<Deposite
-					toggle={handleDeposite}
-					showNoti={isDepositing}
-				/>
+				<Deposite toggle={handleDeposite} showNoti={isDepositing} />
 
-<DepositeMobile
+				{/* <DepositeMobile
 					toggle={handleDeposite}
 					visibility={isDepositing}
-				/>
+				/> */}
 			</main>
 		</>
 	);

@@ -52,7 +52,7 @@ const Button = ({
 
       {/* <div className="w-2"></div> */}
 
-      {!isLoading && <p className={`capitalize`}>{text}</p>}
+      { <p className={`capitalize`}>{text}</p>}
     </button>
   );
 };
