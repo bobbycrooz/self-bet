@@ -48,28 +48,22 @@ export default function Home() {
 
 
   function handleOnChange(e:any, fieldName: string) {
-
     setUserDetails({
       ...userDetails,
       [fieldName]: e.target.value
 
     })
     setIsAuth(true)
-
- 
   }
 
   
   function handleSubmit(e: { preventDefault: () => void; }) {
     e.preventDefault()
     setIsLoading(true)
-
     setTimeout(() => {
     setIsLoading(false)
     push("/dashboard");
-      
     }, 2000);
-    
     
   }
 

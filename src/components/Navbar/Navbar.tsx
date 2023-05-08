@@ -24,7 +24,7 @@ const Navbar = () => {
 	const [showProfile, setShowProfile] = useState(false);
 	const [isSearching, setIsSearching] = useState(false);
 	const [notification, toggleNoti] = useState(false);
-	const [showMobileNotification, setMobileNotification] = useState(true);
+	const [showMobileNotification, setMobileNotification] = useState(false);
 	const [confirmLogout, toggleConfirmLogout] = useState(false);
 
 	function handleShowProfile() {
@@ -195,7 +195,7 @@ const Navbar = () => {
 			<ConfirmLogout handleClose={handleLogout} isLoading={false} toggleLoader={undefined} show={confirmLogout} />
 			<SearchModal isSearching={isSearching} setIsSearching={searchToggle} />
 			<Notification toggle={handleShowNotification} showNoti={notification} />
-			<MobileNotification toggle={handleMobileNotification} visibility={showMobileNotification} />
+			{/* <MobileNotification toggle={handleMobileNotification} visibility={showMobileNotification} /> */}
 		</nav>
 	);
 };

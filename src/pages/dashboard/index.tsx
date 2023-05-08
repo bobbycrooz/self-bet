@@ -124,7 +124,7 @@ function Home() {
 						.fill(1)
 						.map((i, k) => (
 							<div className="" key={k}>
-								<BetCard betType={"KOLO"} />
+								<BetCard betType={"POINT"} />
 							</div>
 						))}
 				</div>
