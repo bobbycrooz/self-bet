@@ -49,12 +49,15 @@ const mobileNavItemArray = [
 		name: "home",
 		link: "/dashboard",
 		icon: "/icons/dashboard/home.svg",
+		iconActive: "/icons/dashboard/homeActive.svg",
 	},
 
 	{
 		name: " bets",
 		link: "/dashboard/my-bets",
 		icon: "/icons/dashboard/bets.svg",
+		iconActive: "/icons/dashboard/betsActive.svg",
+
 	},
 
 	{
@@ -62,18 +65,24 @@ const mobileNavItemArray = [
 		name: "",
 		link: "/dashboard/create-bet",
 		icon: "",
+		iconActive: "",
+
 	},
 
 	{
 		name: " wallet",
 		link: "/dashboard/my-wallet",
 		icon: "/icons/dashboard/my-wallet.svg",
+		iconActive: "/icons/dashboard/walletActive.svg",
+
 	},
 
 	{
 		name: "profile",
 		link: "/dashboard/profile",
 		icon: "/icons/dashboard/cog.svg",
+		iconActive: "/icons/dashboard/profileActive.svg",
+
 	},
 ];
 
@@ -198,7 +207,7 @@ const Sidebar = () => {
 					{mobileNavItemArray.map((i, k) => (
 						<>
 							{i.add ? (
-								<div className="w-full pt-2">
+								<div key={k} className="w-full pt-2">
 									<Link href={i.link}>
 										<div className="mobile_create_btn mx-auto w-14 h-14 bg-sec rounded-full centered">
 											<PlusSvg />
@@ -216,11 +225,12 @@ const Sidebar = () => {
 									className={`col-center w-full txt-sm f-m text-gray-500 capitalize   hover:bg-gray-50 rounded-lg ${
 										i.link ==
 											pathname &&
-										"bg-gray-50 "
+										"bg-gray-50 text-sec"
 									}`}
 								>
 									<Image
-										src={i.icon}
+										src={i.link ===
+											pathname ? i.iconActive : i.icon}
 										alt="logo"
 										width={24}
 										height={24}

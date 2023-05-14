@@ -8,6 +8,7 @@ import DashboardLayout from "@/layouts";
 import { PlusSvg } from "@/assets";
 import WithdrawMobile from "@/components/WithdrawMobile";
 import DepositeMobile from "@/components/DepositeMobile";
+import Link from "next/link";
 
 function Home() {
 	const [isWithdrawing, setIsWithdrawing] = useState(false);
@@ -174,7 +175,16 @@ function Home() {
 				{/*-------- body------ */}
 				<div className="md:pl-12 mt-[206px]  p-2 md:mt-[116px]  pb-12 md:pb-0 w-full md:pr-[104px]">
 					<div className="transaction_list p-4 md:p-8 border  rounded-xl  border-gray-200">
-						<h1 className="t-header">Transaction</h1>
+						<h1 className="t-header hidden md:flex">Transactions</h1>
+
+						<div className="w-full row-between md:hidden">
+						<h1 className="t-header">Transactions</h1>
+						
+						<Link href={'/dashboard/transactions'}>
+						<h1 className="capitalize f-b txt-sm text-sec">see all</h1>
+						</Link>
+
+						</div>
 
 						{/* -----tabs--------- */}
 						<div className="active_tab w-full h-[40px] md:h-[30px] mt-8 border-b middle space-x-3">
