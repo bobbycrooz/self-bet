@@ -89,7 +89,7 @@ export default function DropdownBtn({
    
   }
 
-  function dropDownCardHandler(type: string) {
+ function dropDownCardHandler(type: string) {
     switch (type) {
       case "byTeam":
         return <SearchByTeamCard handleShowList={handleShowList} />;
@@ -117,24 +117,25 @@ export default function DropdownBtn({
 
 
   return (
-    <div className="dropdown_filter relative">
+    <div className="dropdown_filter md:relative ">
       <div
         role="button"
         onClick={() => handleShowList(type)}
-        className={` px-4 p-[10px] row-between border space-x-4  border-gray-100 rounded-lg`}
+        className={` p-4 flex px-3 row-between border space-x-4 w-full  border-gray-100 rounded-lg`}
       >
-        <h1 className="bet_condition_name txt-sm f-m text-gray-500">{title}</h1>
+        <h1 className="bet_condition_name txt-sm f-m text-gray-500 ">{title}</h1>
         <Image
           src={"/icons/carret-fade.svg"}
           alt="wallet"
           width={20}
           height={20}
           role="button"
-          className={` carret ${showList && "active"} transition-transform`}
+          className={` carret ${showList && "active"}  transition-transform`}
         />
       </div>
 
       {show && <div className=" bg-white">{dropDownCardHandler(type)}</div>}
+      {/* {show && <div className="z-[99999] bg-white">{dropDownCardHandler(type)}</div>} */}
     </div>
   );
 }
@@ -175,7 +176,7 @@ function SearchByTeamCard(props: any) {
     <div
       ref={cardRef}
       onClick={handleCardClick}
-      className="absolute  dropdown_body bg-white  space-y-4 column transform w-[328px] shadow-soft left-0 top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
+      className="absolute  dropdown_body bg-white  space-y-4 column transform w-[328px] shadow-soft left-0 top-[140px]  md:top-12  border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
     >
       {/* search component */}
       <div className="search">
@@ -243,7 +244,7 @@ function SearchByLeagueCard() {
   ];
 
   return (
-    <div className="absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft left-0 top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg">
+    <div className="absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft left-0 top-[140px]  md:top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg">
       {/* search component */}
       <div className="search">
         <div
@@ -310,13 +311,13 @@ function SearchByNameCard() {
   ];
 
   return (
-    <div className="absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft left-0 top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg">
+    <div className="absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft left-0 top-[140px]  md:top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg">
       {/* search component */}
       <div className="search">
         <div
           role="button"
           //   onClick={searchToggle}
-          className="search_container relative bg-gray-50 rounded-lg w-full h-10"
+          className="search_container relative bg-gray-50 rounded-lg w-full h-10 "
         >
           <Image
             src={"/icons/dashboard/search.svg"}
@@ -360,7 +361,7 @@ function SearchByRangeCard() {
   const [values, setValues] = useState([25, 75]);
 
   return (
-    <div className="absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft left-0 top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg">
+    <div className="absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft left-0 top-[140px]  md:top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg">
       <div className="row-between">
         <h1 className="text-gray-900 txt-md f-m">Price (₦)</h1>
         <h1 className="text-gray-500 txt-sm f-eb">Apply</h1>
@@ -390,7 +391,7 @@ function SearchByPercentCard() {
   ];
 
   return (
-    <div className="absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft right-0 top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg">
+    <div className="absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft right-0 top-[140px]  md:top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg">
       {/* search component */}
 
       <h1 className="text-gray-700 f-m capitalize">Discount Percentage</h1>
@@ -432,7 +433,7 @@ function CustomSearchCard({
     <div
       ref={cardRef}
       onClick={handleCardClick}
-      className="absolute dropdown_body z-50 space-y-4 column transform w-[328px] shadow-soft left-0 top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
+      className="absolute dropdown_body z-50 space-y-4 column transform w-[328px] shadow-soft left-0 top-[140px]  md:top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
     >
       {/* -----custom search list ---- */}
       <ol className="team_options w-full">

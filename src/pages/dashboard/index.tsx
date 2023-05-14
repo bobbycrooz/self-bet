@@ -8,11 +8,14 @@ import DashboardLayout from "@/layouts";
 import { NextPageWithLayout } from "../_app";
 import { betCardType } from "@/components/BetCard";
 import Link from "next/link";
+import { useUser } from "@/context/userContext";
 // import {betCardType}
 
 function Home() {
 	const [loginMode, setLoginMode] = useState(true);
 	const { push, query, pathname } = useRouter();
+	const { User, dispatch} = useUser()
+	console.log(User, "this value is loading");
 
 	const tabs = ["All Bets", "Today", "Tomorrow"];
 
@@ -40,6 +43,13 @@ function Home() {
 			setLoginMode(true);
 		}
 	}, [pathname, query.login]);
+
+	useEffect(() => {
+		setTimeout(() => {
+			dispatch({ type: "STORE_USER", payload: { email: "bobby@gmail.com", name: "bobbydev" } });
+		}, 4000);
+	}, []);
+
 
 	return (
 		<>
@@ -82,22 +92,21 @@ function Home() {
 				</div>
 
 				{/*  HOME BANNER CAROUSEL --mobile */}
-
-				<div className="md:hidden h-[146px]  dashboard_home-content-sm w-full  rounded-2xl pl-[28px] flex items-center">
+				<div className="md:hidden h-[160px]  dashboard_home-content-sm w-full  rounded-2xl pl-[28px] flex items-center">
 					{/*  */}
 					<div className="banneer_text   w-[213px] ">
-						<h1 className="txt-sm f-b  text-white">
+						<h1 className="txt-sm f-bk  text-[#EBEEF3]">
 							Revolutionize Your Sports Betting
 							Experience
 						</h1>
-						<p className="text-white text-[8px] mt-[2px] mb-2  md:txt-md f-m">
+						<p className="text-[#B9BDC5] text-[8px] mt-[8px] mb-2  md:txt-md f-m">
 							Get your friends together for a
 							thrilling betting experience, and win
 							big.
 						</p>
 						<Link href={"/dashboard/create-bet"}>
 							{" "}
-							<button className="bg-sec p-2 px-4 txt-xs text-gray-50 rounded-lg f-b">
+							<button className="bg-sec p-2 px-4 txt-sm text-gray-50 rounded-lg f-b mt-3">
 								Create your bet now
 							</button>
 						</Link>

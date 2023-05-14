@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect, useRef, ChangeEventHandler } from "react";
 import Button from "./Button";
+import useScreen from "@/hooks/useScreen";
+import { useRouter } from "next/router";
 
 interface ModalProps {
   show?: boolean;
@@ -41,10 +43,10 @@ const PlaceBetLoader = ({
   }
 
   return show ? (
-    <div className="modal_overlay fixed top-0 left-0 w-full h-full bg-[#00000083] grid-center">
+    <div className="modal_overlay p-4 fixed top-0 left-0 w-full h-full bg-[#00000083] grid-center">
       <div
         ref={cardRef}
-        className="modal_card relative p-12 px-8 bg-white rounded-lg shadow-soft w-[400px] min-h-[244px]"
+        className="modal_card relative p-6 md:p-12 md:px-8 bg-white rounded-lg shadow-soft md:w-[400px] min-h-[244px]"
       >
         <div className="modal_card-content w-full h-auto fadeIn">
           {isLoading ? (
@@ -95,9 +97,15 @@ function Prompt({
   status: string;
   handleClose: any;
 }) {
+
+
+const {isMobile} = useScreen()
+const {push} = useRouter()
+
+
   return (
-    <div className="col-center ">
-      <div className="cancle_btn absolute -right-10 -top-10">
+    <div className="col-center">
+      <div className="cancle_btn absolute  md:-right-10 -top-11">
         <Image
           src={"/icons/dashboard/cancleBtn.svg"}
           alt={""}
@@ -156,7 +164,7 @@ function Prompt({
           </div>
         </div>
       ) : (
-        <div className="w-full col-center space-y-6 ">
+        <div className="md:w-full col-center space-y-6 ">
           <Image
             src={"/icons/error.svg"}
             alt="logo"
@@ -175,9 +183,9 @@ function Prompt({
             </p>
           </div>
 
-          <div className="button_group space-x-3">
-            <Button text={"Cancel"} type={"button"} ghost click={handleClose} />
-            <Button text={"Deposite now"} type={"button"} primary />
+          <div className="md:flex w-full  justify-around space-y-3 md:space-y-0 md:space-x-3">
+            <Button text={"Cancel"} full={isMobile} type={"button"} ghost click={handleClose} />
+            <Button click={() => push('/dashboard/my-wallet')} text={"Deposite now"} full={isMobile}  type={"button"} primary />
           </div>
         </div>
       )}

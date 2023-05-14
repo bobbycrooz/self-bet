@@ -66,14 +66,8 @@
 */
 
 .dashboard {
-  height: calc(100vh - 56px);
-  .main_page {
-    width: calc(100% - 240px);
+  
 
-    @include smallPhone {
-      width: 100%;
-    }
-  }
 
   &_home {
     &-content {
@@ -89,7 +83,7 @@
 
       &-sm {
         background-image: url("/images/home/banner-sm.png");
-        background-position: center;
+        background-position: right;
 
       background-size: cover;
 
@@ -101,9 +95,45 @@
   }
 
   &_create {
+    // height: calc(100vh - 56px);
     &-inner {
-      height: calc(100vh - 100px);
+        // height: calc(100vh - 56px);
+      height: 100%;
+      min-height: calc(100vh - 150px);
+      @include smallPhone {
+        height: calc(100vh - 150px);
+
+        // background-color: red;
+      }
     }
+  }
+}
+
+.dashboard_layout{
+
+  &-wrapper{
+    // @apply bb;
+
+  }
+
+  &-body{
+    @apply  h-full ;
+
+
+    .main_page{
+      height: calc(100vh - 56px);
+      width: calc(100% - 240px);
+      // @apply br;
+      // height: 100vh;
+      @include smallPhone {
+        height: 100vh;
+        width: 100%;
+
+      }
+      // @apply bb;
+ 
+    }
+
   }
 }
 

@@ -101,9 +101,9 @@ const BetCard = ({ betType }: PropTypes) => {
 					<div className="badge_container space-y-2 ">
 						<div className="row-between">
 							{showDetails.mode == betCardType.KOLO ? (
-								<div className="badge uppercase p-2 w-[86px] bg-cyan-50 rounded txt-xs f-b text-cyan-600">KOLO bet</div>
+								<div className="badge uppercase  p-1 px-2 bg-cyan-50 rounded txt-xs f-b text-cyan-600">KOLO bet</div>
 							) : (
-								<div className="badge uppercase p-2 w-[80px] bg-yellow-100 rounded txt-xs f-b text-yellow-600">
+								<div className="badge uppercase  p-1 px-2 bg-yellow-100 rounded txt-xs f-b text-yellow-600">
 									point bet
 								</div>
 							)}
@@ -157,7 +157,7 @@ const BetCard = ({ betType }: PropTypes) => {
 				<div className="__">
 					{isMobile ? (
 						<div className="betInfo overlay z-[999999999999] fixed top-0 flex items-end left-0  w-full h-full bg-[#0000005c]">
-							{!true && (
+							{true ? (
 								<div
 									className={`overlay_pane-mobile-deposite  info_panel relative w-full fadeIn-d   ${
 										showDetails.show ? "active" : ""
@@ -218,11 +218,11 @@ const BetCard = ({ betType }: PropTypes) => {
 														<div className="col">
 															<div className="row-between ">
 																{showDetails.mode === betCardType.KOLO ? (
-																	<div className="badge uppercase p-2 w-[86px] bg-cyan-50 rounded txt-xs f-b text-cyan-600">
+																	<div className="badge uppercase  p-1 px-2 bg-cyan-50 rounded txt-xs f-b text-cyan-600">
 																		KOLO bet
 																	</div>
 																) : (
-																	<div className="badge uppercase p-2 w-[80px] bg-yellow-100 rounded txt-xs f-b text-yellow-600">
+																	<div className="badge uppercase  p-1 px-2 bg-yellow-100 rounded txt-xs f-b text-yellow-600">
 																		point bet
 																	</div>
 																)}
@@ -273,10 +273,7 @@ const BetCard = ({ betType }: PropTypes) => {
 										</div>
 									</div>
 								</div>
-							)}
-
-							{/* Bet details ---joined and result */}
-							{true && (
+							) : (
 								<div
 									className={`overlay_pane-mobile-deposite  info_panel relative w-full fadeIn-d   ${
 										showDetails.show ? "active" : ""
@@ -311,11 +308,11 @@ const BetCard = ({ betType }: PropTypes) => {
 														<h1 className="bet_name txt-lg f-b text-gray-600">Battle of best banterers</h1>
 
 														{showDetails.mode === betCardType.KOLO ? (
-															<div className="badge uppercase p-1 px-2 bg-cyan-50 rounded txt-xs f-b text-cyan-600">
+															<div className="badge uppercase  p-1 px-2 bg-cyan-50 rounded txt-xs f-b text-cyan-600">
 																KOLO bet
 															</div>
 														) : (
-															<div className="badge uppercase p-1 px-2 bg-yellow-100 rounded txt-xs f-b text-yellow-600">
+															<div className="badge uppercase  p-1 px-2 bg-yellow-100 rounded txt-xs f-b text-yellow-600">
 																point bet
 															</div>
 														)}
@@ -345,44 +342,34 @@ const BetCard = ({ betType }: PropTypes) => {
 														</div>
 													</div>
 
-
-
-
 													{/* -----------won section and players avatar list row-------- */}
 
-												<div className="won  w-full row-between mt-6 ">
-													<div
-														className="badge uppercase p-1 px-2 bg-[#ECFDF3] rounded txt-sm f-m text-[#027A48]"
-													>
-														won
+													<div className="won  w-full row-between mt-6 ">
+														<div className="badge uppercase p-1 px-2 bg-[#ECFDF3] rounded txt-sm f-m text-[#027A48]">
+															won
+														</div>
+														<div className="">
+															<Image src={"/images/home/users.png"} alt={""} className="" width={144} height={24} />
+														</div>
 													</div>
-													<div className="">
 
-													<Image src={"/images/home/users.png"} alt={""} className="" width={144} height={24}  />
-													</div>
-												</div>
+													{/* -----------reslut list row-------- */}
 
-												{/* -----------reslut list row-------- */}
+													{/* header */}
+													<div className="create_aside mt-[46px]">
+														<div
+															role="button"
+															// onClick={handleShowBet}
+															className="h-[46px]    w-full relative header rounded-t-lg middle "
+														>
+															<div className="middle">
+																<h1 className="header_text txt-sm f-b text-gray-50 p-4">Results</h1>
 
-												{/* header */}
-												<div className="create_aside mt-[46px]">
-													<div
-														role="button"
-														// onClick={handleShowBet}
-														className="h-[46px]    w-full relative header rounded-t-lg middle "
-													>
-														<div className="middle">
-															<h1 className="header_text txt-sm f-b text-gray-50 p-4">Results</h1>
-
-															<p className="rounded bg-gray-400 px-2 p-[2px] text-white txt-xs f-m">{8}</p>
+																<p className="rounded bg-gray-400 px-2 p-[2px] text-white txt-xs f-m">{8}</p>
+															</div>
 														</div>
 													</div>
 												</div>
-
-
-												</div>
-
-												
 
 												<div className="px-4 w-full space-y-4 mt-6  pb-[200px] ]">
 													{/* ------be list --------for each tab */}
@@ -442,11 +429,11 @@ const BetCard = ({ betType }: PropTypes) => {
 													<div className="col">
 														<div className="row-between ">
 															{showDetails.mode === betCardType.KOLO ? (
-																<div className="badge uppercase p-2 w-[86px] bg-cyan-50 rounded txt-xs f-b text-cyan-600">
+																<div className="badge uppercase  p-1 px-2 bg-cyan-50 rounded txt-xs f-b text-cyan-600">
 																	KOLO bet
 																</div>
 															) : (
-																<div className="badge uppercase p-2 w-[80px] bg-yellow-100 rounded txt-xs f-b text-yellow-600">
+																<div className="badge uppercase  p-1 px-2 bg-yellow-100 rounded txt-xs f-b text-yellow-600">
 																	point bet
 																</div>
 															)}

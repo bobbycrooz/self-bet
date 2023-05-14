@@ -103,7 +103,7 @@ function Home() {
 				{/* ----header---- */}
 				<div className="bg-gray-50 w-full h-44 flex  items-start md:pt-4 relative p-6 pt-8">
 					{/* ----middle card-----desktop view */}
-					<div className=" hidden md:flex absolute  md:row-between p-8 amount_box md:w-[657px] h-[148px] bg-white shadow-light left-1/2 -translate-x-1/2 rounded-lg -bottom-1/2">
+					<div className=" hidden md:flex absolute  md:justify-between md:items-center p-8 amount_box md:w-[657px] h-[148px] bg-white shadow-light left-1/2 -translate-x-1/2 rounded-lg -bottom-1/2">
 						<div className="middle space-x-4">
 							<Image
 								src={
@@ -127,7 +127,7 @@ function Home() {
 
 						{/* 0--------------- */}
 
-						<div className="col-center  br space-y-3">
+						<div className="col-center space-y-3">
 							<Button
 								text="Deposite"
 								type={"button"}
@@ -152,7 +152,7 @@ function Home() {
 					</div>
 
 					{/* ----middle card-----phone view */}
-					<div className="flex absolute  middle row-between p-8 amount_box w-[90%] h-[148px] bg-white shadow-light left-1/2 -translate-x-1/2 rounded-lg -bottom-1/2">
+					<div className="flex absolute  middle md:hidden row-between p-8 amount_box w-[90%] h-[148px] bg-white shadow-light left-1/2 -translate-x-1/2 rounded-lg -bottom-1/2">
 						<div className="wallet_col_1  stack w-[70%]">
 							<div className="wallet_row middle space-x-4">
 								<Image

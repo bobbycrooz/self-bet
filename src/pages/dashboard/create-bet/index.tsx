@@ -118,12 +118,12 @@ function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<main className="dashboard_create bg-white w-full h-auto pb-[160px]  md:pb-[100px]  p-4 md:p-8 space-y-6">
-				<h1 className="txt-xl f-b t-g7  md:t-header1 w-full text-left pb-[13px] border-b">
+			<main className="dashboard_create bg-white  w-full h-auto pb-[]   p-4 md:p-8 space-y-6">
+				<h1 className="txt-xl f-b t-g7  md:t-header1 w-full text-left pb-[0px] border-b">
 					Create new bet
 				</h1>
 
-				<div className="bet_type-select dashboard_create-inner relative inner_shadow space-y-4  md:space-y-8 p-4 md:p-8  rounded-lg">
+				<div className="bet_type-select dashboard_create-inner   relative inner_shadow space-y-4   md:space-y-8 p-4 md:p-8  rounded-lg">
 					{handleBetCreationStep(step)}
 					{/* progress handler */}
 					{step >= 2 && (
@@ -220,7 +220,7 @@ function CreateBet({ stepHandler }: { stepHandler: any }) {
 			</div>
 
 			{/* card--types */}
-			<div className="bet_types grid md:grid-cols-2 gap-4 md:gap-8 pb-20">
+			<div className="bet_types grid md:grid-cols-2 gap-4 md:gap-8 ">
 
 				{/* ----kolo banner */}
 				<div className=" w-full h-[311px] md:h-[520px] relative rounded-lg ">
@@ -423,7 +423,7 @@ function SelectMatch() {
 	];
 
 	return (
-		<>
+		<div className="">
 			<div className="details ">
 				{/* header -destop view */}
 				<h1 className="hidden md:flex md:display-xs f-b text-gray-900">
@@ -447,7 +447,7 @@ function SelectMatch() {
 			</div>
 
 			{/* ----------- */}
-			<div className="filter_tab w-full row-between">
+			<div className="filter_tab w-full row-between ">
 				<DropDown
 					type={"byTeam"}
 					lists={[]}
@@ -487,7 +487,7 @@ function SelectMatch() {
 			</div>
 
 			{/* current selection tab ----phone */}
-			<div className="md:hidden   relative   ">
+			<div className="md:hidden  border-b  relative   ">
 				<div className=" overflow-x-scroll custom-scrollbar vert h-[50px]">
 					<div className="scroll_track  mt-2 w-[600px] space-x-2 middle">
 						{nav.map((i, k) => (
@@ -515,7 +515,7 @@ function SelectMatch() {
 
 			{/* ------------------ */}
 
-			<div className="w-full  h-[450px] overflow-y-scroll custom-scrollbar pb-[84px]">
+			<div className="w-full   h-[420px] overflow-y-scroll custom-scrollbar pb-[44px] md:pb-[84px]">
 				<div className="matched w-full h-auto grid md:grid-cols-3 gap-6">
 					{/* --team  display baner---- */}
 					{Array(16)
@@ -577,7 +577,7 @@ function SelectMatch() {
 						))}
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 

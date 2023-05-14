@@ -115,9 +115,11 @@ const Sidebar = () => {
 	const showMobileBetSlip =
 		pathname === "/dashboard/create-bet/bet-details";
 
+	const isCreating = pathname == '/dashboard/create-bet'
+
 	return (
 		<>
-			<aside className="sidebar h-full border-r md:flex hidden flex-col justify-between   bg-white w-[240px] p-3 pt-4">
+			<aside className="sidebar   border-r md:flex hidden flex-col justify-between   bg-white w-[240px] p-3 pt-4">
 				<ul className="nav_container w-full space-y-4">
 					{navItemArray.map((i, k) => (
 						<li
@@ -183,7 +185,7 @@ const Sidebar = () => {
 			</aside>
 			{/* ---------------mobile */}
 
-			<div className="md:hidden mobile_menu   shadow-bet-card-v absolute bottom-0 left-0 w-full z-[99999]">
+			{!isCreating && <div className="md:hidden mobile_menu    shadow-bet-card-v fixed bottom-0 left-0 w-full z-[99999]">
 				{showMobileBetSlip && (
 					<div className="betslip ">
 						<BetSlip
@@ -233,7 +235,7 @@ const Sidebar = () => {
 						</>
 					))}
 				</ul>
-			</div>
+			</div>}
 		</>
 	);
 };
