@@ -14,8 +14,7 @@ interface PropTypes {
 const Notification = ({ toggle, showNoti }: PropTypes) => {
 
   const [showDetails, setShowDetails] = useState(false);
-  const {width, isMobile} = useScreen()
-  console.log('this is the current screen size:', width);
+  const {isTablet, isMobile} = useScreen()
   
 
   function handleShowDetails() {
@@ -75,12 +74,15 @@ const Notification = ({ toggle, showNoti }: PropTypes) => {
     },
   ];
 
+  // console.log(isMobile, isTablet);
+  
+
 
   return (
     showNoti ? (
       <div className="wrapper">
         {
-          isMobile ? (
+          isMobile || isTablet ? (
 
             <div className="betInfo overlay z-[999999999999] fixed top-0 flex items-end left-0  w-full h-full bg-[#0000005c]">
         

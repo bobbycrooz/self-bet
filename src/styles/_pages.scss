@@ -81,6 +81,11 @@
 
       object-fit: cover;
 
+      @include tablet{
+      background-position: right;
+
+      }
+
       &-sm {
         background-image: url("/images/home/banner-sm.png");
         background-position: right;
@@ -125,6 +130,11 @@
       width: calc(100% - 240px);
       // @apply br;
       // height: 100vh;
+      @include tablet {
+        height: 100vh;
+        width: 100%;
+
+      }
       @include smallPhone {
         height: 100vh;
         width: 100%;

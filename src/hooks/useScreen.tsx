@@ -12,8 +12,8 @@ function useWindowSize() {
       height:  0,
   });
 
-  const isMobile = windowSize.width < 478
-  const isTablet = windowSize.width < 768
+  const isMobile = windowSize.width <= 641
+  const isTablet = windowSize.width <= 768
 
   useEffect(() => {
     function handleResize() {

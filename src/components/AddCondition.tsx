@@ -35,7 +35,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 	const [status, setStatus] = useState(statusConst.failed);
 	const [conditions, setConditions] = useState<Array<ConditionTypes>>([]);
 	const tabRef = useRef(null);
-  const {isMobile} = useScreen()
+	const { isMobile, isTablet } = useScreen();
 
 	function processHandler() {
 		toggleShow((p) => !p);
@@ -128,6 +128,21 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 		}
 	}
 
+	function handleSetAll() {
+		let updatedArray = [...conditions];
+
+		conditionList.map((it, k) => {
+			let existing = updatedArray.filter((i: ConditionTypes, a) => i.id === it.id);
+			if (existing.length > 0) {
+				return;
+			} else {
+				updatedArray.push(it);
+
+				setConditions(updatedArray);
+			}
+		});
+	}
+
 	function handleRemoveItem(condition: any) {
 		let currentArray = [...conditions];
 
@@ -165,14 +180,14 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 	return showNoti ? (
 		<>
 			<div className="wrapper">
-				{isMobile ? (
+				{isMobile || isTablet ? (
 					<div className="betInfo overlay z-[999999999999] fixed top-0 flex items-end left-0  w-full h-full bg-[#0000005c]">
 						<div
 							className={`overlay_pane-mobile-withdraw info_panel relative w-full fadeIn-w  ${
 								showNoti ? "active" : ""
 							}     bg-white`}
 						>
-						{/* ----Cancel button---------  */}           
+							{/* ----Cancel button---------  */}
 							<div className="cancle_btn absolute left-1/2 -top-16 -translate-x-1/2">
 								<Image
 									src={"/icons/dashboard/cancleBtn.svg"}
@@ -184,8 +199,8 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 								/>
 							</div>
 
-             	{/* -----------main content----------- */}
-							<div className="wrapper w-full h-[600px] overflow-y-scroll custom-scrollbar">
+							{/* -----------main content----------- */}
+							<div className="wrapper w-full h-[600px] overflow-y-scroll custom-scrollbar pb-16">
 								<div className=" w-full p-4">
 									{/* -----pane_header----- */}
 									<div className="w-full column text-gray-500">
@@ -345,7 +360,14 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 
 													{/* ---Condition list----- */}
 													<ol className="team_options w-full px-4 p-2 space-y-2">
-														<p className="txt-xs f-b text-gray-900">Select one or more conditions</p>
+														<div className="space-y-2">
+															<p className="txt-xs f-b text-gray-900">Select one or more conditions</p>
+															<div role="button" onClick={handleSetAll} className="middle space-x-2">
+																<input onChange={handleSetAll} type="checkbox" name="all" id="" />
+																<p className="txt-xs f-s text-gray-500">Select All</p>
+
+															</div>
+														</div>
 
 														{conditionList.map((i, k) => (
 															<li

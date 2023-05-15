@@ -248,7 +248,7 @@ function Home() {
 				</div>
 
 				{/*-------- body------ */}
-				<div className="p-4 md:pl-12 mt-[116px] w-full md:pr-[104px]">
+				<div className="p-4 md:p-8 lg:pl-12 mt-[116px] w-full lg:pr-[104px]">
 					<h1 className="w-full text-gray-800 txt-md f-eb md:txt-xl md:f-b ">
 						My bets
 					</h1>
@@ -273,7 +273,7 @@ function Home() {
 					</div>
 
           {/* active bet section */}
-					<div className="active_bet_wrapper grid md:grid-cols-3 gap-4 md:gap-6 w-full  h-auto mt-6 ">
+					<div className="active_bet_wrapper grid lg:grid-cols-3 md:grid-cols-2 gap-4 md:gap-6 w-full  h-auto mt-6 ">
 						{Array(9)
 							.fill(1)
 							.map((i, k) => (

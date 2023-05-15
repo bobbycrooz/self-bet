@@ -14,7 +14,7 @@ import { useUser } from "@/context/userContext";
 function Home() {
 	const [loginMode, setLoginMode] = useState(true);
 	const { push, query, pathname } = useRouter();
-	const { User, dispatch} = useUser()
+	const { User} = useUser()
 	console.log(User, "this value is loading");
 
 	const tabs = ["All Bets", "Today", "Tomorrow"];
@@ -44,11 +44,7 @@ function Home() {
 		}
 	}, [pathname, query.login]);
 
-	useEffect(() => {
-		setTimeout(() => {
-			dispatch({ type: "STORE_USER", payload: { email: "bobby@gmail.com", name: "bobbydev" } });
-		}, 4000);
-	}, []);
+
 
 
 	return (
@@ -67,14 +63,15 @@ function Home() {
 			</Head>
 
 			<main className="dashboard_home  bg-white w-full h-auto p-4 md:px-12 md:py-16 ">
-				<div className=" dashboard_home-content hidden md:block  w-full h-[126px] md:h-[260px] rounded-2xl md:pl-24 pt-10">
+
+				<div className=" dashboard_home-content hidden md:block  w-full  md:h-[auto] lg:h-[260px] rounded-2xl lg:pl-24 md:pl-8 lg:pt-10 p-6">
 					{/*  HOME BANNER CAROUSEL  --desktop*/}
-					<div className="banneer_text w-full md:w-[690px]">
+					<div className="banneer_text w-full lg:w-[690px]">
 						<h1 className=" f-b display-sm f-eb text-white">
 							Revolutionize Your Sports Betting
 							Experience
 						</h1>
-						<p className="text-white txt-md f-m mt-[9px] mb-6  w-[90%]">
+						<p className="text-[#B9BDC5]  txt-md f-m mt-[9px] mb-6  lg:w-[90%] md:w-[80%]">
 							Get your friends together for a
 							thrilling betting experience. Create
 							custom bets, track your progress, and
@@ -113,22 +110,7 @@ function Home() {
 					</div>
 				</div>
 
-				{/* active bet listing */}
-				{/* <div className="active_tab w-full  h-[30px] mt-8 border-b middle space-x-3">
-          {tabs.map((i, k) => (
-            <div
-              className={`tab_item px-3 hover:text-gray-700 hover:border-gray-700 border-b-2  ${
-                k == 0
-                  ? "text-gray-700 border-gray-700  "
-                  : "border-transparent text-gry-500"
-              } h-full middle`}
-              key={k}
-            >
-              <p className={`txt-sm  f-m`}> {i}</p>
-            </div>
-          ))}
-        </div> */}
-				<div className="active_bet_wrapper grid md:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
+				<div className="active_bet_wrapper grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
 					{Array(9)
 						.fill(1)
 						.map((i, k) => (

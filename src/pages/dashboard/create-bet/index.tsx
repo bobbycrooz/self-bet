@@ -220,7 +220,7 @@ function CreateBet({ stepHandler }: { stepHandler: any }) {
 			</div>
 
 			{/* card--types */}
-			<div className="bet_types grid md:grid-cols-2 gap-4 md:gap-8 ">
+			<div className="bet_types grid lg:grid-cols-2 gap-4 md:gap-8 ">
 
 				{/* ----kolo banner */}
 				<div className=" w-full h-[311px] md:h-[520px] relative rounded-lg ">
@@ -457,7 +457,7 @@ function SelectMatch() {
 				/>
 
 				{/* current bet selection tab --desktop */}
-				<div className="hidden md:flex md:middle space-x-3 nav  txt-sm text-gray-500">
+				<div className="hidden lg:flex md:middle space-x-3 nav  txt-sm text-gray-500">
 					{nav.map((i, k) => (
 							<div
 							key={k}
@@ -487,7 +487,7 @@ function SelectMatch() {
 			</div>
 
 			{/* current selection tab ----phone */}
-			<div className="md:hidden  border-b  relative   ">
+			<div className="lg:hidden  border-b  relative   ">
 				<div className=" overflow-x-scroll custom-scrollbar vert h-[50px]">
 					<div className="scroll_track  mt-2 w-[600px] space-x-2 middle">
 						{nav.map((i, k) => (
@@ -516,7 +516,7 @@ function SelectMatch() {
 			{/* ------------------ */}
 
 			<div className="w-full   h-[420px] overflow-y-scroll custom-scrollbar pb-[44px] md:pb-[84px]">
-				<div className="matched w-full h-auto grid md:grid-cols-3 gap-6">
+				<div className="matched w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 gap-6">
 					{/* --team  display baner---- */}
 					{Array(16)
 						.fill(1)
@@ -590,7 +590,7 @@ function BetCondition({
 }) {
 	return (
 		<>
-			<div className="md:row-between">
+			<div className="md:flex justify-between">
 				<div className="details">
 					<h1 className="display-xs f-b text-gray-900">
 					Bet conditions
@@ -630,7 +630,7 @@ function BetCondition({
 			{/* ------------------ */}
 
 			<div className="w-full   h-[450px] overflow-y-scroll pb-[84px] custom-scrollbar">
-				<div className="condition w-full h-auto grid md:grid-cols-3 gap-6">
+				<div className="condition w-full h-auto grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 					{/* --------- */}
 					<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
 						<div className="  space-x-4 items-start flex">
@@ -717,7 +717,7 @@ function BetCondition({
 					<div
 						role="button"
 						onClick={handleAddCondition}
-						className="centered  border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card"
+						className="centered shadow-bet-card  border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card"
 					>
 						<div className="space-x-4 middle">
 							<Image

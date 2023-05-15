@@ -12,6 +12,7 @@ interface InputProps {
   place?: any;
   blur?: any;
   error?: string;
+  name?: string;
   touched?: boolean;
   required?: boolean;
   type: string;
@@ -32,6 +33,7 @@ const InputField = ({
   error,
   required,
   touched,
+  name,
   ...rest
 }: InputProps) => {
   const [passwordMode, setPasswordMode] = useState("password");
@@ -69,7 +71,7 @@ const InputField = ({
       <div className="">
         <div onClick={click} className={`custom-input ${!true && "full"} `}>
           <textarea
-            ref={inputRef}
+          name={name}            ref={inputRef}
             disabled={disabled}
             value={value || filedValue}
             onChange={(e) => change(e, name) || onChangeHandler}
@@ -133,6 +135,7 @@ const InputField = ({
 
         <input
           ref={inputRef}
+          name={name} 
           type={typeHandler(type)}
           value={value || filedValue}
           onChange={(e) => change(e, filedName) || onChangeHandler}

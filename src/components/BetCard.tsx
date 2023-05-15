@@ -50,7 +50,7 @@ const BetCard = ({ betType }: PropTypes) => {
 		mode: betType,
 	});
 	const [betTabMode, setBetTabMode] = useState(tabMode.CREATOR);
-	const { width, isMobile } = useScreen();
+	const { isTablet, isMobile } = useScreen();
 
 	function handleShowDetails(cardType?: "KOLO" | "POINT") {
 		if (showDetails.show) {
@@ -155,7 +155,7 @@ const BetCard = ({ betType }: PropTypes) => {
 			{/* bet side bar  */}
 			{showDetails.show && (
 				<div className="__">
-					{isMobile ? (
+					{isMobile || isTablet ? (
 						<div className="betInfo overlay z-[999999999999] fixed top-0 flex items-end left-0  w-full h-full bg-[#0000005c]">
 							{true ? (
 								<div
@@ -266,7 +266,7 @@ const BetCard = ({ betType }: PropTypes) => {
 
 												<div className="px-4 w-full space-y-4  pb-[200px] ]">
 													{/* ------be list --------for each tab */}
-													<div className="det_details   grid gap-6">{tabModeHandler()}</div>
+													<div className="det_details grid   md:grid-cols-2 gap-6">{tabModeHandler()}</div>
 													{/*  */}
 												</div>
 											</div>

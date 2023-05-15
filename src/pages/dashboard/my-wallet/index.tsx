@@ -6,8 +6,6 @@ import { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { PlusSvg } from "@/assets";
-import WithdrawMobile from "@/components/WithdrawMobile";
-import DepositeMobile from "@/components/DepositeMobile";
 import Link from "next/link";
 
 function Home() {
@@ -97,9 +95,9 @@ function Home() {
 
 			<main className="dashboard_home bg-white w-full h-auto pb-16 ">
 				{/* ----header---- */}
-				<div className="bg-gray-50 w-full md:h-[112px]  h-[122px] middle md:p-12 relative ">
+				<div className="bg-gray-50 w-full lg:h-[112px]  h-[122px] middle md:p-12 relative ">
 					{/* ----side card --desktop view */}
-					<div className="absolute md:flex  md:justify-between hidden  p-8 amount_box md:w-[557px] h-[148px] bg-white shadow-light md:right-[105px] rounded-lg md:-bottom-1/2 -bottom-[90%]">
+					<div className="absolute lg:flex  lg:justify-between hidden  p-8 amount_box md:w-[557px] h-[148px] bg-white shadow-light md:right-[105px] rounded-lg md:-bottom-1/2 -bottom-[90%]">
 						<div className="">
 							<p className="text-gray-400 txt-sm f-m ">Wallet balance</p>
 							<h1 className="notify display-sm f-eb text-gray-700  ">N 40,000</h1>
@@ -131,7 +129,7 @@ function Home() {
 					</div>
 
 					{/* ----side card --phone view */}
-					<div className="absolute coulumn md:hidden p-4 space-y-6 amount_box w-[90%] h-auto bg-white shadow-light  left-1/2 -translate-x-1/2 rounded-lg -bottom-[140%]">
+					<div className="absolute coulumn lg:hidden p-4 space-y-6 amount_box w-[90%] md:w-[80%] h-auto bg-white shadow-light  left-1/2 -translate-x-1/2 rounded-lg -bottom-[140%]">
 						<div className=" text-center">
 							<p className="text-gray-400 txt-sm f-m">Wallet balance</p>
 							<h1 className="notify display-sm f-eb text-gray-700  ">N 40,000</h1>
@@ -165,7 +163,7 @@ function Home() {
 
 					{/* -------end--------- */}
 
-					<div className="space-x-4 middle mx-auto md:mx-0   justify-center">
+					<div className="space-x-4 middle mx-auto lg:mx-0   justify-center">
 						<Image src={"/icons/dashboard/wallet.svg"} alt={""} width={48} height={48} />
 
 						<h1 className="notify display-xs f-b text-gray-700  ">My wallet</h1>
@@ -173,17 +171,16 @@ function Home() {
 				</div>
 
 				{/*-------- body------ */}
-				<div className="md:pl-12 mt-[206px]  p-2 md:mt-[116px]  pb-12 md:pb-0 w-full md:pr-[104px]">
+				<div className="lg:pl-12 mt-[206px]  p-2 md:p-6 lg:mt-[116px]  pb-12 lg:pb-0 w-full lg:pr-[104px]">
 					<div className="transaction_list p-4 md:p-8 border  rounded-xl  border-gray-200">
-						<h1 className="t-header hidden md:flex">Transactions</h1>
+						<h1 className="t-header hidden lg:flex">Transactions</h1>
 
-						<div className="w-full row-between md:hidden">
-						<h1 className="t-header">Transactions</h1>
-						
-						<Link href={'/dashboard/transactions'}>
-						<h1 className="capitalize f-b txt-sm text-sec">see all</h1>
-						</Link>
+						<div className="w-full row-between lg:hidden">
+							<h1 className="t-header">Transactions</h1>
 
+							<Link href={"/dashboard/transactions"}>
+								<h1 className="capitalize f-b txt-sm text-sec">see all</h1>
+							</Link>
 						</div>
 
 						{/* -----tabs--------- */}

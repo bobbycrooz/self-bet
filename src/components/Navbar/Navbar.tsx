@@ -7,8 +7,8 @@ import Notification from "../Notification";
 import ConfirmLogout from "../ConfirmLogout";
 import { BellSvg, SearchSvg } from "@/assets";
 import Nav from ".";
-import MobileNotification from "../MobileNotification";
 import useWindowSize from "@/hooks/useScreen";
+import { useUser } from "@/context/userContext";
 
 interface InputProps {
 	icon?: string;
@@ -28,6 +28,10 @@ const Navbar = () => {
 	const [showMobileNotification, setMobileNotification] = useState(false);
 	const [confirmLogout, toggleConfirmLogout] = useState(false);
 	const {isMobile} = useWindowSize()
+	const {User} = useUser()
+
+	console.log(User, "from the nav");
+	
 
 	function handleShowProfile() {
 		setShowProfile((p) => !p);

@@ -24,7 +24,7 @@ const Withdraw = ({ toggle, showNoti }: PropTypes) => {
   const [show, toggleShow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState(statusConst.failed);
-  const {width , isMobile} = useScreen()
+  const {isTablet , isMobile} = useScreen()
 
   function processHandler() {
     toggleShow((p) => !p);
@@ -47,7 +47,7 @@ const Withdraw = ({ toggle, showNoti }: PropTypes) => {
   return showNoti ? (
   <div className="wrapper">
     {
-      isMobile ? (  <div className="betInfo overlay z-[999999999999] fixed top-0 flex items-end left-0  w-full h-full bg-[#0000005c]">
+      isMobile || isTablet ? (  <div className="betInfo overlay z-[999999999999] fixed top-0 flex items-end left-0  w-full h-full bg-[#0000005c]">
       {/* ----Notification Card---------  */}
       <div className={`overlay_pane-mobile-withdraw  info_panel relative w-full fadeIn-w   ${showNoti ? 'active' : '' }  bg-white`}>
         {/* -------cancle button-------- */}

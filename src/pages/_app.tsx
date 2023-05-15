@@ -4,6 +4,7 @@ import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import { Inter } from "next/font/google";
 import UserProvider from "@/context/userContext";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,13 +18,22 @@ type AppPropsWithLayout = AppProps & {
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 	// Use the layout defined at the page level, if available
-	const getLayout = Component.getLayout ?? ((page) => page);
+	// const getLayout = Component.getLayout ?? ((page) => page);
+	const getLayout = Component.getLayout || ((page) => page);
 
-	return getLayout(
-		<main className={inter.className}>
-			<UserProvider>
-				<Component {...pageProps} />
-			</UserProvider>
-		</main>
+	return (
+		<>
+			<Head>
+				<title>selfbet</title>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<link rel="icon" href="fav.svg" />
+			</Head>
+			<main className={inter.className}>
+				<UserProvider>
+				
+					{getLayout(<Component {...pageProps} />)}
+				</UserProvider>
+			</main>
+		</>
 	);
 }

@@ -1,9 +1,11 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "next/font/google";
 import { Button, InputField } from "@components";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useFormik } from 'formik';
+import {features} from "@utils"
+import { useUser } from "@/context/userContext";
 
 interface UserDetailsTypes {
   username?: string,
@@ -17,15 +19,22 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const { push, query, pathname } = useRouter();
   const [userDetails, setUserDetails] = useState<UserDetailsTypes>({})
+  const {state, dispatch} = useUser()
+
+  console.log("currently login mode is :", loginMode)
+
+const registerSchema = {
+  email: '',
+  name: "",
+  password: ""
+}
 
 
+const logingSchema = {
+  name: '',
+  password: ""
+}
 
-  const fetures = [
-    "Take your in-person bets online.",
-    "Create custom bets",
-    "Earn rewards for your passion",
-    "Secure and seamless transactions",
-  ];
 
   // handlers--------------
   function handleAuthMode() {
@@ -46,26 +55,21 @@ export default function Home() {
     push("/auth/forgot-password");
   }
 
+  const formik = useFormik({
+    initialValues: loginMode ? logingSchema : registerSchema,
 
-  function handleOnChange(e:any, fieldName: string) {
-    setUserDetails({
-      ...userDetails,
-      [fieldName]: e.target.value
-
-    })
-    setIsAuth(true)
-  }
+    onSubmit: values => {
+      console.log(values);
+      dispatch({type: "STORE_USER", payload: values})
+      setIsLoading(true)
+      setTimeout(() => {
+      setIsLoading(false)
+      push("/dashboard");
+      }, 2000);
+    },
+  });
 
   
-  function handleSubmit(e: { preventDefault: () => void; }) {
-    e.preventDefault()
-    setIsLoading(true)
-    setTimeout(() => {
-    setIsLoading(false)
-    push("/dashboard");
-    }, 2000);
-    
-  }
 
 
   // useEffects -------------
@@ -85,10 +89,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="auth w-screen h-auto md:h-[882px] row">
+      <main className="auth w-screen h-auto lg:h-[882px] row">
         {/* auth banner */}
         <div
-          className={`auth_banner hidden md:block ${
+          className={`auth_banner hidden lg:block ${
             loginMode ? "login_banner" : "sign_banner"
           } w-[60%] text-white h-full relative`}
         >
@@ -113,7 +117,7 @@ export default function Home() {
               </h1>
 
               <div className="checks mt-6 space-y-3">
-                {fetures.map((i, k) => (
+                {features.map((i, k) => (
                   <div key={k} className="check-item row  space-x-2">
                     <Image
                       src={"/icons/check-circle.svg"}
@@ -131,7 +135,7 @@ export default function Home() {
         </div>
 
         {/* ACTION  */}
-        <div className="auth_content  w-full  md:w-[40%] h-full p-4 md:px-16">
+        <div className="auth_content  w-full  lg:w-[40%] h-full p-4 md:px-24 lg:px-16">
           <div className="w-full  column md:mt-20 space-y-6 pb-8 md:pb-0">
             {/* logo */}
             <Image
@@ -179,7 +183,7 @@ export default function Home() {
             </div>
 
             {/* form */}
-            <form onSubmit={handleSubmit} className="w-full space-y-6">
+            <form onSubmit={formik.handleSubmit} className="w-full space-y-6">
               <div className="space-y-4">
                 <InputField
                   type={"text"}
@@ -187,8 +191,9 @@ export default function Home() {
                   required
                   filedName="username"
                   place={"Enter a username"}
-                  change={handleOnChange}
-                  value={userDetails?.username}
+                  change={formik.handleChange}
+                  value={formik.values.name}
+                  name="name"
 
                 />
                 {!loginMode && (
@@ -197,8 +202,10 @@ export default function Home() {
                     type={"email"}
                     label="Email"
                     place={"***@gmail.com"}
-                    change={handleOnChange}
-                    value={userDetails.email}
+                    change={formik.handleChange}
+                    // @ts-ignore
+                    value={formik.values.email}
+                    name="email"
                   />
                 )}
 
@@ -206,9 +213,10 @@ export default function Home() {
                   type={"password"}
                   label="Password"
                   place={"********"}
-                  change={handleOnChange}
-                  filedName="password"
-                  value={userDetails.password}
+                  change={formik.handleChange}
+                    value={formik.values.password}
+                    name="password"
+                
 
 
                 />
@@ -256,7 +264,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <Button isLoading={isLoading} auth click={handleSubmit} text={"continue"} type={"submit"} full disabled={!isAuth} />
+              <Button isLoading={isLoading} auth  text={"continue"} type={"submit"} full  />
 
               <div className="flex w-full justify-center mt-8">
                 {!loginMode ? (
