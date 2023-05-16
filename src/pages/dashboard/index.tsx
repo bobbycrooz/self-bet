@@ -110,7 +110,7 @@ function Home() {
 					</div>
 				</div>
 
-				<div className="active_bet_wrapper grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
+				<div className="active_bet_wrapper pb-24 grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
 					{Array(9)
 						.fill(1)
 						.map((i, k) => (

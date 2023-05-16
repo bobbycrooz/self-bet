@@ -14,6 +14,7 @@ import {
 import { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
+import { useBet } from "@/context/betContext";
 
 const statusConst = {
 	success: "SUCCESS",
@@ -21,19 +22,14 @@ const statusConst = {
 };
 
 function Home() {
-	const [isLoading, setIsLoading] = useState(true);
-	const [placing, isPlacing] = useState(false);
-	const [status, setStatus] = useState(statusConst.failed);
 
-	function handlePlaceBet() {
-		isPlacing((p) => !p);
-		setIsLoading(true);
+	const {isLoading,
+		placing,
+		status,
+		handlePlaceBet, setIsLoading,
+		setStatus} = useBet()
 
-		setTimeout(() => {
-			setIsLoading(false);
-			setStatus(statusConst.failed);
-		}, 5000);
-	}
+
 
 	// function handleDeposite() {
 	//   setIsDepositing((p) => !p);

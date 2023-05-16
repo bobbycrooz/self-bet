@@ -68,7 +68,7 @@ const Withdraw = ({ toggle, showNoti }: PropTypes) => {
 
         {/* -----------content----------- */}
 
-        <div className="  w-full p-8">
+        <div className="  w-full p-4 pb-8">
           {/* -----info----- */}
           <div className="w-full column">
             <Image

@@ -43,7 +43,7 @@ const PlaceBetLoader = ({
   }
 
   return show ? (
-    <div className="modal_overlay p-4 fixed top-0 left-0 w-full h-full bg-[#00000083] grid-center">
+    <div className="modal_overlay p-4 fixed top-0 left-0 w-full h-full bg-[#00000083] grid-center z-[111111]">
       <div
         ref={cardRef}
         className="modal_card relative p-6 md:p-12 md:px-8 bg-white rounded-lg shadow-soft md:w-[400px] min-h-[244px]"
@@ -142,7 +142,9 @@ const {push} = useRouter()
           </div>
 
           <div className="row  space-x-3">
+            <Link href={"/dashboard/my-bets"}>
             <h1 className="vew">View your bets</h1>
+            </Link>
 
             {/* ---carret--- */}
             <svg

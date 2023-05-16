@@ -9,6 +9,8 @@ import { BellSvg, SearchSvg } from "@/assets";
 import Nav from ".";
 import useWindowSize from "@/hooks/useScreen";
 import { useUser } from "@/context/userContext";
+import { useSession, signIn, signOut } from "next-auth/react";
+
 
 interface InputProps {
 	icon?: string;
@@ -29,6 +31,10 @@ const Navbar = () => {
 	const [confirmLogout, toggleConfirmLogout] = useState(false);
 	const {isMobile} = useWindowSize()
 	const {User} = useUser()
+	const {data: session} = useSession()
+
+	console.log(session, "this is the session");
+	
 
 	console.log(User, "from the nav");
 	
@@ -39,6 +45,8 @@ const Navbar = () => {
 
 	function handleShowNotification() {
 		toggleNoti((p) => !p);
+		// signIn()layout
+
 	}
 
 	function searchToggle() {
@@ -53,9 +61,9 @@ const Navbar = () => {
 
 
 	return (
-		<nav className=" w-full   md:h-14 h-[76px] bg-white flex items-center justify-between px-6 p-1 border-b">
+		<nav className=" w-full fixed lg:static top-0 z-10  md:h-14 h-[76px] bg-white flex items-center justify-between px-6 p-1 border-b">
 			{/* logo */}
-			<Link href={"/"}>
+			<Link href={"/dashboard"}>
 				<div className="menu_logo middle space-x-4 hidden">
 					<Image src={"/icons/logo-2.svg"} alt="logo" width={120} height={26} className="block md:hidden" />
 

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, ChangeEventHandler } from "react";
 import Button from "./Button";
 import { BetSlipDetails } from "@/pages/dashboard/create-bet/bet-details";
+import { useBet } from "@/context/betContext";
 
 const navItemArray = [
 	{
@@ -111,6 +112,12 @@ const mobileNavItemArray = [
 const Sidebar = () => {
 	const { push, pathname } = useRouter();
 	const [showBetList, setShowBetList] = useState(false);
+	
+	const {isLoading,
+		placing,
+		status,
+		handlePlaceBet, setIsLoading,
+		setStatus} = useBet()
 
 	function linkHandler(link: string) {
 		return push(link);
@@ -118,6 +125,12 @@ const Sidebar = () => {
 
 	function handleShowBet() {
 		setShowBetList((p) => !p);
+	}
+
+
+		function handlePlaceBetMobile() {
+			handleShowBet()
+		handlePlaceBet()
 	}
 
 	console.log(pathname);
@@ -194,12 +207,13 @@ const Sidebar = () => {
 			</aside>
 			{/* ---------------mobile */}
 
-			{!isCreating && <div className="lg:hidden mobile_menu    shadow-bet-card-v fixed bottom-0 left-0 w-full z-[99999]">
+			{!isCreating && <div className="lg:hidden mobile_menu    shadow-bet-card-v fixed bottom-0 left-0 w-full z-[9]">
 				{showMobileBetSlip && (
 					<div className="betslip ">
 						<BetSlip
 							handleShowBet={handleShowBet}
 							showBetList={showBetList}
+							handlePlaceBet={handlePlaceBetMobile}
 						/>
 					</div>
 				)}
@@ -251,7 +265,13 @@ const Sidebar = () => {
 };
 
 // @ts-ignore
-function BetSlip({ handleShowBet, showBetList }) {
+function BetSlip({ handleShowBet, showBetList,handlePlaceBet }) {
+	
+	// const {isLoading,
+	// 	placing,
+	// 	status,
+	// 	handlePlaceBet, setIsLoading,
+	// 	setStatus} = useBet()
 	return (
 		<aside className={`w-full h-auto `}>
 			{/* --wrapperr--- */}
@@ -314,9 +334,9 @@ function BetSlip({ handleShowBet, showBetList }) {
 							type={"button"}
 							full
 							primary
-							// click={
-							// 	handlePlaceBet
-							// }
+							click={
+								handlePlaceBet
+							}
 						/>
 					</div>}
 				</div>

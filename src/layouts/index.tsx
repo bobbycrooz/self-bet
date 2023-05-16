@@ -2,15 +2,10 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { Button, InputField, Navbar, Sidebar } from "@components";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-// import Dasboa
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function DashboardLayout({ children }: { children: any }) {
-  const [loginMode, setLoginMode] = useState(true);
-  const { push, query, pathname } = useRouter();
 
   const mainStyle = {
     width: "100vw",
@@ -18,9 +13,6 @@ export default function DashboardLayout({ children }: { children: any }) {
     // overFlowY: "hidden"
 
   }
-  // <main style={mainStyle} className="dashboard max-w-screen h-screen overflow-y-hidden">
-
-
 
 
 
@@ -28,9 +20,9 @@ export default function DashboardLayout({ children }: { children: any }) {
     <main  className="dashboard_layout-wrapper">
       <Navbar />
 
-      <div className="flex dashboard_layout-body ">
+      <div  className="flex dashboard_layout-body mt-[76px] lg:mt-0">
         <Sidebar />
-        <main className="main_page overflow-y-scroll custom-scrollbar">{children}</main>
+        <main className="main_page overflow-y-scroll custom-scrollbar pb-[0px] lg:pb-0">{children}</main>
       </div>
     </main>
   );

@@ -5,6 +5,8 @@ import type { NextPage } from "next";
 import { Inter } from "next/font/google";
 import UserProvider from "@/context/userContext";
 import Head from "next/head";
+import { SessionProvider } from "next-auth/react";
+import BetProvider from "@/context/betContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,10 +31,11 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 				<link rel="icon" href="fav.svg" />
 			</Head>
 			<main className={inter.className}>
-				<UserProvider>
-				
-					{getLayout(<Component {...pageProps} />)}
-				</UserProvider>
+				<SessionProvider session={pageProps.session}>
+					<UserProvider>
+						<BetProvider>{getLayout(<Component {...pageProps} />)}</BetProvider>
+					</UserProvider>
+				</SessionProvider>
 			</main>
 		</>
 	);

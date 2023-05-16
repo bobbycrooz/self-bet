@@ -131,12 +131,14 @@
       // @apply br;
       // height: 100vh;
       @include tablet {
-        height: 100vh;
+             height: calc(100vh - 76px);
+
         width: 100%;
 
       }
       @include smallPhone {
-        height: 100vh;
+           height: calc(100vh - 76px);
+
         width: 100%;
 
       }
