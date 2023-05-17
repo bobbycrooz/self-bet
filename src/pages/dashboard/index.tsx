@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { BetCard, Button, InputField } from "@components";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { NextPageWithLayout } from "../_app";
@@ -44,9 +44,22 @@ function Home() {
 		}
 	}, [pathname, query.login]);
 
-
-
-
+	
+	const topRef = useRef(null);
+	useEffect(() => {
+		if (topRef.current) {
+			// @ts-ignore
+			topRef.current.scrollIntoView({
+				behavior: "smooth",
+				block: "start",
+				inline: "nearest",
+			});
+		}
+	}, [pathname]);
+	
+	
+	
+	
 	return (
 		<>
 			<Head>
@@ -61,6 +74,7 @@ function Home() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
+		<div ref={topRef} className="h-[76px] br w-full "></div>
 
 			<main className="dashboard_home  bg-white w-full h-auto p-4 md:px-12 md:py-16 ">
 
@@ -110,7 +124,7 @@ function Home() {
 					</div>
 				</div>
 
-				<div className="active_bet_wrapper pb-24 grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
+				<div className="active_bet_wrapper pb-36 grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
 					{Array(9)
 						.fill(1)
 						.map((i, k) => (
@@ -119,6 +133,7 @@ function Home() {
 							</div>
 						))}
 				</div>
+				<div  className="bottom_div w-full h-12 br"></div>
 			</main>
 		</>
 	);

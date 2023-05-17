@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { BetCard, Button, Deposite, InputField, Withdraw } from "@components";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { PlusSvg } from "@/assets";
@@ -11,7 +11,7 @@ import Link from "next/link";
 function Home() {
 	const [isWithdrawing, setIsWithdrawing] = useState(false);
 	const [isDepositing, setIsDepositing] = useState(false);
-	// const { push, query, pathname } = useRouter();
+	const { push, query, pathname } = useRouter();
 
 	const tabs = ["All", "Deposit", "Payouts", "Withdraw"];
 
@@ -84,6 +84,20 @@ function Home() {
 	//   }
 	// }, [pathname, query.login]);
 
+	const topRef = useRef(null);
+	useEffect(() => {
+		if (topRef.current) {
+			// @ts-ignore
+			topRef.current.scrollIntoView({
+				behavior: "smooth",
+				block: "start",
+				inline: "nearest",
+			});
+		}
+	}, [pathname]);
+	
+
+
 	return (
 		<>
 			<Head>
@@ -92,6 +106,7 @@ function Home() {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
+			<div ref={topRef} className="h-[76px] br w-full "></div>
 
 			<main className="dashboard_home bg-white w-full h-auto pb-16 ">
 				{/* ----header---- */}

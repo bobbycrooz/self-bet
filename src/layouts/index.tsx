@@ -6,24 +6,24 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 export default function DashboardLayout({ children }: { children: any }) {
+	const mainStyle = {
+		width: "100vw",
+		height: "100vh",
+		// overFlowY: "hidden"
+	};
 
-  const mainStyle = {
-    width: "100vw",
-    height: "100vh",
-    // overFlowY: "hidden"
-
-  }
+	const { pathname } = useRouter();
+  
 
 
+	return (
+		<main className="dashboard_layout-wrapper">
+			<Navbar />
 
-  return (
-    <main  className="dashboard_layout-wrapper">
-      <Navbar />
-
-      <div  className="flex dashboard_layout-body mt-[76px] lg:mt-0">
-        <Sidebar />
-        <main className="main_page overflow-y-scroll custom-scrollbar pb-[0px] lg:pb-0">{children}</main>
-      </div>
-    </main>
-  );
+			<div className="flex dashboard_layout-body lg:mt-0  ">
+				<Sidebar />
+				<main className="main_page overflow-y-scroll custom-scrollbar ">{children}</main>
+			</div>
+		</main>
+	);
 }

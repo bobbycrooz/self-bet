@@ -103,6 +103,19 @@ function Home() {
 		}
 	}, [step]);
 
+	
+	const topRef = useRef(null);
+	useEffect(() => {
+		if (topRef.current) {
+			// @ts-ignore
+			topRef.current.scrollIntoView({
+				behavior: "smooth",
+				block: "start",
+				inline: "nearest",
+			});
+		}
+	}, [pathname]);
+
 	return (
 		<>
 			<Head>
@@ -112,6 +125,8 @@ function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
+
+			<div ref={topRef} className="h-[76px] md:h-0  w-full "></div>
 			<main className="dashboard_create bg-white  w-full h-auto pb-[]   p-4 md:p-8 space-y-6">
 				<h1 className="txt-xl f-b t-g7  md:t-header1 w-full text-left pb-[0px] border-b">Create new bet</h1>
 
@@ -272,7 +287,6 @@ function CreateBet({ stepHandler }: { stepHandler: any }) {
 					</div>
 				</div>
 
-				<div className="h-24 flex md:hidden"></div>
 			</div>
 		</>
 	);
@@ -290,7 +304,7 @@ function SelectMatch() {
 	const nav = ["All aleague", "Premier League", "la liga", "Seria A", "bundes liga"];
 
 	return (
-		<div className="">
+		<div className=" ">
 			<div className="details ">
 				{/* header -destop view */}
 				<h1 className="hidden md:flex md:display-xs f-b text-gray-900">Select Match</h1>
@@ -357,7 +371,7 @@ function SelectMatch() {
 
 			{/* ------------------ */}
 
-			<div className="w-full   h-[420px] overflow-y-scroll custom-scrollbar pb-[44px] md:pb-[84px]">
+			<div className="w-full  h-[400px] overflow-y-scroll custom-scrollbar pb-[84px] md:pb-[84px]">
 				<div className="matched w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 gap-6">
 					{/* --team  display baner---- */}
 					{Array(16)

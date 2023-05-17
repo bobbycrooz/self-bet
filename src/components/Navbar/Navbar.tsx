@@ -32,11 +32,6 @@ const Navbar = () => {
 	const {isMobile} = useWindowSize()
 	const {User} = useUser()
 	const {data: session} = useSession()
-
-	console.log(session, "this is the session");
-	
-
-	console.log(User, "from the nav");
 	
 
 	function handleShowProfile() {
@@ -61,7 +56,7 @@ const Navbar = () => {
 
 
 	return (
-		<nav className=" w-full fixed lg:static top-0 z-10  md:h-14 h-[76px] bg-white flex items-center justify-between px-6 p-1 border-b">
+		<nav className=" w-full  fixed lg:static top-0 z-10  md:h-14 h-[76px] bg-white flex items-center justify-between px-6 p-1 border-b">
 			{/* logo */}
 			<Link href={"/dashboard"}>
 				<div className="menu_logo middle space-x-4 hidden">

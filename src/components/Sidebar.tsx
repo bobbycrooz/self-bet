@@ -207,7 +207,7 @@ const Sidebar = () => {
 			</aside>
 			{/* ---------------mobile */}
 
-			{!isCreating && <div className="lg:hidden mobile_menu    shadow-bet-card-v fixed bottom-0 left-0 w-full z-[9]">
+			{!isCreating && <div className="  lg:hidden mobile_menu    shadow-bet-card-v fixed bottom-0 left-0 w-full z-[9]">
 				{showMobileBetSlip && (
 					<div className="betslip ">
 						<BetSlip

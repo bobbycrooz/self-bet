@@ -100,15 +100,20 @@
   }
 
   &_create {
-    // height: calc(100vh - 56px);
+    // height: calc(100vh - 76px);
+    // background-color: red;
     &-inner {
-        // height: calc(100vh - 56px);
+        height: calc(100vh - 76px);
+        // height: auto;
       height: 100%;
       min-height: calc(100vh - 150px);
       @include smallPhone {
-        height: calc(100vh - 150px);
+        // height: calc(100vh - 196px);
 
-        // background-color: red;
+        height: auto;
+    // @apply bb;
+
+
       }
     }
   }
@@ -118,26 +123,27 @@
 
   &-wrapper{
     // @apply bb;
+    @apply  h-screen ;
 
   }
 
   &-body{
-    @apply  h-full ;
-
+// @apply bg-green-500;
+height: auto;
 
     .main_page{
-      height: calc(100vh - 56px);
+      // height: calc(100vh - 56px);
       width: calc(100% - 240px);
       // @apply br;
       // height: 100vh;
       @include tablet {
-             height: calc(100vh - 76px);
+            //  height: calc(100vh - 76px);
 
         width: 100%;
 
       }
       @include smallPhone {
-           height: calc(100vh - 76px);
+          //  height: calc(100vh - 76px);
 
         width: 100%;
 

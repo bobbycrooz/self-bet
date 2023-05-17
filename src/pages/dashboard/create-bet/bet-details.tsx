@@ -11,7 +11,7 @@ import {
 	PlaceBetLoader,
 	Withdraw,
 } from "@components";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { useBet } from "@/context/betContext";
@@ -22,6 +22,7 @@ const statusConst = {
 };
 
 function Home() {
+	const { push, query, pathname } = useRouter();
 
 	const {isLoading,
 		placing,
@@ -31,9 +32,18 @@ function Home() {
 
 
 
-	// function handleDeposite() {
-	//   setIsDepositing((p) => !p);
-	// }
+	
+		const topRef = useRef(null);
+		useEffect(() => {
+			if (topRef.current) {
+				// @ts-ignore
+				topRef.current.scrollIntoView({
+					behavior: "smooth",
+					block: "start",
+					inline: "nearest",
+				});
+			}
+		}, [pathname]);
 
 	return (
 		<>
@@ -49,6 +59,8 @@ function Home() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
+
+			<div ref={topRef} className="h-[76px] md:h-0 br w-full "></div>
 
 			<main className="bet_details bg-gray-50 w-full overflow-y-scroll custom-scrollbar">
 				<div className="h-  p-3 md:p-8 w-full h-auto space-x-6 flex items-start">
