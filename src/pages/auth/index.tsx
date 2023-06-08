@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { useFormik } from 'formik';
 import {features} from "@utils"
 import { useUser } from "@/context/userContext";
+import { useSession, signIn, signOut } from "next-auth/react";
+
 
 interface UserDetailsTypes {
   username?: string,
@@ -20,8 +22,10 @@ export default function Home() {
   const { push, query, pathname } = useRouter();
   const [userDetails, setUserDetails] = useState<UserDetailsTypes>({})
   const {state, dispatch} = useUser()
+  const {data: session} = useSession()
+  
 
-  console.log("currently login mode is :", loginMode)
+  console.log("currently login mode is :", session)
 
 const registerSchema = {
   email: '',
@@ -47,12 +51,14 @@ const logingSchema = {
   }
 
   function handleGoogle() {
-    push("/auth/continue");
+    signIn()
+    // push("/auth/continue");
   }
 
   
   function handleForgotPassword() {
-    push("/auth/forgot-password");
+    signOut()
+    // push("/auth/forgot-password");
   }
 
   const formik = useFormik({
