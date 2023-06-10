@@ -112,7 +112,8 @@ function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-		<div ref={topRef} className="h-[76px] br w-full "></div>
+			<div ref={topRef} className="h-[76px]  w-full md:h-0"></div>
+			
 			<main className="dashboard_home bg-white w-full h-auto pb-16 ">
 				
 				{/* ----header---- */}

@@ -4,59 +4,58 @@
 -------------------------------------------
 */
 .auth {
-  // auth page
-  // @apply bg-green-400 w-full h-screen;
-  &_google {
-    background-image: url("/images/auth_google.png");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    object-fit: cover;
+	// auth page
+	// @apply bg-green-400 w-full h-screen;
+	&_google {
+		background-image: url("/images/auth_google.png");
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		object-fit: cover;
 
-    @include smallPhone {
-      background-image: none;
+		@include smallPhone {
+			background-image: none;
+		}
 
-    }
+		&-card {
+			@apply bg-white p-4 md:p-16 rounded-xl;
+			box-shadow: 0px 8px 8px -4px #10182808, 0px 20px 24px -4px #10182814;
 
-    &-card {
-      @apply bg-white p-4 md:p-16 rounded-xl;
-      box-shadow: 0px 8px 8px -4px #10182808, 0px 20px 24px -4px #10182814;
+			@include smallPhone {
+				box-shadow: none;
+			}
+		}
+	}
 
-      @include smallPhone {
-        box-shadow: none;
-      }
-    }
-  }
+	&_banner {
+		&.login_banner {
+			background-image: url("/images/login-banner.webp");
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+			object-fit: cover;
+		}
 
-  &_banner {
-    &.login_banner {
-      background-image: url("/images/login-banner.webp");
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      object-fit: cover;
-    }
+		&.sign_banner {
+			background-image: url("/images/auth-banner.webp");
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+			object-fit: cover;
+		}
 
-    &.sign_banner {
-      background-image: url("/images/auth-banner.webp");
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      object-fit: cover;
-    }
+		&-content {
+			@apply absolute w-full;
+			transition: all 0.4s linear;
+			&.login {
+				@apply top-[0%] left-0 w-full pl-[90px] pt-[80px];
+			}
 
-    &-content {
-      @apply absolute w-full;
-      transition: all 0.4s linear;
-      &.login {
-        @apply top-[0%] left-0 w-full pl-[90px] pt-[80px];
-      }
-
-      &.signIn {
-        @apply bottom-[0%] left-0 w-full pl-[90px] pb-[80px];
-      }
-    }
-  }
+			&.signIn {
+				@apply bottom-[0%] left-0 w-full pl-[90px] pb-[80px];
+			}
+		}
+	}
 }
 
 /* 
@@ -66,93 +65,80 @@
 */
 
 .dashboard {
-  
+	&_home {
+		&-content {
+			background-image: url("/images/home/banner.png");
 
+			background-position: center;
 
-  &_home {
-    &-content {
-      background-image: url("/images/home/banner.png");
+			background-size: cover;
 
-      background-position: center;
+			background-repeat: no-repeat;
 
-      background-size: cover;
+			object-fit: cover;
 
-      background-repeat: no-repeat;
+			@include tablet {
+				background-position: right;
+			}
 
-      object-fit: cover;
+			&-sm {
+				background-image: url("/images/home/banner-sm.png");
+				background-position: right;
 
-      @include tablet{
-      background-position: right;
+				background-size: cover;
 
-      }
+				background-repeat: no-repeat;
 
-      &-sm {
-        background-image: url("/images/home/banner-sm.png");
-        background-position: right;
+				object-fit: cover;
+			}
+		}
+	}
 
-      background-size: cover;
+	&_create {
+		// height: calc(100vh - 76px);
+		// background-color: red;
+		&-inner {
+			height: calc(100vh - 76px);
+			// height: auto;
+			height: 100%;
+			min-height: calc(100vh - 150px);
+			@include smallPhone {
+				// height: calc(100vh - 196px);
 
-      background-repeat: no-repeat;
-
-      object-fit: cover;
-      }
-    }
-  }
-
-  &_create {
-    // height: calc(100vh - 76px);
-    // background-color: red;
-    &-inner {
-        height: calc(100vh - 76px);
-        // height: auto;
-      height: 100%;
-      min-height: calc(100vh - 150px);
-      @include smallPhone {
-        // height: calc(100vh - 196px);
-
-        height: auto;
-    // @apply bb;
-
-
-      }
-    }
-  }
+				height: auto;
+				// @apply bb;
+			}
+		}
+	}
 }
 
-.dashboard_layout{
+.dashboard_layout {
+	&-wrapper {
+		// @apply bb;
+		@apply h-screen;
+	}
 
-  &-wrapper{
-    // @apply bb;
-    @apply  h-screen ;
+	&-body {
+		// @apply bg-green-500;
+		height: calc(100vh - 3.5rem);
 
-  }
-
-  &-body{
-// @apply bg-green-500;
+		.main_page {
+			// height: calc(100vh - 56px);
+			width: calc(100% - 240px);
+			// @apply br;
+			@include tablet {
+				//  height: calc(100vh - 76px);
 height: auto;
+				width: 100%;
+			}
+			@include smallPhone {
+				//  height: calc(100vh - 76px);
 
-    .main_page{
-      // height: calc(100vh - 56px);
-      width: calc(100% - 240px);
-      // @apply br;
-      // height: 100vh;
-      @include tablet {
-            //  height: calc(100vh - 76px);
-
-        width: 100%;
-
-      }
-      @include smallPhone {
-          //  height: calc(100vh - 76px);
-
-        width: 100%;
-
-      }
-      // @apply bb;
- 
-    }
-
-  }
+				width: 100%;
+			}
+			// @apply bb;
+		}
+	}
 }
 
 /* 
@@ -174,14 +160,14 @@ height: auto;
 }
 
 .create_aside {
-  .header {
-    background-image: url("/images/create/aside_banner.png");
-    // background-position: center;
+	.header {
+		background-image: url("/images/create/aside_banner.png");
+		// background-position: center;
 
-    background-size: cover;
+		background-size: cover;
 
-    background-repeat: no-repeat;
+		background-repeat: no-repeat;
 
-    // object-fit: cover;
-  }
+		// object-fit: cover;
+	}
 }

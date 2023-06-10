@@ -9,101 +9,117 @@
 @import "components.scss";
 
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  // font-family: 'Inter', 'sans-serif';
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	// font-family: 'Inter', 'sans-serif';
 }
-
 
 body {
-  font-family: "Inter", sans-serif !important;
-  @apply overflow-x-hidden;
+	font-family: "Inter", sans-serif !important;
+	@apply overflow-x-hidden;
 
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
+	&::-webkit-scrollbar {
+		width: 4px;
+	}
 
-  &::-webkit-scrollbar-track {
-    @apply bg-gray-300;
-  }
+	&::-webkit-scrollbar-track {
+		@apply bg-gray-300;
+	}
 
-  &::-webkit-scrollbar-thumb {
-    @apply bg-gray-600 outline-1 outline-gray-600;
-  }
+	&::-webkit-scrollbar-thumb {
+		@apply bg-gray-600 outline-1 outline-gray-600;
+	}
 }
 
-.custom-scrollbar{
-    &::-webkit-scrollbar {
-    width: 0px;
-    height: 0;
-    
-   
-  }
+.custom-scrollbar {
+	&::-webkit-scrollbar {
+		width: 0px;
+		height: 0;
+	}
 
+	&::-webkit-scrollbar-track {
+		@apply bg-gray-300;
+	}
 
-  &::-webkit-scrollbar-track {
-    @apply bg-gray-300;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    @apply bg-gray-400 outline-1 outline-gray-400;
-  }
+	&::-webkit-scrollbar-thumb {
+		@apply bg-gray-400 outline-1 outline-gray-400;
+	}
 }
 
 .bet_card {
-  .dots {
-    visibility: hidden;
-  }
-  &:hover {
-    .dots {
-      visibility: visible;
-    }
-  }
+	.dots {
+		visibility: hidden;
+	}
+	&:hover {
+		.dots {
+			visibility: visible;
+		}
+	}
 }
 
 .creators_card {
-  .header {
-    background-image: url("/icons/creator_header.png");
-    // background-position: center;
+	.header {
+		background-image: url("/icons/creator_header.png");
+		// background-position: center;
 
-    background-size: cover;
+		background-size: cover;
 
-    background-repeat: no-repeat;
+		background-repeat: no-repeat;
 
-    // object-fit: cover;
-  }
+		// object-fit: cover;
+	}
 }
 
 .teams_display_matches {
-  .selector {
-    display: none;
-  }
+	.selector {
+		display: none;
+	}
 
-  &:hover {
-    .selector {
-      display: block;
-    }
-  }
+	&:hover {
+		.selector {
+			display: block;
+		}
+	}
 }
 
 .bet_details {
-  height: calc(100vh - 56px);
+	height: calc(100vh - 56px);
 }
 
-
-.overlay{
-  &.active{
-
-  }
+.overlay {
+	&.active {
+	}
 }
 
-input[type="search"]{
-  border-color: transparent !important;
-
+input[type="search"] {
+	border-color: transparent !important;
 }
 
 // .mobile_create_btn{
 //   width: 48px !important;
 //   height: 48px;
 // }
+
+.dropdown_profile {
+	.profile_item {
+    @apply text-gray-700 text-[20px];
+		&:hover {
+			.profile_item-icon,
+			p {
+				@apply text-sec;
+			}
+		}
+	}
+
+	.profile_logout {
+    @apply text-gray-700 text-[20px];
+
+		&:hover {
+			.profile_logout-icon,
+			p {
+				@apply text-sec  ;
+			}
+		}
+	}
+}

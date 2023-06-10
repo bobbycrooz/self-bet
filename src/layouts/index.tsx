@@ -20,7 +20,7 @@ export default function DashboardLayout({ children }: { children: any }) {
 		<main className="dashboard_layout-wrapper">
 			<Navbar />
 
-			<div className="flex dashboard_layout-body lg:mt-0  ">
+			<div className="flex dashboard_layout-body lg:mt-0 ">
 				<Sidebar />
 				<main className="main_page overflow-y-scroll custom-scrollbar ">{children}</main>
 			</div>

@@ -209,6 +209,7 @@ function SendReset({
 						type={"email"}
 						label="Email"
 						place={"***@gmail.com"}
+						change={() => true}
 					/>
 				</div>
 

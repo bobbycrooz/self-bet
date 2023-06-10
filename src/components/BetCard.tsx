@@ -5,6 +5,8 @@ import Button from "./Button";
 import DropDown from "./DropDown";
 import useScreen from "@/hooks/useScreen";
 import { BallSvg } from "@/assets";
+import {BiShareAlt} from 'react-icons/bi'
+import {VscSaveAll} from 'react-icons/vsc'
 
 interface PropTypes {
 	betType: "KOLO" | "POINT" | undefined;
@@ -51,6 +53,9 @@ const BetCard = ({ betType }: PropTypes) => {
 	});
 	const [betTabMode, setBetTabMode] = useState(tabMode.CREATOR);
 	const { isTablet, isMobile } = useScreen();
+	const [showCardOptions, setShowCardOptions] = useState(false);
+	const profileRef = useRef<HTMLDivElement>(null);
+
 
 	function handleShowDetails(cardType?: "KOLO" | "POINT") {
 		if (showDetails.show) {
@@ -80,11 +85,23 @@ const BetCard = ({ betType }: PropTypes) => {
 		}
 	}
 
+	function handleClickOutside(e: any)
+
+
+	{
+
+		if (showCardOptions &&  profileRef.current && profileRef.current !== e.target) {
+			setShowCardOptions(false)
+		}
+		
+	}
+
 	return (
 		<>
 			<div
-				role="button"
-				onClick={() => handleShowDetails(betType)}
+				ref={profileRef}
+				onClick={handleClickOutside}
+				
 				className="bet_card shadow-bet-card bg-white border border-gray-200 rounded-lg "
 			>
 				<div className=" p-3 md:p-6 space-y-4">
@@ -108,7 +125,36 @@ const BetCard = ({ betType }: PropTypes) => {
 								</div>
 							)}
 
-							<Image src={"/icons/dots.svg"} alt={""} width={24} height={24} className="dots" />
+
+							<div role="button" title="options" onClick={() => setShowCardOptions(p => !p)} className="dots relative">
+								<Image src={"/icons/dots.svg"} alt={""} width={24} height={24} className="" />
+								
+									{showCardOptions && (
+								<div
+									// ref={profileRef}
+									className="bet_card-dropdown dropdown_profile z-50 absolute -right-1/2 top-[30px] bg-white  w-48 rounded-lg p-6 space-y-[18px] shadow-light strictFadeIn"
+								>
+									<Link
+										role="button"
+										// onClick={() => setShowProfile(false)}
+										className="profile_item middle space-x-4"
+										href={"/dashboard/profile"}
+									>
+										<VscSaveAll className=" profile_item-icon"/>
+
+										<p className="item_name txt-sm f-m text-gray-700 hover:text-sec">Save for later</p>
+									</Link>
+
+									<div role="button"  className="profile_logout middle space-x-4">
+										
+											<BiShareAlt  className="profile_logout-icon"/>
+
+										<p className="item_name txt-sm f-m text-gray-700  hover:text-sec">Share</p>
+									</div>
+								</div>
+							)}
+
+							</div>
 						</div>
 
 						<h1 className="bet_name txt-lg f-eb text-gray-600">Battle of best banterers</h1>
@@ -143,6 +189,7 @@ const BetCard = ({ betType }: PropTypes) => {
 						) : (
 							<div
 								role="button"
+				onClick={() => handleShowDetails(betType)}
 								className="join capitalize border border-gray-300 rounded-lg px-2 p-1 txt-md f-s text-gray-700"
 							>
 								<p> Join now</p>

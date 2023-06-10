@@ -16,13 +16,27 @@ export default function SearchModal({ isSearching, setIsSearching }: { isSearchi
 
 	const { isMobile } = useScreen();
 
-  // function dropDownCardHandler(): import("react").ReactNode | ((bag: PanelRenderPropArg) => import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>>) {
-  //   throw new Error("Function not implemented.");
-  // }
+	// function dropDownCardHandler(): import("react").ReactNode | ((bag: PanelRenderPropArg) => import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>>) {
+	//   throw new Error("Function not implemented.");
+	// }
 
 	return (
 		<>
-			<Transition appear show={isSearching} as={Fragment}>
+			<Transition appear show={isSearching} as={'div'} className={'relative'}>
+						
+				
+				<div className="cancle_btn bg-white br absolute left-1/2 -top-16 -translate-x-1/2">
+							<Image
+								src={"/icons/dashboard/cancleBtn.svg"}
+								alt={""}
+								width={48}
+								height={48}
+								// onClick={toggle}
+								role="button"
+							/>
+				</div>
+				
+
 				<Dialog as="div" className="relative z-10" onClose={setIsSearching}>
 					<Transition.Child
 						as={Fragment}
@@ -75,46 +89,45 @@ export default function SearchModal({ isSearching, setIsSearching }: { isSearchi
 
 									{/* filter tab */}
 									{isMobile ? (
-                    <div className="w-full overflow-x-auto ">
-		<div className="filters middle space-x-3 w-[900px] ">
-											<DropDown
-												type={"byTeam"}
-												lists={[]}
-												title="Team"
-												show={searchMode.team}
-												toggleShow={setSearchMode}
-											/>
-											<DropDown
-												type={"byLeague"}
-												lists={[]}
-												title={"League"}
-												show={searchMode.league}
-												toggleShow={setSearchMode}
-											/>
-											<DropDown
-												type={"byName"}
-												lists={[]}
-												title={"Creator"}
-												show={searchMode.name}
-												toggleShow={setSearchMode}
-											/>
-											<DropDown
-												type={"byRange"}
-												lists={[]}
-												title={"Bet Amount"}
-												show={searchMode.range}
-												toggleShow={setSearchMode}
-											/>
-											<DropDown
-												type={"byPercent"}
-												lists={[]}
-												title={"Bet Discount"}
-												show={searchMode.percent}
-												toggleShow={setSearchMode}
-											/>
+										<div className="w-full overflow-x-auto ">
+											<div className="filters middle space-x-3 w-[900px] ">
+												<DropDown
+													type={"byTeam"}
+													lists={[]}
+													title="Team"
+													show={searchMode.team}
+													toggleShow={setSearchMode}
+												/>
+												<DropDown
+													type={"byLeague"}
+													lists={[]}
+													title={"League"}
+													show={searchMode.league}
+													toggleShow={setSearchMode}
+												/>
+												<DropDown
+													type={"byName"}
+													lists={[]}
+													title={"Creator"}
+													show={searchMode.name}
+													toggleShow={setSearchMode}
+												/>
+												<DropDown
+													type={"byRange"}
+													lists={[]}
+													title={"Bet Amount"}
+													show={searchMode.range}
+													toggleShow={setSearchMode}
+												/>
+												<DropDown
+													type={"byPercent"}
+													lists={[]}
+													title={"Bet Discount"}
+													show={searchMode.percent}
+													toggleShow={setSearchMode}
+												/>
+											</div>
 										</div>
-                    </div>
-								
 									) : (
 										<div className="filters middle space-x-2 ">
 											<DropDown
@@ -155,12 +168,9 @@ export default function SearchModal({ isSearching, setIsSearching }: { isSearchi
 										</div>
 									)}
 
-{/* -------------- */}
+									{/* -------------- */}
 
-{/* { isMobile && dropDownCardHandler("byName")} */}
-
-
-
+									{/* { isMobile && dropDownCardHandler("byName")} */}
 
 									{/* search result */}
 									{Array(5)

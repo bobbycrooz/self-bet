@@ -2,10 +2,15 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { Button, InputField } from "@components";
+import { checkSVG } from "@/assets";
+import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home()
+{
+	const [isChecked, setIsChecked] = useState(false);
+	
 	return (
 		<>
 			<Head>
@@ -53,12 +58,9 @@ export default function Home() {
 								/>
 
 								<div className="terms row space-x-2 items-center ">
-									<input
-										type="checkbox"
-										name="agree"
-										id="agree"
-										className="w-4 h-4 border-gray-300"
-									/>
+								<div role="button" onClick={() => setIsChecked((p) => !p)} className="check_box fadeIn">
+													{checkSVG(isChecked)}
+												</div>
 
 									<h2 className="terms-text txt-sm f-m ">
 										I agree to the{" "}

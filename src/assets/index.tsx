@@ -250,15 +250,50 @@ export function TransactionSVG() {
 	);
 }
 
-
-
 export function BackSVG() {
 	return (
-<svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.53906 6.22819L14.0391 6.22819" stroke="#6B7280" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M6.58203 11.2488L1.54036 6.22884L6.58203 1.20801" stroke="#6B7280" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
-</svg>
+		<svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path
+				d="M1.53906 6.22819L14.0391 6.22819"
+				stroke="#6B7280"
+				strokeWidth="1.25"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M6.58203 11.2488L1.54036 6.22884L6.58203 1.20801"
+				stroke="#6B7280"
+				strokeWidth="1.25"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+			/>
+		</svg>
 	);
 }
 
+// export function nameSVG() {
+// 	return (
 
+// 	);
+// }
+
+export function checkSVG(checked: boolean) {
+	return checked ? (
+		<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect x="0.5" y="0.5" width="15" height="15" rx="3.5" fill="#F9FAFB" />
+			<path
+				d="M12 5L6.5 10.5L4 8"
+				stroke="#4B5563"
+				stroke-width="1.6666"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<rect x="0.5" y="0.5" width="15" height="15" rx="3.5" stroke="#4B5563" />
+		</svg>
+	) : (
+		<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect x="0.5" y="0.5" width="15" height="15" rx="3.5" fill="white" />
+			<rect x="0.5" y="0.5" width="15" height="15" rx="3.5" stroke="#D0D5DD" />
+		</svg>
+	);
+}

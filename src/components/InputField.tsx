@@ -122,7 +122,7 @@ const InputField = ({
               <Image
                 width={20}
                 height={20}
-                src={"/icons/eye-open.svg"}
+                src={"/icons/eye-close.svg"}
                 alt=""
               />
             )}

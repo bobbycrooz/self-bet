@@ -121,7 +121,7 @@ export default function DropdownBtn({
       <div
         role="button"
         onClick={() => handleShowList(type)}
-        className={` p-4 flex px-3 row-between border space-x-4 w-full  border-gray-100 rounded-lg`}
+        className={` p-4 flex px-3 row-between h-[40px] space-x-4 w-full border  border-gray-100 rounded-lg `}
       >
         <h1 className="bet_condition_name txt-sm f-m text-gray-500 ">{title}</h1>
         <Image
