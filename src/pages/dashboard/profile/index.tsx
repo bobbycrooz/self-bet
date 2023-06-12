@@ -145,7 +145,7 @@ function Home() {
 
 						<div className="col-center space-y-3">
 							<Button
-								text="Deposite"
+								text="Deposit"
 								type={"button"}
 								primary
 								click={handleDeposite}
@@ -202,7 +202,7 @@ function Home() {
 								/> */}
 
                 <button onClick={handleDeposite} className="txt-sm f-b text-white rounded-lg bg-sec p-3 w-full">
-                  Deposite
+                  Deposit
                 </button>
 							</div>
 						</div>
@@ -245,6 +245,9 @@ function Home() {
 							</div>
 						</div>
 
+
+						<Link href={"/dashboard/settings"}>
+						
 						<div className="settings_button middle space-x-2 px-4 p-3 rounded-lg border border-gray-300">
 							<Image
 								src={
@@ -253,13 +256,14 @@ function Home() {
 								alt={""}
 								width={16}
 								height={16}
-								className="mt-1"
+								className=""
 							/>
 
 							<p className="Se txt-md f-b text-gray-800 md:flex hidden">
 								Settings
 							</p>
-						</div>
+							</div>
+							</Link>
 					</div>
 				</div>
 
@@ -309,9 +313,9 @@ function Home() {
 				/>
 
 				{/* -----deposite pane------- */}
-				<DepositeMobile
+				<Deposite
 					toggle={handleDeposite}
-					visibility={isDepositing}
+					showNoti={isDepositing}
 				/>
 			</main>
 		</>

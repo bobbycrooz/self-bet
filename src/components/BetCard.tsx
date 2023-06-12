@@ -5,8 +5,8 @@ import Button from "./Button";
 import DropDown from "./DropDown";
 import useScreen from "@/hooks/useScreen";
 import { BallSvg } from "@/assets";
-import {BiShareAlt} from 'react-icons/bi'
-import {VscSaveAll} from 'react-icons/vsc'
+import { BiShareAlt } from "react-icons/bi";
+import { VscSaveAll } from "react-icons/vsc";
 
 interface PropTypes {
 	betType: "KOLO" | "POINT" | undefined;
@@ -33,7 +33,7 @@ const tabs = [
 
 	{
 		name: "Bet conditions",
-		badge: "9",
+		badge: "1",
 		tabMode: tabMode.BET,
 	},
 
@@ -55,7 +55,6 @@ const BetCard = ({ betType }: PropTypes) => {
 	const { isTablet, isMobile } = useScreen();
 	const [showCardOptions, setShowCardOptions] = useState(false);
 	const profileRef = useRef<HTMLDivElement>(null);
-
 
 	function handleShowDetails(cardType?: "KOLO" | "POINT") {
 		if (showDetails.show) {
@@ -85,15 +84,10 @@ const BetCard = ({ betType }: PropTypes) => {
 		}
 	}
 
-	function handleClickOutside(e: any)
-
-
-	{
-
-		if (showCardOptions &&  profileRef.current && profileRef.current !== e.target) {
-			setShowCardOptions(false)
+	function handleClickOutside(e: any) {
+		if (showCardOptions && profileRef.current && profileRef.current !== e.target) {
+			setShowCardOptions(false);
 		}
-		
 	}
 
 	return (
@@ -101,7 +95,6 @@ const BetCard = ({ betType }: PropTypes) => {
 			<div
 				ref={profileRef}
 				onClick={handleClickOutside}
-				
 				className="bet_card shadow-bet-card bg-white border border-gray-200 rounded-lg "
 			>
 				<div className=" p-3 md:p-6 space-y-4">
@@ -125,35 +118,37 @@ const BetCard = ({ betType }: PropTypes) => {
 								</div>
 							)}
 
-
-							<div role="button" title="options" onClick={() => setShowCardOptions(p => !p)} className="dots relative">
+							<div
+								role="button"
+								title="options"
+								onClick={() => setShowCardOptions((p) => !p)}
+								className="dots relative"
+							>
 								<Image src={"/icons/dots.svg"} alt={""} width={24} height={24} className="" />
-								
-									{showCardOptions && (
-								<div
-									// ref={profileRef}
-									className="bet_card-dropdown dropdown_profile z-50 absolute -right-1/2 top-[30px] bg-white  w-48 rounded-lg p-6 space-y-[18px] shadow-light strictFadeIn"
-								>
-									<Link
-										role="button"
-										// onClick={() => setShowProfile(false)}
-										className="profile_item middle space-x-4"
-										href={"/dashboard/profile"}
+
+								{showCardOptions && (
+									<div
+										// ref={profileRef}
+										className="bet_card-dropdown dropdown_profile z-50 absolute -right-1/2 top-[30px] bg-white  w-48 rounded-lg p-6 space-y-[18px] shadow-light strictFadeIn"
 									>
-										<VscSaveAll className=" profile_item-icon"/>
+										<Link
+											role="button"
+											// onClick={() => setShowProfile(false)}
+											className="profile_item middle space-x-4"
+											href={"/dashboard/profile"}
+										>
+											<VscSaveAll className=" profile_item-icon" />
 
-										<p className="item_name txt-sm f-m text-gray-700 hover:text-sec">Save for later</p>
-									</Link>
+											<p className="item_name txt-sm f-m text-gray-700 hover:text-sec">Save for later</p>
+										</Link>
 
-									<div role="button"  className="profile_logout middle space-x-4">
-										
-											<BiShareAlt  className="profile_logout-icon"/>
+										<div role="button" className="profile_logout middle space-x-4">
+											<BiShareAlt className="profile_logout-icon" />
 
-										<p className="item_name txt-sm f-m text-gray-700  hover:text-sec">Share</p>
+											<p className="item_name txt-sm f-m text-gray-700  hover:text-sec">Share</p>
+										</div>
 									</div>
-								</div>
-							)}
-
+								)}
 							</div>
 						</div>
 
@@ -189,7 +184,7 @@ const BetCard = ({ betType }: PropTypes) => {
 						) : (
 							<div
 								role="button"
-				onClick={() => handleShowDetails(betType)}
+								onClick={() => handleShowDetails(betType)}
 								className="join capitalize border border-gray-300 rounded-lg px-2 p-1 txt-md f-s text-gray-700"
 							>
 								<p> Join now</p>
@@ -201,7 +196,7 @@ const BetCard = ({ betType }: PropTypes) => {
 
 			{/* bet side bar  */}
 			{showDetails.show && (
-				<div className="__">
+				<div className="__ ">
 					{isMobile || isTablet ? (
 						<div className="betInfo overlay z-[999999999999] fixed top-0 flex items-end left-0  w-full h-full bg-[#0000005c]">
 							{true ? (
@@ -281,8 +276,8 @@ const BetCard = ({ betType }: PropTypes) => {
 														</div>
 
 														<div className="col">
-															<h1 className="amount text-gray-400 txt-xs f-b">bet amount</h1>
-															<h1 className="txt-md f-b text-gray-700 mt-2 mb-4">N5000</h1>
+															<h1 className="amount text-gray-400 txt-xs f-b">Bet amount:</h1>
+															<h1 className="txt-md f-b text-gray-700 mt-2 mb-4 text-right">N5000</h1>
 														</div>
 													</div>
 
@@ -293,21 +288,34 @@ const BetCard = ({ betType }: PropTypes) => {
 													</div>
 
 													{/*  --------action tab row-------*/}
-													<div className="active_tab w-full   h-[35px] mt-8  middle space-x-3">
-														{tabs.map((i, k) => (
-															<div
-																role="button"
-																onClick={() => setBetTabMode(i.tabMode)}
-																className={`tab_item px-3  hover:text-gray-700 hover:border-gray-200 border-b-2 space-x-2 ${
-																	betTabMode == i.tabMode
-																		? "text-gray-700 border-gray-700  "
-																		: "border-transparent text-gray-500"
-																} h-full middle`}
-																key={k}
-															>
-																<p className={`txt-sm  f-m`}> {i.name}</p>{" "}
-															</div>
-														))}
+													<div className="active_tab w-full   h-[35px] mt-8  overflow-x-scroll">
+														<div className="w-[400px]  active_tab    h-[35px]  middle space-x-3">
+															{tabs.map((i, k) => (
+																<div
+																	role="button"
+																	onClick={() => setBetTabMode(i.tabMode)}
+																	className={`tab_item px-3  hover:text-gray-700 hover:border-gray-200 border-b-2 space-x-2 ${
+																		betTabMode == i.tabMode
+																			? "text-gray-700 border-gray-700  "
+																			: "border-transparent text-gray-500"
+																	} h-full middle`}
+																	key={k}
+																>
+																	<p className={`txt-sm f-m`}> {i.name}</p>{" "}
+																	{i.badge && (
+																		<p
+																			className={`rounded bg-gray-500  px-2 p-[2px] text-white txt-xs f-m ${
+																				betTabMode == i.tabMode
+																					? " bg-gray-700 border-gray-700 "
+																					: " text-gray-500"
+																			}  `}
+																		>
+																			{i.badge}
+																		</p>
+																	)}
+																</div>
+															))}
+														</div>
 													</div>
 												</div>
 
@@ -431,7 +439,7 @@ const BetCard = ({ betType }: PropTypes) => {
 						</div>
 					) : (
 						<div className="betInfo overlay z-10 fixed top-0 flex justify-end left-0 strictFadeIn w-full h-full bg-[#0000005c]">
-							<div className="info_panel slideInLeft  relative w-[50%] h-screen bg-white">
+							<div className="info_panel slideInLeft  relative w-[50%]    h-screen bg-white">
 								{/*  */}
 								<div
 									role="button"
@@ -446,7 +454,7 @@ const BetCard = ({ betType }: PropTypes) => {
 									<div className="h-auto">
 										{/*  */}
 										<div className="panel_content  space-y-6  w-full">
-											<div className="px-12 w-full p-4">
+											<div className=" w-full p-6">
 												<div className="bet_banner w-full h-[192px] relative">
 													{showDetails.mode === betCardType.KOLO ? (
 														<Image
@@ -492,7 +500,7 @@ const BetCard = ({ betType }: PropTypes) => {
 													</div>
 
 													<div className="col">
-														<h1 className="amount text-gray-400 txt-xs f-b">bet amount</h1>
+														<h1 className="amount text-gray-400 txt-xs f-b">Bet amount</h1>
 														<h1 className="txt-md f-b text-gray-700 mt-2 mb-4">N5000</h1>
 														<Link href={"/dashboard/create-bet/bet-details"}>
 															<Button text={"Join bet"} type={"button"} primary />
@@ -507,14 +515,14 @@ const BetCard = ({ betType }: PropTypes) => {
 														<div
 															role="button"
 															onClick={() => setBetTabMode(i.tabMode)}
-															className={`tab_item px-3  hover:text-gray-700 hover:border-gray-200 border-b-2 space-x-2 ${
+															className={`tab_item px-3  hover:text-gray-700  border-b-2 space-x-2 ${
 																betTabMode == i.tabMode
 																	? "text-gray-700 border-gray-700  "
 																	: "border-transparent text-gry-500"
 															} h-full middle`}
 															key={k}
 														>
-															<p className={`txt-sm  f-m`}> {i.name}</p>{" "}
+															<p className={`txt-sm  ${betTabMode == i.tabMode ? "f-b" : "f-m"}`}> {i.name}</p>{" "}
 															{i.badge && (
 																<p className="rounded bg-gray-600 px-2 p-[2px] text-white txt-xs f-m">{i.badge}</p>
 															)}
@@ -525,7 +533,8 @@ const BetCard = ({ betType }: PropTypes) => {
 
 											<div className="px-12 w-full space-y-4">
 												{/* ------be list --------for each tab */}
-												<div className="det_details   grid grid-cols-2 gap-6">{tabModeHandler()}</div>
+													<div className="det_details   grid grid-cols-2 gap-6">{tabModeHandler()}</div>
+													<div className="w-full h-6 invisible"></div>
 												{/*  */}
 											</div>
 										</div>

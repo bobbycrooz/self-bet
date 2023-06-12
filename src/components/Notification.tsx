@@ -173,9 +173,9 @@ const Notification = ({ toggle, showNoti }: PropTypes) => {
 											</div>
 
 											<div className="noti_text space-y-3">
-												<h1 className="notify txt-xl f-b text-gray-700  ">{i.header}</h1>
+												<h1 className="notify txt-md f-b text-gray-700  ">{i.header}</h1>
 
-												<p className="txt-sm f-m text-gray-500">{i.body}</p>
+												<p className="txt-sm font-normal text-gray-500">{i.body}</p>
 											</div>
 										</div>
 

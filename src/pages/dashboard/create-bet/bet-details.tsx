@@ -60,7 +60,7 @@ function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<div ref={topRef} className="h-[76px] md:h-0 br w-full "></div>
+			<div ref={topRef} className="h-[76px] md:h-0  w-full "></div>
 
 			<main className="bet_details bg-gray-50 w-full overflow-y-scroll custom-scrollbar">
 				<div className="h-  p-3 md:p-8 w-full h-auto space-x-6 flex items-start">

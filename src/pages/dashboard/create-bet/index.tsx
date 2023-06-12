@@ -150,7 +150,7 @@ function Home() {
 									<p className="t-header1">back</p>
 								</div>
 
-								<div className="hidden md:flex match_count capitalize t-headerb7">Match Selected</div>
+								{step === 2 && <div className="hidden md:flex match_count capitalize t-headerb7">Match Selected</div>}
 
 								<Button text={step !== 4 ? "Proceed" : "Proceed to placing bet"} type={"button"} primary click={next} />
 							</div>
@@ -304,8 +304,8 @@ function SelectMatch() {
 	const nav = ["All aleague", "Premier League", "la liga", "Seria A", "bundes liga"];
 
 	return (
-		<div className=" ">
-			<div className="details ">
+		<div className="  ">
+			<div className="details space-y-4 mb-2">
 				{/* header -destop view */}
 				<h1 className="hidden md:flex md:display-xs f-b text-gray-900">Select Match</h1>
 
@@ -322,7 +322,7 @@ function SelectMatch() {
 			</div>
 
 			{/* ----------- */}
-			<div className="filter_tab w-full row-between ">
+			<div className="filter_tab w-full row-between  space-y-4 ">
 				<DropDown type={"byTeam"} lists={[]} title={"All matches"} show={searchMode.team} toggleShow={setSearchMode} />
 
 				{/* current bet selection tab --desktop */}
@@ -372,7 +372,7 @@ function SelectMatch() {
 			{/* ------------------ */}
 
 			<div className="w-full  h-[400px] overflow-y-scroll custom-scrollbar pb-[84px] md:pb-[84px]">
-				<div className="matched w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 gap-6">
+				<div className="matched w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 gap-6 md:pt-4">
 					{/* --team  display baner---- */}
 					{Array(16)
 						.fill(1)
@@ -609,7 +609,7 @@ function BetDetails() {
 						<div className="space-y-2 mt-2">
 							<h1 className="text-gray-600 txt-sm f-b ">Number of people</h1>
 
-							<div className="number_row flex gap-2">
+							<div className="number_row flex gap-2  h-[48px]">
 								<div className="add rounded-lg bg-gray-100 p-4">
 									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path
@@ -624,7 +624,7 @@ function BetDetails() {
 
 								{/*  */}
 								<div className="input">
-									<input type="text" name="num" value={3} id="" className="border rounded-lg border-gray-200 p-4 text-gray-300 text-center w-24" />
+									<input  style={{height: '48px'}} type="text" name="num" value={3} id="" className="border rounded-lg border-gray-200 p-4 text-gray-300 text-center w-24" />
 								</div>
 
 								{/* \ */}
