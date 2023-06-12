@@ -107,7 +107,7 @@ const Notification = ({ toggle, showNoti }: PropTypes) => {
 						</div>
 
 						{/* Notification list */}
-						<div className="notification_list  p-4 overflow-y-scroll    custom-scrollbar">
+						<div className="notification_list  p-4 overflow-y-scroll  custom-scrollbar">
 							<div className="w-full space-y-6 ">
 								{notificationArray.map((i, k) => (
 									<div

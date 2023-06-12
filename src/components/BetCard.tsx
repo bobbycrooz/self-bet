@@ -288,13 +288,13 @@ const BetCard = ({ betType }: PropTypes) => {
 													</div>
 
 													{/*  --------action tab row-------*/}
-													<div className="active_tab w-full   h-[35px] mt-8  overflow-x-scroll">
+													<div className="active_tab w-full   h-[35px] mt-8  overflow-x-scroll custom-scrollbar">
 														<div className="w-[400px]  active_tab    h-[35px]  middle space-x-3">
 															{tabs.map((i, k) => (
 																<div
 																	role="button"
 																	onClick={() => setBetTabMode(i.tabMode)}
-																	className={`tab_item px-3  hover:text-gray-700 hover:border-gray-200 border-b-2 space-x-2 ${
+																	className={`tab_item px-3  hover:text-gray-700 border-b-2 space-x-2 ${
 																		betTabMode == i.tabMode
 																			? "text-gray-700 border-gray-700  "
 																			: "border-transparent text-gray-500"
