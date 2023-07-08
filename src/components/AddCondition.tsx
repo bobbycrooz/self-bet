@@ -10,6 +10,7 @@ import DynamicModal from "./DynamicModal";
 import ConfirmationModal from "./ConfirmationModal";
 import CheckIcon, { AddIcon, TimesIcon } from "@/assets";
 import useScreen from "@/hooks/useScreen";
+import { useBet } from "@/context/betContext";
 
 interface PropTypes {
 	toggle: any;
@@ -31,17 +32,26 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 	const [show, toggleShow] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [showSectors, setShowSectors] = useState(false);
+	const [codes, setCodes] = useState([]);
+	const [currentSector, setCurrentSector] = useState({
+		Sector: "",
+		Codes: [],
+	});
 	const [showConditionList, setShowConditionList] = useState(false);
 	const [status, setStatus] = useState(statusConst.failed);
 	const [conditions, setConditions] = useState<Array<ConditionTypes>>([]);
 	const tabRef = useRef(null);
 	const { isMobile, isTablet } = useScreen();
+	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
+
+	const [sectorLists, setSectors] = useState([]);
 
 	function processHandler() {
 		toggleShow((p) => !p);
 	}
 
 	function handleSector(e: any) {
+		getAllSectores();
 		setShowSectors((p) => !p);
 	}
 
@@ -49,31 +59,21 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 		setShowConditionList((p) => !p);
 	}
 
-	const sectors = [
-		{
-			type: "Home team / Away team / Draw",
-			color: "bg-green-700",
-			meta: {},
-		},
+	function handleGetSectorCodes(sector: string) {
+		const codes = MarketList.find((i: { Sector: string }) => i.Sector === sector);
 
-		{
-			type: "Half time (O/U)",
-			color: "bg-orange-700",
-			meta: {},
-		},
+		setCodes(codes.Codes);
+	}
 
-		{
-			type: "Home / Away (O/U)",
-			color: "bg-yellow-700",
-			meta: {},
-		},
+	function handlePickSector(sector: string) {
+		setCurrentSector({
+			...currentSector,
+			Sector:sector
+		});
 
-		{
-			type: "Odd / Even",
-			color: "bg-blue-700",
-			meta: {},
-		},
-	];
+		handleGetSectorCodes(sector);
+		setShowSectors((p) => !p);
+	}
 
 	const conditionList = [
 		{
@@ -101,6 +101,18 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 		},
 	];
 
+	function getAllSectores() {
+		const sectors: any[] | React.SetStateAction<undefined> = [];
+
+		if (MarketList) {
+			MarketList.map((i: { Sector: any }) => sectors.push(i.Sector));
+		}
+
+		// console.log(sectors);
+
+		setSectors(sectors as any);
+	}
+
 	function handleSetCondition(condition: ConditionTypes) {
 		let updatedArray = [...conditions];
 
@@ -108,7 +120,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 
 		// find existing condition
 		if (updatedArray.length > 0) {
-			let existing = updatedArray.filter((i: ConditionTypes, a) => i.id === condition.id);
+			let existing = updatedArray.filter((i: any, a) => i.value === condition.value);
 
 			if (existing.length > 0) {
 				return console.log("there is something in the array so i left");
@@ -118,6 +130,10 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 				updatedArray.push(condition);
 
 				setConditions(updatedArray);
+				setCurrentSector({
+					...currentSector,
+					Codes: updatedArray as any,
+				});
 			}
 		} else {
 			console.log("there was nothing and i added it to the array");
@@ -131,12 +147,12 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 	function handleSetAll() {
 		let updatedArray = [...conditions];
 
-		conditionList.map((it, k) => {
-			let existing = updatedArray.filter((i: ConditionTypes, a) => i.id === it.id);
+		conditionList.map((i: any) => {
+			let existing = updatedArray.filter((i: any) => i.value === i.value);
 			if (existing.length > 0) {
 				return;
 			} else {
-				updatedArray.push(it);
+				updatedArray.push(i);
 
 				setConditions(updatedArray);
 			}
@@ -147,22 +163,26 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 		let currentArray = [...conditions];
 
 		// find existing condition
-		let existing = currentArray.filter((i: ConditionTypes, a) => i.id === condition.id);
+		let existing = currentArray.filter((i: any, a) => i.value === condition.value);
 
 		if (existing.length > 0) {
-			const updatedArray = currentArray?.filter((i: ConditionTypes, a) => i.id !== condition.id);
+			const updatedArray = currentArray?.filter((i: any, a) => i.value !== condition.value);
 
 			setConditions(updatedArray);
+			setCurrentSector({
+				...currentSector,
+				codes: updatedArray as any,
+			});
 		} else {
 			console.log("this item does not exist in the array");
 		}
 	}
 
-	function isExisting(condition: ConditionTypes) {
+	function isExisting(condition: any) {
 		let currentArray = [...conditions];
 
 		// find existing condition
-		let existing = currentArray.filter((i: ConditionTypes, a) => i.id === condition.id);
+		let existing = currentArray.filter((i: any) => i.value === condition.value);
 
 		if (existing.length > 0) {
 			return true;
@@ -177,9 +197,34 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 		}
 	}
 
+	function saveBetConditions() {
+		// save bet coditions
+
+		console.log(currentSector, "this is the current selected market before all selcetion...");
+
+		const processCodes = currentSector.Codes.map((i: any) => i.value);
+		console.log(processCodes, "this is the current selected market after all selcetion...");
+		
+
+		const betConditions = {
+			...currentSector,
+			Codes: processCodes,
+		};
+
+		dispatchBet({ type: "BET_CONDITIONS", payload: { conditions: betConditions } });
+
+		// // console.log(currentSector, "this is the current selected market before all selcetion...");
+		// console.log(processCodes, "this is the current selected market after all selcetion...");
+	}
+
+	useEffect(() => {
+		fetchAlllMarkets();
+	}, []);
+
 	return showNoti ? (
 		<>
 			<div className="wrapper">
+				{/* ----------------phone----------------- */}
 				{isMobile || isTablet ? (
 					<div className="betInfo overlay z-[999999999999] fixed top-0 flex items-end left-0  w-full h-full bg-[#0000005c]">
 						<div
@@ -272,13 +317,29 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 
 													<ol className="team_options w-full p-4">
 														<p className="txt-xs f-b text-gray-900">Pick a sector</p>
-														{sectors.map((i, k) => (
-															<li key={k} role="button" className="option middle  mt-2  w-full  h-8 space-x-3">
-																<div className={`h-full w-1 rounded-lg ${i.color}`}></div>
+														{sectors.map(
+															(
+																i: {
+																	color: any;
+																	type:
+																		| string
+																		| number
+																		| boolean
+																		| React.ReactElement<any, string | React.JSXElementConstructor<any>>
+																		| React.ReactFragment
+																		| React.ReactPortal
+																		| null
+																		| undefined;
+																},
+																k: React.Key | null | undefined
+															) => (
+																<li key={k} role="button" className="option middle  mt-2  w-full  h-8 space-x-3">
+																	<div className={`h-full w-1 rounded-lg ${i.color}`}></div>
 
-																<h1 className="text-gray-500 txt-sm f-m capitalize">{i.type}</h1>
-															</li>
-														))}
+																	<h1 className="text-gray-500 txt-sm f-m capitalize">{i.type}</h1>
+																</li>
+															)
+														)}
 													</ol>
 												</div>
 											)}
@@ -365,26 +426,26 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 															<div role="button" onClick={handleSetAll} className="middle space-x-2">
 																<input onChange={handleSetAll} type="checkbox" name="all" id="" />
 																<p className="txt-xs f-s text-gray-500">Select All</p>
-
 															</div>
 														</div>
 
-														{conditionList.map((i, k) => (
-															<li
-																key={k}
-																role="button"
-																className="option middle  w-full  px-4 p-3 space-x-3"
-																onClick={() => handleSetCondition(i)}
-															>
-																<div className="icon">{!isExisting(i) ? <AddIcon /> : <CheckIcon />}</div>
+														{codes &&
+															codes.map((i: any, k) => (
+																<li
+																	key={k}
+																	role="button"
+																	className="option middle  w-full  px-4 p-3 space-x-3"
+																	onClick={() => handleSetCondition(i)}
+																>
+																	<div className="icon">{!isExisting(i) ? <AddIcon /> : <CheckIcon />}</div>
 
-																<h1 className="f-m text-gray-700">
-																	{i.betType}
-																	{":"}
-																	<span className="text-gray-400 txt-sm f-m ml-1">{i.name}</span>
-																</h1>
-															</li>
-														))}
+																	<h1 className="f-m text-gray-700">
+																		{i.value}
+																		{":"}
+																		<span className="text-gray-400 txt-sm f-m ml-1">{i.desc}</span>
+																	</h1>
+																</li>
+															))}
 													</ol>
 												</div>
 											)}
@@ -400,6 +461,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 						</div>
 					</div>
 				) : (
+					// ------------------desktop-----------------
 					<div className="betInfo overlay z-20 fixed top-0 flex justify-end left-0 strictFadeIn w-full h-full bg-[#0000005c]">
 						{/* ----Add sector Card---------  */}
 						<div className="info_panel slideInLeft relative w-[35%] h-screen bg-white rounded-l-lg">
@@ -441,7 +503,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 												onClick={handleSector}
 												className="selector_btn row-between p-4 border rounded-lg mt-[10px]"
 											>
-												<p className="txt-sm f-m text-gray-500">Select sector</p>
+												<p className="txt-sm f-m text-gray-500">{currentSector.Sector || "Select sector"}</p>
 
 												<Image
 													src={"/icons/dashboard/down.svg"}
@@ -486,24 +548,33 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 														</div>
 													</div>
 
-													<ol className="team_options w-full p-4">
-														<p className="txt-xs f-b text-gray-900">Pick a sector</p>
-														{sectors.map((i, k) => (
-															<li key={k} role="button" className="option middle  mt-2  w-full  h-8 space-x-3">
-																<div className={`h-full w-1 rounded-lg ${i.color}`}></div>
+													<ol className="team_options w-full p-4 h-[230px] overflow-y-scroll">
+														<p className="txt-xs f-b text-gray-900 ">Pick a sector</p>
+														<div className="h-fullw-full">
+															{sectorLists.map((i, k) => (
+																<li
+																	key={k}
+																	role="button"
+																	onClick={() => handlePickSector(i)}
+																	className="option middle  mt-2  w-full  h-8 space-x-3"
+																>
+																	<div className={`h-full w-1 rounded-lg bg-green-400`}></div>
 
-																<h1 className="text-gray-500 txt-sm f-m capitalize">{i.type}</h1>
-															</li>
-														))}
+																	<h1 className="text-gray-500 txt-sm f-m capitalize">{i}</h1>
+																</li>
+															))}
+														</div>
 													</ol>
 												</div>
 											)}
 										</div>
 
 										{/* ----select points */}
-										<div className="selector mt-4">
-											<InputField label={"Sector Point"} type={"text"} place={"e.g 2.5"} />
-										</div>
+										{!true && (
+											<div className="selector mt-4">
+												<InputField label={"Sector Point"} type={"text"} place={"e.g 2.5"} />
+											</div>
+										)}
 
 										{/* --select Sector Conditions--- */}
 										<div className="selector mt-4">
@@ -520,7 +591,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 														onClick={handleRefClic}
 														className="w-full h-full flex flex-wrap gap-2 gap-y-1"
 													>
-														{conditions.map((i, k) => (
+														{conditions.map((i: any, k) => (
 															<div
 																key={k}
 																role="button"
@@ -528,9 +599,9 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 																className=" p-2 middle space-x-3 rounded-lg bg-gray-100"
 															>
 																<h1 className="f-m text-gray-700">
-																	{i.betType}
+																	{i.value}
 																	{":"}
-																	<span className="text-gray-400 txt-sm f-m ml-1">{i.name}</span>
+																	<span className="text-gray-400 txt-sm f-m ml-1">{i.desc}</span>
 																</h1>
 
 																<button className="text-xs text-gray-400">
@@ -578,22 +649,23 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 													<ol className="team_options w-full px-4 p-2 space-y-2">
 														<p className="txt-xs f-b text-gray-900">Select one or more conditions</p>
 
-														{conditionList.map((i, k) => (
-															<li
-																key={k}
-																role="button"
-																className="option middle  w-full  px-4 p-3 space-x-3"
-																onClick={() => handleSetCondition(i)}
-															>
-																<div className="icon">{!isExisting(i) ? <AddIcon /> : <CheckIcon />}</div>
+														{codes &&
+															codes.map((i: any, k) => (
+																<li
+																	key={k}
+																	role="button"
+																	className="option middle  w-full  px-4 p-3 space-x-3"
+																	onClick={() => handleSetCondition(i)}
+																>
+																	<div className="icon">{!isExisting(i) ? <AddIcon /> : <CheckIcon />}</div>
 
-																<h1 className="f-m text-gray-700">
-																	{i.betType}
-																	{":"}
-																	<span className="text-gray-400 txt-sm f-m ml-1">{i.name}</span>
-																</h1>
-															</li>
-														))}
+																	<h1 className="f-m text-gray-700">
+																		{i.value}
+																		{":"}
+																		<span className="text-gray-400 txt-sm f-m ml-1">{i.desc}</span>
+																	</h1>
+																</li>
+															))}
 													</ol>
 												</div>
 											)}
@@ -601,7 +673,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 
 										{/* ---save btn */}
 										<div className="mt-8">
-											<Button text={"Save bet Conditions"} type={"button"} primary full />
+											<Button click={saveBetConditions} text={"Save bet Conditions"} type={"button"} primary full />
 										</div>
 									</div>
 								</div>

@@ -1,0 +1,40 @@
+{
+	"Type": "KoloBet",
+
+	"Leagues": ["Premier League"],
+
+	"Teams": ["Southampton", "Nottingham Forest"],
+
+	"Criteria": {
+
+
+		
+		"TeamA": { "name": "Southampton", "logo": "https://media.api-sports.io/football/teams/41.png" },
+		"TeamB": { "name": "Nottingham Forest", "logo": "https://media-3.api-sports.io/football/teams/65.png" },
+
+		"Conditions": [
+			{
+				"Sector": "H_TEAM/A_TEAM/DRAW",
+
+				"Codes": ["1", "2", "3"]
+			},
+
+			{
+				"Sector": "H_TEAM/A_TEAM/DRAW",
+
+				"Codes": ["1", "2", "3"]
+			}
+		],
+
+		"FixtureId": 868135,
+
+
+		"MatchDate": "2023-01-26T11:28:00.000+00:00"  //check match data ,  vlaidate useres waller`s balance image validity {size}
+	},
+
+	"Discount": { "discount": 0, "max": 0 },
+
+	"Amount": 100,
+
+	"Conditions": [{ "Sector": "H_TEAM/A_TEAM/DRAW", "Codes": "1" }]
+}

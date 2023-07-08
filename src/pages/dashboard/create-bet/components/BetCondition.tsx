@@ -1,13 +1,30 @@
 import Image from "next/image";
 
-import {  MoreSvg} from "@/assets";
+import { MoreSvg } from "@/assets";
+import { useBet } from "@/context/betContext";
 // import { NextPageWithLayout } from "../_app";
 
+export default function BetCondition({ handleAddCondition, isAdding }: { handleAddCondition: any; isAdding: boolean }) {
+	const conditions = [
+		{
+			Sector: "H_TEAM/A_TEAM/DRAW",
+
+			Codes: ["1", "2", "3"],
+		},
+
+		{
+			Sector: "H_TEAM/A_TEAM/DRAW",
+
+			Codes: ["1", "2", "3"],
+		},
+	];
+
+	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
+
+	console.log(Bet.Criteria.Conditions, "bet conditions");
+	
 
 
-
-export default function BetCondition({ handleAddCondition, isAdding }: { handleAddCondition: any; isAdding: boolean })
-{
 	return (
 		<>
 			<div className="md:flex justify-between">
@@ -48,51 +65,31 @@ export default function BetCondition({ handleAddCondition, isAdding }: { handleA
 			<div className="w-full   h-[450px] overflow-y-scroll pb-[84px] custom-scrollbar">
 				<div className="condition w-full h-auto grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 					{/* --------- */}
-					<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
-						<div className="  space-x-4 items-start flex">
-							<Image className="team_logo " src={"/icons/green_ball.svg"} alt="chealse" width={48} height={48} />
-							<div className="texts ">
-								<h1 className="team_name txt-md f-m text-gray-500">Home team / Away team / Draw</h1>
-							</div>
 
-							<MoreSvg />
+					{Bet.Criteria.Conditions.map((i, k) => (
+						// <div key={k} className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
+						// 	<div className="  space-x-4 items-start flex">
+						// 		<Image className="team_logo " src={"/icons/green_ball.svg"} alt="chealse" width={48} height={48} />
+						// 		<div className="texts ">
+						// 			<h1 className="team_name txt-md f-m text-gray-500">{i?.Sector}</h1>
+						// 		</div>
+
+						// 		<MoreSvg />
+						// 	</div>
+						// </div>
+
+						<div key={k}  className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
+					<div className="  space-x-4 items-start flex ">
+						<Image className="team_logo " src={"/icons/red_ball.svg"} alt="chealse" width={48} height={48} />
+						<div className="texts ">
+							<h1 className="team_name txt-md  f-m text-gray-500 text-left">{i?.Sector}</h1>
 						</div>
+
+						<MoreSvg />
 					</div>
+				</div>
+					))}
 
-					<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
-						<div className="  space-x-4 items-start flex">
-							<Image className="team_logo " src={"/icons/red_ball.svg"} alt="chealse" width={48} height={48} />
-							<div className="texts ">
-								<h1 className="team_name txt-md f-m text-gray-500">Home team / Away team / Draw</h1>
-							</div>
-
-							<MoreSvg />
-						</div>
-					</div>
-
-					{/* ---- */}
-					<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card ">
-						<div className="  space-x-4 items-start flex">
-							<Image className="team_logo " src={"/icons/blue_ball.svg"} alt="chealse" width={48} height={48} />
-							<div className="texts ">
-								<h1 className="team_name txt-md f-m text-gray-500">Home team / Away team / Draw</h1>
-							</div>
-
-							<MoreSvg />
-						</div>
-					</div>
-
-					{/* ---- */}
-					<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
-						<div className="  space-x-4 items-start flex">
-							<Image className="team_logo " src={"/icons/cyan_ball.svg"} alt="chealse" width={48} height={48} />
-							<div className="texts ">
-								<h1 className="team_name txt-md f-m text-gray-500">Home team / Away team / Draw</h1>
-							</div>
-
-							<MoreSvg />
-						</div>
-					</div>
 					{/* --------- */}
 					<div
 						role="button"
@@ -110,3 +107,29 @@ export default function BetCondition({ handleAddCondition, isAdding }: { handleA
 		</>
 	);
 }
+
+				
+
+// 				{/* ---- */}
+// 				<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card ">
+// 					<div className="  space-x-4 items-start flex">
+// 						<Image className="team_logo " src={"/icons/blue_ball.svg"} alt="chealse" width={48} height={48} />
+// 						<div className="texts ">
+// 							<h1 className="team_name txt-md f-m text-gray-500">Home team / Away team / Draw</h1>
+// 						</div>
+
+// 						<MoreSvg />
+// 					</div>
+// 				</div>
+
+// 				{/* ---- */}
+// 				<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
+// 					<div className="  space-x-4 items-start flex">
+// 						<Image className="team_logo " src={"/icons/cyan_ball.svg"} alt="chealse" width={48} height={48} />
+// 						<div className="texts ">
+// 							<h1 className="team_name txt-md f-m text-gray-500">Home team / Away team / Draw</h1>
+// 						</div>
+
+// 						<MoreSvg />
+// 					</div>
+// 				</div>

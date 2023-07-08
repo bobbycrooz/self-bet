@@ -6,13 +6,13 @@ import { ReactElement, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { CarretRightSvg, MoreSvg, SvgElement, UploadSvg } from "@/assets";
+import { useBet } from "@/context/betContext";
 
+export default function CreateBet({ stepHandler }: { stepHandler: any }) {
+	const { Bet, dispatchBet } = useBet();
 
+	console.log(Bet, "bet");
 
-
-
-export default function CreateBet({ stepHandler }: { stepHandler: any })
-{
 	const fetures = [
 		"Create custom bets on a “single” match ",
 		"Unlimited number of participants",
@@ -27,6 +27,19 @@ export default function CreateBet({ stepHandler }: { stepHandler: any })
 
 	function ReturnJSX(text: string) {
 		return <strong className="txt-xs md:text-[16px] text-white">{text}</strong>;
+	}
+
+	// handlers--------------
+	function handleBetType(type: string) {
+		// dispatch bet type
+
+		if (type == "kolo") {
+			dispatchBet({ type: "BET_TYPE", payload: { type: "KoloBet" } });
+		} else {
+			dispatchBet({ type: "BET_TYPE", payload: { type: "PointBet" } });
+		}
+
+		stepHandler(2);
 	}
 
 	return (
@@ -55,7 +68,7 @@ export default function CreateBet({ stepHandler }: { stepHandler: any })
 									width={48}
 									height={48}
 									role="button"
-									onClick={() => stepHandler(2)}
+									onClick={() => handleBetType("kolo")}
 									className="hidden md:block"
 								/>
 
@@ -66,7 +79,7 @@ export default function CreateBet({ stepHandler }: { stepHandler: any })
 									width={32}
 									height={32}
 									role="button"
-									onClick={() => stepHandler(2)}
+									onClick={() => handleBetType("kolo")}
 									className=" md:hidden"
 								/>
 							</div>
@@ -86,6 +99,7 @@ export default function CreateBet({ stepHandler }: { stepHandler: any })
 						</div>
 					</div>
 				</div>
+
 				{/* -----Ponit banner------ */}
 				<div className=" w-full rounded-lg h-[291px] md:h-[520px] relative ">
 					<Image src={"/images/create/point_banner.png"} alt={""} fill className=" rounded-lg" />
@@ -100,7 +114,7 @@ export default function CreateBet({ stepHandler }: { stepHandler: any })
 									width={48}
 									height={48}
 									role="button"
-									onClick={() => stepHandler(2)}
+									onClick={() => handleBetType("point")}
 									className="hidden md:block"
 								/>
 
@@ -111,7 +125,7 @@ export default function CreateBet({ stepHandler }: { stepHandler: any })
 									width={32}
 									height={32}
 									role="button"
-									onClick={() => stepHandler(2)}
+									onClick={() => handleBetType("point")}
 									className=" md:hidden"
 								/>
 							</div>
@@ -131,9 +145,7 @@ export default function CreateBet({ stepHandler }: { stepHandler: any })
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</>
 	);
 }
-

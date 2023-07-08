@@ -3,10 +3,28 @@ import Image from "next/image";
 import { CarretRightSvg } from "@/assets";
 import { DropDown } from "@components";
 import { useState } from "react";
+import { features } from "process";
+import { useBet } from "@/context/betContext";
 
+const fixtures = [
+	{
+		TeamA: {
+			name: "Chelsea",
+			logo: "/icons/teams/chealse_logo.svg",
+		},
+		TeamB: {
+			name: "Leicester C",
+			logo: "/icons/teams/lei_logo.svg",
+		},
+	},
 
-export default function SelectMatch()
-{
+	{
+		TeamA: { name: "Southampton", logo: "https://media.api-sports.io/football/teams/41.png" },
+		TeamB: { name: "Nottingham Forest", logo: "https://media-3.api-sports.io/football/teams/65.png" },
+	},
+];
+
+export default function SelectMatch() {
 	const [searchMode, setSearchMode] = useState({
 		team: false,
 		name: false,
@@ -14,6 +32,28 @@ export default function SelectMatch()
 		percent: false,
 		range: false,
 	});
+	const { Bet, dispatchBet } = useBet();
+
+	const handleMatchSelection = (i: any) => {
+
+		// get team names 
+		const teamA = i.TeamA.name;
+		const teamB = i.TeamB.name;
+
+		const Teams = [teamA, teamB];
+
+
+
+		dispatchBet({ type: "BET_MATCH", payload: i });
+		dispatchBet({
+			type: "BET_TEAMS", payload: {
+				teams: Teams
+			}
+		});
+		
+		console.log(Teams);
+		
+	};
 
 	const nav = ["All aleague", "Premier League", "la liga", "Seria A", "bundes liga"];
 
@@ -88,49 +128,39 @@ export default function SelectMatch()
 			<div className="w-full  h-[450px] overflow-y-scroll custom-scrollbar pb-[0]  md:pb-[84px]">
 				<div className="matched w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 gap-6 md:pt-4 ">
 					{/* --team  display baner---- */}
-					{Array(16)
-						.fill(1)
-						.map((i, k) => (
-							<div
-								key={k}
-								className="teams_display_matches middle hover:border-gray-500 shadow-bet-card hover:shadow-none relative justify-around border border-gray-200 rounded-lg p-6 "
-							>
-								<div className="team_caard team_caard col-center space-y-2">
-									<Image
-										className="team_logo "
-										src={"/icons/teams/chealse_logo.svg"}
-										alt="chealse"
-										width={48}
-										height={48}
-									/>
-									<h1 className="team_name txt-xs f-s text-gray-600">Chelsea</h1>
-								</div>
-
-								<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
-									<h1 className="">Sat, 3 Dec</h1>
-									<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">8:30</h1>
-								</div>
-
-								<div className="team_caard col-center  space-y-2">
-									<Image
-										className="team_logo "
-										src={"/icons/teams/lei_logo.svg"}
-										alt="chealse"
-										width={48}
-										height={48}
-									/>
-									<h1 className="team_name txt-xs f-s text-gray-600">Leicester C</h1>
-								</div>
-
-								<Image
-									className="selector  absolute right-0 top-0"
-									src={"/images/create/selector.svg"}
-									alt="chealse"
-									width={32}
-									height={32}
-								/>
+					{fixtures.map((i, k) => (
+						<div
+							key={k}
+							role="button"
+							onClick={() => handleMatchSelection(i)}
+							className="cursor-pointer teams_display_matches middle hover:border-gray-500 shadow-bet-card hover:shadow-none relative justify-around border border-gray-200 rounded-lg p-6 "
+						>
+							{/* Team A */}
+							<div className="team_caard team_caard col-center space-y-2">
+								<Image className="team_logo " src={i.TeamA.logo} alt="chealse" width={48} height={48} />
+								<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamA.name}</h1>
 							</div>
-						))}
+
+							<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
+								<h1 className="">Sat, 3 Dec</h1>
+								<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">8:30</h1>
+							</div>
+
+							{/* Team B */}
+							<div className="team_caard col-center  space-y-2">
+								<Image className="team_logo " src={i.TeamB.logo} alt="chealse" width={48} height={48} />
+								<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamB.name}</h1>
+							</div>
+
+							<Image
+								className="selector  absolute right-0 top-0"
+								src={"/images/create/selector.svg"}
+								alt="chealse"
+								width={32}
+								height={32}
+							/>
+						</div>
+					))}
 				</div>
 			</div>
 		</div>

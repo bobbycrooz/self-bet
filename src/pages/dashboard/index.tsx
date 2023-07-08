@@ -9,6 +9,7 @@ import { NextPageWithLayout } from "../_app";
 import { betCardType } from "@/components/BetCard";
 import Link from "next/link";
 import { useUser } from "@/context/userContext";
+import { getToken } from "@/utils";
 // import {betCardType}
 
 function Home() {
@@ -55,6 +56,10 @@ function Home() {
 			});
 		}
 	}, [pathname]);
+
+
+	console.log(getToken(), "fdfvioepjgioe riogje----------------------------------");
+	
 
 	return (
 		<>

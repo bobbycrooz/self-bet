@@ -33,6 +33,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 			<main className={inter.className}>
 				<SessionProvider session={pageProps.session}>
 					<UserProvider>
+						
 						<BetProvider>{getLayout(<Component {...pageProps} />)}</BetProvider>
 					</UserProvider>
 				</SessionProvider>

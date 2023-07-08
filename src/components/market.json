@@ -1,0 +1,344 @@
+[
+  {
+    "_id": "6492a96d8c47a7b5599a590d",
+    "Sector": "H_TEAM/A_TEAM/DRAW",
+    "Codes": [
+      {
+        "value": "1",
+        "desc": "Home to Win"
+      },
+      {
+        "value": "2",
+        "desc": "Away to Win"
+      },
+      {
+        "value": "X",
+        "desc": "Draw"
+      },
+      {
+        "value": "1XDC",
+        "desc": "Home Win or Draw"
+      },
+      {
+        "value": "X2DC",
+        "desc": "Away Win or Draw"
+      },
+      {
+        "value": "12DC",
+        "desc": "Home Wins or Away Wins"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6492a96d8c47a7b5599a5910",
+    "Sector": "HT(O/U)",
+    "Codes": [
+      {
+        "value": "Ov0.5",
+        "desc": "Half time goals Over 0.5"
+      },
+      {
+        "value": "Un0.5",
+        "desc": "Half time goals Under 0.5"
+      },
+      {
+        "value": "Ov1.5",
+        "desc": "Half time goals Over 1.5"
+      },
+      {
+        "value": "Un1.5",
+        "desc": "Half time goals Under 1.5"
+      },
+      {
+        "value": "Ov2.5",
+        "desc": "Half time goals Over 2.5"
+      },
+      {
+        "value": "Un2.5",
+        "desc": "Half time goals Under 2.5"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6492a96d8c47a7b5599a5911",
+    "Sector": "NumberOfGoals",
+    "Codes": [
+      {
+        "value": "1-2",
+        "desc": "Minimum of one Goal"
+      },
+      {
+        "value": "1-3",
+        "desc": "Minimum of Three Goals"
+      },
+      {
+        "value": "HalfTime More Goals",
+        "desc": "HalfTime More Goals"
+      },
+      {
+        "value": "No HalfTime Goals",
+        "desc": "No HalfTime Goals"
+      },
+      {
+        "value": "Second Half More Goals",
+        "desc": "Second Half More Goals"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6492a96d8c47a7b5599a590e",
+    "Sector": "FH/SH",
+    "Codes": [
+      {
+        "value": "XHT",
+        "desc": "First Half ends in draw"
+      },
+      {
+        "value": "1HT",
+        "desc": "Home Wins First Half"
+      },
+      {
+        "value": "2HT",
+        "desc": "Away Wins First Half"
+      },
+      {
+        "value": "XST",
+        "desc": "Second half ends in draw"
+      },
+      {
+        "value": "1ST",
+        "desc": "Home Wins Second Half"
+      },
+      {
+        "value": "2ST",
+        "desc": "Away Wins Second Half"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6492a96d8c47a7b5599a590f",
+    "Sector": "GoalScores",
+    "Codes": [
+      {
+        "value": "GG",
+        "desc": "Both Teams Must Score"
+      },
+      {
+        "value": "NG",
+        "desc": "Both Teams Will Not Score Against Each Other"
+      },
+      {
+        "value": "HS",
+        "desc": "Home Team Has to score minimum of one goal"
+      },
+      {
+        "value": "HNS",
+        "desc": "Home Team Will not score"
+      },
+      {
+        "value": "AS",
+        "desc": "Away Team Has to score minimum of one goal"
+      },
+      {
+        "value": "HNS",
+        "desc": "Away Team Will not score"
+      },
+      {
+        "value": "1GG",
+        "desc": "Home Wins And Both Teams Score"
+      },
+      {
+        "value": "2GG",
+        "desc": "Away Wins And Both Teams Score"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6492a96d8c47a7b5599a5914",
+    "Sector": "ODD/EVEN",
+    "Codes": [
+      {
+        "value": "ODD",
+        "desc": "Total Goals must be an Odd Numer"
+      },
+      {
+        "value": "Even",
+        "desc": "Total Goals must be an Even Numer"
+      },
+      {
+        "value": "ODD HT",
+        "desc": "First Half Goals must be an Odd Numer"
+      },
+      {
+        "value": "EVEN HT",
+        "desc": "First Half Goals must be an Even Numer"
+      },
+      {
+        "value": "ODD ST",
+        "desc": "Second Half Goals must be an Odd Numer"
+      },
+      {
+        "value": "EVEN ST",
+        "desc": "Second Half Goals must be an Even Numer"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6492a96d8c47a7b5599a5915",
+    "Sector": "GG/NG HT/ST",
+    "Codes": [
+      {
+        "value": "GG HT",
+        "desc": "Both Teams Must score in first half"
+      },
+      {
+        "value": "NG HT",
+        "desc": "Only One of the two teams must score in first half"
+      },
+      {
+        "value": "GG ST",
+        "desc": "Both Teams Must score in second half"
+      },
+      {
+        "value": "NG ST",
+        "desc": "Only One of the two teams must score in second half"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6492a96d8c47a7b5599a5916",
+    "Sector": "DC HT/ST",
+    "Codes": [
+      {
+        "value": "1XHT",
+        "desc": "Home Wins Or Draw first half"
+      },
+      {
+        "value": "X2HT",
+        "desc": "Away Wins Or Draw first half"
+      },
+      {
+        "value": "12HT",
+        "desc": "Either Team Must Wins First Half"
+      },
+      {
+        "value": "1XST",
+        "desc": "Home Wins Or Draw Second half"
+      },
+      {
+        "value": "X2ST",
+        "desc": "Away Wins Or Draw Second half"
+      },
+      {
+        "value": "12ST",
+        "desc": "Either Team Must Wins Second Half"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6492a96d8c47a7b5599a5912",
+    "Sector": "H/A(O/U)",
+    "Codes": [
+      {
+        "value": "H(Ov0.5)",
+        "desc": "Home Scores Over 0.5"
+      },
+      {
+        "value": "H(Un0.5)",
+        "desc": "Home Scores Under 0.5"
+      },
+      {
+        "value": "A(Ov0.5)",
+        "desc": "Away Scores Over 0.5"
+      },
+      {
+        "value": "A(Un0.5)",
+        "desc": "Away Scores Under 0.5"
+      },
+      {
+        "value": "H(Ov1.5)",
+        "desc": "Home Scores Over 1.5"
+      },
+      {
+        "value": "H(Un1.5)",
+        "desc": "Home Scores Under 1.5"
+      },
+      {
+        "value": "A(Ov1.5)",
+        "desc": "Away Scores Over 1.5"
+      },
+      {
+        "value": "A(Un1.5)",
+        "desc": "Away Scores Under 1.5"
+      },
+      {
+        "value": "H(Ov2.5)",
+        "desc": "Home Scores Over 2.5"
+      },
+      {
+        "value": "H(Un2.5)",
+        "desc": "Home Scores Under 2.5"
+      },
+      {
+        "value": "A(Ov2.5)",
+        "desc": "Away Scores Over 2.5"
+      },
+      {
+        "value": "A(Un2.5)",
+        "desc": "Home Scores Under 2.5"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "6492a96d8c47a7b5599a5913",
+    "Sector": "HT/FT",
+    "Codes": [
+      {
+        "value": "1/1",
+        "desc": "Home Wins First And Second Half"
+      },
+      {
+        "value": "1/2",
+        "desc": "Home Wins First Half, Away Wins Full Time"
+      },
+      {
+        "value": "2/1",
+        "desc": "Away Wins First Half, Home Wins Full Time"
+      },
+      {
+        "value": "2/2",
+        "desc": "Away Wins Both Half"
+      },
+      {
+        "value": "X/X",
+        "desc": "First and Second Half Draw"
+      },
+      {
+        "value": "1/X",
+        "desc": "Home Wins First Half But Match Ends in draw"
+      },
+      {
+        "value": "X/1",
+        "desc": "First Half Draw But Home wins Full Time"
+      },
+      {
+        "value": "2/X",
+        "desc": "Away Wins First Half But Match Ends in draw"
+      },
+      {
+        "value": "X/2",
+        "desc": "First Half Draw But Away wins Full Time"
+      }
+    ],
+    "__v": 0
+  }
+]

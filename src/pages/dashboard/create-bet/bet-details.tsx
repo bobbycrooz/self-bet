@@ -24,39 +24,29 @@ const statusConst = {
 function Home() {
 	const { push, query, pathname } = useRouter();
 
-	const {isLoading,
-		placing,
-		status,
-		handlePlaceBet, setIsLoading,
-		setStatus} = useBet()
+	const { Bet, isLoading, placing, status, handlePlaceBet, setIsLoading, setStatus, MarketList } = useBet();
 
+	console.log(Bet, "bet ------------ ");
 
+	const topRef = useRef(null);
 
-	
-		const topRef = useRef(null);
-		useEffect(() => {
-			if (topRef.current) {
-				// @ts-ignore
-				topRef.current.scrollIntoView({
-					behavior: "smooth",
-					block: "start",
-					inline: "nearest",
-				});
-			}
-		}, [pathname]);
+	useEffect(() => {
+		if (topRef.current) {
+			// @ts-ignore
+			topRef.current.scrollIntoView({
+				behavior: "smooth",
+				block: "start",
+				inline: "nearest",
+			});
+		}
+	}, [pathname]);
 
 	return (
 		<>
 			<Head>
 				<title>Details </title>
-				<meta
-					name="description"
-					content="welcome to selfbet home"
-				/>
-				<meta
-					name="viewport"
-					content="width=device-width, initial-scale=1"
-				/>
+				<meta name="description" content="welcome to selfbet home" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
@@ -70,9 +60,7 @@ function Home() {
 						<div className="bet_banner w-full h-[124px] md:h-[224px] relative">
 							{!true ? (
 								<Image
-									src={
-										"/images/home/kolo_banner.png"
-									}
+									src={"/images/home/kolo_banner.png"}
 									alt={""}
 									fill
 									className="r"
@@ -81,9 +69,7 @@ function Home() {
 								/>
 							) : (
 								<Image
-									src={
-										"/images/home/point_banner.png"
-									}
+									src={"/images/home/point_banner.png"}
 									alt={""}
 									fill
 									className="r"
@@ -96,34 +82,33 @@ function Home() {
 						{/* ------bet details container */}
 						<div className="w-full py-4 space-y-3">
 							{/* bet_details  component */}
-							<BetConditionDropdown />
-							<BetConditionDropdown />
-							<BetConditionDropdown />
+
+							{<BetConditionDropdown Bet={Bet} />}
+							{/* <BetConditionDropdown />
+							<BetConditionDropdown /> */}
 						</div>
 						<div className="md:hidden w-full h-28"></div>
 					</main>
 
 					<aside className="hidden md:flex  w-[286px] h-auto sticky top-6">
 						{/* ----- */}
-						<div className="create_aside border-gray-200 w-full rounded-lg shadow-md bg-white">
+						<div className="create_aside border-gray-200 w-full rounded-lg shadow-md bg-white br">
 							{/* header */}
 							<div className="h-[56px]  w-full relative header rounded-t-lg middle ">
 								<div className="middle">
-									<h1 className="header_text txt-sm f-b text-gray-50 p-4">
-										Betslip
-									</h1>
+									<h1 className="header_text txt-sm f-b text-gray-50 p-4">Betslip</h1>
 
-									<p className="rounded bg-gray-400 px-2 p-[2px] text-white txt-xs f-m">
-										{8}
-									</p>
+									<p className="rounded bg-gray-400 px-2 p-[2px] text-white txt-xs f-m">{8}</p>
 								</div>
 							</div>
 
 							<div className="aside_body p-2 py-6 space-y-3">
 								{/* ----bets */}
-								<BetSlipDetails />
-								<BetSlipDetails />
-								<BetSlipDetails />
+								{Bet.Conditions.map((i: any, k: number) => (
+									<div key={k} className="space-y-2">
+										<BetSlipDetails data={i} />
+									</div>
+								))}
 
 								{/* ----price -box */}
 								<div
@@ -131,32 +116,16 @@ function Home() {
 "
 								>
 									<div className="row-between w-full">
-										<h1 className="p  txt-sm f-m">
-											Stake
-										</h1>
-										<h1 className="txt-sm f-b ">
-											N500
-										</h1>
+										<h1 className="p  txt-sm f-m">Stake</h1>
+										<h1 className="txt-sm f-b ">N500</h1>
 									</div>
 
 									<div className="row-between w-full">
-										<h1 className="p  txt-sm f-m">
-											Potential win
-										</h1>
-										<h1 className="txt-sm f-b ">
-											N5000
-										</h1>
+										<h1 className="p  txt-sm f-m">Potential win</h1>
+										<h1 className="txt-sm f-b ">N5000</h1>
 									</div>
 
-									<Button
-										text={"Place Bet"}
-										type={"button"}
-										full
-										primary
-										click={
-											handlePlaceBet
-										}
-									/>
+									<Button text={"Place Bet"} type={"button"} full primary click={handlePlaceBet} />
 								</div>
 							</div>
 						</div>
@@ -181,7 +150,13 @@ Home.getLayout = function getLayout(page: ReactElement) {
 	return <DashboardLayout>{page}</DashboardLayout>;
 };
 
-export function BetSlipDetails() {
+export function BetSlipDetails({ data }: { data: any }) {
+	const { Bet, dispatchBet } = useBet();
+
+	
+
+	console.log(data, "bet --------bet slip for data---- ");
+
 	const [sowList, setShowList] = useState(false);
 
 	function handleShowList() {
@@ -194,7 +169,7 @@ export function BetSlipDetails() {
 			<div className="  p-3" role="button" onClick={handleShowList}>
 				<div className="row-between">
 					<h1 className="txt-sm f-m text-gray-700">
-						Leicester - Chelsea
+						{Bet.Teams[0]} - {Bet.Teams[1]}
 					</h1>
 
 					<Image
@@ -210,34 +185,34 @@ export function BetSlipDetails() {
 			</div>
 
 			{/* ----body */}
-			{sowList && (
+			{!sowList && (
 				<div className="w-full border-t  strictFadeIn">
 					<ol className=" px-4">
-						{Array(4)
-							.fill(1)
-							.map((i, k) => (
-								<li
-									key={k}
-									className={`selector_item flex w-full h-full py-4  ${
-										k !== 3 &&
-										"border-b"
-									} space-x-3`}
-								>
-									<div className="mt-1">
-										<CheckSVG />
-									</div>
 
-									<div className="column  space-y-2">
-										<h1 className="f-b txt-sm text-gray-900">
-											1{" "}
-										</h1>
+							<li className={`selector_item flex w-full h-full py-4  ${ "border-b"} space-x-3`}>
+								<div className="mt-1">
+									<CheckSVG />
+								</div>
 
-										<p className="text-gray-400 txt-xs  f-s">
-											HOME
-										</p>
-									</div>
-								</li>
-							))}
+								<div className="column  space-y-2">
+									<h1 className="f-b txt-sm text-gray-900">{data?.Sector} </h1>
+
+									<p className="text-gray-400 txt-xs  f-s">{data?.Codes}</p>
+								</div>
+							</li>
+						{/* {data.map((i, k) => (
+							<li key={k} className={`selector_item flex w-full h-full py-4  ${k !== 3 && "border-b"} space-x-3`}>
+								<div className="mt-1">
+									<CheckSVG />
+								</div>
+
+								<div className="column  space-y-2">
+									<h1 className="f-b txt-sm text-gray-900">{i.Sector} </h1>
+
+									<p className="text-gray-400 txt-xs  f-s">{i.Codes}</p>
+								</div>
+							</li>
+						))} */}
 					</ol>
 				</div>
 			)}
@@ -247,21 +222,8 @@ export function BetSlipDetails() {
 
 function CheckSVG() {
 	return (
-		<svg
-			width="16"
-			height="16"
-			viewBox="0 0 16 16"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<rect
-				x="0.4"
-				y="0.4"
-				width="15.2"
-				height="15.2"
-				rx="4.4"
-				fill="#4B5563"
-			/>
+		<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect x="0.4" y="0.4" width="15.2" height="15.2" rx="4.4" fill="#4B5563" />
 			<path
 				d="M11.7342 5.2002L6.60091 10.3335L4.26758 8.0002"
 				stroke="white"
@@ -269,21 +231,14 @@ function CheckSVG() {
 				stroke-linecap="round"
 				stroke-linejoin="round"
 			/>
-			<rect
-				x="0.4"
-				y="0.4"
-				width="15.2"
-				height="15.2"
-				rx="4.4"
-				stroke="#4B5563"
-				stroke-width="0.8"
-			/>
+			<rect x="0.4" y="0.4" width="15.2" height="15.2" rx="4.4" stroke="#4B5563" stroke-width="0.8" />
 		</svg>
 	);
 }
 
-function BetConditionDropdown() {
+function BetConditionDropdown({ Bet }: { Bet: any }) {
 	const [isOpen, setIsOpen] = useState(false);
+	const { Criteria } = Bet;
 
 	function handleOpen() {
 		setIsOpen((p) => !p);
@@ -291,72 +246,41 @@ function BetConditionDropdown() {
 
 	return (
 		<div
-			className={`bet-details-dropdown w-full ${
-				isOpen && "active"
-			} border  border-gray-200 rounded-lg shadow-bet-card`}
+			className={`bet-details-dropdown w-full ${isOpen && "active"} border  border-gray-200 rounded-lg shadow-bet-card`}
 		>
 			{/* ---heaader---- */}
-			<div
-				role="button"
-				onClick={handleOpen}
-				className="card-header bg-white rounded-t-lg "
-			>
+			<div role="button" onClick={handleOpen} className="card-header bg-white rounded-t-lg ">
 				<div className="teams_display row-between bg-white border-b  border-gray-200 rounded-lg p-4  ">
 					<div className="team_caard team_caard col-center space-y-2">
-						<Image
-							className="team_logo "
-							src={"/icons/teams/chealse_logo.svg"}
-							alt="chealse"
-							width={48}
-							height={48}
-						/>
-						<h1 className="team_name txt-xs f-s text-gray-600">
-							Chelsea
-						</h1>
+						<Image className="team_logo " src={Criteria.TeamA.logo} alt="chealse" width={48} height={48} />
+						<h1 className="team_name txt-xs f-s text-gray-600">{Criteria.TeamA.name}</h1>
 					</div>
 
 					<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
 						<h1 className="">Sat, 3 Dec</h1>
-						<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">
-							8:30
-						</h1>
+						<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">8:30</h1>
 					</div>
 
 					<div className="team_caard col-center  space-y-2">
-						<Image
-							className="team_logo "
-							src={"/icons/teams/lei_logo.svg"}
-							alt="chealse"
-							width={48}
-							height={48}
-						/>
-						<h1 className="team_name txt-xs f-s text-gray-600">
-							Leicester C
-						</h1>
+						<Image className="team_logo " src={Criteria.TeamB.logo} alt="chealse" width={48} height={48} />
+						<h1 className="team_name txt-xs f-s text-gray-600"> {Criteria.TeamB.name}</h1>
 					</div>
 				</div>{" "}
 			</div>
 
 			{/* -------body------- */}
-			<div
-				className={`${
-					!true && "active"
-				} transition-all p-4 bg-white  card_body w-full`}
-			>
+			<div className={`${!true && "active"} transition-all p-4 bg-white  card_body w-full`}>
 				<h1 className="txt-xs md:txt-sm f-m text-gray-500">
-					You can select only one condition from each bet
-					sector. Each selection counts as the sector point
+					You can select only one condition from each bet sector. Each selection counts as the sector point
 				</h1>
 
 				{/* ---- */}
 				<div className="grid md:grid-cols-2 gap-3 mt-6">
-					{Array(4)
-						.fill(1)
-						.map((i, k) => (
-							<div key={k} className="">
-								<BetSelectorDetails />
-							</div>
-						))}
+					{Criteria.Conditions.map((i: any, k: number) => (
+						<div key={k} className="">
+							<BetSelectorDetails sectors={i} />
+						</div>
+					))}
 				</div>
 			</div>
 
@@ -382,21 +306,57 @@ function BetConditionDropdown() {
 	);
 }
 
-function BetSelectorDetails() {
+function BetSelectorDetails({ sectors }: { sectors: any }) {
 	const [sowList, setShowList] = useState(false);
+	const { MarketList } = useBet();
+	const { Bet, dispatchBet } = useBet();
+
 
 	function handleShowList() {
 		setShowList((p) => !p);
 	}
+
+	function handlePickCondition(i: any) {
+		const pickedCondition = {
+			Sector: sectors.Sector,
+			Codes: i,
+
+		};
+
+
+		dispatchBet({
+			type: "PICK_CONDITION",
+			payload: {
+				condition: pickedCondition,
+			},
+		});
+	}
+
+	function getDesc(i: string) {
+		console.log(i, "----");
+
+		// const sectoreDtails = MarketList.find((i: any) => i.Sector === sectors.Sector);
+
+		// get array of codes for given sector
+		const codes = MarketList.find((i: any) => i.Sector === sectors.Sector).Codes;
+
+
+		const desc = codes.find((item: any) => item.value === i).desc;
+
+
+		return desc;
+	}
+
+	// useEffect(() => {
+	// 	processSectorConditions();
+	// }, []);
 
 	return (
 		<div className="conditon_card border rounded-lg  h-auto">
 			{/* --header */}
 			<div className=" p-3 " role="button" onClick={handleShowList}>
 				<div className="row-between">
-					<h1 className="txt-sm f-b text-gray-500">
-						⚽️ Home team / Away team / Draw
-					</h1>
+					<h1 className="txt-sm f-b text-gray-500">⚽️{sectors.Sector}</h1>
 
 					<Image
 						src={"/icons/dashboard/down.svg"}
@@ -408,9 +368,7 @@ function BetSelectorDetails() {
 						className="carret"
 					/>
 				</div>
-				<p className="txt-sm text-gray-400 mt-1">
-					Predict who wins or draws
-				</p>
+				<p className="txt-sm text-gray-400 mt-1">Predict who wins or draws</p>
 			</div>
 
 			{/* ----body */}
@@ -418,21 +376,18 @@ function BetSelectorDetails() {
 			{sowList && (
 				<div className="w-full border-t rounded-b-xl">
 					<ol className="space-y-4 p-4">
-						{Array(4)
-							.fill(1)
-							.map((i, k) => (
-								<li
-									key={k}
-									className="selector_item rounded-lg bg-gray-50 p-[10px] px-4"
-								>
-									<h1 className="f-b">
-										1{" "}
-										<span className="text-gray-400 txt-sm f-m">
-											[Description]
-										</span>
-									</h1>
-								</li>
-							))}
+						{sectors.Codes.map((i: any, k: number) => (
+							<li
+								role="button"
+								onClick={() => handlePickCondition( i)}
+								key={k}
+								className="selector_item rounded-lg bg-gray-50 p-[10px] px-4"
+							>
+								<h1 className="f-b">
+									{i} <span className="text-gray-400 txt-sm f-m">{getDesc(i)}</span>
+								</h1>
+							</li>
+						))}
 					</ol>
 				</div>
 			)}

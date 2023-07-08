@@ -8,12 +8,7 @@ import { features } from "@utils";
 import { useUser } from "@/context/userContext";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { checkSVG } from "@/assets";
-
-interface UserDetailsTypes {
-	username?: string;
-	email?: string;
-	password?: string;
-}
+import { UserDetailsTypes } from "@/types";
 
 export default function Home() {
 	const [loginMode, setLoginMode] = useState(true);
@@ -22,20 +17,20 @@ export default function Home() {
 	const [isChecked, setIsChecked] = useState(false);
 	const { push, query, pathname } = useRouter();
 	const [userDetails, setUserDetails] = useState<UserDetailsTypes>({});
-	const { state, dispatch } = useUser();
+	const { state, dispatch, handleAuth } = useUser();
 	const { data: session } = useSession();
 
-	console.log("currently login mode is :", session);
+	console.log("currently login mode is :", loginMode);
 
 	const registerSchema = {
-		email: "",
-		name: "",
-		password: "",
+		Email: "bobby@mail.com",
+		Username: "",
+		Password: "",
 	};
 
 	const logingSchema = {
-		name: "",
-		password: "",
+		Email: "",
+		Password: "",
 	};
 
 	// handlers--------------
@@ -59,18 +54,34 @@ export default function Home() {
 	}
 
 	const formik = useFormik({
-    initialValues: loginMode ? logingSchema : registerSchema,
-    
-    
+		initialValues: loginMode == true  ? logingSchema : registerSchema,
 
-		onSubmit: (values) => {
-			console.log(values);
-			dispatch({ type: "STORE_USER", payload: values });
+		onSubmit: async (values) => {
 			setIsLoading(true);
-			setTimeout(() => {
-				setIsLoading(false);
+
+			const res = await handleAuth(values, loginMode);
+			// dispatch({ type: "STORE_USER", payload: values });
+
+			if (!loginMode && res) {
+				setIsLoading(!true);
+				setLoginMode(true);
+
+				// 	push("/dashboard");
+			} else if (res) {
+				setIsLoading(!true);
 				push("/dashboard");
-			}, 2000);
+			}
+
+
+				setIsLoading(!true);
+
+			console.log('somothig wnet wrong');
+			
+			// if (res) {
+			// 	setIsLoading(!true);
+
+			// 	push("/dashboard");
+			// }
 		},
 	});
 
@@ -161,25 +172,26 @@ export default function Home() {
 						<form onSubmit={formik.handleSubmit} className="w-full space-y-6">
 							<div className="space-y-4">
 								<InputField
-									type={"text"}
-									label="username"
-									required
-									filedName="username"
-									place={"Enter a username"}
+									filedName="Email"
+									type={"email"}
+									label="Email"
+									place={"***@gmail.com"}
 									change={formik.handleChange}
-									value={formik.values.name}
-									name="name"
+									// @ts-ignore
+									value={formik.values.Email}
+									name="Email"
 								/>
 								{!loginMode && (
 									<InputField
-										filedName="email"
-										type={"email"}
-										label="Email"
-										place={"***@gmail.com"}
+										type={"text"}
+										label="username"
+										required
+										filedName="Username"
+										place={"Enter a username"}
 										change={formik.handleChange}
 										// @ts-ignore
-										value={formik.values.email}
-										name="email"
+										value={formik.values.Username}
+										name="Username"
 									/>
 								)}
 
@@ -188,8 +200,8 @@ export default function Home() {
 									label="Password"
 									place={"********"}
 									change={formik.handleChange}
-									value={formik.values.password}
-									name="password"
+									value={formik.values.Password}
+									name="Password"
 								/>
 
 								<div className="terms row-between">
@@ -226,9 +238,17 @@ export default function Home() {
 										</h1>
 									)}
 								</div>
-              </div>
-            
-							<Button primary isLoading={isLoading} auth text={loginMode ? "Login" : "Create account"} type={"submit"} full disabled={!formik?.values?.name.length} />
+							</div>
+
+							<Button
+								primary
+								isLoading={isLoading}
+								auth
+								text={loginMode ? "Login" : "Create account"}
+								type={"submit"}
+								full
+								disabled={!formik?.values?.Email.length}
+							/>
 
 							<div className="flex w-full justify-center mt-8">
 								{!loginMode ? (
