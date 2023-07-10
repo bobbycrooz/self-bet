@@ -66,6 +66,7 @@ export default function BetCondition({ handleAddCondition, isAdding }: { handleA
 				<div className="condition w-full h-auto grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 					{/* --------- */}
 
+					{/* @ts-ignore */}
 					{Bet.Criteria.Conditions.map((i, k) => (
 						// <div key={k} className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
 						// 	<div className="  space-x-4 items-start flex">

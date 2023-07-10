@@ -13,29 +13,19 @@ type ResponsTypes = Promise<{
 	};
 }>;
 
-
-
-
 export function marketListAPI(PageNumber: number): ResponsTypes {
-	// console.log('look i got here');
 	return service({
 		url: `/Market/List?PageNumber=${1}`,
 		method: "get",
-	
 	});
 }
 
-
-
-
-// export function creatUser(data: UserTypes) {
-// 	// console.log('look i got here');
-// 	return service({
-// 		url: "/v1/auth/register",
-// 		method: "post",
-// 		data: data,
-// 	});
-// }
+export function getAllFixturesAPI(page: number) {
+	return service({
+		url: `/Fixtures/List?PageNumber=${page}`,
+		method: "get",
+	});
+}
 
 // export function updateUser(data: UserTypes) {
 // 	// console.log('look i got here');

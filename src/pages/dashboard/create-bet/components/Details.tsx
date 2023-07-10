@@ -78,7 +78,7 @@ export default function BetDetails({
 								change={handleBetNameChange}
 								filedName="betName"
 								type={"text"}
-								value={BetDetailsData.BetName}
+								value={BetDetailsData?.BetName}
 								place={"e.g. labaja"}
 							/>
 							<p className="txt-sm text-gray-400">You can change this if you want</p>
@@ -89,7 +89,7 @@ export default function BetDetails({
 								label={"Bet Amount"}
 								filedName="betAmount"
 								type={"text"}
-								value={`${BetDetailsData.Amount}`}
+								value={`${BetDetailsData?.Amount}`}
 								change={handleBetNameChange}
 							/>
 
@@ -148,9 +148,9 @@ export default function BetDetails({
 
 						{true && (
 							<Discount
-								discount={BetDetailsData.Discount}
+								discount={BetDetailsData?.Discount}
 								handleBetNameChange={handleBetNameChange}
-								numberOfPeople={BetDetailsData.NumberOfPeople}
+								numberOfPeople={BetDetailsData?.NumberOfPeople}
 								setNumberOfPeople={handleNumberOfPeople}
 							/>
 						)}

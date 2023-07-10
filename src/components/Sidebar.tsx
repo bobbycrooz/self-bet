@@ -245,10 +245,10 @@ function BetSlip({ handleShowBet, showBetList, handlePlaceBet }) {
 					}  overflow-y-scroll   custom-scrollbar pb-[100px] `}
 				>
 					<div className={`aside_body p-2 py-6 space-y-3`}>
-						{/* ----bets */}
-						<BetSlipDetails />
-						<BetSlipDetails />
-						<BetSlipDetails />
+						{/* ----bets---- */}
+						<BetSlipDetails data={undefined} />
+						<BetSlipDetails data={undefined} />
+						<BetSlipDetails data={undefined} />
 					</div>
 
 					{/* ----price -box */}

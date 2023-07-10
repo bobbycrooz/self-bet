@@ -3,6 +3,8 @@ import { UserDetailsTypes } from "@/types";
 import { saveToken } from "@/utils";
 import { promises } from "dns";
 import React, { useContext, useState, useEffect, useMemo, createContext, Children, useReducer } from "react";
+import useToast from "@/hooks/useToast";
+
 // import utils from 'utils';
 
 interface propsTypes {
@@ -39,6 +41,7 @@ const UserProvider = ({ children }: { children: any }) => {
 	const [refresh, setRefresh] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [User, dispatch] = useReducer(userReducer, initialState);
+	const { notify } = useToast();
 
 	// handlers------------------
 	function findAndInitUser() {
@@ -63,7 +66,11 @@ const UserProvider = ({ children }: { children: any }) => {
 				}
 				const { error, serverResponse } = await loginAPI(datauu);
 
-				console.log(serverResponse.token, "this user is logging in");
+				console.log(serverResponse, "this user is logging in");
+				// @ts-ignore
+				notify("error", serverResponse);
+
+				
 
 				if (!error) {
 					const saveToCookie = saveToken(serverResponse.token);
@@ -73,6 +80,7 @@ const UserProvider = ({ children }: { children: any }) => {
 					dispatch({ type: "STORE_USER", payload: values });
 					return true;
 				}
+
 				return false
 
 			} else {

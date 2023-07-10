@@ -7,6 +7,8 @@ import UserProvider from "@/context/userContext";
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 import BetProvider from "@/context/betContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,8 +35,8 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 			<main className={inter.className}>
 				<SessionProvider session={pageProps.session}>
 					<UserProvider>
-						
 						<BetProvider>{getLayout(<Component {...pageProps} />)}</BetProvider>
+						<ToastContainer />
 					</UserProvider>
 				</SessionProvider>
 			</main>

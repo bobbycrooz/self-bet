@@ -119,7 +119,9 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 		console.log(updatedArray.length > 0, "thsi is the initaial array");
 
 		// find existing condition
-		if (updatedArray.length > 0) {
+		if (updatedArray.length > 0)
+		{
+			// @ts-ignore
 			let existing = updatedArray.filter((i: any, a) => i.value === condition.value);
 
 			if (existing.length > 0) {
@@ -171,7 +173,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 			setConditions(updatedArray);
 			setCurrentSector({
 				...currentSector,
-				codes: updatedArray as any,
+				Codes: updatedArray as any,
 			});
 		} else {
 			console.log("this item does not exist in the array");
@@ -219,7 +221,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 
 	useEffect(() => {
 		fetchAlllMarkets();
-	}, []);
+	}, [fetchAlllMarkets]);
 
 	return showNoti ? (
 		<>
@@ -317,6 +319,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 
 													<ol className="team_options w-full p-4">
 														<p className="txt-xs f-b text-gray-900">Pick a sector</p>
+														{/* @ts-ignore */}
 														{sectors.map(
 															(
 																i: {

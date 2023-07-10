@@ -9,6 +9,7 @@ import { useUser } from "@/context/userContext";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { checkSVG } from "@/assets";
 import { UserDetailsTypes } from "@/types";
+import useToast from "@/hooks/useToast";
 
 export default function Home() {
 	const [loginMode, setLoginMode] = useState(true);
@@ -19,6 +20,7 @@ export default function Home() {
 	const [userDetails, setUserDetails] = useState<UserDetailsTypes>({});
 	const { state, dispatch, handleAuth } = useUser();
 	const { data: session } = useSession();
+	const { notify } = useToast();
 
 	console.log("currently login mode is :", loginMode);
 
@@ -54,7 +56,7 @@ export default function Home() {
 	}
 
 	const formik = useFormik({
-		initialValues: loginMode == true  ? logingSchema : registerSchema,
+		initialValues: loginMode == true ? logingSchema : registerSchema,
 
 		onSubmit: async (values) => {
 			setIsLoading(true);
@@ -65,18 +67,18 @@ export default function Home() {
 			if (!loginMode && res) {
 				setIsLoading(!true);
 				setLoginMode(true);
-
+				notify("success", "Account created successfully");
 				// 	push("/dashboard");
 			} else if (res) {
 				setIsLoading(!true);
+				notify("success", "Logged in successfully");
 				push("/dashboard");
 			}
 
+			setIsLoading(!true);
 
-				setIsLoading(!true);
+			console.log("somothig wnet wrong");
 
-			console.log('somothig wnet wrong');
-			
 			// if (res) {
 			// 	setIsLoading(!true);
 

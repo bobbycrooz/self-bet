@@ -2,9 +2,10 @@ import Image from "next/image";
 
 import { CarretRightSvg } from "@/assets";
 import { DropDown } from "@components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { features } from "process";
 import { useBet } from "@/context/betContext";
+import { getAllFixturesAPI } from "@/axios/endpoints/bet.endpoint";
 
 const fixtures = [
 	{
@@ -23,6 +24,7 @@ const fixtures = [
 		TeamB: { name: "Nottingham Forest", logo: "https://media-3.api-sports.io/football/teams/65.png" },
 	},
 ];
+const nav = ["All aleague", "Premier League", "la liga", "Seria A", "bundes liga"];
 
 export default function SelectMatch() {
 	const [searchMode, setSearchMode] = useState({
@@ -33,29 +35,47 @@ export default function SelectMatch() {
 		range: false,
 	});
 	const { Bet, dispatchBet } = useBet();
+	const [fixtures, setFixtures] = useState([]);
 
+	// handlers ------------------
 	const handleMatchSelection = (i: any) => {
-
-		// get team names 
+		// get team names
 		const teamA = i.TeamA.name;
 		const teamB = i.TeamB.name;
 
 		const Teams = [teamA, teamB];
 
-
-
 		dispatchBet({ type: "BET_MATCH", payload: i });
 		dispatchBet({
-			type: "BET_TEAMS", payload: {
-				teams: Teams
-			}
+			type: "BET_TEAMS",
+			payload: {
+				teams: Teams,
+			},
 		});
-		
+
 		console.log(Teams);
-		
 	};
 
-	const nav = ["All aleague", "Premier League", "la liga", "Seria A", "bundes liga"];
+	async function fetchAlllFixturs() {
+		if (fixtures.length > 0) return console.log("fixtures already fetched");
+
+		// fetch all fixtures from api
+
+		// @ts-ignore
+		const { error, serverResponse } = await getAllFixturesAPI(1);
+
+		if (error) return console.log(error);
+
+		console.log(serverResponse);
+
+		setFixtures(serverResponse);
+	}
+
+	// useEffects ------------------
+
+	useEffect(() => {
+		fetchAlllFixturs();
+	}, []);
 
 	return (
 		<div className="  ">
@@ -128,7 +148,7 @@ export default function SelectMatch() {
 			<div className="w-full  h-[450px] overflow-y-scroll custom-scrollbar pb-[0]  md:pb-[84px]">
 				<div className="matched w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 gap-6 md:pt-4 ">
 					{/* --team  display baner---- */}
-					{fixtures.map((i, k) => (
+					{fixtures.map((i:any, k) => (
 						<div
 							key={k}
 							role="button"
@@ -137,8 +157,8 @@ export default function SelectMatch() {
 						>
 							{/* Team A */}
 							<div className="team_caard team_caard col-center space-y-2">
-								<Image className="team_logo " src={i.TeamA.logo} alt="chealse" width={48} height={48} />
-								<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamA.name}</h1>
+								<Image className="team_logo " src={i.TeamA.Logo == "TeamALogoUrl" ? "/icons/teams/chealse_logo.svg" : i.TeamA.Logo } alt="chealse" width={48} height={48} />
+								<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamA.TeamName}</h1>
 							</div>
 
 							<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
@@ -148,8 +168,8 @@ export default function SelectMatch() {
 
 							{/* Team B */}
 							<div className="team_caard col-center  space-y-2">
-								<Image className="team_logo " src={i.TeamB.logo} alt="chealse" width={48} height={48} />
-								<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamB.name}</h1>
+								<Image className="team_logo " src={i.TeamB.Logo == "TeamBLogoUrl" ? "/icons/teams/lei_logo.svg" : i.TeamB.Logo} alt="chealse" width={48} height={48} />
+								<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamB.TeamName}</h1>
 							</div>
 
 							<Image
