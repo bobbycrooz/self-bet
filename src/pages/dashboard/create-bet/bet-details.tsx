@@ -26,7 +26,6 @@ function Home() {
 
 	const { Bet, isLoading, placing, status, handlePlaceBet, setIsLoading, setStatus, MarketList } = useBet();
 
-	console.log(Bet, "bet ------------ ");
 
 	const topRef = useRef(null);
 
@@ -84,15 +83,14 @@ function Home() {
 							{/* bet_details  component */}
 
 							{<BetConditionDropdown Bet={Bet} />}
-							{/* <BetConditionDropdown />
-							<BetConditionDropdown /> */}
+						
 						</div>
 						<div className="md:hidden w-full h-28"></div>
 					</main>
 
 					<aside className="hidden md:flex  w-[286px] h-auto sticky top-6">
 						{/* ----- */}
-						<div className="create_aside border-gray-200 w-full rounded-lg shadow-md bg-white br">
+						<div className="create_aside border-gray-200 w-full rounded-lg shadow-md bg-white ">
 							{/* header */}
 							<div className="h-[56px]  w-full relative header rounded-t-lg middle ">
 								<div className="middle">
@@ -155,7 +153,7 @@ export function BetSlipDetails({ data }: { data: any }) {
 
 	
 
-	console.log(data, "bet --------bet slip for data---- ");
+	// console.log(data, "bet --------bet slip for data---- ");
 
 	const [sowList, setShowList] = useState(false);
 
@@ -252,8 +250,8 @@ function BetConditionDropdown({ Bet }: { Bet: any }) {
 			<div role="button" onClick={handleOpen} className="card-header bg-white rounded-t-lg ">
 				<div className="teams_display row-between bg-white border-b  border-gray-200 rounded-lg p-4  ">
 					<div className="team_caard team_caard col-center space-y-2">
-						<Image className="team_logo " src={Criteria.TeamA.logo} alt="chealse" width={48} height={48} />
-						<h1 className="team_name txt-xs f-s text-gray-600">{Criteria.TeamA.name}</h1>
+						<Image className="team_logo " src={Criteria.TeamA.Logo} alt="chealse" width={48} height={48} />
+						<h1 className="team_name txt-xs f-s text-gray-600">{Criteria.TeamA.TeamName}</h1>
 					</div>
 
 					<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
@@ -262,8 +260,8 @@ function BetConditionDropdown({ Bet }: { Bet: any }) {
 					</div>
 
 					<div className="team_caard col-center  space-y-2">
-						<Image className="team_logo " src={Criteria.TeamB.logo} alt="chealse" width={48} height={48} />
-						<h1 className="team_name txt-xs f-s text-gray-600"> {Criteria.TeamB.name}</h1>
+						<Image className="team_logo " src={Criteria.TeamB.Logo} alt="chealse" width={48} height={48} />
+						<h1 className="team_name txt-xs f-s text-gray-600"> {Criteria.TeamB.TeamName}</h1>
 					</div>
 				</div>{" "}
 			</div>

@@ -72,11 +72,23 @@ body {
 }
 
 .teams_display_matches {
+	@apply cursor-pointer  middle hover:border-gray-500 shadow-bet-card hover:shadow-none relative justify-around border border-gray-200 rounded-lg p-6;
+
+	&.active {
+		@apply border-gray-500 shadow-none;
+
+		.selector {
+			display: block;
+		}
+	}
+
 	.selector {
 		display: none;
 	}
 
 	&:hover {
+		@apply border-gray-500 shadow-none;
+
 		.selector {
 			display: block;
 		}
@@ -103,7 +115,7 @@ input[type="search"] {
 
 .dropdown_profile {
 	.profile_item {
-    @apply text-gray-700 text-[20px];
+		@apply text-gray-700 text-[20px];
 		&:hover {
 			.profile_item-icon,
 			p {
@@ -113,12 +125,12 @@ input[type="search"] {
 	}
 
 	.profile_logout {
-    @apply text-gray-700 text-[20px];
+		@apply text-gray-700 text-[20px];
 
 		&:hover {
 			.profile_logout-icon,
 			p {
-				@apply text-sec  ;
+				@apply text-sec;
 			}
 		}
 	}

@@ -11,7 +11,7 @@ import { useBet } from "@/context/betContext";
 export default function CreateBet({ stepHandler }: { stepHandler: any }) {
 	const { Bet, dispatchBet } = useBet();
 
-	console.log(Bet, "bet");
+	// console.log(Bet, "bet");
 
 	const fetures = [
 		"Create custom bets on a “single” match ",

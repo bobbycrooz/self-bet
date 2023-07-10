@@ -20,21 +20,20 @@ export function marketListAPI(PageNumber: number): ResponsTypes {
 	});
 }
 
-export function getAllFixturesAPI(page: number) {
+export function getAllFixturesAPI(page: number): ResponsTypes {
 	return service({
 		url: `/Fixtures/List?PageNumber=${page}`,
 		method: "get",
 	});
 }
 
-// export function updateUser(data: UserTypes) {
-// 	// console.log('look i got here');
-// 	return service({
-// 		url: "/v1/auth/update-user",
-// 		method: "post",
-// 		data: data,
-// 	});
-// }
+export function createBetAPI(data: any): ResponsTypes {
+	return service({
+		url: "/Bet/Create",
+		method: "post",
+		data: data,
+	});
+}
 
 // // -----
 // export function getAllPurchases() {

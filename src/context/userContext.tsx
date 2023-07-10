@@ -50,7 +50,7 @@ const UserProvider = ({ children }: { children: any }) => {
 
 		const parsedUser = JSON.parse(rootUser);
 
-		console.log("found user in storage and set it to context", parsedUser);
+		// console.log("found user in storage and set it to context", parsedUser);
 
 		return dispatch({ type: "STORE_USER", payload: parsedUser });
 	}
@@ -66,7 +66,7 @@ const UserProvider = ({ children }: { children: any }) => {
 				}
 				const { error, serverResponse } = await loginAPI(datauu);
 
-				console.log(serverResponse, "this user is logging in");
+				// console.log(serverResponse, "this user is logging in");
 				// @ts-ignore
 				notify("error", serverResponse);
 
@@ -75,7 +75,7 @@ const UserProvider = ({ children }: { children: any }) => {
 				if (!error) {
 					const saveToCookie = saveToken(serverResponse.token);
 
-					console.log(saveToCookie, "this token has been saved to cookie");
+					// console.log(saveToCookie, "this token has been saved to cookie");
 
 					dispatch({ type: "STORE_USER", payload: values });
 					return true;
@@ -84,14 +84,14 @@ const UserProvider = ({ children }: { children: any }) => {
 				return false
 
 			} else {
-				console.log(values, "this user is registering");
+				// console.log(values, "this user is registering");
 
 				const { error, serverResponse } = await registerAPI(values);
 
 
 				if (error)
 				{
-					console.log(serverResponse, "this is the error from the server");
+					// console.log(serverResponse, "this is the error from the server");
 					
 					return false
 				}
@@ -103,7 +103,7 @@ const UserProvider = ({ children }: { children: any }) => {
 				return true;
 			}
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			return false;
 		}
 	}

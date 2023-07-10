@@ -1,6 +1,8 @@
 import { InputField, Toggle } from "@components";
 import { SvgElement, UploadSvg } from "@/assets";
 import { ChangeEvent, useState } from "react";
+import DropzoneComponent from "@/components/DropZone";
+import { useBet } from "@/context/betContext";
 // import { NextPageWithLayout } from "../_app";
 
 export default function BetDetails({
@@ -12,12 +14,13 @@ export default function BetDetails({
 }) {
 	// const [betName, setBetName] = useState("");
 	// const [betAmount, setBetAmount] = useState("");
-	// const [discount, setDiscount] = useState("");
-	// const [numberOfPeople, setNumberOfPeople] = useState(3);
+	const [showDiscount, setShowDiscount] = useState(true);
+	const {setBetImg} = useBet()
+
 
 	function handleBetNameChange(e: ChangeEvent<HTMLInputElement>, name: string) {
 		e.preventDefault();
-		console.log(e.target.value, name, "bet details");
+		// console.log(e.target.value, name, "bet details");
 
 		if (name === "betName") {
 			// setBetName(e.target.value);
@@ -56,12 +59,7 @@ export default function BetDetails({
 		}
 	}
 
-	// function handleSubmitDetails(e: ChangeEvent<HTMLInputElement>)
-	// {
-	// 	console.log(betName, betAmount, discount, numberOfPeople, "bet details")
-
-	// }
-
+	
 	return (
 		<>
 			<div className="w-full  h-[600px] overflow-y-scroll custom-scrollbar pb-12">
@@ -114,21 +112,15 @@ export default function BetDetails({
 						</div>
 
 						{/*  */}
-						<div className="border border-gray-200 text-gray-400 col-center  px-6 p-4 rounded-lg mt-4">
-							<UploadSvg />
 
-							<h1 className="txt-sm w-full text-center mt-3">
-								<span className="text-sec f-s">Click to upload </span> or drag and drop
-							</h1>
-							<h1 className="txt-sm w-full text-center">PNG, JPG or GIF (max. 800x400px)</h1>
-						</div>
+						<DropzoneComponent seCurrentFile={setBetImg} />
 					</div>
 				</div>
 
 				<hr className="border-gray-200 w-full my-8" />
 
 				{/* ------row three */}
-				<div className="details_row flex flex-col md:flex-row md:items-start md:space-x-[160px]  br">
+				<div className="details_row flex flex-col md:flex-row md:items-start md:space-x-[160px]">
 					<h1 className="txt-md f-s text-gray-600  text-left ">Discount</h1>
 
 					<div className="details_column mt-6 md:mt-0">
@@ -137,7 +129,7 @@ export default function BetDetails({
 								<h1 className="text-gray-600 txt-sm f-b ">Enable Discount</h1>
 
 								{/* toggle */}
-								<Toggle />
+								<Toggle toggler={setShowDiscount} state={ showDiscount} />
 							</div>
 							<p className="txt-sm text-gray-400 mt-1 w-[80%]">
 								Add a discount to your bet participants by paying their balance upfront
@@ -146,7 +138,7 @@ export default function BetDetails({
 
 						{/* ----------- */}
 
-						{true && (
+						{showDiscount && (
 							<Discount
 								discount={BetDetailsData?.Discount}
 								handleBetNameChange={handleBetNameChange}

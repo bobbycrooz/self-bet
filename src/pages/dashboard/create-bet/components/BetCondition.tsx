@@ -21,7 +21,7 @@ export default function BetCondition({ handleAddCondition, isAdding }: { handleA
 
 	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
 
-	console.log(Bet.Criteria.Conditions, "bet conditions");
+	// console.log(Bet.Criteria.Conditions, "bet conditions");
 	
 
 

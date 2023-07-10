@@ -1,0 +1,162 @@
+[
+  {
+    "_id": "64a13f644a52e76f990c384b",
+    "TeamA": {
+      "TeamName": "Bournemouth",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Bournemouth.png"
+    },
+    "TeamB": {
+      "TeamName": "West Ham",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/West%20Ham.png"
+    },
+    "MatchDate": "2023-08-12T14:00:00.000Z",
+    "FixtureId": 1035039,
+    "LeagueName": "Premier League",
+    "LeagueImg": "https://selfbet.s3.af-south-1.amazonaws.com/Premier%20League.png",
+    "__v": 0
+  },
+  {
+    "_id": "64a13f644a52e76f990c384c",
+    "TeamA": {
+      "TeamName": "Brighton",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Brighton.png"
+    },
+    "TeamB": {
+      "TeamName": "Luton",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Luton.png"
+    },
+    "MatchDate": "2023-08-12T14:00:00.000Z",
+    "FixtureId": 1035040,
+    "LeagueName": "Premier League",
+    "LeagueImg": "https://selfbet.s3.af-south-1.amazonaws.com/Premier%20League.png",
+    "__v": 0
+  },
+  {
+    "_id": "64a13f644a52e76f990c384d",
+    "TeamA": {
+      "TeamName": "Everton",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Everton.png"
+    },
+    "TeamB": {
+      "TeamName": "Fulham",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Fulham.png"
+    },
+    "MatchDate": "2023-08-12T14:00:00.000Z",
+    "FixtureId": 1035041,
+    "LeagueName": "Premier League",
+    "LeagueImg": "https://selfbet.s3.af-south-1.amazonaws.com/Premier%20League.png",
+    "__v": 0
+  },
+  {
+    "_id": "64a13f644a52e76f990c384e",
+    "TeamA": {
+      "TeamName": "Sheffield Utd",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Sheffield%20Utd.png"
+    },
+    "TeamB": {
+      "TeamName": "Crystal Palace",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Crystal%20Palace.png"
+    },
+    "MatchDate": "2023-08-12T14:00:00.000Z",
+    "FixtureId": 1035042,
+    "LeagueName": "Premier League",
+    "LeagueImg": "https://selfbet.s3.af-south-1.amazonaws.com/Premier%20League.png",
+    "__v": 0
+  },
+  {
+    "_id": "64a13f644a52e76f990c3849",
+    "TeamA": {
+      "TeamName": "Burnley",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Burnley.png"
+    },
+    "TeamB": {
+      "TeamName": "Manchester City",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Manchester%20City.png"
+    },
+    "MatchDate": "2023-08-11T19:00:00.000Z",
+    "FixtureId": 1035037,
+    "LeagueName": "Premier League",
+    "LeagueImg": "https://selfbet.s3.af-south-1.amazonaws.com/Premier%20League.png",
+    "__v": 0
+  },
+  {
+    "_id": "64a13f644a52e76f990c384a",
+    "TeamA": {
+      "TeamName": "Arsenal",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Arsenal.png"
+    },
+    "TeamB": {
+      "TeamName": "Nottingham Forest",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Nottingham%20Forest.png"
+    },
+    "MatchDate": "2023-08-12T11:30:00.000Z",
+    "FixtureId": 1035038,
+    "LeagueName": "Premier League",
+    "LeagueImg": "https://selfbet.s3.af-south-1.amazonaws.com/Premier%20League.png",
+    "__v": 0
+  },
+  {
+    "_id": "64a13f644a52e76f990c3851",
+    "TeamA": {
+      "TeamName": "Chelsea",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Chelsea.png"
+    },
+    "TeamB": {
+      "TeamName": "Liverpool",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Liverpool.png"
+    },
+    "MatchDate": "2023-08-13T15:30:00.000Z",
+    "FixtureId": 1035045,
+    "LeagueName": "Premier League",
+    "LeagueImg": "https://selfbet.s3.af-south-1.amazonaws.com/Premier%20League.png",
+    "__v": 0
+  },
+  {
+    "_id": "64a13f644a52e76f990c3852",
+    "TeamA": {
+      "TeamName": "Manchester United",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Manchester%20United.png"
+    },
+    "TeamB": {
+      "TeamName": "Wolves",
+      "Logo": "https://selfbet.s3.af-south-1.amazonaws.com/Wolves.png"
+    },
+    "MatchDate": "2023-08-14T19:00:00.000Z",
+    "FixtureId": 1035046,
+    "LeagueName": "Premier League",
+    "LeagueImg": "https://selfbet.s3.af-south-1.amazonaws.com/Premier%20League.png",
+    "__v": 0
+  },
+  {
+    "_id": "64a13f644a52e76f990c385d",
+    "TeamA": {
+      "TeamName": "Burnley",
+      "Logo": "TeamALogoUrl"
+    },
+    "TeamB": {
+      "TeamName": "Manchester City",
+      "Logo": "TeamBLogoUrl"
+    },
+    "MatchDate": "2023-08-11T19:00:00.000Z",
+    "FixtureId": 1035037,
+    "LeagueName": "Premier League",
+    "LeagueImg": "LeagueImgUrl",
+    "__v": 0
+  },
+  {
+    "_id": "64a13f644a52e76f990c385e",
+    "TeamA": {
+      "TeamName": "Arsenal",
+      "Logo": "TeamALogoUrl"
+    },
+    "TeamB": {
+      "TeamName": "Nottingham Forest",
+      "Logo": "TeamBLogoUrl"
+    },
+    "MatchDate": "2023-08-12T11:30:00.000Z",
+    "FixtureId": 1035038,
+    "LeagueName": "Premier League",
+    "LeagueImg": "LeagueImgUrl",
+    "__v": 0
+  }
+]

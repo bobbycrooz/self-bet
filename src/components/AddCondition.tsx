@@ -116,7 +116,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 	function handleSetCondition(condition: ConditionTypes) {
 		let updatedArray = [...conditions];
 
-		console.log(updatedArray.length > 0, "thsi is the initaial array");
+		// console.log(updatedArray.length > 0, "thsi is the initaial array");
 
 		// find existing condition
 		if (updatedArray.length > 0)
@@ -127,7 +127,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 			if (existing.length > 0) {
 				return console.log("there is something in the array so i left");
 			} else {
-				console.log("there was nothing and i added it to the array");
+				// console.log("there was nothing and i added it to the array");
 
 				updatedArray.push(condition);
 
@@ -138,7 +138,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 				});
 			}
 		} else {
-			console.log("there was nothing and i added it to the array");
+			// console.log("there was nothing and i added it to the array");
 
 			updatedArray.push(condition);
 
@@ -176,7 +176,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 				Codes: updatedArray as any,
 			});
 		} else {
-			console.log("this item does not exist in the array");
+			// console.log("this item does not exist in the array");
 		}
 	}
 
@@ -202,10 +202,10 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 	function saveBetConditions() {
 		// save bet coditions
 
-		console.log(currentSector, "this is the current selected market before all selcetion...");
+		// console.log(currentSector, "this is the current selected market before all selcetion...");
 
 		const processCodes = currentSector.Codes.map((i: any) => i.value);
-		console.log(processCodes, "this is the current selected market after all selcetion...");
+		// console.log(processCodes, "this is the current selected market after all selcetion...");
 		
 
 		const betConditions = {

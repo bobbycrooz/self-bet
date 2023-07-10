@@ -7,23 +7,7 @@ import { features } from "process";
 import { useBet } from "@/context/betContext";
 import { getAllFixturesAPI } from "@/axios/endpoints/bet.endpoint";
 
-const fixtures = [
-	{
-		TeamA: {
-			name: "Chelsea",
-			logo: "/icons/teams/chealse_logo.svg",
-		},
-		TeamB: {
-			name: "Leicester C",
-			logo: "/icons/teams/lei_logo.svg",
-		},
-	},
 
-	{
-		TeamA: { name: "Southampton", logo: "https://media.api-sports.io/football/teams/41.png" },
-		TeamB: { name: "Nottingham Forest", logo: "https://media-3.api-sports.io/football/teams/65.png" },
-	},
-];
 const nav = ["All aleague", "Premier League", "la liga", "Seria A", "bundes liga"];
 
 export default function SelectMatch() {
@@ -37,15 +21,19 @@ export default function SelectMatch() {
 	const { Bet, dispatchBet } = useBet();
 	const [fixtures, setFixtures] = useState([]);
 
+	console.log(Bet, "bet");
+	
+
 	// handlers ------------------
 	const handleMatchSelection = (i: any) => {
-		// get team names
-		const teamA = i.TeamA.name;
-		const teamB = i.TeamB.name;
+		// get team names and update teams 
+		const teamA = i.TeamA.TeamName;
+		const teamB = i.TeamB.TeamName;
 
 		const Teams = [teamA, teamB];
 
 		dispatchBet({ type: "BET_MATCH", payload: i });
+
 		dispatchBet({
 			type: "BET_TEAMS",
 			payload: {
@@ -53,7 +41,42 @@ export default function SelectMatch() {
 			},
 		});
 
-		console.log(Teams);
+		// get fixture id and update criteria
+		const fixtureId = i.FixtureId;
+		console.log(fixtureId, "fixture id");
+
+		dispatchBet({
+			type: "BET_FIXTURE_ID",
+			payload: {
+				FixtureId: fixtureId,
+			},
+		});
+
+		// get leagues and update 
+		const league = i.LeagueName;
+		console.log(league, "league")
+
+		dispatchBet({
+			type: "BET_LEAGUES",
+			payload: {
+				league: league,
+			},
+
+		});
+
+		// get matchDate and update criteria
+		const matchDate = i.MatchDate;
+
+		console.log(matchDate, "match date");
+
+		dispatchBet({
+			type: "BET_MATCH_DATE",
+			payload: {
+				MatchDate: matchDate,
+			},
+		});
+
+		
 	};
 
 	async function fetchAlllFixturs() {
@@ -68,8 +91,17 @@ export default function SelectMatch() {
 
 		console.log(serverResponse);
 
+		// @ts-ignore
 		setFixtures(serverResponse);
 	}
+
+	function checkIfMatchIsSelected(matchFixId: number)
+	{
+		if (Bet.Criteria.FixtureId === matchFixId) return true;
+		
+		return false;
+	}
+
 
 	// useEffects ------------------
 
@@ -153,7 +185,7 @@ export default function SelectMatch() {
 							key={k}
 							role="button"
 							onClick={() => handleMatchSelection(i)}
-							className="cursor-pointer teams_display_matches middle hover:border-gray-500 shadow-bet-card hover:shadow-none relative justify-around border border-gray-200 rounded-lg p-6 "
+							className={`teams_display_matches ${checkIfMatchIsSelected(i?.FixtureId) && 'active'}`}
 						>
 							{/* Team A */}
 							<div className="team_caard team_caard col-center space-y-2">
@@ -161,6 +193,7 @@ export default function SelectMatch() {
 								<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamA.TeamName}</h1>
 							</div>
 
+							{/* Date and time */}
 							<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
 								<h1 className="">Sat, 3 Dec</h1>
 								<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">8:30</h1>

@@ -165,7 +165,7 @@ function SearchByTeamCard(props: any) {
     const cardEle = e.target;
     const cardEleRef = cardRef.current;
 
-    console.log(cardEle, cardEleRef);
+    // console.log(cardEle, cardEleRef);
 
     if (cardEle !== cardEleRef) {
       props.handleShowList();
@@ -422,7 +422,7 @@ function CustomSearchCard({
     const cardEle = e.target;
     const cardEleRef = cardRef.current;
 
-    console.log(cardEle, cardEleRef);
+    // console.log(cardEle, cardEleRef);
 
     if (cardEle !== cardEleRef) {
       handler();
