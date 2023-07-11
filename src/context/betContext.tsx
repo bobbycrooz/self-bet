@@ -116,7 +116,7 @@ const BetProvider = ({ children }: { children: any }) => {
 	const [MarketList, setMarketList] = useState([]);
 
 	const [BetImg, setBetImg] = useState(null);
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 	const [placing, isPlacing] = useState(false);
 	const [status, setStatus] = useState(statusConst.success);
 	const { notify } = useToast();

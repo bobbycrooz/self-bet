@@ -312,7 +312,7 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 
 	function handlePickCondition(i: any) {
 		// check if condition already exist
-		const exist = Bet.Criteria.Conditions.length > 0;
+		const exist = Bet.Criteria.Conditions.length = 1;
 
 		if (exist) {
 			return notify("error", "You can only pick one condition per sector");
