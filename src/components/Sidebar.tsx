@@ -6,6 +6,7 @@ import React, { useState, useEffect, useRef, ChangeEventHandler } from "react";
 import Button from "./Button";
 import { BetSlipDetails } from "@/pages/dashboard/create-bet/bet-details";
 import { useBet } from "@/context/betContext";
+import { useUser } from "@/context/userContext";
 
 const navItemArray = [
 	{
@@ -108,6 +109,7 @@ const Sidebar = () => {
 	const [showBetList, setShowBetList] = useState(false);
 
 	const { isLoading, placing, status, handlePlaceBet, setIsLoading, setStatus } = useBet();
+	const {logOut} = useUser()
 
 	function linkHandler(link: string) {
 		return push(link);
@@ -149,8 +151,7 @@ const Sidebar = () => {
 				</ul>
 
 				<div className="w-full">
-					<Link href={"/auth"}>
-						<div className="middle  justify-between border-t py-4">
+						<div role="button" onClick={logOut} className="middle  justify-between border-t py-4">
 							<Image src={"/icons/dashboard/olivia.svg"} alt="logo" width={40} height={40} className="" />
 
 							<div className="name_box ">
@@ -160,7 +161,6 @@ const Sidebar = () => {
 
 							<Image src={"/icons/dashboard/logout.svg"} alt="logo" width={36} height={36} className="" />
 						</div>
-					</Link>
 				</div>
 				{/*  */}
 			</aside>

@@ -20,7 +20,7 @@ export default function BetDetails({
 
 	function handleBetNameChange(e: ChangeEvent<HTMLInputElement>, name: string) {
 		e.preventDefault();
-		// console.log(e.target.value, name, "bet details");
+		
 
 		if (name === "betName") {
 			// setBetName(e.target.value);
@@ -42,7 +42,6 @@ export default function BetDetails({
 			// setDiscount(e.target.value);
 		}
 
-		// validateEmail();
 	}
 
 	function handleNumberOfPeople(mode: string) {

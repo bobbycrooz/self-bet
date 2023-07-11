@@ -15,6 +15,7 @@ import { ReactElement, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { useBet } from "@/context/betContext";
+import useToast from "@/hooks/useToast";
 
 const statusConst = {
 	success: "SUCCESS",
@@ -25,7 +26,6 @@ function Home() {
 	const { push, query, pathname } = useRouter();
 
 	const { Bet, isLoading, placing, status, handlePlaceBet, setIsLoading, setStatus, MarketList } = useBet();
-
 
 	const topRef = useRef(null);
 
@@ -83,7 +83,6 @@ function Home() {
 							{/* bet_details  component */}
 
 							{<BetConditionDropdown Bet={Bet} />}
-						
 						</div>
 						<div className="md:hidden w-full h-28"></div>
 					</main>
@@ -123,7 +122,7 @@ function Home() {
 										<h1 className="txt-sm f-b ">N5000</h1>
 									</div>
 
-									<Button text={"Place Bet"} type={"button"} full primary click={handlePlaceBet} />
+									<Button text={"Place Bet"} type={"button"} isLoading={isLoading} full primary click={handlePlaceBet} />
 								</div>
 							</div>
 						</div>
@@ -150,8 +149,6 @@ Home.getLayout = function getLayout(page: ReactElement) {
 
 export function BetSlipDetails({ data }: { data: any }) {
 	const { Bet, dispatchBet } = useBet();
-
-	
 
 	// console.log(data, "bet --------bet slip for data---- ");
 
@@ -186,18 +183,17 @@ export function BetSlipDetails({ data }: { data: any }) {
 			{!sowList && (
 				<div className="w-full border-t  strictFadeIn">
 					<ol className=" px-4">
+						<li className={`selector_item flex w-full h-full py-4  ${"border-b"} space-x-3`}>
+							<div className="mt-1">
+								<CheckSVG />
+							</div>
 
-							<li className={`selector_item flex w-full h-full py-4  ${ "border-b"} space-x-3`}>
-								<div className="mt-1">
-									<CheckSVG />
-								</div>
+							<div className="column  space-y-2">
+								<h1 className="f-b txt-sm text-gray-900">{data?.Sector} </h1>
 
-								<div className="column  space-y-2">
-									<h1 className="f-b txt-sm text-gray-900">{data?.Sector} </h1>
-
-									<p className="text-gray-400 txt-xs  f-s">{data?.Codes}</p>
-								</div>
-							</li>
+								<p className="text-gray-400 txt-xs  f-s">{data?.Codes}</p>
+							</div>
+						</li>
 						{/* {data.map((i, k) => (
 							<li key={k} className={`selector_item flex w-full h-full py-4  ${k !== 3 && "border-b"} space-x-3`}>
 								<div className="mt-1">
@@ -308,19 +304,24 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 	const [sowList, setShowList] = useState(false);
 	const { MarketList } = useBet();
 	const { Bet, dispatchBet } = useBet();
-
+	const { notify } = useToast();
 
 	function handleShowList() {
 		setShowList((p) => !p);
 	}
 
 	function handlePickCondition(i: any) {
+		// check if condition already exist
+		const exist = Bet.Criteria.Conditions.length > 0;
+
+		if (exist) {
+			return notify("error", "You can only pick one condition per sector");
+		}
+
 		const pickedCondition = {
 			Sector: sectors.Sector,
 			Codes: i,
-
 		};
-
 
 		dispatchBet({
 			type: "PICK_CONDITION",
@@ -338,9 +339,7 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 		// get array of codes for given sector
 		const codes = MarketList.find((i: any) => i.Sector === sectors.Sector).Codes;
 
-
 		const desc = codes.find((item: any) => item.value === i).desc;
-
 
 		return desc;
 	}
@@ -377,7 +376,7 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 						{sectors.Codes.map((i: any, k: number) => (
 							<li
 								role="button"
-								onClick={() => handlePickCondition( i)}
+								onClick={() => handlePickCondition(i)}
 								key={k}
 								className="selector_item rounded-lg bg-gray-50 p-[10px] px-4"
 							>

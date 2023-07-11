@@ -5,6 +5,7 @@ import { Button, InputField, DynamicModal } from "@components";
 import { ChangeEvent, Dispatch, SetStateAction, use, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { changePasswordAPI, resetMailAPI } from "@/axios/endpoints/auth.endpoint";
+import useToast from "@/hooks/useToast";
 
 const inter = Inter({ subsets: ["latin"] });
 const stepNames = {
@@ -125,7 +126,10 @@ function SendReset({
 	setCurrentStep: Dispatch<SetStateAction<string>>;
 	isLoading: boolean;
 	toggleLoader: Dispatch<SetStateAction<boolean>>;
-}) {
+	})
+{
+	
+	const { notify } = useToast();
 	async function handleSendLink(e: { preventDefault: () => void }) {
 		e.preventDefault();
 
@@ -139,10 +143,18 @@ function SendReset({
 			Email: email,
 		});
 
-		if (error) {
+		if (error)
+		{
+			// @ts-ignore
+			notify("error", serverResponse );
+			
 		} else {
 			toggleLoader(true);
-			console.log(serverResponse, "email has been sent succesfully");
+
+			// console.log(serverResponse, "email has been sent succesfully");
+			// @ts-ignore
+			notify("success", serverResponse );
+
 
 			setTimeout(() => {
 				toggleLoader(false);
@@ -221,6 +233,8 @@ function NewPassword({
 }) {
 	// colect email
 	const [password, setPassword] = useState("");
+	const { notify } = useToast();
+	const [isBtnLoading, setIsLoading] = useState(false);
 
 	const [confirmPassword, confirmPasswordSetPassword] = useState("");
 	
@@ -232,12 +246,16 @@ function NewPassword({
 
 	async function handleSubmitNewPassword(e: { preventDefault: () => void }) {
 		e.preventDefault();
+		setIsLoading(true);
 
-		if (!validatePassword()) return;
+
+		if (!validatePassword())
+		{
+			setIsLoading(false);	
+			return notify("error", "Password does not match!" );
+		}
 
 		// send email
-
-		console.log(password, confirmPassword, "email");
 
 		// 	toggleLoader(true);
 		// setTimeout(() => {
@@ -251,10 +269,18 @@ function NewPassword({
 			token,
 		});
 
-		if (error) {
+		if (error)
+		{
+			setIsLoading(false);	
+
+			 // @ts-ignore
+			notify("error", serverResponse);
+			
 		} else {
 			toggleLoader(true);
-			console.log(serverResponse, "password has been changed succesfullys");
+			
+			// @ts-ignore
+			notify("success", "Password successfully changed!" );
 
 			setTimeout(() => {
 				toggleLoader(false);
@@ -325,6 +351,7 @@ function NewPassword({
 					text={"Set New Password"}
 					type={"submit"}
 					full
+					isLoading={isLoading}
 					disabled={isLoading}
 					click={handleSubmitNewPassword}
 					primary

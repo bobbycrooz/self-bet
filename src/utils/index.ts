@@ -34,3 +34,17 @@ export function hasToken() {
 		return false;
 	}
 }
+
+
+export function removeToken()
+{
+	let token = Cookies.get("token");
+
+	if (token)
+	{
+		Cookies.remove("token");
+		return true;
+	}
+
+	return;
+}

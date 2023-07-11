@@ -25,17 +25,19 @@ function fmtResponse(responseData: any, error: boolean) {
 }
 
 const service = axios.create({
-	baseURL:'https://13.246.19.94',
-		// process.env.NEXT_PUBLIC_NODE_ENV === "development" ? `http://localhost:3000` : process.env.NEXT_PUBLIC_BASE_LINK,
+	baseURL: "https://13.246.19.94",
+	// process.env.NEXT_PUBLIC_NODE_ENV === "development" ? `http://localhost:3000` : process.env.NEXT_PUBLIC_BASE_LINK,
 	headers: {
-		"X-API-KEY": "idris",
-		"iden-unique_key": "quadraple-and-hello-edfojoidfj",
-		// Authorization: `bearer `
+		" x-auth-token": `${String(getToken())}`,
+		// "Content-Type": "multipart/form-data",
 	},
 });
 
 // request interceptor
 service.interceptors.request.use(
+
+
+
       // @ts-ignore
 	async (config: AxiosRequestConfig) => {
 		if (config.headers === undefined) {

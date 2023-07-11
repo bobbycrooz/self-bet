@@ -1,5 +1,6 @@
 import { loginAPI, registerAPI } from "@/axios/endpoints/auth.endpoint";
 import { createBetAPI, marketListAPI } from "@/axios/endpoints/bet.endpoint";
+import useToast from "@/hooks/useToast";
 import { UserDetailsTypes } from "@/types";
 import { getToken, saveToken } from "@/utils";
 import axios from "axios";
@@ -22,6 +23,8 @@ const initialState = {
 	Leagues: [],
 
 	Teams: [],
+
+	BetName: "",
 
 	Conditions: [],
 
@@ -116,6 +119,7 @@ const BetProvider = ({ children }: { children: any }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [placing, isPlacing] = useState(false);
 	const [status, setStatus] = useState(statusConst.success);
+	const { notify } = useToast();
 
 	function handlePlaceBet() {
 		isPlacing((p) => !p);
@@ -148,25 +152,44 @@ const BetProvider = ({ children }: { children: any }) => {
 		const formData = new FormData();
 
 		// @ts-ignore
-		formData.append("BetImg", BetImg);
-		formData.append("Data", JSON.stringify(Bet));
+		formData.append("BetImg", BetImg[0]);
+		formData.append("Type", Bet.Type);
+		formData.append("Teams", Bet.Teams);
+		formData.append("Leagues", Bet.Leagues);
+		formData.append("Amount", Bet.Amount);
+		formData.append("Discount", JSON.stringify(Bet.Discount));
+		formData.append("Criteria", JSON.stringify(Bet.Criteria));
+		formData.append("Conditions", JSON.stringify(Bet.Conditions));
+		formData.append("BetName", Bet.BetName);
 
 		try {
-			console.log(Bet, "bet");
-			console.log(BetImg, "bet img");
+			const response = await axios.post("https://13.246.19.94/Bet/Create", formData, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+					Authorization: `Bearer ${String(getToken())}`,
+					"x-auth-token": `${String(getToken())}`,
+				},
+			});
 
-			// const response = await axios.post("https://13.246.19.94/Bet/Create", formData, {
-			// 	headers: {
-			// 		"Content-Type": "multipart/form-data",
-			// 		 Authorization: `Bearer ${String(getToken())}`
-			// 	},
-			// });
+			// const { error, serverResponse } = await createBetAPI(formData)
 
-			const { error, serverResponse } = await createBetAPI(formData)
+			console.log(response, "response");
 
-			console.log(serverResponse, "response");
+			if (response.status == 200)
+			{
+				setStatus(statusConst.success);
+				return notify('success', 'Bet Placed Successfully')
+			}
+
+			// if (!error) {
+			// 	setStatus(statusConst.success);
+			// } else {
+			// 	setStatus(statusConst.failed);
+			// }
+
+			
 		} catch (error) {
-			console.log(error, "--error--");
+			notify('error', 'Bet Placed Failed')
 		}
 	}
 

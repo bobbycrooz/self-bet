@@ -11,6 +11,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import CheckIcon, { AddIcon, TimesIcon } from "@/assets";
 import useScreen from "@/hooks/useScreen";
 import { useBet } from "@/context/betContext";
+import useToast from "@/hooks/useToast";
 
 interface PropTypes {
 	toggle: any;
@@ -43,6 +44,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 	const tabRef = useRef(null);
 	const { isMobile, isTablet } = useScreen();
 	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
+	const {notify} = useToast()
 
 	const [sectorLists, setSectors] = useState([]);
 
@@ -200,12 +202,9 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 	}
 
 	function saveBetConditions() {
-		// save bet coditions
 
-		// console.log(currentSector, "this is the current selected market before all selcetion...");
 
 		const processCodes = currentSector.Codes.map((i: any) => i.value);
-		// console.log(processCodes, "this is the current selected market after all selcetion...");
 		
 
 		const betConditions = {
@@ -214,9 +213,10 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 		};
 
 		dispatchBet({ type: "BET_CONDITIONS", payload: { conditions: betConditions } });
+		notify("success", "Bet conditions saved successfully!");
+		toggle()
 
-		// // console.log(currentSector, "this is the current selected market before all selcetion...");
-		// console.log(processCodes, "this is the current selected market after all selcetion...");
+	
 	}
 
 	useEffect(() => {

@@ -62,28 +62,18 @@ export default function Home() {
 			setIsLoading(true);
 
 			const res = await handleAuth(values, loginMode);
-			// dispatch({ type: "STORE_USER", payload: values });
 
 			if (!loginMode && res) {
-				setIsLoading(!true);
+				setIsLoading(false);
+
 				setLoginMode(true);
-				notify("success", "Account created successfully");
-				// 	push("/dashboard");
 			} else if (res) {
-				setIsLoading(!true);
-				notify("success", "Logged in successfully");
+				setIsLoading(false);
+
 				push("/dashboard");
 			}
 
 			setIsLoading(!true);
-
-			console.log("somothig wnet wrong");
-
-			// if (res) {
-			// 	setIsLoading(!true);
-
-			// 	push("/dashboard");
-			// }
 		},
 	});
 
