@@ -311,10 +311,9 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 	}
 
 	function handlePickCondition(i: any) {
-		// check if condition already exist
-		const exist = Bet.Criteria.Conditions.length = 1;
+		// check if condition already exist		
 
-		if (exist) {
+		if (Bet.Conditions.length > 0) {
 			return notify("error", "You can only pick one condition per sector");
 		}
 
@@ -332,9 +331,6 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 	}
 
 	function getDesc(i: string) {
-		console.log(i, "----");
-
-		// const sectoreDtails = MarketList.find((i: any) => i.Sector === sectors.Sector);
 
 		// get array of codes for given sector
 		const codes = MarketList.find((i: any) => i.Sector === sectors.Sector).Codes;
@@ -344,9 +340,6 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 		return desc;
 	}
 
-	// useEffect(() => {
-	// 	processSectorConditions();
-	// }, []);
 
 	return (
 		<div className="conditon_card border rounded-lg  h-auto">
