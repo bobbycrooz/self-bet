@@ -135,3 +135,17 @@ input[type="search"] {
 		}
 	}
 }
+
+
+.threeDot{
+
+		.edit_card{
+			display: none;
+		}
+	&:hover{
+
+		.edit_card{
+			display: block;
+		}
+	}
+}

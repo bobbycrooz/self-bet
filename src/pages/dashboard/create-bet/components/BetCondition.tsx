@@ -22,8 +22,6 @@ export default function BetCondition({ handleAddCondition, isAdding }: { handleA
 	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
 
 	// console.log(Bet.Criteria.Conditions, "bet conditions");
-	
-
 
 	return (
 		<>
@@ -68,27 +66,29 @@ export default function BetCondition({ handleAddCondition, isAdding }: { handleA
 
 					{/* @ts-ignore */}
 					{Bet.Criteria.Conditions.map((i, k) => (
-						// <div key={k} className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
-						// 	<div className="  space-x-4 items-start flex">
-						// 		<Image className="team_logo " src={"/icons/green_ball.svg"} alt="chealse" width={48} height={48} />
-						// 		<div className="texts ">
-						// 			<h1 className="team_name txt-md f-m text-gray-500">{i?.Sector}</h1>
-						// 		</div>
+						<div key={k} className="teams_display  border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
+							<div className="  space-x-4 items-start flex ">
+								<Image className="team_logo " src={"/icons/red_ball.svg"} alt="chealse" width={48} height={48} />
+								<div className="texts ">
+									<h1 className="team_name txt-md  f-m text-gray-500 text-left">{i?.Sector}</h1>
+								</div>
+							</div>
+							<div className="w-full flex justify-end relative threeDot">
+								<button className="">
+									<MoreSvg />
+								</button>
 
-						// 		<MoreSvg />
-						// 	</div>
-						// </div>
+								<div className="edit_card bg-white rounded shadow  absolute -right-6 top-5">
+									<p role="button" className="edit text-xs py-2 border-b hover:bg-gray-200 w-full px-4 cursor-pointer">
+										Edit
+									</p>
+									<p role="button" className="edit text-xs  py-2 hover:bg-gray-200 w-full px-4 cursor-pointer">
+										Delete
+									</p>
 
-						<div key={k}  className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
-					<div className="  space-x-4 items-start flex ">
-						<Image className="team_logo " src={"/icons/red_ball.svg"} alt="chealse" width={48} height={48} />
-						<div className="texts ">
-							<h1 className="team_name txt-md  f-m text-gray-500 text-left">{i?.Sector}</h1>
+								</div>
+							</div>
 						</div>
-
-						<MoreSvg />
-					</div>
-				</div>
 					))}
 
 					{/* --------- */}
@@ -108,29 +108,3 @@ export default function BetCondition({ handleAddCondition, isAdding }: { handleA
 		</>
 	);
 }
-
-				
-
-// 				{/* ---- */}
-// 				<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card ">
-// 					<div className="  space-x-4 items-start flex">
-// 						<Image className="team_logo " src={"/icons/blue_ball.svg"} alt="chealse" width={48} height={48} />
-// 						<div className="texts ">
-// 							<h1 className="team_name txt-md f-m text-gray-500">Home team / Away team / Draw</h1>
-// 						</div>
-
-// 						<MoreSvg />
-// 					</div>
-// 				</div>
-
-// 				{/* ---- */}
-// 				<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
-// 					<div className="  space-x-4 items-start flex">
-// 						<Image className="team_logo " src={"/icons/cyan_ball.svg"} alt="chealse" width={48} height={48} />
-// 						<div className="texts ">
-// 							<h1 className="team_name txt-md f-m text-gray-500">Home team / Away team / Draw</h1>
-// 						</div>
-
-// 						<MoreSvg />
-// 					</div>
-// 				</div>

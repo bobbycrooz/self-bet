@@ -35,8 +35,8 @@ const initialState = {
 	Type: "",
 
 	Criteria: {
-		TeamA: { name: "Southampton", logo: "https://media.api-sports.io/football/teams/41.png" },
-		TeamB: { name: "Nottingham Forest", logo: "https://media-3.api-sports.io/football/teams/65.png" },
+		TeamA: { TeamName: "", Logo: "" },
+		TeamB: { TeamName: "", Logo: "" },
 
 		Conditions: [],
 
@@ -215,6 +215,7 @@ const BetProvider = ({ children }: { children: any }) => {
 				setIsLoading,
 				setStatus,
 				setBetImg,
+				BetImg
 			}}
 		>
 			{children}

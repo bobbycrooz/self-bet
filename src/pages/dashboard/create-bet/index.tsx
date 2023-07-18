@@ -11,6 +11,7 @@ import BetCondition from "./components/BetCondition";
 import BetDetails from "./components/Details";
 import SelectMatch from "./components/Matches";
 import { useBet } from "@/context/betContext";
+import useToast from "@/hooks/useToast";
 // import { NextPageWithLayout } from "../_app";
 
 function CreateBetPage() {
@@ -21,16 +22,17 @@ function CreateBetPage() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const progressRef = useRef(null);
 	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
+	const { BetImg} = useBet()
 
+	const { notify } = useToast();
 	const [BetDetailsData, setBetDetailsData] = useState({
 		BetName: "",
-		Amount: 0,
+		Amount: "",
 		Discount: 0,
 		NumberOfPeople: 0,
 	});
 
-	// console.log(Bet, "bet ------------ ")
-	
+	console.log(step, "step ------------ ");
 
 	function handleAddCondition() {
 		setIsAdding((p) => !p);
@@ -47,6 +49,38 @@ function CreateBetPage() {
 	}
 
 	function next() {
+		// validation
+		// [1] a match must be selected
+		let hasSelectedOneMatch = Bet.Criteria.TeamA?.TeamName?.length > 1;
+		let hasSelectedCondition = Bet.Criteria?.Conditions?.length > 1;
+		let hasName = BetDetailsData.BetName?.length > 4;
+		let hasAmount = BetDetailsData.Amount?.length > 4;
+		
+
+		 console.log(BetImg)
+		
+		if (step == 2 && !hasSelectedOneMatch) {
+			return notify("warn", "One match is required for KOLO bet");
+		}
+		
+		if (step == 3 && !hasSelectedCondition) {
+			return notify("warn", "You must add a bet condition!");
+		}
+		
+		if (step == 4 && !hasName) {
+			return notify("warn", "You must specfy a bet name!");
+		}
+		
+		if (step == 4 && !hasAmount) {
+			return notify("warn", "You must specfy a bet Amount!");
+		}
+		
+
+		if (step == 4 && !BetImg) {
+			return notify("warn", "You must upload a bet image!");
+		}
+		
+		
 		if (step === 4) {
 			setIsLoading(true);
 
@@ -63,8 +97,7 @@ function CreateBetPage() {
 				},
 			});
 
-			setIsLoading(false)
-
+			setIsLoading(false);
 
 			return push("/dashboard/create-bet/bet-details");
 		}
@@ -186,7 +219,13 @@ function CreateBetPage() {
 
 								{step === 2 && <div className="hidden md:flex match_count capitalize t-headerb7">Match Selected</div>}
 
-								<Button text={step !== 4 ? "Proceed" : "Proceed to placing bet"} type={"button"} primary click={next} isLoading={isLoading} />
+								<Button
+									text={step !== 4 ? "Proceed" : "Proceed to placing bet"}
+									type={"button"}
+									primary
+									click={next}
+									isLoading={isLoading}
+								/>
 							</div>
 						</div>
 					)}

@@ -44,7 +44,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 	const tabRef = useRef(null);
 	const { isMobile, isTablet } = useScreen();
 	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
-	const {notify} = useToast()
+	const { notify } = useToast();
 
 	const [sectorLists, setSectors] = useState([]);
 
@@ -70,7 +70,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 	function handlePickSector(sector: string) {
 		setCurrentSector({
 			...currentSector,
-			Sector:sector
+			Sector: sector,
 		});
 
 		handleGetSectorCodes(sector);
@@ -121,8 +121,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 		// console.log(updatedArray.length > 0, "thsi is the initaial array");
 
 		// find existing condition
-		if (updatedArray.length > 0)
-		{
+		if (updatedArray.length > 0) {
 			// @ts-ignore
 			let existing = updatedArray.filter((i: any, a) => i.value === condition.value);
 
@@ -202,21 +201,26 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 	}
 
 	function saveBetConditions() {
-
-
 		const processCodes = currentSector.Codes.map((i: any) => i.value);
-		
 
 		const betConditions = {
 			...currentSector,
 			Codes: processCodes,
 		};
 
+		let hasSelectedCondition = (betConditions.Codes.length > 1)
+
+		// console.log(hasSelectedCondition);
+		
+
+		// validat
+		if (!hasSelectedCondition) {
+			return notify("warn", "More than  one condition is require per sector");
+		}
+
 		dispatchBet({ type: "BET_CONDITIONS", payload: { conditions: betConditions } });
 		notify("success", "Bet conditions saved successfully!");
-		toggle()
-
-	
+		toggle();
 	}
 
 	useEffect(() => {
