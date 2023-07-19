@@ -5,8 +5,7 @@ import { DropDown } from "@components";
 import { useEffect, useState } from "react";
 import { features } from "process";
 import { useBet } from "@/context/betContext";
-import { getAllFixturesAPI } from "@/axios/endpoints/bet.endpoint";
-
+import { getAllFixturesAPI, searchFixturesAPI } from "@/axios/endpoints/bet.endpoint";
 
 const nav = ["All aleague", "Premier League", "la liga", "Seria A", "bundes liga"];
 
@@ -21,12 +20,9 @@ export default function SelectMatch() {
 	const { Bet, dispatchBet } = useBet();
 	const [fixtures, setFixtures] = useState([]);
 
-	console.log(Bet, "bet");
-	
-
 	// handlers ------------------
 	const handleMatchSelection = (i: any) => {
-		// get team names and update teams 
+		// get team names and update teams
 		const teamA = i.TeamA.TeamName;
 		const teamB = i.TeamB.TeamName;
 
@@ -52,16 +48,15 @@ export default function SelectMatch() {
 			},
 		});
 
-		// get leagues and update 
+		// get leagues and update
 		const league = i.LeagueName;
-		console.log(league, "league")
+		console.log(league, "league");
 
 		dispatchBet({
 			type: "BET_LEAGUES",
 			payload: {
 				league: league,
 			},
-
 		});
 
 		// get matchDate and update criteria
@@ -75,8 +70,6 @@ export default function SelectMatch() {
 				MatchDate: matchDate,
 			},
 		});
-
-		
 	};
 
 	async function fetchAlllFixturs() {
@@ -95,13 +88,23 @@ export default function SelectMatch() {
 		setFixtures(serverResponse);
 	}
 
-	function checkIfMatchIsSelected(matchFixId: number)
-	{
+	function checkIfMatchIsSelected(matchFixId: number) {
 		if (Bet.Criteria.FixtureId === matchFixId) return true;
-		
+
 		return false;
 	}
 
+	async function searchByName(pageNumber: number, category: "TeamName" | "LeagueName", searchValue: string) {
+		// @ts-ignore
+		const { error, serverResponse } = await searchFixturesAPI(pageNumber, category, searchValue);
+
+		if (error) return console.log(error);
+
+		console.log(serverResponse);
+
+		// @ts-ignore
+		setFixtures(serverResponse);
+	}
 
 	// useEffects ------------------
 
@@ -135,6 +138,8 @@ export default function SelectMatch() {
 				<div className="hidden lg:flex md:middle space-x-3 nav  txt-sm text-gray-500">
 					{nav.map((i, k) => (
 						<div
+							role="button"
+							onClick={() => searchByName(1, "LeagueName", i)}
 							key={k}
 							className={`nav_item ${
 								k == 0 ? "bg-gray-50 f-b" : "f-m"
@@ -158,6 +163,8 @@ export default function SelectMatch() {
 					<div className="scroll_track  mt-2 w-[600px] space-x-2 middle">
 						{nav.map((i, k) => (
 							<div
+								role="button"
+								onClick={() => searchByName(1, "LeagueName", i)}
 								key={k}
 								className={`nav_item ${
 									k == 0 ? "bg-gray-50 f-b" : "f-m"
@@ -178,44 +185,76 @@ export default function SelectMatch() {
 			{/* ------------------ */}
 
 			<div className="w-full  h-[450px] overflow-y-scroll custom-scrollbar pb-[0]  md:pb-[84px]">
-				<div className="matched w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 gap-6 md:pt-4 ">
-					{/* --team  display baner---- */}
-					{fixtures.map((i:any, k) => (
-						<div
-							key={k}
-							role="button"
-							onClick={() => handleMatchSelection(i)}
-							className={`teams_display_matches ${checkIfMatchIsSelected(i?.FixtureId) && 'active'}`}
-						>
-							{/* Team A */}
-							<div className="team_caard team_caard col-center space-y-2">
-								<Image className="team_logo " src={i.TeamA.Logo == "TeamALogoUrl" ? "/icons/teams/chealse_logo.svg" : i.TeamA.Logo } alt="chealse" width={48} height={48} />
-								<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamA.TeamName}</h1>
-							</div>
+				{fixtures.length > 0 ? (
+					<div className="matched w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 gap-6 md:pt-4 ">
+						{/* --team  display baner---- */}
+						{fixtures.map((i: any, k) => (
+							<div
+								key={k}
+								role="button"
+								onClick={() => handleMatchSelection(i)}
+								className={`teams_display_matches ${checkIfMatchIsSelected(i?.FixtureId) && "active"}`}
+							>
+								{/* Team A */}
+								<div className="team_caard team_caard col-center space-y-2">
+									<Image
+										className="team_logo "
+										src={i.TeamA.Logo == "TeamALogoUrl" ? "/icons/teams/chealse_logo.svg" : i.TeamA.Logo}
+										alt="chealse"
+										width={48}
+										height={48}
+									/>
+									<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamA.TeamName}</h1>
+								</div>
 
-							{/* Date and time */}
-							<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
-								<h1 className="">Sat, 3 Dec</h1>
-								<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">8:30</h1>
-							</div>
+								{/* Date and time */}
+								<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
+									<h1 className="">Sat, 3 Dec</h1>
+									<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">8:30</h1>
+								</div>
 
-							{/* Team B */}
-							<div className="team_caard col-center  space-y-2">
-								<Image className="team_logo " src={i.TeamB.Logo == "TeamBLogoUrl" ? "/icons/teams/lei_logo.svg" : i.TeamB.Logo} alt="chealse" width={48} height={48} />
-								<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamB.TeamName}</h1>
-							</div>
+								{/* Team B */}
+								<div className="team_caard col-center  space-y-2">
+									<Image
+										className="team_logo "
+										src={i.TeamB.Logo == "TeamBLogoUrl" ? "/icons/teams/lei_logo.svg" : i.TeamB.Logo}
+										alt="chealse"
+										width={48}
+										height={48}
+									/>
+									<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamB.TeamName}</h1>
+								</div>
 
-							<Image
-								className="selector  absolute right-0 top-0"
-								src={"/images/create/selector.svg"}
-								alt="chealse"
-								width={32}
-								height={32}
-							/>
-						</div>
-					))}
-				</div>
+								<Image
+									className="selector  absolute right-0 top-0"
+									src={"/images/create/selector.svg"}
+									alt="chealse"
+									width={32}
+									height={32}
+								/>
+							</div>
+						))}
+					</div>
+				) : (
+					<FetchLoading />
+				)}
 			</div>
 		</div>
+	);
+}
+
+function FetchLoading() {
+	const [isEmpty, setIsEmpty] = useState(false);
+
+	useEffect(() => {
+		setTimeout(() => {
+			setIsEmpty(true);
+		}, 2000);
+	}, []);
+
+	return isEmpty ? (
+		<div className="grid-center w-full h-full  text-sm">No match found in this catergory</div>
+	) : (
+		<div className="grid-center w-full h-full italic text-sm">loading...</div>
 	);
 }

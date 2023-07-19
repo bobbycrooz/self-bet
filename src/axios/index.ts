@@ -28,7 +28,7 @@ const service = axios.create({
 	baseURL: "https://13.246.19.94",
 	// process.env.NEXT_PUBLIC_NODE_ENV === "development" ? `http://localhost:3000` : process.env.NEXT_PUBLIC_BASE_LINK,
 	headers: {
-		" x-auth-token": `${String(getToken())}`,
+		"x-auth-token": `${String(getToken())}`,
 		// "Content-Type": "multipart/form-data",
 	},
 });
@@ -78,7 +78,7 @@ service.interceptors.response.use(
 
 		// check if error is an axios error
 		// if (error?.name && error.name === 'AxiosError') {
-		if (error && !error.response.data) {
+		if (error && !error?.response?.data) {
 			return {
 				error: true,
 				serverResponse: error.message,

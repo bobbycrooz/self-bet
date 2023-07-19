@@ -4,6 +4,10 @@ import { Inter } from "next/font/google";
 import { Button, InputField, Navbar, Sidebar } from "@components";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import { getToken } from "@/utils";
+import { useBet } from "@/context/betContext";
+import { useUser } from "@/context/userContext";
+import useToast from "@/hooks/useToast";
 
 export default function DashboardLayout({ children }: { children: any }) {
 	const mainStyle = {
@@ -13,8 +17,17 @@ export default function DashboardLayout({ children }: { children: any }) {
 	};
 
 	const { pathname } = useRouter();
-  
+	const { Bet } = useBet();
+	const { logOut } = useUser();
+	const {notify} = useToast()
 
+	useEffect(() => {
+		console.log(getToken());
+		if (!getToken()) {
+			logOut();
+			notify("error", "Session expired")
+		}
+	}, []);
 
 	return (
 		<main className="dashboard_layout-wrapper">

@@ -35,58 +35,13 @@ export function createBetAPI(data: any): ResponsTypes {
 	});
 }
 
-// // -----
-// export function getAllPurchases() {
-//   return service({
-//     url: `admin/allP2PTransactions`,
-//     method: 'get'
-//   });
-// }
-
-// export function getPurchasePage(number: number) {
-//   console.log('i got here');
-
-//   return service({
-//     url: `admin/allP2PTransactions?page=${number}`,
-//     method: 'get'
-//   });
-// }
-
-// // -----
-
-// export function getAllWithdrawals() {
-//   return service({
-//     url: `admin/allWithdrawals`,
-//     method: 'get'
-//   });
-// }
-
-// // export function getAllUser() {
-// //   return service({
-// //     url: `admin/allUsers`,
-// //     method: 'get'
-// //   });
-// // }
-
-// export function getTotalUsers() {
-//   return service({
-//     url: `admin/user/count`,
-//     method: 'get'
-//   });
-// }
-
-// // export function getTransfers() {
-// //   return service({
-// //     url: `admin/allTransferTransactions?page=1`,
-// //     method: 'get'
-// //   });
-// // }
-
-// // export function searchByName(name) {
-// //   console.log(name);
-// //   return service({
-// //     url: `/name/${name.toLowerCase()}`,
-// //     method: 'get'
-// //   });
-// // }
-// // continent / { region };
+export function searchFixturesAPI(
+	PageNumber: number,
+	Name: "LeagueName" | "TeamName",
+	searchValue: string
+): ResponsTypes {
+	return service({
+		url: `/Fixtures/Search?PageNumber=${PageNumber}&${Name}=${searchValue}`,
+		method: "get",
+	});
+}

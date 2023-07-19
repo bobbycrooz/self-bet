@@ -23,6 +23,11 @@ export default function BetCondition({ handleAddCondition, isAdding }: { handleA
 
 	// console.log(Bet.Criteria.Conditions, "bet conditions");
 
+	function handleDeletConditions(BetDetails: any)
+	{
+		console.log(BetDetails)
+	}
+
 	return (
 		<>
 			<div className="md:flex justify-between">
@@ -79,10 +84,10 @@ export default function BetCondition({ handleAddCondition, isAdding }: { handleA
 								</button>
 
 								<div className="edit_card bg-white rounded shadow  absolute -right-6 top-5">
-									<p role="button" className="edit text-xs py-2 border-b hover:bg-gray-200 w-full px-4 cursor-pointer">
+									<p onClick={() => handleDeletConditions(i)} role="button" className="edit text-xs py-2 border-b hover:bg-gray-200 w-full px-4 cursor-pointer">
 										Edit
 									</p>
-									<p role="button" className="edit text-xs  py-2 hover:bg-gray-200 w-full px-4 cursor-pointer">
+									<p role="button" onClick={() => handleDeletConditions(i)}  className="edit text-xs  py-2 hover:bg-gray-200 w-full px-4 cursor-pointer">
 										Delete
 									</p>
 

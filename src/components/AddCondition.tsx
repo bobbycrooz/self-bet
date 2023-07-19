@@ -223,6 +223,8 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 		toggle();
 	}
 
+	
+
 	useEffect(() => {
 		fetchAlllMarkets();
 	}, [fetchAlllMarkets]);

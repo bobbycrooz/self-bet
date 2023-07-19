@@ -57,8 +57,6 @@ function CreateBetPage() {
 		let hasAmount = BetDetailsData.Amount?.length > 4;
 		
 
-		 console.log(BetImg)
-		
 		if (step == 2 && !hasSelectedOneMatch) {
 			return notify("warn", "One match is required for KOLO bet");
 		}

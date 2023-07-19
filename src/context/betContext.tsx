@@ -148,6 +148,19 @@ const BetProvider = ({ children }: { children: any }) => {
 		} catch (error) {}
 	}
 
+
+	// async function searchAllMarketList() {
+	// 	try {
+	// 		// const searchResult =await searchAPI(value)
+	// 	} catch (error)
+	// 	{
+	// 		console.log(error, 'from search endpoint');	
+	// 	}
+	// }
+
+
+
+
 	async function placeBet() {
 		const formData = new FormData();
 
