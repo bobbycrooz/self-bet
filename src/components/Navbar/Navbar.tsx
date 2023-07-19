@@ -10,8 +10,8 @@ import Nav from ".";
 import useWindowSize from "@/hooks/useScreen";
 import { useUser } from "@/context/userContext";
 import { useSession, signIn, signOut } from "next-auth/react";
-import {RiLogoutCircleRLine} from 'react-icons/ri'
-import {HiOutlineUserCircle} from 'react-icons/hi'
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import { HiOutlineUserCircle } from "react-icons/hi";
 
 interface InputProps {
 	icon?: string;
@@ -35,6 +35,8 @@ const Navbar = () => {
 	const { User } = useUser();
 	const { data: session } = useSession();
 
+	console.log(User);
+
 	function handleShowProfile() {
 		setShowProfile((p) => !p);
 	}
@@ -54,7 +56,6 @@ const Navbar = () => {
 	}
 
 	function handleProfileClick(e: any) {
-
 		if (showProfile && !profileRef.current?.contains(e.target)) {
 			console.log("the profile is active so i am closing it");
 
@@ -153,12 +154,18 @@ const Navbar = () => {
 						<Link className="border  middle rounded-lg p space-x-3 pr-3 border-gray-200" href={"/dashboard/my-wallet"}>
 							<Image src={"/icons/dashboard/wallet.svg"} alt="wallet" width={40} height={40} className="" />
 
-							<h1 className="balance text-gray-700 txt-sm f-b">40,000 NGN</h1>
+							<h1 className="balance text-gray-700 txt-sm f-b">
+								{User?.Balance ? `${User.Balance.toLocaleString()} NGN` : "--_--"}{" "}
+							</h1>
 						</Link>
 
 						{/*  */}
 						<div className="profile h-8 middle space-x-2 relative">
-							<Image src={"/icons/dashboard/olivia.svg"} alt="wallet" width={32} height={32} className="" />
+							<div className="w-8 h-8 bg-gray-100 rounded-full grid-center">
+								<h1 className=" txt-xs  f-eb  text-gray-400">
+									{User?.Username ? User?.Username.slice(0, 2).toUpperCase() : ""}
+								</h1>
+							</div>
 
 							<Image
 								src={"/icons/dashboard/down.svg"}
@@ -181,14 +188,13 @@ const Navbar = () => {
 										className="profile_item middle space-x-4"
 										href={"/dashboard/profile"}
 									>
-										<HiOutlineUserCircle className=" profile_item-icon"/>
+										<HiOutlineUserCircle className=" profile_item-icon" />
 
 										<p className="item_name txt-sm f-m text-gray-700 hover:text-sec">Profile</p>
 									</Link>
 
 									<div role="button" onClick={handleLogout} className="profile_logout middle space-x-4">
-										
-											<RiLogoutCircleRLine  className="profile_logout-icon"/>
+										<RiLogoutCircleRLine className="profile_logout-icon" />
 
 										<p className="item_name txt-sm f-m text-gray-700  hover:text-sec">Log out</p>
 									</div>

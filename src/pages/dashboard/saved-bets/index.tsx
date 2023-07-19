@@ -88,9 +88,13 @@ function Home() {
             {Array(9)
               .fill(1)
               .map((i, k) => (
-                <div className="" key={k}>
-                  <BetCard betType={k % 2 == 0 ? "KOLO" : "POINT"} />
-                </div>
+              	<div className="" key={k}>
+										<BetCard
+											betType={k % 2 ==
+												0
+												? "KoloBet"
+												: "PointBet"} data={undefined}										/>
+									</div>
               ))}
           </div>
         </div>

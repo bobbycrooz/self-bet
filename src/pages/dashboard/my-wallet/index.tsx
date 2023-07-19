@@ -7,11 +7,14 @@ import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { PlusSvg } from "@/assets";
 import Link from "next/link";
+import { useUser } from "@/context/userContext";
 
 function Home() {
 	const [isWithdrawing, setIsWithdrawing] = useState(false);
 	const [isDepositing, setIsDepositing] = useState(false);
 	const { push, query, pathname } = useRouter();
+	const { User } = useUser();
+
 
 	const tabs = ["All", "Deposit", "Payouts", "Withdraw"];
 
@@ -117,7 +120,7 @@ function Home() {
 					<div className="absolute lg:flex  lg:justify-between hidden  p-8 amount_box md:w-[557px] h-[148px] bg-white shadow-light md:right-[105px] rounded-lg md:-bottom-1/2 -bottom-[90%]">
 						<div className="">
 							<p className="text-gray-400 txt-sm f-m ">Wallet balance</p>
-							<h1 className="notify display-sm f-eb text-gray-700  ">N 40,000</h1>
+							<h1 className="notify display-sm f-eb text-gray-700  ">N {User?.Balance ? User?.Balance.toLocaleString() : "--_--"}</h1>
 						</div>
 
 						{/* 0--------------- */}

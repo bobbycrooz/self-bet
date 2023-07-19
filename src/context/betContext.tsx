@@ -1,5 +1,5 @@
 import { loginAPI, registerAPI } from "@/axios/endpoints/auth.endpoint";
-import { createBetAPI, marketListAPI } from "@/axios/endpoints/bet.endpoint";
+import { createBetAPI, fetchBetListAPI, marketListAPI } from "@/axios/endpoints/bet.endpoint";
 import useToast from "@/hooks/useToast";
 import { UserDetailsTypes } from "@/types";
 import { getToken, saveToken } from "@/utils";
@@ -114,12 +114,15 @@ const statusConst = {
 const BetProvider = ({ children }: { children: any }) => {
 	const [Bet, dispatchBet] = useReducer(betReducer, initialState);
 	const [MarketList, setMarketList] = useState([]);
+	const [BetList, setBetList] = useState([]);
 
 	const [BetImg, setBetImg] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [placing, isPlacing] = useState(false);
 	const [status, setStatus] = useState(statusConst.success);
 	const { notify } = useToast();
+
+	// handlers------------------
 
 	function handlePlaceBet() {
 		isPlacing((p) => !p);
@@ -131,9 +134,6 @@ const BetProvider = ({ children }: { children: any }) => {
 			setStatus(statusConst.success);
 		}, 5000);
 	}
-
-	// handlers------------------
-	// console.log(Bet, "bet");
 
 	async function fetchAlllMarkets() {
 		try {
@@ -148,18 +148,18 @@ const BetProvider = ({ children }: { children: any }) => {
 		} catch (error) {}
 	}
 
-
-	// async function searchAllMarketList() {
-	// 	try {
-	// 		// const searchResult =await searchAPI(value)
-	// 	} catch (error)
-	// 	{
-	// 		console.log(error, 'from search endpoint');	
-	// 	}
-	// }
-
-
-
+	async function fetchAllActiveBets() {
+		try {
+			const { error, serverResponse } = await fetchBetListAPI(1);
+			if (!error) {
+				setBetList(serverResponse as any);
+			} else {
+				console.log(serverResponse, "fetching all bets");
+			}
+		} catch (error) {
+			console.log(error, "from search endpoint");
+		}
+	}
 
 	async function placeBet() {
 		const formData = new FormData();
@@ -188,10 +188,9 @@ const BetProvider = ({ children }: { children: any }) => {
 
 			console.log(response, "response");
 
-			if (response.status == 200)
-			{
+			if (response.status == 200) {
 				setStatus(statusConst.success);
-				return notify('success', 'Bet Placed Successfully')
+				return notify("success", "Bet Placed Successfully");
 			}
 
 			// if (!error) {
@@ -199,16 +198,21 @@ const BetProvider = ({ children }: { children: any }) => {
 			// } else {
 			// 	setStatus(statusConst.failed);
 			// }
-
-			
 		} catch (error) {
-			notify('error', 'Bet Placed Failed')
+			notify("error", "Bet Placed Failed");
 		}
 	}
 
 	// --------USEEFFECTS
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		if (BetList.length === 0) {
+			fetchAllActiveBets();
+		}
+
+		console.log('userContext mounted!!');
+		
+	}, []);
 
 	// --------USEEFFECTS
 
@@ -228,7 +232,8 @@ const BetProvider = ({ children }: { children: any }) => {
 				setIsLoading,
 				setStatus,
 				setBetImg,
-				BetImg
+				BetImg,
+				BetList,
 			}}
 		>
 			{children}

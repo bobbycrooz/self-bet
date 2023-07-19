@@ -117,13 +117,10 @@ function Home() {
 								.map((i, k) => (
 									<div className="" key={k}>
 										<BetCard
-											betType={
-												k % 2 ==
+											betType={k % 2 ==
 												0
-													? "KOLO"
-													: "POINT"
-											}
-										/>
+												? "KoloBet"
+												: "PointBet"} data={undefined}										/>
 									</div>
 								))}
 						</div>

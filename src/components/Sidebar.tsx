@@ -109,7 +109,9 @@ const Sidebar = () => {
 	const [showBetList, setShowBetList] = useState(false);
 
 	const { isLoading, placing, status, handlePlaceBet, setIsLoading, setStatus } = useBet();
-	const {logOut} = useUser()
+	const { logOut } = useUser()
+	const { User } = useUser();
+	
 
 	function linkHandler(link: string) {
 		return push(link);
@@ -152,11 +154,16 @@ const Sidebar = () => {
 
 				<div className="w-full">
 						<div role="button" onClick={logOut} className="middle  justify-between border-t py-4">
-							<Image src={"/icons/dashboard/olivia.svg"} alt="logo" width={40} height={40} className="" />
+						{/* <Image src={"/icons/dashboard/olivia.svg"} alt="logo" width={40} height={40} className="" /> */}
+							<div className="w-8 h-8 bg-gray-100 rounded-full grid-center">
+								<h1 className=" txt-xs  f-eb  text-gray-400">
+									{User?.Username ? User?.Username.slice(0, 2).toUpperCase() : ""}
+								</h1>
+							</div>
 
 							<div className="name_box ">
-								<h1 className="name txt-sm text-gray-800 f-s">Olivia Rhye</h1>
-								<p className="sub_name text-xs f-n text-gray-400">olivia@untitledui.com</p>
+							<h1 className="name txt-md t-g9 f-eb">{User?.Username ? User?.Username : "--_--"}</h1>
+								<p className="sub_name text-sm f-n t-g6">{User?.Email ? User?.Email : "--_--"}</p>
 							</div>
 
 							<Image src={"/icons/dashboard/logout.svg"} alt="logo" width={36} height={36} className="" />

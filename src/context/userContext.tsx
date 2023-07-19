@@ -81,10 +81,11 @@ const UserProvider = ({ children }: { children: any }) => {
 				};
 				const { error, serverResponse } = await loginAPI(datauu);
 
+
 				if (!error) {
 					const saveToCookie = saveToken(serverResponse.token);
 
-					dispatch({ type: "STORE_USER", payload: values });
+					dispatch({ type: "STORE_USER", payload: serverResponse });
 
 					notify("success", "Login successful!");
 

@@ -10,13 +10,16 @@ import { betCardType } from "@/components/BetCard";
 import Link from "next/link";
 import { useUser } from "@/context/userContext";
 import { getToken } from "@/utils";
+import { useBet } from "@/context/betContext";
 // import {betCardType}
 
 function Home() {
 	const [loginMode, setLoginMode] = useState(true);
 	const { push, query, pathname } = useRouter();
 	const { User } = useUser();
-	console.log(User, "this value is loading");
+	const { BetList } = useBet();
+
+	console.log(BetList, "this is the bet list");
 
 	const tabs = ["All Bets", "Today", "Tomorrow"];
 
@@ -56,10 +59,6 @@ function Home() {
 			});
 		}
 	}, [pathname]);
-
-
-	console.log(getToken(), "fdfvioepjgioe riogje----------------------------------");
-	
 
 	return (
 		<>
@@ -103,15 +102,18 @@ function Home() {
 					</div>
 				</div>
 
-				<div className="active_bet_wrapper pb-36 grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
-					{Array(9)
-						.fill(1)
-						.map((i, k) => (
+				{BetList?.length > 0 ? (
+					<div className="active_bet_wrapper pb-36 grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
+						{BetList.map((i:any, k:number) => (
 							<div className="" key={k}>
-								<BetCard betType={"POINT"} />
+								<BetCard betType={i.Type} data={i} />
 							</div>
 						))}
-				</div>
+					</div>
+				) : (
+					<div className="w-full flex justify-center py-14">fetching bets ...</div>
+				)}
+
 				<div className="bottom_div w-full h-12 md:h-0"></div>
 			</main>
 		</>

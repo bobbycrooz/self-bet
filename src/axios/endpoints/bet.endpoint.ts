@@ -45,3 +45,10 @@ export function searchFixturesAPI(
 		method: "get",
 	});
 }
+
+export function fetchBetListAPI(page: number): ResponsTypes {
+	return service({
+		url: `/Bet/List?PageNumber=${page}`,
+		method: "get",
+	});
+}

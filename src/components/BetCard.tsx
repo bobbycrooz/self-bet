@@ -7,9 +7,11 @@ import useScreen from "@/hooks/useScreen";
 import { BallSvg } from "@/assets";
 import { BiShareAlt } from "react-icons/bi";
 import { VscSaveAll } from "react-icons/vsc";
+import MatchCard from "./MatchCard";
 
 interface PropTypes {
-	betType: "KOLO" | "POINT" | undefined;
+	betType: "KoloBet" | "PointBet" | undefined;
+	data: any;
 }
 
 const tabMode = {
@@ -19,8 +21,8 @@ const tabMode = {
 };
 
 export const betCardType = {
-	POINT: "POINT",
-	KOLO: "KOLO",
+	KOLO: "KoloBet",
+	POINT: "PointBet",
 };
 // const tabs = ["Matches", "Bet conditions", "Creator’s Bet"];
 
@@ -43,7 +45,7 @@ const tabs = [
 	},
 ];
 
-const BetCard = ({ betType }: PropTypes) => {
+const BetCard = ({ betType, data }: PropTypes) => {
 	const [showDetails, setShowDetails] = useState<{
 		show: boolean;
 		mode: string | undefined;
@@ -56,7 +58,7 @@ const BetCard = ({ betType }: PropTypes) => {
 	const [showCardOptions, setShowCardOptions] = useState(false);
 	const profileRef = useRef<HTMLDivElement>(null);
 
-	function handleShowDetails(cardType?: "KOLO" | "POINT") {
+	function handleShowDetails(cardType?: "KoloBet" | "PointBet") {
 		if (showDetails.show) {
 			setShowDetails({
 				...showDetails,
@@ -74,11 +76,11 @@ const BetCard = ({ betType }: PropTypes) => {
 	function tabModeHandler() {
 		switch (betTabMode) {
 			case tabMode.MATCHES:
-				return <Matches />;
+				return <Matches data={data} />;
 			case tabMode.BET:
-				return <Bets />;
+				return <Bets data={data} />;
 			case tabMode.CREATOR:
-				return <Creator />;
+				return <Creator  />;
 			default:
 				break;
 		}
@@ -98,14 +100,42 @@ const BetCard = ({ betType }: PropTypes) => {
 				className="bet_card shadow-bet-card bg-white border border-gray-200 rounded-lg "
 			>
 				<div className=" p-3 md:p-6 space-y-4">
-					<div className="bet_banner w-full h-32  relative">
-						<Image
-							src={"/images/home/bet_banner-1.png"}
-							alt={""}
-							fill
-							// width={300}
-							// height={128}
-						/>
+					<div
+						style={{
+							backgroundImage: `url(${data?.Criteria.LeagueImg})`,
+							backgroundSize: "contain",
+							backgroundPosition: "center",
+							backgroundRepeat: "no-repeat",
+						}}
+						className="bet_banner w-full h-32  relative flex justify-between items-center p-6 bg-[#0000003d]"
+					>
+						<div className="imgTa">
+							<Image
+								className="team_logo "
+								src={
+									data?.Criteria.TeamA.Logo == "TeamALogoUrl"
+										? "/icons/teams/chealse_logo.svg"
+										: data?.Criteria.TeamA.Logo
+								}
+								alt="chealse"
+								width={48}
+								height={48}
+							/>
+						</div>
+
+						<div className="imgTa">
+							<Image
+								className="team_logo "
+								src={
+									data?.Criteria.TeamB.Logo == "TeamALogoUrl"
+										? "/icons/teams/chealse_logo.svg"
+										: data?.Criteria.TeamB.Logo
+								}
+								alt="chealse"
+								width={48}
+								height={48}
+							/>
+						</div>
 					</div>
 
 					<div className="badge_container space-y-2 ">
@@ -152,21 +182,21 @@ const BetCard = ({ betType }: PropTypes) => {
 							</div>
 						</div>
 
-						<h1 className="bet_name txt-lg f-eb text-gray-600">Battle of best banterers</h1>
+						<h1 className="bet_name txt-lg f-eb text-gray-600">{data?.Creator.Username}</h1>
 					</div>
 
 					<div className="author row-between">
 						<h1 className="name txt-xs f-m text-gray-400">
-							By <span className="f-b text-gray-600">Peter Zokoro</span>
+							By <span className="f-b text-gray-600">{data?.Creator.Username}</span>
 						</h1>
 
 						<div className="amounts middle space-x-2">
 							<div className="">
-								<h1 className="off txt-xs f-s text-gray-500">10% off</h1>
-								<h1 className="off txt-xs  text-gray-300 ">/₦5000</h1>
+								<h1 className="off txt-xs f-s text-gray-500">{data?.Discount.discount}% off</h1>
+								<h1 className="off txt-xs  text-gray-300 ">/₦{data?.Amount}</h1>
 							</div>
 
-							<h1 className="stake text-gray-500 txt-xl f-b">₦4500</h1>
+							<h1 className="stake text-gray-500 txt-xl f-b">₦{data?.Amount}</h1>
 						</div>
 					</div>
 				</div>
@@ -174,7 +204,7 @@ const BetCard = ({ betType }: PropTypes) => {
 				<footer className="card_footer row-center w-full rounded-b h-20 bg-gray-100 p-6">
 					<div className="row-between  w-full">
 						<h1 className="name txt-xs f-m text-gray-400">
-							<span className="f-b text-gray-700">18</span> Players
+							<span className="f-b text-gray-700">{data?.Discount.max}</span> Players
 						</h1>
 
 						{!true ? (
@@ -305,9 +335,7 @@ const BetCard = ({ betType }: PropTypes) => {
 																	{i.badge && (
 																		<p
 																			className={`rounded bg-gray-500  px-2 p-[2px] text-white txt-xs f-m ${
-																				betTabMode == i.tabMode
-																					? " bg-gray-700 border-gray-700 "
-																					: " text-gray-500"
+																				betTabMode == i.tabMode ? " bg-gray-700 border-gray-700 " : " text-gray-500"
 																			}  `}
 																		>
 																			{i.badge}
@@ -438,6 +466,7 @@ const BetCard = ({ betType }: PropTypes) => {
 							)}
 						</div>
 					) : (
+						// ----desktop----
 						<div className="betInfo overlay z-10 fixed top-0 flex justify-end left-0 strictFadeIn w-full h-full bg-[#0000005c]">
 							<div className="info_panel slideInLeft  relative w-[50%]    h-screen bg-white">
 								{/*  */}
@@ -494,14 +523,14 @@ const BetCard = ({ betType }: PropTypes) => {
 															)}
 														</div>
 
-														<h1 className="bet_name txt-lg f-eb text-gray-600">Battle of best banterers</h1>
+														<h1 className="bet_name txt-lg f-eb text-gray-600">{data?.Creator.Username}</h1>
 
 														<Image src={"/images/home/users.png"} alt={""} className="mt-4" width={144} height={24} />
 													</div>
 
 													<div className="col">
 														<h1 className="amount text-gray-400 txt-xs f-b">Bet amount</h1>
-														<h1 className="txt-md f-b text-gray-700 mt-2 mb-4">N5000</h1>
+														<h1 className="txt-md f-b text-gray-700 mt-2 mb-4">N {data?.Amount}</h1>
 														<Link href={"/dashboard/create-bet/bet-details"}>
 															<Button text={"Join bet"} type={"button"} primary />
 														</Link>
@@ -533,8 +562,8 @@ const BetCard = ({ betType }: PropTypes) => {
 
 											<div className="px-12 w-full space-y-4">
 												{/* ------be list --------for each tab */}
-													<div className="det_details   grid grid-cols-2 gap-6">{tabModeHandler()}</div>
-													<div className="w-full h-6 invisible"></div>
+												<div className="det_details   grid grid-cols-2 gap-6">{tabModeHandler()}</div>
+												<div className="w-full h-6 invisible"></div>
 												{/*  */}
 											</div>
 										</div>
@@ -549,84 +578,37 @@ const BetCard = ({ betType }: PropTypes) => {
 	);
 };
 
-function Matches() {
+function Matches({ data }: any) {
 	return (
-		<>
-			{/* --team  display baner---- */}
-			{Array(9)
-				.fill(1)
-				.map((i, k) => (
-					<div key={k} className="teams_display middle  justify-around border border-gray-200 rounded-lg p-6 ">
-						<div className="team_caard team_caard col-center space-y-2">
-							<Image
-								className="team_logo "
-								src={"/icons/teams/chealse_logo.svg"}
-								alt="chealse"
-								width={48}
-								height={48}
-							/>
-							<h1 className="team_name txt-xs f-s text-gray-600">Chelsea</h1>
-						</div>
-
-						<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
-							<h1 className="">Sat, 3 Dec</h1>
-							<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">8:30</h1>
-						</div>
-
-						<div className="team_caard col-center  space-y-2">
-							<Image className="team_logo " src={"/icons/teams/lei_logo.svg"} alt="chealse" width={48} height={48} />
-							<h1 className="team_name txt-xs f-s text-gray-600">Leicester C</h1>
-						</div>
-					</div>
-				))}
-		</>
+		<MatchCard
+			teamData={{
+				TeamA: {
+					Logo: data.Criteria.TeamA.Logo,
+					TeamName: data.Criteria.TeamA.TeamName,
+				},
+				TeamB: {
+					Logo: data.Criteria.TeamB.Logo,
+					TeamName: data.Criteria.TeamB.TeamName,
+				},
+			}}
+		/>
 	);
 }
 
-function Bets() {
+function Bets({ data }: any) {
 	return (
 		<>
-			<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 ">
-				<div className="  space-x-4 items-start flex">
-					<Image className="team_logo " src={"/icons/green_ball.svg"} alt="chealse" width={48} height={48} />
-					<div className="texts">
-						<h1 className="team_name txt-sm f-b text-gray-700">Home team / Away team / Draw</h1>
-						<p className="team_name txt-sm  text-gray-600">Predict who wins or draws</p>
+			{data?.Criteria.Conditions.map((i: any, k: React.Key | null | undefined) => (
+				<div key={k} className="teams_display border border-gray-200 rounded-lg px-4 p-5 ">
+					<div className="  space-x-4 items-start flex">
+						<Image className="team_logo " src={"/icons/green_ball.svg"} alt="chealse" width={48} height={48} />
+						<div className="texts">
+							<h1 className="team_name txt-sm f-b text-gray-700">{i.Sector}</h1>
+							<p className="team_name txt-sm  text-gray-600">Predict who wins or draws</p>
+						</div>
 					</div>
 				</div>
-			</div>
-
-			<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 ">
-				<div className="  space-x-4 items-start flex">
-					<Image className="team_logo " src={"/icons/red_ball.svg"} alt="chealse" width={48} height={48} />
-					<div className="texts">
-						<h1 className="team_name txt-sm f-b text-gray-700">Home team / Away team / Draw</h1>
-						<p className="team_name txt-sm  text-gray-600">Predict who wins or draws</p>
-					</div>
-				</div>
-			</div>
-
-			{/* ---- */}
-			<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 ">
-				<div className="  space-x-4 items-start flex">
-					<Image className="team_logo " src={"/icons/blue_ball.svg"} alt="chealse" width={48} height={48} />
-					<div className="texts">
-						<h1 className="team_name txt-sm f-b text-gray-700">Home team / Away team / Draw</h1>
-						<p className="team_name txt-sm  text-gray-600">Predict who wins or draws</p>
-					</div>
-				</div>
-			</div>
-
-			{/* ---- */}
-			<div className="teams_display border border-gray-200 rounded-lg px-4 p-5 ">
-				<div className="  space-x-4 items-start flex">
-					<Image className="team_logo " src={"/icons/cyan_ball.svg"} alt="chealse" width={48} height={48} />
-					<div className="texts">
-						<h1 className="team_name txt-sm f-b text-gray-700">Home team / Away team / Draw</h1>
-						<p className="team_name txt-sm  text-gray-600">Predict who wins or draws</p>
-					</div>
-				</div>
-			</div>
+			))}
 		</>
 	);
 }
