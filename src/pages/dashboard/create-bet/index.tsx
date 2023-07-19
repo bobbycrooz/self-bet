@@ -52,7 +52,7 @@ function CreateBetPage() {
 		// validation
 		// [1] a match must be selected
 		let hasSelectedOneMatch = Bet.Criteria.TeamA?.TeamName?.length > 1;
-		let hasSelectedCondition = Bet.Criteria?.Conditions?.length > 1;
+		let hasSelectedCondition = Bet.Criteria?.Conditions?.length > 0;
 		let hasName = BetDetailsData.BetName?.length > 4;
 		let hasAmount = BetDetailsData.Amount?.length > 4;
 		

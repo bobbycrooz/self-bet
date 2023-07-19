@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { CarretRightSvg } from "@/assets";
 import { DropDown } from "@components";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { features } from "process";
 import { useBet } from "@/context/betContext";
 import { getAllFixturesAPI, searchFixturesAPI } from "@/axios/endpoints/bet.endpoint";
@@ -132,7 +132,15 @@ export default function SelectMatch() {
 
 			{/* ----------- */}
 			<div className="filter_tab w-full row-between  space-y-4 ">
-				<DropDown type={"byTeam"} lists={[]} title={"All matches"} show={searchMode.team} toggleShow={setSearchMode} />
+				<DropDown
+					type={"byTeam"}
+					lists={[]}
+					title={"All matches"}
+					show={searchMode.team}
+					setFixtures={setFixtures}
+					toggleShow={setSearchMode}
+				/>
+				{/* <CustomSearchCard list={[]} handler={undefined}/> */}
 
 				{/* current bet selection tab --desktop */}
 				<div className="hidden lg:flex md:middle space-x-3 nav  txt-sm text-gray-500">
@@ -256,5 +264,37 @@ function FetchLoading() {
 		<div className="grid-center w-full h-full  text-sm">No match found in this catergory</div>
 	) : (
 		<div className="grid-center w-full h-full italic text-sm">loading...</div>
+	);
+}
+
+function CustomSearchCard({ list, handler }: { list: Array<string>; handler: any }) {
+	const cardRef = useRef(null);
+
+	function handleCardClick(e: any) {
+		const cardEle = e.target;
+		const cardEleRef = cardRef.current;
+
+		// console.log(cardEle, cardEleRef);
+
+		if (cardEle !== cardEleRef) {
+			handler();
+		}
+	}
+
+	return (
+		<div
+			ref={cardRef}
+			onClick={handleCardClick}
+			className="absolute dropdown_body z-50 space-y-4 column transform w-[328px] shadow-soft left-0 top-[140px]  md:top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
+		>
+			{/* -----custom search list ---- */}
+			<ol className="team_options w-full">
+				{list.map((i, k) => (
+					<li key={k} role="button" onClick={() => handler(i)} className="option middle space-x-4">
+						<h1 className="text-gray-700 f-m capitalize">{i}</h1>
+					</li>
+				))}
+			</ol>
+		</div>
 	);
 }
