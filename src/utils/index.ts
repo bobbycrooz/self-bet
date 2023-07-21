@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import moment from "moment";
 
 
 export  const features = [
@@ -47,4 +48,26 @@ export function removeToken()
 	}
 
 	return;
+}
+
+export function formatMatchDate(date: string) {
+	const isoDateString = date;
+
+	// Use Moment.js to create a Moment.js object from the date string
+	const dateObject = moment(isoDateString);
+
+	// Get the month (January is 0, December is 11)
+	const month = dateObject.format("MMMM");
+
+	// Get the day of the month
+	const day = dateObject.format("DD");
+
+	// Get the time (formatted as 24-hour time)
+	const time = dateObject.format("HH:mm");
+
+	let dateR = `${month}, ${day}`;
+	
+	return [dateR, time]
+
+
 }

@@ -27,15 +27,14 @@ function fmtResponse(responseData: any, error: boolean) {
 const service = axios.create({
 	baseURL: "https://13.246.19.94",
 	// process.env.NEXT_PUBLIC_NODE_ENV === "development" ? `http://localhost:3000` : process.env.NEXT_PUBLIC_BASE_LINK,
-	headers: {
-		"x-auth-token": `${String(getToken())}`,
-		// "Content-Type": "multipart/form-data",
-	},
+	// headers: {
+	// 	"x-auth-token": `${String(getToken())}`,
+	// 	// "Content-Type": "multipart/form-data",
+	// },
 });
 
 // request interceptor
 service.interceptors.request.use(
-
 
 
       // @ts-ignore
@@ -47,6 +46,7 @@ service.interceptors.request.use(
 		if (hasToken() && getToken() !== false) {
 			// config.headers.Authorization = `Bearer ${token}`;
 			config.headers.Authorization = `Bearer ${String(getToken())}`;
+			config.headers["x-auth-token"] = `${String(getToken())}`;
 		}
 
 		return config;

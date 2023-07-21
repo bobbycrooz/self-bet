@@ -35,7 +35,6 @@ const Navbar = () => {
 	const { User } = useUser();
 	const { data: session } = useSession();
 
-	console.log(User);
 
 	function handleShowProfile() {
 		setShowProfile((p) => !p);

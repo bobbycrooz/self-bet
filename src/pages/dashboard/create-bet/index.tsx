@@ -39,14 +39,7 @@ function CreateBetPage() {
 	}
 
 	// handlers--------------
-	function handleAuthMode() {
-		setLoginMode((p) => !p);
-		window?.scrollTo({
-			top: 0,
-			left: 0,
-			behavior: "smooth",
-		});
-	}
+
 
 	function next() {
 		// validation
@@ -54,7 +47,7 @@ function CreateBetPage() {
 		let hasSelectedOneMatch = Bet.Criteria.TeamA?.TeamName?.length > 1;
 		let hasSelectedCondition = Bet.Criteria?.Conditions?.length > 0;
 		let hasName = BetDetailsData.BetName?.length > 4;
-		let hasAmount = BetDetailsData.Amount?.length > 4;
+		let hasAmount = BetDetailsData.Amount?.length > 2;
 		
 
 		if (step == 2 && !hasSelectedOneMatch) {
@@ -148,14 +141,17 @@ function CreateBetPage() {
 				return "0";
 		}
 	}
-	// console.log(handleProgressBar(step), "the progress bar");
+
+
 
 	// useEffects -------------
 	useEffect(() => {
-		if (query.login) {
-			setLoginMode(true);
+		if (query.step) {
+			setStep(4);
 		}
-	}, [pathname, query.login]);
+	}, [pathname]);
+
+	
 
 	// to focus on the progress bar
 	useEffect(() => {

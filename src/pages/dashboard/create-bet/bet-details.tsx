@@ -16,6 +16,8 @@ import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { useBet } from "@/context/betContext";
 import useToast from "@/hooks/useToast";
+import { formatMatchDate } from "@/utils";
+import Link from "next/link";
 
 const statusConst = {
 	success: "SUCCESS",
@@ -57,7 +59,7 @@ function Home() {
 					<main className=" w-[100%] space-y-6 pb-20 ">
 						{/* bet type banner */}
 						<div className="bet_banner w-full h-[124px] md:h-[224px] relative">
-							{!true ? (
+							{Bet.Type == "KoloBet" ? (
 								<Image
 									src={"/images/home/kolo_banner.png"}
 									alt={""}
@@ -81,6 +83,29 @@ function Home() {
 						{/* ------bet details container */}
 						<div className="w-full py-4 space-y-3">
 							{/* bet_details  component */}
+							<Link href={`/dashboard/create-bet?step=4`} role="button" className="middle space-x-2">
+								<div className="back_icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
+										<path
+											d="M9.57 5.92999L3.5 12L9.57 18.07"
+											stroke="#292D32"
+											stroke-width="1.5"
+											stroke-miterlimit="10"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+										<path
+											d="M20.4999 12H3.66992"
+											stroke="#292D32"
+											stroke-width="1.5"
+											stroke-miterlimit="10"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</svg>
+								</div>
+								<p className="txt-sm">Modify bet</p>
+							</Link>
 
 							{<BetConditionDropdown Bet={Bet} />}
 						</div>
@@ -95,7 +120,7 @@ function Home() {
 								<div className="middle">
 									<h1 className="header_text txt-sm f-b text-gray-50 p-4">Betslip</h1>
 
-									<p className="rounded bg-gray-400 px-2 p-[2px] text-white txt-xs f-m">{8}</p>
+									<p className="rounded bg-gray-400 px-2 p-[2px] text-white txt-xs f-m">{Bet?.Conditions?.length}</p>
 								</div>
 							</div>
 
@@ -114,15 +139,22 @@ function Home() {
 								>
 									<div className="row-between w-full">
 										<h1 className="p  txt-sm f-m">Stake</h1>
-										<h1 className="txt-sm f-b ">N500</h1>
+										<h1 className="txt-sm f-b ">N {Bet.Amount}</h1>
 									</div>
 
 									<div className="row-between w-full">
 										<h1 className="p  txt-sm f-m">Potential win</h1>
-										<h1 className="txt-sm f-b ">N5000</h1>
+										<h1 className="txt-sm f-b ">N {Bet.Amount}</h1>
 									</div>
 
-									<Button text={"Place Bet"} type={"button"} isLoading={isLoading} full primary click={handlePlaceBet} />
+									<Button
+										text={"Place Bet"}
+										type={"button"}
+										isLoading={isLoading}
+										full
+										primary
+										click={handlePlaceBet}
+									/>
 								</div>
 							</div>
 						</div>
@@ -238,6 +270,8 @@ function BetConditionDropdown({ Bet }: { Bet: any }) {
 		setIsOpen((p) => !p);
 	}
 
+	const [time, dateR] = formatMatchDate(Bet.Criteria.MatchDate);
+
 	return (
 		<div
 			className={`bet-details-dropdown w-full ${isOpen && "active"} border  border-gray-200 rounded-lg shadow-bet-card`}
@@ -251,8 +285,8 @@ function BetConditionDropdown({ Bet }: { Bet: any }) {
 					</div>
 
 					<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
-						<h1 className="">Sat, 3 Dec</h1>
-						<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">8:30</h1>
+						<h1 className="">{time}</h1>
+						<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">{dateR}</h1>
 					</div>
 
 					<div className="team_caard col-center  space-y-2">
@@ -311,7 +345,7 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 	}
 
 	function handlePickCondition(i: any) {
-		// check if condition already exist		
+		// check if condition already exist
 
 		if (Bet.Conditions.length > 0) {
 			return notify("error", "You can only pick one condition per sector");
@@ -331,7 +365,6 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 	}
 
 	function getDesc(i: string) {
-
 		// get array of codes for given sector
 		const codes = MarketList.find((i: any) => i.Sector === sectors.Sector).Codes;
 
@@ -339,7 +372,6 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 
 		return desc;
 	}
-
 
 	return (
 		<div className="conditon_card border rounded-lg  h-auto">

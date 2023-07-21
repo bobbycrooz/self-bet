@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import { features } from "process";
 import { useBet } from "@/context/betContext";
 import { getAllFixturesAPI, searchFixturesAPI } from "@/axios/endpoints/bet.endpoint";
+import moment from "moment";
+import { formatMatchDate } from "@/utils";
 
 const nav = ["All aleague", "Premier League", "la liga", "Seria A", "bundes liga"];
 
@@ -19,6 +21,7 @@ export default function SelectMatch() {
 	});
 	const { Bet, dispatchBet } = useBet();
 	const [fixtures, setFixtures] = useState([]);
+	const [showFilderList, setShowFilderList] = useState(false);
 
 	// handlers ------------------
 	const handleMatchSelection = (i: any) => {
@@ -39,7 +42,7 @@ export default function SelectMatch() {
 
 		// get fixture id and update criteria
 		const fixtureId = i.FixtureId;
-		console.log(fixtureId, "fixture id");
+		// console.log(fixtureId, "fixture id");
 
 		dispatchBet({
 			type: "BET_FIXTURE_ID",
@@ -50,7 +53,7 @@ export default function SelectMatch() {
 
 		// get leagues and update
 		const league = i.LeagueName;
-		console.log(league, "league");
+		// console.log(league, "league");
 
 		dispatchBet({
 			type: "BET_LEAGUES",
@@ -62,7 +65,7 @@ export default function SelectMatch() {
 		// get matchDate and update criteria
 		const matchDate = i.MatchDate;
 
-		console.log(matchDate, "match date");
+		// console.log(matchDate, "match date");
 
 		dispatchBet({
 			type: "BET_MATCH_DATE",
@@ -82,7 +85,7 @@ export default function SelectMatch() {
 
 		if (error) return console.log(error);
 
-		console.log(serverResponse);
+		// console.log(serverResponse);
 
 		// @ts-ignore
 		setFixtures(serverResponse);
@@ -95,16 +98,39 @@ export default function SelectMatch() {
 	}
 
 	async function searchByName(pageNumber: number, category: "TeamName" | "LeagueName", searchValue: string) {
+		console.log("searching by name", searchValue, category);
+
 		// @ts-ignore
 		const { error, serverResponse } = await searchFixturesAPI(pageNumber, category, searchValue);
 
+		setFixtures([]);
+
 		if (error) return console.log(error);
 
-		console.log(serverResponse);
+		// console.log(serverResponse);
 
 		// @ts-ignore
 		setFixtures(serverResponse);
 	}
+
+	function handleFilterToggle() {
+		setShowFilderList((p) => !p);
+	}
+
+	async function handleSearchTeam(name: any) {
+		const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", name);
+
+		setFixtures([]);
+
+		//  @ts-ignore
+		if (error) return console.log(error);
+
+		setFixtures(serverResponse as any);
+
+		// @ts-ignore
+	}
+
+
 
 	// useEffects ------------------
 
@@ -131,7 +157,7 @@ export default function SelectMatch() {
 			</div>
 
 			{/* ----------- */}
-			<div className="filter_tab w-full row-between  space-y-4 ">
+			<div className="filter_tab w-full row-between  space-y-4 relative">
 				<DropDown
 					type={"byTeam"}
 					lists={[]}
@@ -143,7 +169,7 @@ export default function SelectMatch() {
 				{/* <CustomSearchCard list={[]} handler={undefined}/> */}
 
 				{/* current bet selection tab --desktop */}
-				<div className="hidden lg:flex md:middle space-x-3 nav  txt-sm text-gray-500">
+				<div className="hidden lg:flex md:middle space-x-3 nav  txt-sm text-gray-500 ">
 					{nav.map((i, k) => (
 						<div
 							role="button"
@@ -158,10 +184,43 @@ export default function SelectMatch() {
 					))}
 				</div>
 
-				<div className="filter_btn middle space-x-4 p-[10px] px-3 rounded-lg border border-gray-100">
+				{/* filter */}
+				<div
+					role="button"
+					title="filter"
+					onClick={handleFilterToggle}
+					className="filter_btn middle space-x-4 p-[10px] px-3 rounded-lg border border-gray-100"
+				>
 					<Image src={"/images/create/filter.svg"} alt={""} width={16} height={16} />
 
 					<p className="txt-sm f-m text-gray-500">Filter</p>
+				</div>
+
+				{/* --- Filter dropdown --- */}
+				<div
+					className={`filer_pane absolute ${
+						showFilderList && "active"
+					} w-full top-[40px] left-0 bg-white shadow-light p-2 py-4 flex z-50 `}
+				>
+					<div className="filte_catergory_wrapper grid grid-cols-3 gap-3 w-full mt-2">
+						<div className="filter_item w-full  bg-white">
+							<h1 className="txt-sm f-m text-gray-500 f-b txt-md mb-2">Date</h1>
+
+							<SearchComponent icon={<CalenderSVG />} handler={handleSearchTeam} type="TeamName" place="select date" />
+						</div>
+
+						<div className="filter_item w-full  bg-white">
+							<h1 className="txt-sm f-m text-gray-500 f-b txt-md mb-2">Team</h1>
+
+							<SearchComponent icon={<SearchSVG />} handler={searchByName} type="TeamName" place="search teams" />
+						</div>
+
+						<div className="filter_item w-full  bg-white">
+							<h1 className="txt-sm f-m text-gray-500 f-b txt-md mb-2">League</h1>
+
+							<SearchComponent icon={<SearchSVG />} handler={searchByName} type="LeagueName" place="search league" />
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -193,10 +252,18 @@ export default function SelectMatch() {
 			{/* ------------------ */}
 
 			<div className="w-full  h-[450px] overflow-y-scroll custom-scrollbar pb-[0]  md:pb-[84px]">
+				<div className={`pushDown ${showFilderList && "active"}`} />
+
 				{fixtures.length > 0 ? (
 					<div className="matched w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 gap-6 md:pt-4 ">
 						{/* --team  display baner---- */}
-						{fixtures.map((i: any, k) => (
+						{fixtures.map((i: any, k) =>
+						{
+
+							const [time, dateR] = formatMatchDate(i.MatchDate)
+							
+							
+							return (
 							<div
 								key={k}
 								role="button"
@@ -217,8 +284,8 @@ export default function SelectMatch() {
 
 								{/* Date and time */}
 								<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
-									<h1 className="">Sat, 3 Dec</h1>
-									<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">8:30</h1>
+										<h1 className="">{time}</h1>
+										<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">{dateR} </h1>
 								</div>
 
 								{/* Team B */}
@@ -241,7 +308,8 @@ export default function SelectMatch() {
 									height={32}
 								/>
 							</div>
-						))}
+						)
+						})}
 					</div>
 				) : (
 					<FetchLoading />
@@ -296,5 +364,155 @@ function CustomSearchCard({ list, handler }: { list: Array<string>; handler: any
 				))}
 			</ol>
 		</div>
+	);
+}
+
+function SearchComponent({
+	handler,
+	icon,
+	place,
+	type,
+}: {
+	handler?: any;
+	icon: any;
+	place: string;
+	type: "TeamName" | "LeagueName";
+}) {
+	const [searchValue, setSearchValue] = useState("");
+
+	function handleChange(e: any) {
+		setSearchValue(e.target.value);
+	}
+
+	function handleSearch(e: any) {
+		e.preventDefault();
+
+		handler(1, type, searchValue);
+
+		setSearchValue("");
+	}
+
+	return (
+		<form onSubmit={handleSearch} className="search">
+			<div
+				role="button"
+				//   onClick={searchToggle}
+				className="search_container relative bg-gray-50 rounded-lg w-full h-10"
+			>
+				<div className="absolute top-1/2 -translate-y-1/2 left-2 txt-sm f-m text-gray-400">{icon}</div>
+
+				<input
+					type="text"
+					name=""
+					id=""
+					onChange={handleChange}
+					onBlur={handleChange}
+					className="bg-transparent w-full  h-full pl-9 outline-none"
+					placeholder={place}
+				/>
+			</div>
+		</form>
+	);
+}
+
+function SearchSVG() {
+	return (
+		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+			<path
+				d="M9.58268 17.4998C13.9549 17.4998 17.4993 13.9554 17.4993 9.58317C17.4993 5.21092 13.9549 1.6665 9.58268 1.6665C5.21043 1.6665 1.66602 5.21092 1.66602 9.58317C1.66602 13.9554 5.21043 17.4998 9.58268 17.4998Z"
+				stroke="#9CA3AF"
+				stroke-width="1.25"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M18.3327 18.3332L16.666 16.6665"
+				stroke="#9CA3AF"
+				stroke-width="1.25"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+		</svg>
+	);
+}
+
+function CalenderSVG() {
+	return (
+		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+			<path
+				d="M6.66602 1.6665V4.1665"
+				stroke="#9CA3AF"
+				stroke-width="1.25"
+				stroke-miterlimit="10"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M13.334 1.6665V4.1665"
+				stroke="#9CA3AF"
+				stroke-width="1.25"
+				stroke-miterlimit="10"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M2.91602 7.57471H17.0827"
+				stroke="#6B7280"
+				stroke-width="1.25"
+				stroke-miterlimit="10"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M17.5 7.08317V14.1665C17.5 16.6665 16.25 18.3332 13.3333 18.3332H6.66667C3.75 18.3332 2.5 16.6665 2.5 14.1665V7.08317C2.5 4.58317 3.75 2.9165 6.66667 2.9165H13.3333C16.25 2.9165 17.5 4.58317 17.5 7.08317Z"
+				stroke="#6B7280"
+				stroke-width="1.25"
+				stroke-miterlimit="10"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M13.0781 11.4167H13.0856"
+				stroke="#6B7280"
+				stroke-width="1.66667"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M13.0781 13.9167H13.0856"
+				stroke="#6B7280"
+				stroke-width="1.66667"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M9.99607 11.4167H10.0036"
+				stroke="#6B7280"
+				stroke-width="1.66667"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M9.99607 13.9167H10.0036"
+				stroke="#6B7280"
+				stroke-width="1.66667"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M6.91209 11.4167H6.91957"
+				stroke="#6B7280"
+				stroke-width="1.66667"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+			<path
+				d="M6.91209 13.9167H6.91957"
+				stroke="#6B7280"
+				stroke-width="1.66667"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
+		</svg>
 	);
 }

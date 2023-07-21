@@ -143,7 +143,10 @@ function SearchByTeamCard(props: any) {
 		{
 			name: "As roma",
 			icon: "/icons/teams/roma_logo-sm.svg",
-		},
+		}, {
+			name: "Manchester United",
+			icon: "/icons/teams/roma_logo-sm.svg",
+		}
 	];
 
 	const cardRef = useRef(null);
@@ -176,6 +179,9 @@ function SearchByTeamCard(props: any) {
 
 	async function handleSearchTeam(name: any) {
 		const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", name);
+
+		props.setFixtures([]);
+
 
 		//  @ts-ignore
 		if (error) return console.log(error);
@@ -224,7 +230,7 @@ function SearchByTeamCard(props: any) {
 			<div className="scroll_wrapper overflow-y-scroll w-full h-[200px] z-[9999999] custom-scrollbar">
 				<ol className="team_options w-full bg-white   h-full">
 					{teams.map((i, k) => (
-						<li key={k} role="button" onClick={() => handleSearchTeam(i.name)} className="option middle space-x-4 ">
+						<li key={k} role="button" onClick={() => handleSearchTeam(i.name)} className="option middle space-x-4  hover:bg-gray-200">
 							<Image
 								src={i.icon}
 								alt="wallet"
