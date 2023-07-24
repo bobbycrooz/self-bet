@@ -4,7 +4,17 @@ import { MoreSvg } from "@/assets";
 import { useBet } from "@/context/betContext";
 // import { NextPageWithLayout } from "../_app";
 
-export default function BetCondition({ handleAddCondition, isAdding }: { handleAddCondition: any; isAdding: boolean }) {
+export default function BetCondition({
+	handleAddCondition,
+	isAdding,
+	editBetConditons,
+	deleteBetConditons,
+}: {
+	handleAddCondition: any;
+	isAdding: boolean;
+	editBetConditons: any;
+	deleteBetConditons: any;
+}) {
 	const conditions = [
 		{
 			Sector: "H_TEAM/A_TEAM/DRAW",
@@ -21,12 +31,7 @@ export default function BetCondition({ handleAddCondition, isAdding }: { handleA
 
 	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
 
-	// console.log(Bet.Criteria.Conditions, "bet conditions");
-
-	function handleDeletConditions(BetDetails: any)
-	{
-		console.log(BetDetails)
-	}
+	// console.log("here is the conditons in the store", Bet.Criteria.Conditions)
 
 	return (
 		<>
@@ -84,13 +89,20 @@ export default function BetCondition({ handleAddCondition, isAdding }: { handleA
 								</button>
 
 								<div className="edit_card bg-white rounded shadow  absolute -right-6 top-5">
-									<p onClick={() => handleDeletConditions(i)} role="button" className="edit text-xs py-2 border-b hover:bg-gray-200 w-full px-4 cursor-pointer">
+									<p
+										onClick={() => editBetConditons(i)}
+										role="button"
+										className="edit text-xs py-2 border-b hover:bg-gray-200 w-full px-4 cursor-pointer"
+									>
 										Edit
 									</p>
-									<p role="button" onClick={() => handleDeletConditions(i)}  className="edit text-xs  py-2 hover:bg-gray-200 w-full px-4 cursor-pointer">
+									<p
+										role="button"
+										onClick={() => deleteBetConditons(i)}
+										className="edit text-xs  py-2 hover:bg-gray-200 w-full px-4 cursor-pointer"
+									>
 										Delete
 									</p>
-
 								</div>
 							</div>
 						</div>

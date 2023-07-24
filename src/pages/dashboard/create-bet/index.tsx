@@ -12,6 +12,7 @@ import BetDetails from "./components/Details";
 import SelectMatch from "./components/Matches";
 import { useBet } from "@/context/betContext";
 import useToast from "@/hooks/useToast";
+import { ConditionTypes } from "@/components/AddCondition";
 // import { NextPageWithLayout } from "../_app";
 
 function CreateBetPage() {
@@ -22,15 +23,21 @@ function CreateBetPage() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const progressRef = useRef(null);
 	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
-	const { BetImg} = useBet()
+	const { BetImg } = useBet();
 
 	const { notify } = useToast();
 	const [BetDetailsData, setBetDetailsData] = useState({
 		BetName: "",
 		Amount: "",
-		Discount: 0,
+		Discount: "",
 		NumberOfPeople: 0,
 	});
+	const [currentSector, setCurrentSector] = useState({
+		Sector: "",
+		Codes: [],
+	});
+	const [conditions, setConditions] = useState<Array<ConditionTypes>>([]);
+	const [showDiscount, setShowDiscount] = useState(true);
 
 	console.log(step, "step ------------ ");
 
@@ -40,7 +47,6 @@ function CreateBetPage() {
 
 	// handlers--------------
 
-
 	function next() {
 		// validation
 		// [1] a match must be selected
@@ -48,30 +54,35 @@ function CreateBetPage() {
 		let hasSelectedCondition = Bet.Criteria?.Conditions?.length > 0;
 		let hasName = BetDetailsData.BetName?.length > 4;
 		let hasAmount = BetDetailsData.Amount?.length > 2;
-		
 
 		if (step == 2 && !hasSelectedOneMatch) {
 			return notify("warn", "One match is required for KOLO bet");
 		}
-		
+
 		if (step == 3 && !hasSelectedCondition) {
 			return notify("warn", "You must add a bet condition!");
 		}
-		
+
 		if (step == 4 && !hasName) {
 			return notify("warn", "You must specfy a bet name!");
 		}
-		
+
 		if (step == 4 && !hasAmount) {
 			return notify("warn", "You must specfy a bet Amount!");
 		}
-		
 
 		if (step == 4 && !BetImg) {
 			return notify("warn", "You must upload a bet image!");
 		}
-		
-		
+
+		if (step == 4 && showDiscount && BetDetailsData.Discount.length < 2) {
+			return notify("warn", "Specify a discount percentage!");
+		}
+
+		if (step == 4 && showDiscount && BetDetailsData.NumberOfPeople == 0) {
+			return notify("warn", "Specify Number of players!");
+		}
+
 		if (step === 4) {
 			setIsLoading(true);
 
@@ -113,10 +124,26 @@ function CreateBetPage() {
 				return <SelectMatch />;
 
 			case 3:
-				return <BetCondition isAdding={isAdding} handleAddCondition={handleAddCondition} />;
+				return (
+					<BetCondition
+						isAdding={isAdding}
+						handleAddCondition={handleAddCondition}
+						editBetConditons={editBetConditons}
+						deleteBetConditons={deleteBetConditons}
+						// setCurrentSector={setCurrentSector}
+						// conditions={conditions}
+					/>
+				);
 
 			case 4:
-				return <BetDetails BetDetailsData={BetDetailsData} setBetDetailsData={setBetDetailsData} />;
+				return (
+					<BetDetails
+						BetDetailsData={BetDetailsData}
+						setBetDetailsData={setBetDetailsData}
+						showDiscount={showDiscount}
+						setShowDiscount={setShowDiscount}
+					/>
+				);
 
 			default:
 				return <CreateBet stepHandler={stepHandler} />;
@@ -142,7 +169,26 @@ function CreateBetPage() {
 		}
 	}
 
+	function editBetConditons(data: any) {
+		// get selected condition details to be edited
+		console.log(data);
 
+		// set the current sector to the sector to e edited.
+		setCurrentSector({
+			...currentSector,
+			Sector: data.Sector,
+		});
+		handleAddCondition();
+	}
+
+	function deleteBetConditons(data: any) {
+		// get selected condition details to be edited
+		const newConditons = Bet.Criteria.Conditions.filter((i: any) => i.Sector !== data.Sector);
+
+		dispatchBet({ type: "BET_CONDITIONS_EDIT", payload: { conditions: newConditons } });
+
+		notify("success", "This sector has been deleted succesfully!");
+	}
 
 	// useEffects -------------
 	useEffect(() => {
@@ -150,8 +196,6 @@ function CreateBetPage() {
 			setStep(4);
 		}
 	}, [pathname]);
-
-	
 
 	// to focus on the progress bar
 	useEffect(() => {
@@ -227,7 +271,15 @@ function CreateBetPage() {
 			</main>
 
 			{/* ---Add new bet condition */}
-			<AddCondition toggle={handleAddCondition} showNoti={isAdding} />
+			<AddCondition
+				toggle={handleAddCondition}
+				showNoti={isAdding}
+				currentSector={currentSector}
+				setCurrentSector={setCurrentSector}
+				conditions={conditions}
+				setConditions={setConditions}
+				// deleteBetConditons={deleteBetConditons}
+			/>
 		</>
 	);
 }

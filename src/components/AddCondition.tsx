@@ -16,9 +16,13 @@ import useToast from "@/hooks/useToast";
 interface PropTypes {
 	toggle: any;
 	showNoti: boolean;
+	currentSector: any;
+	setCurrentSector: any;
+	conditions: any;
+	setConditions: any;
 }
 
-interface ConditionTypes {
+export interface ConditionTypes {
 	betType: string;
 	name: string;
 	id: number;
@@ -29,18 +33,17 @@ const statusConst = {
 	failed: "FAILED",
 };
 
-const AddCondition = ({ toggle, showNoti }: PropTypes) => {
+const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditions, setCurrentSector }: PropTypes) => {
 	const [show, toggleShow] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [showSectors, setShowSectors] = useState(false);
 	const [codes, setCodes] = useState([]);
-	const [currentSector, setCurrentSector] = useState({
-		Sector: "",
-		Codes: [],
-	});
+	// const [currentSector, setCurrentSector] = useState({
+	// 	Sector: "",
+	// 	Codes: [],
+	// });
 	const [showConditionList, setShowConditionList] = useState(false);
 	const [status, setStatus] = useState(statusConst.failed);
-	const [conditions, setConditions] = useState<Array<ConditionTypes>>([]);
 	const tabRef = useRef(null);
 	const { isMobile, isTablet } = useScreen();
 	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
@@ -208,22 +211,50 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 			Codes: processCodes,
 		};
 
-		let hasSelectedCondition = (betConditions.Codes.length > 1)
+		let hasSelectedCondition = betConditions.Codes.length > 1;
 
 		// console.log(hasSelectedCondition);
-		
 
 		// validat
 		if (!hasSelectedCondition) {
 			return notify("warn", "More than  one condition is require per sector");
 		}
 
+		// check if user has selected that sector
+		const selectedConditon = Bet.Criteria.Conditions.filter((i: any) => i.Sector == currentSector.Sector);
+
+		if (selectedConditon.length > 0) {
+			const newConditons = Bet.Criteria.Conditions.filter((i: any) => i.Sector !== currentSector.Sector);
+
+			console.log(newConditons, "this sector has been selected!!");
+
+			newConditons.push(betConditions);
+
+			dispatchBet({ type: "BET_CONDITIONS_EDIT", payload: { conditions: newConditons } });
+
+			notify("success", "This sector has been edited succesfully!");
+
+			setCurrentSector({
+				Sector: "",
+				Codes: [],
+			});
+			setConditions([]);
+
+			return toggle();
+		}
+
 		dispatchBet({ type: "BET_CONDITIONS", payload: { conditions: betConditions } });
 		notify("success", "Bet conditions saved successfully!");
+		setCurrentSector({
+			Sector: "",
+			Codes: [],
+		});
+		setConditions([]);
+
 		toggle();
 	}
 
-	
+	console.log("this is the current sector", currentSector);
 
 	useEffect(() => {
 		fetchAlllMarkets();
@@ -373,7 +404,8 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 														ref={tabRef}
 														onClick={handleRefClic}
 														className="w-full h-full flex flex-wrap gap-2 gap-y-1"
-													>
+														>
+															{/* @ts-ignore */}
 														{conditions.map((i, k) => (
 															<div
 																key={k}
@@ -600,7 +632,7 @@ const AddCondition = ({ toggle, showNoti }: PropTypes) => {
 														onClick={handleRefClic}
 														className="w-full h-full flex flex-wrap gap-2 gap-y-1"
 													>
-														{conditions.map((i: any, k) => (
+														{conditions.map((i: any, k: number) => (
 															<div
 																key={k}
 																role="button"

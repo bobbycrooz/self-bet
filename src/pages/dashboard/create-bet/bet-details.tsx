@@ -344,11 +344,30 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 		setShowList((p) => !p);
 	}
 
-	function handlePickCondition(i: any) {
-		// check if condition already exist
+	function handlePickCondition(i: any)
+	{
+		
+		
 
+		// check if condition already exist i a specific sector
 		if (Bet.Conditions.length > 0) {
-			return notify("error", "You can only pick one condition per sector");
+			const allSelectedSector: any[] =  []
+			
+			Bet.Conditions.map((i: any) =>
+			{
+				return allSelectedSector.push(i.Sector)
+			})
+
+
+			console.log(allSelectedSector);
+
+			
+			
+			if (allSelectedSector.includes(sectors.Sector))
+			{
+				
+				return notify("error", "You can only pick one condition per sector");
+			}
 		}
 
 		const pickedCondition = {

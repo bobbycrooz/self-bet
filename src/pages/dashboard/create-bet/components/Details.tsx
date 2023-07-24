@@ -8,19 +8,20 @@ import { useBet } from "@/context/betContext";
 export default function BetDetails({
 	BetDetailsData,
 	setBetDetailsData,
+	showDiscount,
+	setShowDiscount,
 }: {
 	BetDetailsData: any;
 	setBetDetailsData: any;
+	showDiscount: any;
+	setShowDiscount: any;
 }) {
 	// const [betName, setBetName] = useState("");
 	// const [betAmount, setBetAmount] = useState("");
-	const [showDiscount, setShowDiscount] = useState(true);
-	const {setBetImg} = useBet()
-
+	const { setBetImg } = useBet();
 
 	function handleBetNameChange(e: ChangeEvent<HTMLInputElement>, name: string) {
 		e.preventDefault();
-		
 
 		if (name === "betName") {
 			// setBetName(e.target.value);
@@ -41,7 +42,6 @@ export default function BetDetails({
 			});
 			// setDiscount(e.target.value);
 		}
-
 	}
 
 	function handleNumberOfPeople(mode: string) {
@@ -58,7 +58,6 @@ export default function BetDetails({
 		}
 	}
 
-	
 	return (
 		<>
 			<div className="w-full  h-[600px] overflow-y-scroll custom-scrollbar pb-12">
@@ -128,7 +127,7 @@ export default function BetDetails({
 								<h1 className="text-gray-600 txt-sm f-b ">Enable Discount</h1>
 
 								{/* toggle */}
-								<Toggle toggler={setShowDiscount} state={ showDiscount} />
+								<Toggle toggler={setShowDiscount} state={showDiscount} />
 							</div>
 							<p className="txt-sm text-gray-400 mt-1 w-[80%]">
 								Add a discount to your bet participants by paying their balance upfront

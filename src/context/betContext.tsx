@@ -36,6 +36,7 @@ const initialState = {
 
 	Criteria: {
 		TeamA: { TeamName: "", Logo: "" },
+
 		TeamB: { TeamName: "", Logo: "" },
 
 		Conditions: [],
@@ -81,6 +82,16 @@ const betReducer = (state: any, action: { type: string; payload: any }) => {
 					Conditions: [...state.Criteria.Conditions, payload.conditions],
 				},
 			};
+		
+			case "BET_CONDITIONS_EDIT":
+			return {
+				...state,
+				Criteria: {
+					...state.Criteria,
+					Conditions:  payload.conditions,
+				},
+			};
+		
 		case "BET_MATCH":
 			return {
 				...state,
@@ -198,8 +209,10 @@ const BetProvider = ({ children }: { children: any }) => {
 			// } else {
 			// 	setStatus(statusConst.failed);
 			// }
-		} catch (error) {
-			notify("error", "Bet Placed Failed");
+		} catch (error: any) {
+			notify("error", error.message);
+				setStatus(statusConst.failed);
+
 		}
 	}
 
