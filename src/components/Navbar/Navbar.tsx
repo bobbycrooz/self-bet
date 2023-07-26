@@ -32,7 +32,7 @@ const Navbar = () => {
 	const [confirmLogout, toggleConfirmLogout] = useState(false);
 	const profileRef = useRef<HTMLDivElement>(null);
 	const { isMobile } = useWindowSize();
-	const { User } = useUser();
+	const { User, logOut } = useUser();
 	const { data: session } = useSession();
 
 

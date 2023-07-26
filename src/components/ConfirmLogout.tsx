@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect, useRef, ChangeEventHandler } from "react";
 import Button from "./Button";
+import { useUser } from "@/context/userContext";
 
 interface ModalProps {
   show?: boolean;
@@ -26,6 +27,7 @@ const Process = ({
 }: ModalProps) => {
   const cardRef = useRef(null);
   // const [status, setStatus] = useState(statusConst.failed);
+  
 
   function disableScrollOnModal() {}
 
@@ -75,7 +77,12 @@ function Prompt({
   handleClose,
 }: {
   handleClose: any;
-}) {
+  })
+{
+  
+	const { logOut } = useUser()
+
+
   return (
     <div className="col-center ">
       <div className="cancle_btn absolute -right-10 -top-10">
@@ -110,10 +117,10 @@ function Prompt({
         <div className="button_group space-x-3">
           <Button text={"Cancel"} type={"button"} ghost />
 
-          <Link href={"/auth"}>
+      
 
-          <Button text={"Logout"} type={"button"}  />
-          </Link>
+          <Button text={"Logout"} click={logOut} type={"button"}  />
+
         </div>
       </div>
     </div>

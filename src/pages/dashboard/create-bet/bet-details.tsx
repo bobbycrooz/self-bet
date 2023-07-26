@@ -153,6 +153,7 @@ function Home() {
 										isLoading={isLoading}
 										full
 										primary
+										disabled={Bet.Type.length < 1 || Bet.Conditions.length < 1}
 										click={handlePlaceBet}
 									/>
 								</div>
@@ -190,6 +191,28 @@ export function BetSlipDetails({ data }: { data: any }) {
 		setShowList((p) => !p);
 	}
 
+	function handleRemoveCondition()
+	{
+
+		console.log(data, "bet --------bet slip for data---- ", Bet.Conditions);
+
+		const newlist = Bet.Conditions.filter((i: any) => i.Sector !== data.Sector);
+
+		console.log(newlist, "bet --------bet slip for data---- ", Bet.Conditions);
+
+
+				
+		dispatchBet({
+			type: "REMOVE_CONDITION",
+			payload: {
+				condition: newlist,
+			},
+		});
+	}
+			
+
+
+
 	return (
 		<div className="conditon_card border rounded-lg h-auto">
 			{/* --header */}
@@ -216,7 +239,7 @@ export function BetSlipDetails({ data }: { data: any }) {
 				<div className="w-full border-t  strictFadeIn">
 					<ol className=" px-4">
 						<li className={`selector_item flex w-full h-full py-4  ${"border-b"} space-x-3`}>
-							<div className="mt-1">
+							<div onClick={handleRemoveCondition} className="mt-1">
 								<CheckSVG />
 							</div>
 
@@ -226,19 +249,7 @@ export function BetSlipDetails({ data }: { data: any }) {
 								<p className="text-gray-400 txt-xs  f-s">{data?.Codes}</p>
 							</div>
 						</li>
-						{/* {data.map((i, k) => (
-							<li key={k} className={`selector_item flex w-full h-full py-4  ${k !== 3 && "border-b"} space-x-3`}>
-								<div className="mt-1">
-									<CheckSVG />
-								</div>
-
-								<div className="column  space-y-2">
-									<h1 className="f-b txt-sm text-gray-900">{i.Sector} </h1>
-
-									<p className="text-gray-400 txt-xs  f-s">{i.Codes}</p>
-								</div>
-							</li>
-						))} */}
+					
 					</ol>
 				</div>
 			)}

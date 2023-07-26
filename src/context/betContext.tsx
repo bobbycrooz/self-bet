@@ -55,6 +55,8 @@ const betReducer = (state: any, action: { type: string; payload: any }) => {
 			return { ...state, Type: payload.type };
 		case "BET_LEAGUES":
 			return { ...state, Leagues: [...state.Leagues, payload.league] };
+		case "REMOVE_BET_LEAGUES":
+			return { ...state, Leagues: [] };
 
 		case "BET_TEAMS":
 			return { ...state, Teams: payload.teams };
@@ -67,6 +69,13 @@ const betReducer = (state: any, action: { type: string; payload: any }) => {
 				...state,
 				Conditions: [...state.Conditions, payload.condition],
 			};
+
+		case "REMOVE_CONDITION":
+			return {
+				...state,
+				Conditions: payload.condition,
+			};
+
 		case "BET_DETAILS":
 			return {
 				...state,
@@ -82,16 +91,24 @@ const betReducer = (state: any, action: { type: string; payload: any }) => {
 					Conditions: [...state.Criteria.Conditions, payload.conditions],
 				},
 			};
-		
-			case "BET_CONDITIONS_EDIT":
+			case "REMOVE_BET_CONDITIONS":
 			return {
 				...state,
 				Criteria: {
 					...state.Criteria,
-					Conditions:  payload.conditions,
+					Conditions: [],
 				},
 			};
-		
+
+		case "BET_CONDITIONS_EDIT":
+			return {
+				...state,
+				Criteria: {
+					...state.Criteria,
+					Conditions: payload.conditions,
+				},
+			};
+
 		case "BET_MATCH":
 			return {
 				...state,
@@ -195,24 +212,34 @@ const BetProvider = ({ children }: { children: any }) => {
 				},
 			});
 
-			// const { error, serverResponse } = await createBetAPI(formData)
-
-			console.log(response, "response");
-
 			if (response.status == 200) {
+				// reset all states
+				dispatchBet({ type: "BET_TYPE", payload: { type: "" } });
+				dispatchBet({
+					type: "REMOVE_BET_LEAGUES",
+					payload: undefined
+				});
+				dispatchBet({ type: "BET_TEAMS", payload: { teams: [] } });
+				dispatchBet({ type: "BET_FIXTURE_ID", payload: { FixtureId: null } });
+				dispatchBet({ type: "PICK_CONDITION", payload: { condition: "" } });
+				dispatchBet({ type: "BET_DETAILS", payload: { amount: 0, discount: 0, betName: "" } });
+				dispatchBet({ type: "REMOVE_BET_CONDITIONS", payload: { conditions: [] } });
+				dispatchBet({
+					type: "BET_MATCH",
+					payload: { TeamA: { TeamName: "", Logo: "" }, TeamB: { TeamName: "", Logo: "" } },
+				});
+				dispatchBet({ type: "BET_MATCH_DATE", payload: { MatchDate: "" } });
+
 				setStatus(statusConst.success);
+
 				return notify("success", "Bet Placed Successfully");
 			}
 
-			// if (!error) {
-			// 	setStatus(statusConst.success);
-			// } else {
-			// 	setStatus(statusConst.failed);
-			// }
+			setStatus(statusConst.failed);
+			return notify("error", "Bet Placed Failed");
 		} catch (error: any) {
 			notify("error", error.message);
-				setStatus(statusConst.failed);
-
+			setStatus(statusConst.failed);
 		}
 	}
 
@@ -223,8 +250,7 @@ const BetProvider = ({ children }: { children: any }) => {
 			fetchAllActiveBets();
 		}
 
-		console.log('userContext mounted!!');
-		
+		console.log("userContext mounted!!");
 	}, []);
 
 	// --------USEEFFECTS
