@@ -8,16 +8,38 @@ import DashboardLayout from "@/layouts";
 import Link from "next/link";
 import DepositeMobile from "@/components/DepositeMobile";
 import { useUser } from "@/context/userContext";
+import { useBet } from "@/context/betContext";
 
-function Home() {
+
+function Home()
+{
+	const { BetList } = useBet();
+	const { User } = useUser();
 	const [isWithdrawing, setIsWithdrawing] = useState(false);
 	const [isDepositing, setIsDepositing] = useState(false);
+		const [currentlist, setCurrentList] = useState(BetList);
+	const [tabMode, setTabMode] = useState("All Bets");
 	const { push, query, pathname } = useRouter();
-	const { User } = useUser();
 
-	const tabs = ["All Bets", "My created bets", "Saved Bet"];
+		const tabs = ["All Bets", "My Created"];
+
 
 	// handlers--------------
+		function handleTabClick(value: "My Created" | "All Bets") {
+		setTabMode(value);
+
+		if (value == "My Created") {
+			const newList = BetList.filter((i: { Creator: { Username: string } }) => i.Creator.Username == User.Username);
+
+			if (newList.length > 0) {
+				return setCurrentList(newList);
+			}
+
+			setCurrentList([]);
+		} else {
+			setCurrentList(BetList);
+		}
+	}
 
 	function iconTypeHandler(type: string): string {
 		switch (type) {
@@ -221,28 +243,43 @@ function Home() {
 
 					{/* action tabs -- */}
 					<div className="active_tab w-full  h-[30px] mt-4 border-b middle space-x-3">
-						{tabs.map((i, k) => (
+						{tabs.map((i: any, k) => (
 							<div
-								className={`tab_item px-3 hover:text-gray-700 hover:border-gray-700 border-b-2  ${
-									k == 0 ? "text-gray-900 border-gray-900  f-b" : "border-transparent text-gray-500 f-m"
+								role="button"
+								onClick={() => handleTabClick(i)}
+								className={`tab_item px-3 hover:text-gray-700 hover:border-gray-700 border-b-2 cursor-pointer  ${
+									tabMode == i ? "text-gray-700 border-gray-700  " : "border-transparent text-gray-400"
 								} h-full middle`}
 								key={k}
 							>
-								<p className={`txt-sm`}> {i}</p>
+								<p className={`txt-sm  f-m`}> {i}</p>
 							</div>
 						))}
 					</div>
 
-					{/* active bet section */}
-					<div className="active_bet_wrapper pb-24 grid lg:grid-cols-3 md:grid-cols-2 gap-4 md:gap-6 w-full  h-auto mt-6 ">
-						{Array(9)
-							.fill(1)
-							.map((i, k) => (
+					{/* --------active bet listing----- */}
+				<div className="w-full h-auto px-4  pt-1/2 ">
+					{/* -----bet list------ */}
+					{currentlist?.length > 0 ? (
+						<div className="active_bet_wrapper pb-36 grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
+							{currentlist?.map((i: any, k: number) => (
 								<div className="" key={k}>
-									<BetCard betType={"KoloBet"} data={undefined} />
+									<BetCard betType={i.Type} data={i} />
 								</div>
 							))}
-					</div>
+						</div>
+					) : (
+						<div className={`nothing  p-2 text-center  w-full mx-auto md:w-[400px] ${true && "py-20"}`}>
+							<h1 className="txt-md f-eb t-g7 md:txt-sm">Your bets will appear here</h1>
+							<h1 className="txt-sm f-m t-g5 mt-1">Start by creating a bet or joining a bet</h1>
+							<div className="h-6"></div>
+							<Link href="/dashboard/create-bet">
+								<Button text={"create new bet"} type={"button"} primary full />
+							</Link>
+							<h1 className="txt-md f-b t-g5 md:txt-sm mt-3">Join bet</h1>
+						</div>
+					)}
+				</div>
 				</div>
 
 				{/* -----withdrawal pane------- */}

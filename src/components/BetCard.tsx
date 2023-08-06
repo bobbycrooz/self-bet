@@ -61,7 +61,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 
 	const profileRef = useRef<HTMLDivElement>(null);
 
-	console.log(data, "this unfocrmation");
+	// console.log(data, "this unfocrmation");
 	
 
 	function handleShowDetails(cardType?: "KoloBet" | "PointBet") {
@@ -112,8 +112,9 @@ const BetCard = ({ betType, data }: PropTypes) => {
 							backgroundSize: "cover",
 							backgroundPosition: "center",
 							backgroundRepeat: "no-repeat",
+
 						}}
-						className="bet_banner w-full h-32  relative flex justify-between items-center p-6 bg-[#0000003d]"
+						className="bet_banner w-full h-32  relative flex justify-between items-center p-6 bg-[#0000003d] rounded-md"
 					>
 						<div className="imgTa">
 							<Image
