@@ -35,10 +35,19 @@ export function createBetAPI(data: any): ResponsTypes {
 	});
 }
 
+
+export function joinBetAPI(data: any): ResponsTypes {
+	return service({
+		url: "/Bet/AddPlayer",
+		method: "post",
+		data: data,
+	});
+}
+
 export function searchFixturesAPI(
 	PageNumber: number,
 	Name: "LeagueName" | "TeamName",
-	searchValue: string
+	searchValue: string | number
 ): ResponsTypes {
 	return service({
 		url: `/Fixtures/Search?PageNumber=${PageNumber}&${Name}=${searchValue}`,
@@ -49,6 +58,24 @@ export function searchFixturesAPI(
 export function fetchBetListAPI(page: number): ResponsTypes {
 	return service({
 		url: `/Bet/List?PageNumber=${page}`,
+		method: "get",
+	});
+}
+
+
+export function searchBetList(
+	PageNumber: number,
+	searchValue: string | number,
+	Name?: "LeagueName" | "TeamName" | "Discount" | "Amount" | "Creator",
+): ResponsTypes
+{
+	
+	// process search query
+	const urlWithName = `/Bet/Search?PageNumber=${PageNumber}&${Name}=${searchValue}`
+	const urlWithOutName = `/Bet/Search?PageNumber=${PageNumber}`
+
+	return service({
+		url: Name ? urlWithName : urlWithOutName,
 		method: "get",
 	});
 }

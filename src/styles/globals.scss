@@ -136,16 +136,38 @@ input[type="search"] {
 	}
 }
 
-
-.threeDot{
-
-		.edit_card{
-			display: none;
-		}
-	&:hover{
-
-		.edit_card{
+.threeDot {
+	.edit_card {
+		display: none;
+	}
+	&:hover {
+		.edit_card {
 			display: block;
+		}
+	}
+}
+
+.nothing_content {
+	.nothing_text {
+		color: var(--grey-600, #4b5563);
+		text-align: center;
+
+		/* Text md/Regular */
+		font-family: Inter;
+		font-size: 16px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 24px; /* 150% */
+
+		span {
+			color: var(--primary-500, #ff4b00);
+
+			/* Text md/Semibold */
+			font-family: Inter;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: 600;
+			line-height: 24px;
 		}
 	}
 }

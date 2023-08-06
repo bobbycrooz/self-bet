@@ -24,7 +24,7 @@ export const betCardType = {
 	KOLO: "KoloBet",
 	POINT: "PointBet",
 };
-// const tabs = ["Matches", "Bet conditions", "Creator’s Bet"];
+
 
 const tabs = [
 	{
@@ -53,10 +53,16 @@ const BetCard = ({ betType, data }: PropTypes) => {
 		show: false,
 		mode: betType,
 	});
-	const [betTabMode, setBetTabMode] = useState(tabMode.CREATOR);
+	const [betTabMode, setBetTabMode] = useState(tabMode.MATCHES);
+
 	const { isTablet, isMobile } = useScreen();
+
 	const [showCardOptions, setShowCardOptions] = useState(false);
+
 	const profileRef = useRef<HTMLDivElement>(null);
+
+	console.log(data, "this unfocrmation");
+	
 
 	function handleShowDetails(cardType?: "KoloBet" | "PointBet") {
 		if (showDetails.show) {
@@ -80,7 +86,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 			case tabMode.BET:
 				return <Bets data={data} />;
 			case tabMode.CREATOR:
-				return <Creator  />;
+				return <Creator data={data} />;
 			default:
 				break;
 		}
@@ -102,8 +108,8 @@ const BetCard = ({ betType, data }: PropTypes) => {
 				<div className=" p-3 md:p-6 space-y-4">
 					<div
 						style={{
-							backgroundImage: `url(${data?.Criteria.LeagueImg})`,
-							backgroundSize: "contain",
+							backgroundImage: `url(${ "/images/home/bet_image.jpg" })`,
+							backgroundSize: "cover",
 							backgroundPosition: "center",
 							backgroundRepeat: "no-repeat",
 						}}
@@ -115,9 +121,9 @@ const BetCard = ({ betType, data }: PropTypes) => {
 								src={
 									data?.Criteria.TeamA.Logo == "TeamALogoUrl"
 										? "/icons/teams/chealse_logo.svg"
-										: data?.Criteria.TeamA.Logo
+										: data?.Criteria.TeamA.Logo ||  data?.Criteria.TeamA.logo
 								}
-								alt="chealse"
+								alt={data?.Criteria.TeamA.name || data?.Criteria.TeamA.TeamName}
 								width={48}
 								height={48}
 							/>
@@ -129,9 +135,9 @@ const BetCard = ({ betType, data }: PropTypes) => {
 								src={
 									data?.Criteria.TeamB.Logo == "TeamALogoUrl"
 										? "/icons/teams/chealse_logo.svg"
-										: data?.Criteria.TeamB.Logo
+										: data?.Criteria.TeamB.Logo ||  data?.Criteria.TeamB.logo
 								}
-								alt="chealse"
+								alt={data?.Criteria.TeamB.name || data?.Criteria.TeamB.TeamName}
 								width={48}
 								height={48}
 							/>
@@ -531,7 +537,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 													<div className="col">
 														<h1 className="amount text-gray-400 txt-xs f-b">Bet amount</h1>
 														<h1 className="txt-md f-b text-gray-700 mt-2 mb-4">N {data?.Amount}</h1>
-														<Link href={"/dashboard/create-bet/bet-details"}>
+														<Link href={`/dashboard/join?id=${data._id}`}>
 															<Button text={"Join bet"} type={"button"} primary />
 														</Link>
 													</div>
@@ -613,40 +619,70 @@ function Bets({ data }: any) {
 	);
 }
 
-function Creator() {
+function Creator({ data }: any)
+{
+	
+	const arrr = typeof data?.CreatorSelection?.Conditions === 'string'
+	
+	// console.log(arrr);
+
+	console.log(data);
+	
+	
+	
 	return (
 		<>
 			{/* --team  display baner---- */}
-			{Array(9)
-				.fill(1)
-				.map((i, k) => (
+			{!arrr &&  data?.CreatorSelection?.Conditions?.map(
+				(
+					i: {
+						Codes:
+							| string
+							| number
+							| boolean
+							| React.ReactElement<any, string | React.JSXElementConstructor<any>>
+							| React.ReactFragment
+							| React.ReactPortal
+							| null
+							| undefined;
+						Sector:
+							| string
+							| number
+							| boolean
+							| React.ReactElement<any, string | React.JSXElementConstructor<any>>
+							| React.ReactFragment
+							| React.ReactPortal
+							| null
+							| undefined;
+					},
+					k: React.Key | null | undefined
+				) => (
 					<div key={k} className="creators_card border-gray-200 rounded-lg shadow-md">
 						{/* header */}
 						<div className="h-12 w-full relative header middle ">
-							<h1 className="header_text txt-sm f-b text-gray-50 p-4">Chelsea - Arsenal</h1>
+							<h1 className="header_text txt-sm f-b text-gray-50 p-4">
+								{data?.Criteria?.TeamA.name || data?.Criteria?.TeamA.TeamName} - {data.Criteria.TeamB.name  || data?.Criteria?.TeamB.TeamName}
+							</h1>
 						</div>
 
 						<div className=" options w-full">
-							{Array(4)
-								.fill(10)
-								.map((i, k) => (
-									<div key={k} className="middle   px-6  ">
-										<div className=" w-full border-b border-dashed py-4 space-x-4 flex">
-											<Image className="team_logo " src={"/icons/ball.svg"} alt="chealse" width={24} height={32} />
-											<div className="texts w-full">
-												<div className="row-between w-full">
-													<h1 className="team_name txt-sm f-b text-gray-900">GG HT</h1>
+							<div className="middle   px-6  ">
+								<div className=" w-full border-b border-dashed py-4 space-x-4 flex">
+									<Image className="team_logo " src={"/icons/ball.svg"} alt="chealse" width={24} height={32} />
+									<div className="texts w-full">
+										<div className="row-between w-full">
+											<h1 className="team_name txt-sm f-b text-gray-900">{i.Codes}</h1>
 
-													<h1 className="team_name txt-sm f-b text-gray-900">2.45</h1>
-												</div>
-												<p className="team_name txt-xs f-s  text-gray-300">GG/NG HT/ST</p>
-											</div>
+											{/* ssN className="team_name txt-sm f-b text-gray-900">2.45</h1> */}
 										</div>
+										<p className="team_name txt-xs f-s  text-gray-300">{i.Sector}</p>
 									</div>
-								))}
+								</div>
+							</div>
 						</div>
 					</div>
-				))}
+				)
+			)}
 		</>
 	);
 }

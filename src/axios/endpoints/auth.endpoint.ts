@@ -52,6 +52,15 @@ export function changePasswordAPI(data: any): ResponsTypes {
 		},
 	});
 }
+
+export function getUserProfile(): ResponsTypes {
+	return service({
+		url: `/Auth/GetUser`,
+		method: "post",
+	});
+}
+
+
 // export function creatUser(data: UserTypes) {
 // 	// console.log('look i got here');
 // 	return service({
@@ -78,14 +87,7 @@ export function changePasswordAPI(data: any): ResponsTypes {
 //   });
 // }
 
-// export function getPurchasePage(number: number) {
-//   console.log('i got here');
 
-//   return service({
-//     url: `admin/allP2PTransactions?page=${number}`,
-//     method: 'get'
-//   });
-// }
 
 // // -----
 

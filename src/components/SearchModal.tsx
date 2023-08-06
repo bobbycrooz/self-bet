@@ -96,75 +96,65 @@ export default function SearchModal({ isSearching, setIsSearching }: { isSearchi
 													lists={[]}
 													title="Team"
 													show={searchMode.team}
-													toggleShow={setSearchMode}
-												/>
+													toggleShow={setSearchMode} context={"Fixtures"}												/>
 												<DropDown
 													type={"byLeague"}
 													lists={[]}
 													title={"League"}
 													show={searchMode.league}
-													toggleShow={setSearchMode}
-												/>
+													toggleShow={setSearchMode} context={"Fixtures"}												/>
 												<DropDown
 													type={"byName"}
 													lists={[]}
 													title={"Creator"}
 													show={searchMode.name}
-													toggleShow={setSearchMode}
-												/>
+													toggleShow={setSearchMode} context={"Fixtures"}												/>
 												<DropDown
 													type={"byRange"}
 													lists={[]}
 													title={"Bet Amount"}
 													show={searchMode.range}
-													toggleShow={setSearchMode}
-												/>
+													toggleShow={setSearchMode} context={"Fixtures"}												/>
 												<DropDown
 													type={"byPercent"}
 													lists={[]}
 													title={"Bet Discount"}
 													show={searchMode.percent}
-													toggleShow={setSearchMode}
-												/>
+													toggleShow={setSearchMode} context={"Fixtures"}												/>
 											</div>
 										</div>
 									) : (
 										<div className="filters middle space-x-2 ">
 											<DropDown
-												type={"byTeam"}
-												lists={[]}
-												title="Team"
-												show={searchMode.team}
-												toggleShow={setSearchMode}
-											/>
+													type={"byTeam"}
+													lists={[]}
+													title="Team"
+													show={searchMode.team}
+													toggleShow={setSearchMode} context={"Fixtures"}											/>
 											<DropDown
-												type={"byLeague"}
-												lists={[]}
-												title={"League"}
-												show={searchMode.league}
-												toggleShow={setSearchMode}
-											/>
+													type={"byLeague"}
+													lists={[]}
+													title={"League"}
+													show={searchMode.league}
+													toggleShow={setSearchMode} context={"Fixtures"}											/>
 											<DropDown
-												type={"byName"}
-												lists={[]}
-												title={"Creator"}
-												show={searchMode.name}
-												toggleShow={setSearchMode}
-											/>
+													type={"byName"}
+													lists={[]}
+													title={"Creator"}
+													show={searchMode.name}
+													toggleShow={setSearchMode} context={"Fixtures"}											/>
 											<DropDown
-												type={"byRange"}
-												lists={[]}
-												title={"Bet Amount"}
-												show={searchMode.range}
-												toggleShow={setSearchMode}
-											/>
+													type={"byRange"}
+													lists={[]}
+													title={"Bet Amount"}
+													show={searchMode.range}
+													toggleShow={setSearchMode} context={"Fixtures"}											/>
 											<DropDown
-												type={"byPercent"}
-												lists={[]}
-												title={"Bet Discount"}
-												show={searchMode.percent}
-												toggleShow={setSearchMode}
-											/>
+													type={"byPercent"}
+													lists={[]}
+													title={"Bet Discount"}
+													show={searchMode.percent}
+													toggleShow={setSearchMode} context={"Fixtures"}											/>
 										</div>
 									)}
 

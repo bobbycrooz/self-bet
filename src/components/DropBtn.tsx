@@ -3,7 +3,9 @@ import { Fragment, useState, useRef } from "react";
 import Image from "next/image";
 // import { Range } from "react-range";
 import { TwoThumbs } from "@components";
-import { getAllFixturesAPI, searchFixturesAPI } from "@/axios/endpoints/bet.endpoint";
+import { getAllFixturesAPI, searchBetList, searchFixturesAPI } from "@/axios/endpoints/bet.endpoint";
+import { useBet } from "@/context/betContext";
+import useToast from "@/hooks/useToast";
 
 interface DropDownBtnProps {
 	type: "byTeam" | "byName" | "byRange" | "byPercent" | "byLeague" | "custom";
@@ -12,11 +14,23 @@ interface DropDownBtnProps {
 	handler?: (value: string) => void;
 	show: boolean;
 	toggleShow: any;
-	setFixtures?: any;
+	// setFixtures?: any;
+	setList?: any;
+	context: "Fixtures" | "Bets";
 }
 
-export default function DropdownBtn({ title, type, lists, handler, show, toggleShow, setFixtures }: DropDownBtnProps) {
+export default function DropdownBtn({
+	title,
+	type,
+	lists,
+	handler,
+	show,
+	toggleShow,
+	setList,
+	context,
+}: DropDownBtnProps) {
 	const [showList, setShowList] = useState(false);
+	const cardRef = useRef(null);
 
 	function handleShowList(type: string) {
 		switch (type) {
@@ -78,19 +92,19 @@ export default function DropdownBtn({ title, type, lists, handler, show, toggleS
 	function dropDownCardHandler(type: string) {
 		switch (type) {
 			case "byTeam":
-				return <SearchByTeamCard handleShowList={handleShowList} setFixtures={setFixtures} />;
+				return <SearchByTeamCard handleShowList={handleShowList} setList={setList} context={context} />;
 
 			case "byName":
-				return <SearchByNameCard />;
+				return <SearchByNameCard handleShowList={handleShowList} setList={setList} context={context} />;
 
 			case "byRange":
-				return <SearchByRangeCard />;
+				return <SearchByRangeCard handleShowList={handleShowList} setList={setList} context={context} />;
 
 			case "byPercent":
-				return <SearchByPercentCard />;
+				return <SearchByPercentCard handleShowList={handleShowList} setList={setList} context={context}/>;
 
 			case "byLeague":
-				return <SearchByLeagueCard />;
+				return <SearchByLeagueCard handleShowList={handleShowList} setList={setList} context={context} />;
 
 			case "custom":
 				return <CustomSearchCard list={lists} handler={handler} />;
@@ -100,7 +114,16 @@ export default function DropdownBtn({ title, type, lists, handler, show, toggleS
 		}
 	}
 
-	console.log(showList);
+	function handleCardClick(e: any) {
+		console.log(cardRef?.current);
+		console.log(e.target);
+
+		console.log(cardRef?.current == e.target);
+
+		if (cardRef?.current != e.target) {
+			handleShowList(type);
+		}
+	}
 
 	return (
 		<div className="dropdown_filter md:relative ">
@@ -120,7 +143,18 @@ export default function DropdownBtn({ title, type, lists, handler, show, toggleS
 				/>
 			</div>
 
-			{show && <div className=" bg-white">{dropDownCardHandler(type)}</div>}
+			{show && (
+				<>
+					<div
+						ref={cardRef}
+						className="   absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft z-50"
+					>
+						{dropDownCardHandler(type)}
+						{/* <div className="bg-[#00000048] absolute w-screen h-screen " /> */}
+					</div>
+					<div onClick={handleCardClick} className="bg-[#00000021] fixed w-screen h-screen left-0 top-0 z-40" />
+				</>
+			)}
 			{/* {show && <div className="z-[99999] bg-white">{dropDownCardHandler(type)}</div>} */}
 		</div>
 	);
@@ -143,12 +177,12 @@ function SearchByTeamCard(props: any) {
 		{
 			name: "As roma",
 			icon: "/icons/teams/roma_logo-sm.svg",
-		}, {
+		},
+		{
 			name: "Manchester United",
 			icon: "/icons/teams/roma_logo-sm.svg",
-		}
+		},
 	];
-
 	const cardRef = useRef(null);
 	const [teams, setTeams] = useState(teamsArray);
 
@@ -178,26 +212,32 @@ function SearchByTeamCard(props: any) {
 	}
 
 	async function handleSearchTeam(name: any) {
-		const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", name);
+		props.setList([]);
 
-		props.setFixtures([]);
+		if (props.context === "Fixtures") {
+			const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", name);
 
+			//  @ts-ignore
+			if (error) return console.log(error);
 
-		//  @ts-ignore
-		if (error) return console.log(error);
+			props.setList(serverResponse);
+		} else {
+			const { error, serverResponse } = await searchBetList(1, name, "TeamName");
 
-		props.setFixtures(serverResponse);
+			//  @ts-ignore
+			if (error) return console.log(error);
+
+			props.setList(serverResponse);
+		}
 
 		props.handleShowList("byTeam");
-
-		// @ts-ignore
 	}
 
 	return (
 		<div
 			ref={cardRef}
 			onClick={handleCardClick}
-			className="absolute  dropdown_body bg-white  space-y-4 column transform w-[328px] shadow-soft left-0 top-[140px]  md:top-12  border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
+			className="dropdown_body space-y-4 column left-0 top-[140px]  md:top-12  border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
 		>
 			{/* search component */}
 			<div className="search">
@@ -230,7 +270,12 @@ function SearchByTeamCard(props: any) {
 			<div className="scroll_wrapper overflow-y-scroll w-full h-[200px] z-[9999999] custom-scrollbar">
 				<ol className="team_options w-full bg-white   h-full">
 					{teams.map((i, k) => (
-						<li key={k} role="button" onClick={() => handleSearchTeam(i.name)} className="option middle space-x-4  hover:bg-gray-200">
+						<li
+							key={k}
+							role="button"
+							onClick={() => handleSearchTeam(i.name)}
+							className="option middle space-x-4  hover:bg-gray-200"
+						>
 							<Image
 								src={i.icon}
 								alt="wallet"
@@ -249,7 +294,7 @@ function SearchByTeamCard(props: any) {
 	);
 }
 
-function SearchByLeagueCard() {
+function SearchByLeagueCard(props: any) {
 	const teamsArray = [
 		{
 			name: "Premier League",
@@ -269,8 +314,30 @@ function SearchByLeagueCard() {
 		},
 	];
 
+	async function handleSearchLeague(name: any) {
+		props.setList([]);
+
+		if (props.context === "Fixtures") {
+			const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", name);
+
+			//  @ts-ignore
+			if (error) return console.log(error);
+
+			props.setList(serverResponse);
+		} else {
+			const { error, serverResponse } = await searchBetList(1, name, "LeagueName");
+
+			//  @ts-ignore
+			if (error) return console.log(error);
+
+			props.setList(serverResponse);
+		}
+
+		props.handleShowList("byTeam");
+	}
+
 	return (
-		<div className="absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft left-0 top-[140px]  md:top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg">
+		<div className="dropdown_body space-y-4 column left-0 top-[140px]  md:top-12   p-4 grid grid-cols-3 gap-2 border-x border-2 ">
 			{/* search component */}
 			<div className="search">
 				<div
@@ -298,7 +365,7 @@ function SearchByLeagueCard() {
 
 			<ol className="team_options w-full">
 				{teamsArray.map((i, k) => (
-					<li key={k} role="button" className="option middle space-x-4">
+					<li key={k} role="button" className="option middle space-x-4" onClick={() => handleSearchLeague(i.name)}>
 						<Image
 							src={i.icon}
 							alt="wallet"
@@ -316,31 +383,43 @@ function SearchByLeagueCard() {
 	);
 }
 
-function SearchByNameCard() {
-	const nameArray = [
-		{
-			name: "Wade Warren",
-			icon: "/icons/teams/name_users.svg",
-		},
-		{
-			name: "Floyd Miles",
-			icon: "/icons/teams/name_users.svg",
-		},
-		{
-			name: "Kristin Watson",
-			icon: "/icons/teams/name_users.svg",
-		},
-		{
-			name: "Eleanor Pena",
-			icon: "/icons/teams/name_users.svg",
-		},
-	];
+function SearchByNameCard(props: any) {
+	const [showFilter, setShowFilter] = useState(false);
+	const [searchKey, setSearchKey] = useState("");
+	const { BetList, setBetList } = useBet();
+	const { notify } = useToast();
+
+	async function handleSubmit(e?: React.FormEvent<HTMLFormElement>) {
+		e && e.preventDefault();
+
+		const hasKey = searchKey.length > 3;
+
+		if (!hasKey) {
+			return notify("warn", "No search value!");
+		}
+
+		// const { error, serverResponse } = await fetchBetListAPI(1);
+		const { error, serverResponse } = await searchBetList(1, searchKey, "Creator");
+
+		if (error) {
+			notify("warn", "no result");
+
+			props.handleShowList("byName");
+
+			return console.log(error);
+		}
+
+		setBetList(serverResponse);
+
+		props.handleShowList("byName");
+	}
 
 	return (
-		<div className="absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft left-0 top-[140px]  md:top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg">
+		<div className=" space-y-4 column  left-0 top-[140px]  md:top-12  p-4 grid grid-cols-3 gap-2 border-x border-2 ">
 			{/* search component */}
 			<div className="search">
-				<div
+				<form
+					onSubmit={handleSubmit}
 					role="button"
 					//   onClick={searchToggle}
 					className="search_container relative bg-gray-50 rounded-lg w-full h-10 "
@@ -351,6 +430,7 @@ function SearchByNameCard() {
 						width={20}
 						height={20}
 						className=" absolute top-1/2 -translate-y-1/2 left-2 txt-sm f-m text-gray-400"
+						onClick={() => handleSubmit()}
 					/>
 
 					<input
@@ -359,10 +439,13 @@ function SearchByNameCard() {
 						id=""
 						className="bg-transparent w-full  h-full pl-9 outline-none"
 						placeholder="e.g Peter Mane..."
+						value={searchKey}
+						onChange={(e) => setSearchKey(e.target.value)}
+						onBlur={(e) => setSearchKey(e.target.value)}
 					/>
-				</div>
+				</form>
 			</div>
-
+			{/* 
 			<ol className="team_options w-full">
 				{nameArray.map((i, k) => (
 					<li key={k} role="button" className="option middle space-x-4">
@@ -378,19 +461,45 @@ function SearchByNameCard() {
 						<h1 className="text-gray-700 txt-md f-m capitalize">{i.name}</h1>
 					</li>
 				))}
-			</ol>
+			</ol> */}
 		</div>
 	);
 }
 
-function SearchByRangeCard() {
+function SearchByRangeCard(props: any) {
 	const [values, setValues] = useState([25, 75]);
 
+	console.log(props);
+
+	async function handleSearchAmount(value: string) {
+		// props.setList([]);
+
+		if (props.context === "Fixtures") {
+			const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", value);
+
+			//  @ts-ignore
+			if (error) return console.log(error);
+
+			props.setList(serverResponse);
+		} else {
+			const { error, serverResponse } = await searchBetList(1, value, "Amount");
+
+			//  @ts-ignore
+			if (error) return console.log(error);
+
+			props.setList(serverResponse);
+		}
+
+		props.handleShowList("byTeam");
+	}
+
 	return (
-		<div className="absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft left-0 top-[140px]  md:top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg">
+		<div className=" space-y-4 column  left-0 top-[140px]  md:top-12   p-4 grid grid-cols-3 gap-2 border-x border-2">
 			<div className="row-between">
 				<h1 className="text-gray-900 txt-md f-m">Price (₦)</h1>
-				<h1 className="text-gray-500 txt-sm f-eb">Apply</h1>
+				<h1 role="button" onClick={() => handleSearchAmount(values[1].toFixed())} className="text-gray-500 txt-sm f-eb">
+					Apply
+				</h1>
 			</div>
 
 			<TwoThumbs rtl={false} values={values} setValues={setValues} />
@@ -404,21 +513,68 @@ function SearchByRangeCard() {
 	);
 }
 
-function SearchByPercentCard() {
-	const percentageArray = ["50% or more", "60% or more", "70% or more", "80% or more"];
+function SearchByPercentCard(props:any) {
+	// const percentageArray = ["50% or more", "60% or more", "70% or more", "80% or more"];
+
+	const perObj = [
+		{
+			name: "50% or more",
+			value: 50,
+		},
+		{
+			name: "60% or more",
+			value: 60,
+		},
+		{
+			name: "70% or more",
+			value: 70,
+		},
+		{
+			name: "80% or more",
+			value: 80,
+		},
+	];
+
+
+	async function handleSearchPercentage(value: number) {
+		// props.setList([]);
+
+		console.log(value);
+		
+
+		if (props.context === "Fixtures") {
+			const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", value);
+
+			//  @ts-ignore
+			if (error) return console.log(error);
+
+			props.setList(serverResponse);
+		} else {
+			const { error, serverResponse } = await searchBetList(1, value, "Discount");
+
+			//  @ts-ignore
+			if (error) return console.log(error);
+
+			props.setList(serverResponse);
+		}
+
+		props.handleShowList("byTeam");
+	}
 
 	return (
-		<div className="absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft right-0 top-[140px]  md:top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg">
+		<div className=" space-y-4 column right-0 top-[140px]  md:top-12  p-4 grid grid-cols-3 gap-2">
 			{/* search component */}
 
 			<h1 className="text-gray-700 f-m capitalize">Discount Percentage</h1>
 
 			<ol className="team_options w-full space-y-3 bg-white">
-				{percentageArray.map((i, k) => (
-					<li key={k} role="button" className="option middle space-x-4">
-						<div className="rounded-full w-5 h-5 border border-gray-300"></div>
+				{perObj.map((i, k) => (
+					<li key={k} onClick={() => handleSearchPercentage(i.value)} role="button" className="option border border-transparent middle space-x-4 hover:border-gray-200">
+						<div
+							className={`rounded-full w-5 h-5 border hover:bg-gray-200 border-gray-300 ${true && "bg-gray-300"}`}
+						></div>
 
-						<h1 className="text-gray-700 f-m capitalize">{i}</h1>
+						<h1 className="text-gray-700 f-m capitalize">{i.name}</h1>
 					</li>
 				))}
 			</ol>
@@ -444,7 +600,7 @@ function CustomSearchCard({ list, handler }: { list: Array<string>; handler: any
 		<div
 			ref={cardRef}
 			onClick={handleCardClick}
-			className="absolute dropdown_body z-50 space-y-4 column transform w-[328px] shadow-soft left-0 top-[140px]  md:top-12 border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
+			className=" space-y-4 column left-0 top-[140px]  md:top-12   p-4 grid grid-cols-3 gap-2 "
 		>
 			{/* -----custom search list ---- */}
 			<ol className="team_options w-full">

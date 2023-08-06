@@ -138,7 +138,6 @@ const statusConst = {
 };
 
 // -------------------------------------------------------
-
 const BetProvider = ({ children }: { children: any }) => {
 	const [Bet, dispatchBet] = useReducer(betReducer, initialState);
 	const [MarketList, setMarketList] = useState([]);
@@ -151,7 +150,6 @@ const BetProvider = ({ children }: { children: any }) => {
 	const { notify } = useToast();
 
 	// handlers------------------
-
 	function handlePlaceBet() {
 		isPlacing((p) => !p);
 		setIsLoading(true);
@@ -190,6 +188,15 @@ const BetProvider = ({ children }: { children: any }) => {
 	}
 
 	async function placeBet() {
+
+		  
+
+		if (Bet.Type.length === 0 )
+		{
+			return notify("error", "You need to select a bet type")
+}
+
+
 		const formData = new FormData();
 
 		// @ts-ignore
@@ -212,6 +219,9 @@ const BetProvider = ({ children }: { children: any }) => {
 				},
 			});
 
+			console.log(response);
+			
+
 			if (response.status == 200) {
 				// reset all states
 				dispatchBet({ type: "BET_TYPE", payload: { type: "" } });
@@ -232,6 +242,8 @@ const BetProvider = ({ children }: { children: any }) => {
 
 				setStatus(statusConst.success);
 
+				fetchAllActiveBets()
+
 				return notify("success", "Bet Placed Successfully");
 			}
 
@@ -240,19 +252,21 @@ const BetProvider = ({ children }: { children: any }) => {
 		} catch (error: any) {
 			notify("error", error.message);
 			setStatus(statusConst.failed);
+
+			console.log('the error also came from here ');
+			
 		}
 	}
 
 	// --------USEEFFECTS
-
 	useEffect(() => {
 		if (BetList.length === 0) {
 			fetchAllActiveBets();
 		}
+		fetchAlllMarkets()
 
 		console.log("userContext mounted!!");
 	}, []);
-
 	// --------USEEFFECTS
 
 	//providing the authcontext data to the consumer component
@@ -273,6 +287,7 @@ const BetProvider = ({ children }: { children: any }) => {
 				setBetImg,
 				BetImg,
 				BetList,
+				setBetList
 			}}
 		>
 			{children}

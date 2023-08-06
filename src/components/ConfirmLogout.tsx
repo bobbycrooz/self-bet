@@ -49,29 +49,7 @@ const Process = ({
   ) : null;
 };
 
-// function Loading(props: any) {
-//   return (
-//     <div className="col-center">
-//       <Image
-//         src={"/icons/loader.svg"}
-//         alt="logo"
-//         width={48}
-//         height={48}
-//         className="animate-spin"
-//       />
 
-//       <div className="w-full space-y-2 mt-8 text-center">
-//         <h1 className="title txt-lg f-b capitalize text-gray-900">
-//           {props.context} processing...
-//         </h1>
-
-//         <p className="subtitle txt-sm f-n text-[##6B7280]">
-//           Please wait while we reset your password. This may take a few moments.
-//         </p>
-//       </div>
-//     </div>
-//   );
-// }
 
 function Prompt({
   handleClose,

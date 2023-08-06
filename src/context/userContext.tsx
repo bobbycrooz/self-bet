@@ -1,4 +1,4 @@
-import { loginAPI, registerAPI } from "@/axios/endpoints/auth.endpoint";
+import { getUserProfile, loginAPI, registerAPI } from "@/axios/endpoints/auth.endpoint";
 import { UserDetailsTypes } from "@/types";
 import { removeToken, saveToken } from "@/utils";
 import { promises } from "dns";
@@ -20,8 +20,10 @@ export const useUser = () => {
 };
 
 const initialState = {
-	email: "",
-	name: "",
+	Balance: "",
+	Email: "",
+	GoogleId: "",
+	Username: "",
 };
 
 const userReducer = (state: any, action: { type: string; payload?: any }) => {
@@ -46,30 +48,42 @@ const UserProvider = ({ children }: { children: any }) => {
 	const { push } = useRouter();
 
 	// handlers------------------
-	function findAndInitUser() {
-		const rootUser = localStorage.getItem("user");
-		if (!rootUser) return;
+	async function findAndInitUser() {
+		
 
-		const parsedUser = JSON.parse(rootUser);
+		if (User.Email.length == 0) {
+			// fetch user
+			const { error, serverResponse } = await getUserProfile();
 
-		// console.log("found user in storage and set it to context", parsedUser);
+			console.log(serverResponse, "initiallizing the user");
 
-		return dispatch({ type: "STORE_USER", payload: parsedUser });
+			if (!error) {
+				return dispatch({ type: "STORE_USER", payload: serverResponse });
+			}
+
+			// 	const parsedUser = JSON.parse(rootUser);
+
+			// console.log("found user in storage and set it to context", parsedUser);
+
+			// return dispatch({ type: "STORE_USER", payload: parsedUser });
+		} else
+		{
+			console.log('there is user so i didnt fetched');
+			
+		}
+
 	}
 
 	function logOut() {
-	
 		localStorage.removeItem("user");
 
-		removeToken()
+		removeToken();
 
-		 dispatch({ type: "REMOVE_USER" });
+		dispatch({ type: "REMOVE_USER" });
 
-		
-		 notify("success", "Logged out successfully!");
+		notify("success", "Logged out successfully!");
 
-
-		return push('/auth')
+		return push("/auth");
 	}
 
 	async function handleAuth(values: UserDetailsTypes, loginMode: boolean): Promise<boolean> {
@@ -80,7 +94,6 @@ const UserProvider = ({ children }: { children: any }) => {
 					Password: values.Password,
 				};
 				const { error, serverResponse } = await loginAPI(datauu);
-
 
 				if (!error) {
 					const saveToCookie = saveToken(serverResponse.token);
@@ -121,12 +134,14 @@ const UserProvider = ({ children }: { children: any }) => {
 
 	useEffect(() => {
 		findAndInitUser();
-	}, []);
+	});
 
 	// --------USEEFFECTS
 
 	//providing the authcontext data to the consumer component
-	return <UserContext.Provider value={{ User, dispatch, isLoading, handleAuth, logOut }}>{children}</UserContext.Provider>;
+	return (
+		<UserContext.Provider value={{ User, dispatch, isLoading, handleAuth, logOut }}>{children}</UserContext.Provider>
+	);
 };
 
 export default UserProvider;

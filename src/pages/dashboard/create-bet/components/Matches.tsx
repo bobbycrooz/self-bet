@@ -163,8 +163,8 @@ export default function SelectMatch() {
 					lists={[]}
 					title={"All matches"}
 					show={searchMode.team}
-					setFixtures={setFixtures}
-					toggleShow={setSearchMode}
+					setList={setFixtures}
+					toggleShow={setSearchMode} context={"Fixtures"}					
 				/>
 				{/* <CustomSearchCard list={[]} handler={undefined}/> */}
 

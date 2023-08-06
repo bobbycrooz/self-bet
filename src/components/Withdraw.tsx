@@ -96,7 +96,7 @@ const Withdraw = ({ toggle, showNoti }: PropTypes) => {
             <div className="bank_list">
               <h1 className="header">Bank</h1>
 
-              <DropdownBtn type={"custom"} title={"bank"} lists={bankArray} show={false} toggleShow={undefined} />
+              <DropdownBtn type={"custom"} title={"bank"} lists={bankArray} show={false} toggleShow={undefined} context={"Fixtures"} />
             </div>
 
             <InputField
@@ -176,7 +176,7 @@ const Withdraw = ({ toggle, showNoti }: PropTypes) => {
             <div className="bank_list">
               <h1 className="header">Bank</h1>
 
-              <DropdownBtn type={"custom"} title={"bank"} lists={bankArray} show={false} toggleShow={undefined} />
+              <DropdownBtn type={"custom"} title={"bank"} lists={bankArray} show={false} toggleShow={undefined} context={"Fixtures"} />
             </div>
 
             <InputField

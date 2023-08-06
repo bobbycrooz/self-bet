@@ -27,11 +27,7 @@ const navItemArray = [
 		icon: "/icons/dashboard/bets.svg",
 	},
 
-	{
-		name: "saved bet",
-		link: "/dashboard/saved-bets",
-		icon: "/icons/dashboard/saved.svg",
-	},
+
 
 	{
 		name: "my wallet",

@@ -71,10 +71,13 @@ function Prompt({ status, handleClose, context }: { context: string; status: str
 	const { isMobile } = useScreen();
 	const { push } = useRouter();
 
+	console.log(status);
+	
+
 	useEffect(() => {
 		if (status === statusConst.success) {
 			setTimeout(() => {
-				push("/dashboard/my-bets");
+				// push("/dashboard/my-bets");
 			}, 5000);
 		}
 	}, []);
