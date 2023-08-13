@@ -101,7 +101,7 @@ export default function DropdownBtn({
 				return <SearchByRangeCard handleShowList={handleShowList} setList={setList} context={context} />;
 
 			case "byPercent":
-				return <SearchByPercentCard handleShowList={handleShowList} setList={setList} context={context}/>;
+				return <SearchByPercentCard handleShowList={handleShowList} setList={setList} context={context} />;
 
 			case "byLeague":
 				return <SearchByLeagueCard handleShowList={handleShowList} setList={setList} context={context} />;
@@ -185,6 +185,7 @@ function SearchByTeamCard(props: any) {
 	];
 	const cardRef = useRef(null);
 	const [teams, setTeams] = useState(teamsArray);
+	const [teamName, setTeamName] = useState("");
 
 	function handleCardClick(e: any) {
 		const cardEle = e.target;
@@ -199,30 +200,23 @@ function SearchByTeamCard(props: any) {
 	}
 
 	function handleChange(e: any) {
-		// loop throught he list
-		const filteredResult = teamsArray.filter((i, a) => i.name.toLowerCase() == e.target.value);
-		const filteredResult2 = teamsArray.filter((i, a) => i.name.toLowerCase().includes(e.target.value));
-
-		if (filteredResult2.length > 0) {
-			// @ts-ignore
-			setTeams(filteredResult2);
-		}
-
-		return;
+		setTeamName(e.target.value);
 	}
 
-	async function handleSearchTeam(name: any) {
+	async function handleSearchTeam(e: any) {
+		e.preventDefault();
+
 		props.setList([]);
 
 		if (props.context === "Fixtures") {
-			const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", name);
+			const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", teamName);
 
 			//  @ts-ignore
 			if (error) return console.log(error);
 
 			props.setList(serverResponse);
 		} else {
-			const { error, serverResponse } = await searchBetList(1, name, "TeamName");
+			const { error, serverResponse } = await searchBetList(1, teamName, "TeamName");
 
 			//  @ts-ignore
 			if (error) return console.log(error);
@@ -240,34 +234,36 @@ function SearchByTeamCard(props: any) {
 			className="dropdown_body space-y-4 column left-0 top-[140px]  md:top-12  border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
 		>
 			{/* search component */}
-			<div className="search">
+			<form onSubmit={handleSearchTeam} className="search">
 				<div
 					role="button"
 					//   onClick={searchToggle}
 					className="search_container relative bg-gray-50 rounded-lg w-full h-10"
 				>
-					<Image
-						src={"/icons/dashboard/search.svg"}
-						alt="logo"
-						width={20}
-						height={20}
-						className=" absolute top-1/2 -translate-y-1/2 left-2 txt-sm f-m text-gray-400"
-					/>
+					<div onClick={handleSearchTeam} role="button" className="imgIcon">
+						<Image
+							src={"/icons/dashboard/search.svg"}
+							alt="logo"
+							width={20}
+							height={20}
+							className=" absolute top-1/2 -translate-y-1/2 left-2 txt-sm f-m text-gray-400"
+						/>
+					</div>
 
 					<input
 						type="text"
 						name=""
 						id=""
-						onChange={handleChange}
-						onBlur={handleChange}
+						onChange={(e) => handleChange(e)}
+						onBlur={(e) => handleChange(e)}
 						className="bg-transparent w-full  h-full pl-9 outline-none"
 						placeholder="Search teams..."
 					/>
 				</div>
-			</div>
+			</form>
 
 			{/* List scroll wrapper */}
-			<div className="scroll_wrapper overflow-y-scroll w-full h-[200px] z-[9999999] custom-scrollbar">
+			{/* <div className="scroll_wrapper overflow-y-scroll w-full h-[200px] z-[9999999] custom-scrollbar">
 				<ol className="team_options w-full bg-white   h-full">
 					{teams.map((i, k) => (
 						<li
@@ -289,7 +285,7 @@ function SearchByTeamCard(props: any) {
 						</li>
 					))}
 				</ol>
-			</div>
+			</div> */}
 		</div>
 	);
 }
@@ -313,19 +309,27 @@ function SearchByLeagueCard(props: any) {
 			icon: "/icons/teams/roma_logo-sm.svg",
 		},
 	];
+	const [teamName, setTeamName] = useState("");
 
-	async function handleSearchLeague(name: any) {
+		function handleChange(e: any) {
+		setTeamName(e.target.value);
+	}
+
+	async function handleSearchLeague(e: any)
+	{
+		e.preventDefault();
+		
 		props.setList([]);
 
 		if (props.context === "Fixtures") {
-			const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", name);
+			const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", teamName);
 
 			//  @ts-ignore
 			if (error) return console.log(error);
 
 			props.setList(serverResponse);
 		} else {
-			const { error, serverResponse } = await searchBetList(1, name, "LeagueName");
+			const { error, serverResponse } = await searchBetList(1, teamName, "LeagueName");
 
 			//  @ts-ignore
 			if (error) return console.log(error);
@@ -339,31 +343,35 @@ function SearchByLeagueCard(props: any) {
 	return (
 		<div className="dropdown_body space-y-4 column left-0 top-[140px]  md:top-12   p-4 grid grid-cols-3 gap-2 border-x border-2 ">
 			{/* search component */}
-			<div className="search">
+			<form onSubmit={handleSearchLeague} className="search">
 				<div
 					role="button"
 					//   onClick={searchToggle}
 					className="search_container relative bg-gray-50 rounded-lg w-full h-10"
 				>
-					<Image
-						src={"/icons/dashboard/search.svg"}
-						alt="logo"
-						width={20}
-						height={20}
-						className=" absolute top-1/2 -translate-y-1/2 left-2 txt-sm f-m text-gray-400"
-					/>
+					<div onClick={handleSearchLeague} role="button" className="imgIcon">
+						<Image
+							src={"/icons/dashboard/search.svg"}
+							alt="logo"
+							width={20}
+							height={20}
+							className=" absolute top-1/2 -translate-y-1/2 left-2 txt-sm f-m text-gray-400"
+						/>
+					</div>
 
 					<input
 						type="text"
 						name=""
 						id=""
+						onChange={(e) => handleChange(e)}
+						onBlur={(e) => handleChange(e)}
 						className="bg-transparent w-full  h-full pl-9 outline-none"
-						placeholder="Search Leagues.."
+						placeholder="Search league..."
 					/>
 				</div>
-			</div>
+			</form>
 
-			<ol className="team_options w-full">
+			{/* <ol className="team_options w-full">
 				{teamsArray.map((i, k) => (
 					<li key={k} role="button" className="option middle space-x-4" onClick={() => handleSearchLeague(i.name)}>
 						<Image
@@ -378,7 +386,7 @@ function SearchByLeagueCard(props: any) {
 						<h1 className="text-gray-700 f-m capitalize">{i.name}</h1>
 					</li>
 				))}
-			</ol>
+			</ol> */}
 		</div>
 	);
 }
@@ -467,7 +475,7 @@ function SearchByNameCard(props: any) {
 }
 
 function SearchByRangeCard(props: any) {
-	const [values, setValues] = useState([25, 75]);
+	const [values, setValues] = useState([25, 705]);
 
 	console.log(props);
 
@@ -496,7 +504,7 @@ function SearchByRangeCard(props: any) {
 	return (
 		<div className=" space-y-4 column  left-0 top-[140px]  md:top-12   p-4 grid grid-cols-3 gap-2 border-x border-2">
 			<div className="row-between">
-				<h1 className="text-gray-900 txt-md f-m">Price (₦)</h1>
+				<h1 className="text-gray-900 txt-md f-m">Price (₦GN)</h1>
 				<h1 role="button" onClick={() => handleSearchAmount(values[1].toFixed())} className="text-gray-500 txt-sm f-eb">
 					Apply
 				</h1>
@@ -513,34 +521,20 @@ function SearchByRangeCard(props: any) {
 	);
 }
 
-function SearchByPercentCard(props:any) {
+function SearchByPercentCard(props: any) {
 	// const percentageArray = ["50% or more", "60% or more", "70% or more", "80% or more"];
+	const [teamName, setTeamName] = useState("");
 
-	const perObj = [
-		{
-			name: "50% or more",
-			value: 50,
-		},
-		{
-			name: "60% or more",
-			value: 60,
-		},
-		{
-			name: "70% or more",
-			value: 70,
-		},
-		{
-			name: "80% or more",
-			value: 80,
-		},
-	];
+		function handleChange(e: any) {
+		setTeamName(e.target.value);
+	}
 
-
-	async function handleSearchPercentage(value: number) {
+	async function handleSearchPercentage(e: any) {
 		// props.setList([]);
 
-		console.log(value);
-		
+		e.preventDefault();
+
+		const value = Number(teamName);
 
 		if (props.context === "Fixtures") {
 			const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", value);
@@ -567,17 +561,33 @@ function SearchByPercentCard(props:any) {
 
 			<h1 className="text-gray-700 f-m capitalize">Discount Percentage</h1>
 
-			<ol className="team_options w-full space-y-3 bg-white">
-				{perObj.map((i, k) => (
-					<li key={k} onClick={() => handleSearchPercentage(i.value)} role="button" className="option border border-transparent middle space-x-4 hover:border-gray-200">
-						<div
-							className={`rounded-full w-5 h-5 border hover:bg-gray-200 border-gray-300 ${true && "bg-gray-300"}`}
-						></div>
+			<form onSubmit={handleSearchPercentage} className="search">
+				<div
+					role="button"
+					//   onClick={searchToggle}
+					className="search_container relative bg-gray-50 rounded-lg w-full h-10"
+				>
+					<div onClick={handleSearchPercentage} role="button" className="imgIcon">
+						<Image
+							src={"/icons/dashboard/search.svg"}
+							alt="logo"
+							width={20}
+							height={20}
+							className=" absolute top-1/2 -translate-y-1/2 left-2 txt-sm f-m text-gray-400"
+						/>
+					</div>
 
-						<h1 className="text-gray-700 f-m capitalize">{i.name}</h1>
-					</li>
-				))}
-			</ol>
+					<input
+						type="text"
+						name=""
+						id=""
+						onChange={(e) => handleChange(e)}
+						onBlur={(e) => handleChange(e)}
+						className="bg-transparent w-full  h-full pl-9 outline-none"
+						placeholder="Search discount..."
+					/>
+				</div>
+			</form>
 		</div>
 	);
 }

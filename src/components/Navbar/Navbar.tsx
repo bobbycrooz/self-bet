@@ -14,6 +14,7 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import HomeSearch from "../HomeSearch";
 import { useRouter } from "next/router";
+import { hasToken } from "@/utils";
 
 interface InputProps {
 	icon?: string;
@@ -25,6 +26,8 @@ interface InputProps {
 	type: "button" | "submit" | "reset" | undefined;
 	click?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
+
+console.log(hasToken(), "the ");
 
 const Navbar = () => {
 	const [showProfile, setShowProfile] = useState(false);
@@ -49,20 +52,19 @@ const Navbar = () => {
 
 	function searchToggle() {
 		if (isSearching) {
-			return ;
+			return;
 		}
 		setIsSearching((p) => !p);
 		push(`/dashboard?search=${true}`);
 	}
 
-		function closeSearch() {
+	function closeSearch() {
 		setIsSearching((p) => !p);
 		if (isSearching) {
 			return push(`/dashboard`);
 		}
 		push(`/dashboard?search=${true}`);
 	}
-
 
 	function handleLogout() {
 		setShowProfile(!showProfile);
@@ -71,7 +73,7 @@ const Navbar = () => {
 
 	function handleProfileClick(e: any) {
 		if (showProfile && !profileRef.current?.contains(e.target)) {
-			console.log("the profile is active so i am closing it");
+			// console.log("the profile is active so i am closing it");
 
 			setShowProfile(false);
 		}
@@ -86,7 +88,7 @@ const Navbar = () => {
 	});
 
 	return (
-		<nav className=" w-full  fixed lg:static top-0 z-10  md:h-14 h-[76px] bg-white flex items-center justify-between px-6 p-1 border-b">
+		<nav className=" w-full  fixed lg:static top-0 z-10  md:h-16 h-[76px] bg-white flex items-center justify-between px-6 p-2 border-b">
 			{/* logo */}
 			<Link href={"/dashboard"}>
 				<div className="menu_logo middle space-x-4 hidden ">
@@ -96,7 +98,7 @@ const Navbar = () => {
 				</div>
 			</Link>
 
-			{!true && (
+			{!hasToken() && (
 				<div
 					role="button"
 					onClick={searchToggle}
@@ -121,18 +123,22 @@ const Navbar = () => {
 			)}
 
 			{/* not logged in user  */}
-			{false ? (
-				<div className="auth_container space-x-4 md:middle hidden md:flex">
-					<Button text={"sign up"} primary type={"button"} />
+			{!hasToken() ? (
+				<div className="auth_container space-x-4 md:middle hidden md:flex m-2">
+					<Link href={"/auth"}>
+						<Button text={"sign up"} primary type={"button"} />
+					</Link>
 
-					<Button text={"login"} type={"button"} />
+					<Link href={"/auth"}>
+						<Button text={"login"} type={"button"} />
+					</Link>
 				</div>
 			) : (
 				!isMobile && (
 					<div className="logedIn md:flex items-center space-x-6 hidden  w-[80%] justify-end relative">
 						{/* search component  */}
 
-							<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={ closeSearch} />
+						<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
 
 						{/* User details */}
 						<div className="min-w-[350px]  justify-end  flex items-center space-x-6 order-1">
@@ -155,7 +161,7 @@ const Navbar = () => {
 								<Image src={"/icons/dashboard/wallet.svg"} alt="wallet" width={40} height={40} className="" />
 
 								<h1 className="balance text-gray-700 txt-sm f-b">
-									{User?.Balance ? `${User.Balance.toLocaleString()} NGN` : "--_--"}{" "}
+									{User?.Balance ? `${User.Balance.toLocaleString()} NGN` : "0 NGN"}{" "}
 								</h1>
 							</Link>
 

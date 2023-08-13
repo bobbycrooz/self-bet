@@ -22,11 +22,18 @@ const nextConfig = {
 				// port: '',
 				// pathname: '/account123/**',
 			},
+
+				{
+				protocol: "https",
+				hostname: "selfbet01.s3.af-south-1.amazonaws.com",
+				// port: '',
+				// pathname: '/account123/**',
+			},
 		],
 	},
 
 	images: {
-		domains: ["media-3.api-sports.io", "media.api-sports.io", "selfbet.s3.af-south-1.amazonaws.com"],
+		domains: ["media-3.api-sports.io", "media.api-sports.io", "selfbet.s3.af-south-1.amazonaws.com", "selfbet01.s3.af-south-1.amazonaws.com"],
 	},
 };
 

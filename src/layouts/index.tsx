@@ -21,13 +21,13 @@ export default function DashboardLayout({ children }: { children: any }) {
 	const { logOut } = useUser();
 	const {notify} = useToast()
 
-	useEffect(() => {
-		console.log(getToken());
-		if (!getToken()) {
-			logOut();
-			notify("error", "Session expired")
-		}
-	}, []);
+	// useEffect(() => {
+	// 	console.log(getToken());
+	// 	if (!getToken()) {
+	// 		logOut();
+	// 		notify("error", "Session expired")
+	// 	}
+	// }, []);
 
 	return (
 		<main className="dashboard_layout-wrapper">

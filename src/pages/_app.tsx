@@ -1,6 +1,6 @@
 import "@/styles/globals.scss";
 import type { AppProps } from "next/app";
-import type { ReactElement, ReactNode } from "react";
+import { useEffect, type ReactElement, type ReactNode } from "react";
 import type { NextPage } from "next";
 import { Inter } from "next/font/google";
 import UserProvider from "@/context/userContext";
@@ -9,6 +9,9 @@ import { SessionProvider } from "next-auth/react";
 import BetProvider from "@/context/betContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
+import { hasToken } from "@/utils";
+import useToast from "@/hooks/useToast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +27,21 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 	// Use the layout defined at the page level, if available
 	// const getLayout = Component.getLayout ?? ((page) => page);
 	const getLayout = Component.getLayout || ((page) => page);
+	const { push, query, pathname } = useRouter();
+	const {notify} = useToast()
+	const protectedRoutes = ["/dashboard/create-bet", "/dashboard/create-bet/bet-details", "/dashboard/my-bets", "/dashboard/my-wallet", "/dashboard/profile",];
+
+	// Guarding routes
+	useEffect(() => {
+		//     push('/dashboard')
+		if (!hasToken() && protectedRoutes.includes(pathname))
+		{
+			notify('info', 'You need to Sign in first')
+
+			push("/dashboard");
+		}
+		
+	});
 
 	return (
 		<>

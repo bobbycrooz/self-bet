@@ -4,7 +4,7 @@ import { Range, getTrackBackground } from "react-range";
 
 const STEP = 0.1;
 const MIN = 0;
-const MAX = 100;
+const MAX = 1000;
 
 const TwoThumbs: React.FC<{
   rtl: boolean;

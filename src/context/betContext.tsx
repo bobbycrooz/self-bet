@@ -1,11 +1,12 @@
 import { loginAPI, registerAPI } from "@/axios/endpoints/auth.endpoint";
-import { createBetAPI, fetchBetListAPI, marketListAPI } from "@/axios/endpoints/bet.endpoint";
+import { createBetAPI, fetchBetListAPI, marketListAPI, resultAPI } from "@/axios/endpoints/bet.endpoint";
 import useToast from "@/hooks/useToast";
 import { UserDetailsTypes } from "@/types";
 import { getToken, saveToken } from "@/utils";
 import axios from "axios";
 import { promises } from "dns";
 import React, { useContext, useState, useEffect, useMemo, createContext, Children, useReducer } from "react";
+import { useUser } from "./userContext";
 // import utils from 'utils';
 
 interface propsTypes {
@@ -91,7 +92,7 @@ const betReducer = (state: any, action: { type: string; payload: any }) => {
 					Conditions: [...state.Criteria.Conditions, payload.conditions],
 				},
 			};
-			case "REMOVE_BET_CONDITIONS":
+		case "REMOVE_BET_CONDITIONS":
 			return {
 				...state,
 				Criteria: {
@@ -142,8 +143,10 @@ const BetProvider = ({ children }: { children: any }) => {
 	const [Bet, dispatchBet] = useReducer(betReducer, initialState);
 	const [MarketList, setMarketList] = useState([]);
 	const [BetList, setBetList] = useState([]);
-
+	const [BetResults, setBetResults] = useState([]);
+	const { User } = useUser();
 	const [BetImg, setBetImg] = useState(null);
+	const [noImg, setNoImg] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const [placing, isPlacing] = useState(false);
 	const [status, setStatus] = useState(statusConst.success);
@@ -187,20 +190,41 @@ const BetProvider = ({ children }: { children: any }) => {
 		}
 	}
 
+	async function fetchAllResults() {
+		try {
+			const { error, serverResponse } = await resultAPI(1);
+
+			if (!error) {
+				console.log(serverResponse[0], "this is the response after making the request ---");
+
+				// filter results
+				const userResult = serverResponse.filter((i: any) => i.Players[0]?.userId == User._id) as any;
+
+				console.log(userResult, "this is the response after making the request ---");
+
+				setBetResults(userResult as any);
+				// setBetResults(serverResponse as any);
+			} else {
+				console.log(serverResponse, "fetching all bets");
+			}
+		} catch (error) {
+			console.log(error, "from result  endpoint");
+		}
+	}
+
 	async function placeBet() {
+		if (Bet.Type.length === 0) {
+			return notify("error", "You need to select a bet type");
+		}
 
-		  
-
-		if (Bet.Type.length === 0 )
-		{
-			return notify("error", "You need to select a bet type")
-}
-
+		// console.log(BetImg);
+		
+		// return console.log(typeof BetImg);
 
 		const formData = new FormData();
 
 		// @ts-ignore
-		formData.append("BetImg", BetImg[0]);
+		formData.append("BetImg", noImg ? BetImg : BetImg[0]);
 		formData.append("Type", Bet.Type);
 		formData.append("Teams", Bet.Teams);
 		formData.append("Leagues", Bet.Leagues);
@@ -210,8 +234,15 @@ const BetProvider = ({ children }: { children: any }) => {
 		formData.append("Conditions", JSON.stringify(Bet.Conditions));
 		formData.append("BetName", Bet.BetName);
 
+		// @ts-ignore
+		// for (var pair of formData.entries()) {
+		// 	console.log(pair[0], pair[1]);
+		// }
+
+		// return console.log(formData.values, "this is the form data");
+
 		try {
-			const response = await axios.post("https://13.246.19.94/Bet/Create", formData, {
+			const response = await axios.post("https://13.244.65.147/Bet/Create", formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 					Authorization: `Bearer ${String(getToken())}`,
@@ -219,15 +250,14 @@ const BetProvider = ({ children }: { children: any }) => {
 				},
 			});
 
-			console.log(response);
-			
+			console.log(response, "this is the response after making the request ---");
 
 			if (response.status == 200) {
 				// reset all states
 				dispatchBet({ type: "BET_TYPE", payload: { type: "" } });
 				dispatchBet({
 					type: "REMOVE_BET_LEAGUES",
-					payload: undefined
+					payload: undefined,
 				});
 				dispatchBet({ type: "BET_TEAMS", payload: { teams: [] } });
 				dispatchBet({ type: "BET_FIXTURE_ID", payload: { FixtureId: null } });
@@ -242,7 +272,7 @@ const BetProvider = ({ children }: { children: any }) => {
 
 				setStatus(statusConst.success);
 
-				fetchAllActiveBets()
+				fetchAllActiveBets();
 
 				return notify("success", "Bet Placed Successfully");
 			}
@@ -253,8 +283,7 @@ const BetProvider = ({ children }: { children: any }) => {
 			notify("error", error.message);
 			setStatus(statusConst.failed);
 
-			console.log('the error also came from here ');
-			
+			console.log("the error also came from here ");
 		}
 	}
 
@@ -263,7 +292,7 @@ const BetProvider = ({ children }: { children: any }) => {
 		if (BetList.length === 0) {
 			fetchAllActiveBets();
 		}
-		fetchAlllMarkets()
+		fetchAlllMarkets();
 
 		console.log("userContext mounted!!");
 	}, []);
@@ -287,7 +316,12 @@ const BetProvider = ({ children }: { children: any }) => {
 				setBetImg,
 				BetImg,
 				BetList,
-				setBetList
+				setBetList,
+				setBetResults,
+				BetResults,
+				fetchAllResults,
+				noImg,
+setNoImg
 			}}
 		>
 			{children}

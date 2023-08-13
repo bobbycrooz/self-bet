@@ -79,9 +79,7 @@ function Home() {
 							<div className="txt-sm f-s t-g9 bg-gray-100 rounded-lg md:px-3 p-[10px] px-4 md:p-1">
 								Update new Avatar
 							</div>
-							<div className="del px-3 md:p-1 txt-sm f-b t-g7">
-								Delete
-							</div>
+							
 						</div>
 
 						{/* ----form----- */}

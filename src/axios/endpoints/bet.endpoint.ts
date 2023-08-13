@@ -20,6 +20,13 @@ export function marketListAPI(PageNumber: number): ResponsTypes {
 	});
 }
 
+export function resultAPI(PageNumber: number): ResponsTypes {
+	return service({
+		url: `/Bet/Results?PageNumber=${PageNumber}`,
+		method: "get",
+	});
+}
+
 export function getAllFixturesAPI(page: number): ResponsTypes {
 	return service({
 		url: `/Fixtures/List?PageNumber=${page}`,

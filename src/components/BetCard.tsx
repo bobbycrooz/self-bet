@@ -8,6 +8,7 @@ import { BallSvg } from "@/assets";
 import { BiShareAlt } from "react-icons/bi";
 import { VscSaveAll } from "react-icons/vsc";
 import MatchCard from "./MatchCard";
+import { useUser } from "@/context/userContext";
 
 interface PropTypes {
 	betType: "KoloBet" | "PointBet" | undefined;
@@ -24,7 +25,6 @@ export const betCardType = {
 	KOLO: "KoloBet",
 	POINT: "PointBet",
 };
-
 
 const tabs = [
 	{
@@ -61,8 +61,10 @@ const BetCard = ({ betType, data }: PropTypes) => {
 
 	const profileRef = useRef<HTMLDivElement>(null);
 
-	// console.log(data, "this unfocrmation");
-	
+	const { User } = useUser();
+
+
+	const hasJoined = data?.Creator._id === User._id;
 
 	function handleShowDetails(cardType?: "KoloBet" | "PointBet") {
 		if (showDetails.show) {
@@ -108,11 +110,10 @@ const BetCard = ({ betType, data }: PropTypes) => {
 				<div className=" p-3 md:p-6 space-y-4">
 					<div
 						style={{
-							backgroundImage: `url(${ "/images/home/bet_image.jpg" })`,
+							backgroundImage: `url(${"/images/home/bet_image.jpg"})`,
 							backgroundSize: "cover",
 							backgroundPosition: "center",
 							backgroundRepeat: "no-repeat",
-
 						}}
 						className="bet_banner w-full h-32  relative flex justify-between items-center p-6 bg-[#0000003d] rounded-md"
 					>
@@ -120,11 +121,11 @@ const BetCard = ({ betType, data }: PropTypes) => {
 							<Image
 								className="team_logo "
 								src={
-									data?.Criteria.TeamA.Logo == "TeamALogoUrl"
+									data?.Criteria?.TeamA?.Logo == "TeamALogoUrl"
 										? "/icons/teams/chealse_logo.svg"
-										: data?.Criteria.TeamA.Logo ||  data?.Criteria.TeamA.logo
+										: data?.Criteria?.TeamA?.Logo || data?.Criteria?.TeamA?.logo
 								}
-								alt={data?.Criteria.TeamA.name || data?.Criteria.TeamA.TeamName}
+								alt={data?.Criteria?.TeamA?.name || data?.Criteria?.TeamA?.TeamName}
 								width={48}
 								height={48}
 							/>
@@ -134,11 +135,11 @@ const BetCard = ({ betType, data }: PropTypes) => {
 							<Image
 								className="team_logo "
 								src={
-									data?.Criteria.TeamB.Logo == "TeamALogoUrl"
+									data?.Criteria?.TeamB?.Logo == "TeamALogoUrl"
 										? "/icons/teams/chealse_logo.svg"
-										: data?.Criteria.TeamB.Logo ||  data?.Criteria.TeamB.logo
+										: data?.Criteria?.TeamB?.Logo || data?.Criteria?.TeamB?.logo
 								}
-								alt={data?.Criteria.TeamB.name || data?.Criteria.TeamB.TeamName}
+								alt={data?.Criteria?.TeamB?.name || data?.Criteria?.TeamB?.TeamName}
 								width={48}
 								height={48}
 							/>
@@ -214,7 +215,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 							<span className="f-b text-gray-700">{data?.Discount.max}</span> Players
 						</h1>
 
-						{!true ? (
+						{hasJoined ? (
 							<h1 className="name txt-md f-m text-gray-400">
 								Payout: <span className="f-s text-gray-700">N500</span>
 							</h1>
@@ -620,70 +621,68 @@ function Bets({ data }: any) {
 	);
 }
 
-function Creator({ data }: any)
-{
-	
-	const arrr = typeof data?.CreatorSelection?.Conditions === 'string'
-	
+function Creator({ data }: any) {
+	const arrr = typeof data?.CreatorSelection?.Conditions === "string";
+
 	// console.log(arrr);
 
 	console.log(data);
-	
-	
-	
+
 	return (
 		<>
 			{/* --team  display baner---- */}
-			{!arrr &&  data?.CreatorSelection?.Conditions?.map(
-				(
-					i: {
-						Codes:
-							| string
-							| number
-							| boolean
-							| React.ReactElement<any, string | React.JSXElementConstructor<any>>
-							| React.ReactFragment
-							| React.ReactPortal
-							| null
-							| undefined;
-						Sector:
-							| string
-							| number
-							| boolean
-							| React.ReactElement<any, string | React.JSXElementConstructor<any>>
-							| React.ReactFragment
-							| React.ReactPortal
-							| null
-							| undefined;
-					},
-					k: React.Key | null | undefined
-				) => (
-					<div key={k} className="creators_card border-gray-200 rounded-lg shadow-md">
-						{/* header */}
-						<div className="h-12 w-full relative header middle ">
-							<h1 className="header_text txt-sm f-b text-gray-50 p-4">
-								{data?.Criteria?.TeamA.name || data?.Criteria?.TeamA.TeamName} - {data.Criteria.TeamB.name  || data?.Criteria?.TeamB.TeamName}
-							</h1>
-						</div>
+			{!arrr &&
+				data?.CreatorSelection?.Conditions?.map(
+					(
+						i: {
+							Codes:
+								| string
+								| number
+								| boolean
+								| React.ReactElement<any, string | React.JSXElementConstructor<any>>
+								| React.ReactFragment
+								| React.ReactPortal
+								| null
+								| undefined;
+							Sector:
+								| string
+								| number
+								| boolean
+								| React.ReactElement<any, string | React.JSXElementConstructor<any>>
+								| React.ReactFragment
+								| React.ReactPortal
+								| null
+								| undefined;
+						},
+						k: React.Key | null | undefined
+					) => (
+						<div key={k} className="creators_card border-gray-200 rounded-lg shadow-md">
+							{/* header */}
+							<div className="h-12 w-full relative header middle ">
+								<h1 className="header_text txt-sm f-b text-gray-50 p-4">
+									{data?.Criteria?.TeamA.name || data?.Criteria?.TeamA.TeamName} -{" "}
+									{data.Criteria.TeamB.name || data?.Criteria?.TeamB.TeamName}
+								</h1>
+							</div>
 
-						<div className=" options w-full">
-							<div className="middle   px-6  ">
-								<div className=" w-full border-b border-dashed py-4 space-x-4 flex">
-									<Image className="team_logo " src={"/icons/ball.svg"} alt="chealse" width={24} height={32} />
-									<div className="texts w-full">
-										<div className="row-between w-full">
-											<h1 className="team_name txt-sm f-b text-gray-900">{i.Codes}</h1>
+							<div className=" options w-full">
+								<div className="middle   px-6  ">
+									<div className=" w-full border-b border-dashed py-4 space-x-4 flex">
+										<Image className="team_logo " src={"/icons/ball.svg"} alt="chealse" width={24} height={32} />
+										<div className="texts w-full">
+											<div className="row-between w-full">
+												<h1 className="team_name txt-sm f-b text-gray-900">{i.Codes}</h1>
 
-											{/* ssN className="team_name txt-sm f-b text-gray-900">2.45</h1> */}
+												{/* ssN className="team_name txt-sm f-b text-gray-900">2.45</h1> */}
+											</div>
+											<p className="team_name txt-xs f-s  text-gray-300">{i.Sector}</p>
 										</div>
-										<p className="team_name txt-xs f-s  text-gray-300">{i.Sector}</p>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				)
-			)}
+					)
+				)}
 		</>
 	);
 }

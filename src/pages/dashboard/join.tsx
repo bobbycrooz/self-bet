@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { useBet } from "@/context/betContext";
 import useToast from "@/hooks/useToast";
-import { formatMatchDate } from "@/utils";
+import { formatMatchDate, hasToken } from "@/utils";
 import Link from "next/link";
 import { joinBetAPI } from "@/axios/endpoints/bet.endpoint";
 
@@ -50,20 +50,17 @@ function Home() {
 	const topRef = useRef(null);
 
 	async function handlePlaceBet() {
-            
-            const { error, serverResponse } = await joinBetAPI(joinBetDetails);
+		const { error, serverResponse } = await joinBetAPI(joinBetDetails);
 
-            // @ts-ignore
-            if (error) return  notify("error", serverResponse)
+		// @ts-ignore
+		if (error) return notify("error", serverResponse);
 
-            setjoinBet({
-                  ...joinBetDetails,
-                  Conditions: []
-            })
-            
-            notify("success", "joined bet successfully")
+		setjoinBet({
+			...joinBetDetails,
+			Conditions: [],
+		});
 
-
+		notify("success", "joined bet successfully");
 	}
 
 	useEffect(() => {
@@ -178,7 +175,9 @@ function Home() {
 								<div className="middle">
 									<h1 className="header_text txt-sm f-b text-gray-50 p-4">Betslip</h1>
 
-									<p className="rounded bg-gray-400 px-2 p-[2px] text-white txt-xs f-m">{joinBetDetails?.Conditions?.length}</p>
+									<p className="rounded bg-gray-400 px-2 p-[2px] text-white txt-xs f-m">
+										{joinBetDetails?.Conditions?.length}
+									</p>
 								</div>
 							</div>
 
@@ -186,7 +185,7 @@ function Home() {
 								{/* ----bets */}
 								{joinBetDetails.Conditions.map((i: any, k: number) => (
 									<div key={k} className="space-y-2">
-                                                            <BetSlipDetails data={i} bet={currentBet} joinBetDetails={joinBetDetails} setjoinBet={setjoinBet} />
+										<BetSlipDetails data={i} bet={currentBet} joinBetDetails={joinBetDetails} setjoinBet={setjoinBet} />
 									</div>
 								))}
 
@@ -206,12 +205,14 @@ function Home() {
 									</div>
 
 									<Button
-										text={"Place Bet"}
+										text={"join Bet"}
 										type={"button"}
 										isLoading={isLoading}
 										full
 										primary
-										disabled={joinBetDetails.betType.length < 1 || joinBetDetails.Conditions.length < 1}
+										disabled={
+											(!hasToken() || joinBetDetails.betType.length < 1) || joinBetDetails.Conditions.length < 1
+										}
 										click={handlePlaceBet}
 									/>
 								</div>
@@ -255,14 +256,15 @@ export function BetSlipDetails({ data, joinBetDetails, setjoinBet, bet }: any) {
 			Conditions: newlist,
 		});
 	}
-      
+
 	return (
 		<div className="conditon_card border rounded-lg h-auto">
 			{/* --header */}
 			<div className="  p-3" role="button" onClick={handleShowList}>
 				<div className="row-between">
 					<h1 className="txt-sm f-m text-gray-700">
-						{bet?.Criteria?.TeamA?.name || bet?.Criteria?.TeamA?.TeamName} - {bet?.Criteria?.TeamB?.name || bet?.Criteria?.TeamB?.TeamName}
+						{bet?.Criteria?.TeamA?.name || bet?.Criteria?.TeamA?.TeamName} -{" "}
+						{bet?.Criteria?.TeamB?.name || bet?.Criteria?.TeamB?.TeamName}
 					</h1>
 
 					<Image

@@ -13,6 +13,7 @@ import SelectMatch from "./components/Matches";
 import { useBet } from "@/context/betContext";
 import useToast from "@/hooks/useToast";
 import { ConditionTypes } from "@/components/AddCondition";
+import { hasToken } from "@/utils";
 // import { NextPageWithLayout } from "../_app";
 
 function CreateBetPage() {
@@ -23,7 +24,7 @@ function CreateBetPage() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const progressRef = useRef(null);
 	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
-	const { BetImg } = useBet();
+	const { BetImg, setBetImg, noImg, setNoImg } = useBet();
 
 	const { notify } = useToast();
 	const [BetDetailsData, setBetDetailsData] = useState({
@@ -72,7 +73,48 @@ function CreateBetPage() {
 		}
 
 		if (step == 4 && !BetImg) {
-			return notify("warn", "You must upload a bet image!");
+			notify("warn", "Defualt bet image will be set!");
+
+			// return console.log(typeof BetImg);
+
+			const toDataURL = (url: RequestInfo | URL) =>
+				fetch(url)
+					.then((response) => response.blob())
+					.then(
+						(blob) =>
+							new Promise((resolve, reject) => {
+								const reader = new FileReader();
+								reader.onloadend = () => resolve(reader.result);
+								reader.onerror = reject;
+								reader.readAsDataURL(blob);
+							})
+					);
+
+			toDataURL("/images/home/bet_image.jpg").then((dataUrl: string | unknown) => {
+				// @ts-ignore
+				const base64String = btoa(dataUrl);
+
+				console.log(base64String, "base64String");
+
+				setBetImg(base64String);
+
+				function dataURLtoFile(dataurl: any, filename: string) {
+					var arr = dataurl.split(","),
+						mime = arr[0].match(/:(.*?);/)[1],
+						bstr = atob(arr[arr.length - 1]),
+						n = bstr.length,
+						u8arr = new Uint8Array(n);
+					while (n--) {
+						u8arr[n] = bstr.charCodeAt(n);
+					}
+					return new File([u8arr], filename, { type: mime });
+				}
+
+				const file = dataURLtoFile(dataUrl, "bet_image.jpg");
+
+				setNoImg(true);
+				setBetImg(file);
+			});
 		}
 
 		if (step == 4 && showDiscount && BetDetailsData.Discount.length < 2) {
@@ -220,6 +262,13 @@ function CreateBetPage() {
 			});
 		}
 	}, [pathname]);
+
+	// // Guarding routes
+	// useEffect(() => {
+	// 	if (!hasToken()) {
+	// 		notify("info", "You need to create an account to create a bet");
+	// 	}
+	// });
 
 	return (
 		<>
