@@ -505,7 +505,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 						</div>
 					) : (
 						// ----desktop----
-						<div className="betInfo overlay z-10 fixed top-0 flex justify-end left-0 strictFadeIn w-full h-full bg-[#0000005c]">
+						<div className="betInfo overlay z-[70] fixed top-0 flex justify-end left-0 strictFadeIn w-full h-full bg-[#0000005c]">
 							<div className="info_panel slideInLeft  relative w-[50%]    h-screen bg-white">
 								{/*  */}
 								<div
