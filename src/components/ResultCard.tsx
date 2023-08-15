@@ -16,7 +16,7 @@ export default function ResultCard({ result }: any) {
 	}
 
 
-	// console.log(result.Created, );
+	console.log(result );
 
 	const date = formatMatchDate(result.Created);
 	

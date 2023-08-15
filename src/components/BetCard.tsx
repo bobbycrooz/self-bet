@@ -58,13 +58,27 @@ const BetCard = ({ betType, data }: PropTypes) => {
 	const { isTablet, isMobile } = useScreen();
 
 	const [showCardOptions, setShowCardOptions] = useState(false);
+	const [copy, setCopy] = useState(false);
 
 	const profileRef = useRef<HTMLDivElement>(null);
 
 	const { User } = useUser();
 
+	function userJoined() {
+		// check if current usser is among the playerws
+		const yes = data?.Players.find((i: any) => i.userId === User._id);
 
-	const hasJoined = data?.Creator._id === User._id;
+		console.log(yes);
+
+		if (yes) return true;
+		return false;
+	}
+
+	function handleCopy() {
+		setCopy(!copy);
+	}
+
+	const hasJoined = data?.Creator._id === User._id || userJoined();
 
 	function handleShowDetails(cardType?: "KoloBet" | "PointBet") {
 		if (showDetails.show) {
@@ -99,6 +113,20 @@ const BetCard = ({ betType, data }: PropTypes) => {
 			setShowCardOptions(false);
 		}
 	}
+
+	const copyToClipboard = () => {
+		// Select the input element
+		const inputElement = document.getElementById("betLink");
+
+		// Select the input text
+		// @ts-ignore
+		inputElement?.select();
+		// @ts-ignore
+		inputElement?.setSelectionRange(0, 99999); // For mobile devices
+
+		// Copy the text to the clipboard
+		document.execCommand("copy");
+	};
 
 	return (
 		<>
@@ -169,18 +197,20 @@ const BetCard = ({ betType, data }: PropTypes) => {
 										// ref={profileRef}
 										className="bet_card-dropdown dropdown_profile z-50 absolute -right-1/2 top-[30px] bg-white  w-48 rounded-lg p-6 space-y-[18px] shadow-light strictFadeIn"
 									>
-										<Link
-											role="button"
-											// onClick={() => setShowProfile(false)}
-											className="profile_item middle space-x-4"
-											href={"/dashboard/profile"}
-										>
-											<VscSaveAll className=" profile_item-icon" />
+										{hasJoined && (
+											<div
+												role="button"
+												onClick={() => handleShowDetails(betType)}
+												className="profile_item middle space-x-4"
+												// href={"/dashboard/profile"}
+											>
+												<VscSaveAll className=" profile_item-icon" />
 
-											<p className="item_name txt-sm f-m text-gray-700 hover:text-sec">Save for later</p>
-										</Link>
+												<p className="item_name txt-sm f-m text-gray-700 hover:text-sec">View</p>
+											</div>
+										)}
 
-										<div role="button" className="profile_logout middle space-x-4">
+										<div role="button" onClick={handleCopy} className="profile_logout middle space-x-4">
 											<BiShareAlt className="profile_logout-icon" />
 
 											<p className="item_name txt-sm f-m text-gray-700  hover:text-sec">Share</p>
@@ -212,7 +242,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 				<footer className="card_footer row-center w-full rounded-b h-20 bg-gray-100 p-6">
 					<div className="row-between  w-full">
 						<h1 className="name txt-xs f-m text-gray-400">
-							<span className="f-b text-gray-700">{data?.Discount.max}</span> Players
+							<span className="f-b text-gray-700">{data?.Players.length}</span> Players
 						</h1>
 
 						{hasJoined ? (
@@ -321,7 +351,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 
 													<div className="mt-4">
 														<Link href={"/dashboard/create-bet/bet-details"}>
-															<Button text={"Join bet"} type={"button"} primary full />
+															<Button text={hasJoined ? "Joined" : "Join Bet"} type={"button"} primary full />
 														</Link>
 													</div>
 
@@ -540,7 +570,8 @@ const BetCard = ({ betType, data }: PropTypes) => {
 														<h1 className="amount text-gray-400 txt-xs f-b">Bet amount</h1>
 														<h1 className="txt-md f-b text-gray-700 mt-2 mb-4">N {data?.Amount}</h1>
 														<Link href={`/dashboard/join?id=${data._id}`}>
-															<Button text={"Join bet"} type={"button"} primary />
+															<Button disabled={hasJoined} text={hasJoined ? "Joined" : "Join Bet"} type={"button"} primary full />
+															{/* <Button text={"Join bet"} type={"button"} primary /> */}
 														</Link>
 													</div>
 												</div>
@@ -580,6 +611,41 @@ const BetCard = ({ betType, data }: PropTypes) => {
 							</div>
 						</div>
 					)}
+				</div>
+			)}
+
+			{copy && (
+				<div className="modal top-0 left-0 strictFadeIn fixed w-full h-full bg-[#0000003e] grid place-content-center z-30">
+					<div className=" bg-white rounded p-4 py-8 FadeIn space-y-2 relative w-[400px]">
+						<div role="button" onClick={() => handleCopy()} className="cancle_btn absolute -right-11  -top-11">
+							<Image
+								src={"/icons/dashboard/cancleBtn.svg"}
+								alt={""}
+								width={48}
+								height={48}
+								//  onClick={toggle}
+								role="button"
+							/>
+						</div>
+
+						<h1 className="txt-sm text-gray-600 f-n">Bet link</h1>
+
+						<div className="w-full relative">
+							<input
+								id="betLink"
+								type="text"
+								className="rounded border p-2 text-sm text-gray-400 font-medium w-full"
+								value={`https://selfbet.vercel.app/dashboard/join?id=${data?._id}`}
+							/>
+
+							<button
+								onClick={copyToClipboard}
+								className="bg-sec text-white copy absolute right-0  top-0 rounded p-2 px-4 capitalize text-sm "
+							>
+								copy
+							</button>
+						</div>
+					</div>
 				</div>
 			)}
 		</>

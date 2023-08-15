@@ -476,11 +476,20 @@ function SearchByNameCard(props: any) {
 
 function SearchByRangeCard(props: any) {
 	const [values, setValues] = useState([25, 705]);
+		const [teamName, setTeamName] = useState("");
+
+		function handleChange(e: any) {
+		setTeamName(e.target.value);
+	}
 
 	console.log(props);
 
-	async function handleSearchAmount(value: string) {
+	async function handleSearchAmount(e: any) {
 		// props.setList([]);
+
+		e.preventDefault();
+
+		const value = Number(teamName);
 
 		if (props.context === "Fixtures") {
 			const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", value);
@@ -498,25 +507,38 @@ function SearchByRangeCard(props: any) {
 			props.setList(serverResponse);
 		}
 
-		props.handleShowList("byTeam");
+		props.handleShowList("byRange");
 	}
 
 	return (
 		<div className=" space-y-4 column  left-0 top-[140px]  md:top-12   p-4 grid grid-cols-3 gap-2 border-x border-2">
-			<div className="row-between">
-				<h1 className="text-gray-900 txt-md f-m">Price (₦GN)</h1>
-				<h1 role="button" onClick={() => handleSearchAmount(values[1].toFixed())} className="text-gray-500 txt-sm f-eb">
-					Apply
-				</h1>
-			</div>
+		<form onSubmit={handleSearchAmount} className="search">
+				<div
+					role="button"
+					//   onClick={searchToggle}
+					className="search_container relative bg-gray-50 rounded-lg w-full h-10"
+				>
+					<div onClick={handleSearchAmount} role="button" className="imgIcon">
+						<Image
+							src={"/icons/dashboard/search.svg"}
+							alt="logo"
+							width={20}
+							height={20}
+							className=" absolute top-1/2 -translate-y-1/2 left-2 txt-sm f-m text-gray-400"
+						/>
+					</div>
 
-			<TwoThumbs rtl={false} values={values} setValues={setValues} />
-
-			<div className="row w-full justify-between  space-x-2">
-				<div className="mout w-full rounded-lg p-[10px] px-[14px] bg-gray-100">{values[0].toFixed()}</div>
-				<p className="">-</p>
-				<div className="mout w-full rounded-lg p-[10px] px-[14px] bg-gray-100">{values[1].toFixed()}</div>
-			</div>
+					<input
+						type="text"
+						name=""
+						id=""
+						onChange={(e) => handleChange(e)}
+						onBlur={(e) => handleChange(e)}
+						className="bg-transparent w-full  h-full pl-9 outline-none"
+						placeholder="Search amount..."
+					/>
+				</div>
+			</form>
 		</div>
 	);
 }

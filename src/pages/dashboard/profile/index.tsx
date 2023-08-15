@@ -239,10 +239,10 @@ function Home()
 
 				{/*-------- body------ */}
 				<div className="p-4 md:p-8 lg:pl-12 mt-[116px] w-full lg:pr-[104px]">
-					<h1 className="w-full text-gray-800 txt-md f-eb md:txt-xl md:f-b ">My bets</h1>
+					{/* <h1 className="w-full text-gray-800 txt-md f-eb md:txt-xl md:f-b ">My bets</h1> */}
 
 					{/* action tabs -- */}
-					<div className="active_tab w-full  h-[30px] mt-4 border-b middle space-x-3">
+					{/* <div className="active_tab w-full  h-[30px] mt-4 border-b middle space-x-3">
 						{tabs.map((i: any, k) => (
 							<div
 								role="button"
@@ -255,12 +255,12 @@ function Home()
 								<p className={`txt-sm  f-m`}> {i}</p>
 							</div>
 						))}
-					</div>
+					</div> */}
 
 					{/* --------active bet listing----- */}
-				<div className="w-full h-auto px-4  pt-1/2 ">
+			 <div className="w-full h-auto px-4  pt-1/2 ">
 					{/* -----bet list------ */}
-					{currentlist?.length > 0 ? (
+					{/* {currentlist?.length > 0 ? (
 						<div className="active_bet_wrapper pb-36 grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
 							{currentlist?.map((i: any, k: number) => (
 								<div className="" key={k}>
@@ -278,8 +278,8 @@ function Home()
 							</Link>
 							<h1 className="txt-md f-b t-g5 md:txt-sm mt-3">Join bet</h1>
 						</div>
-					)}
-				</div>
+					)} */}
+				</div> 
 				</div>
 
 				{/* -----withdrawal pane------- */}

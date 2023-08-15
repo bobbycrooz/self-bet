@@ -65,6 +65,8 @@ function Home() {
 
 		fetchAllResults();
 		FilterUserBet()
+		
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname, step, BetList]);
 
 	return (

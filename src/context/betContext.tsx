@@ -1,5 +1,11 @@
 import { loginAPI, registerAPI } from "@/axios/endpoints/auth.endpoint";
-import { createBetAPI, fetchBetListAPI, marketListAPI, resultAPI } from "@/axios/endpoints/bet.endpoint";
+import {
+	createBetAPI,
+	fetchBetListAPI,
+	marketListAPI,
+	resultAPI,
+	transactiontAPI,
+} from "@/axios/endpoints/bet.endpoint";
 import useToast from "@/hooks/useToast";
 import { UserDetailsTypes } from "@/types";
 import { getToken, saveToken } from "@/utils";
@@ -142,6 +148,7 @@ const statusConst = {
 const BetProvider = ({ children }: { children: any }) => {
 	const [Bet, dispatchBet] = useReducer(betReducer, initialState);
 	const [MarketList, setMarketList] = useState([]);
+	const [TransactiontList, setTransactionList] = useState([]);
 	const [BetList, setBetList] = useState([]);
 	const [BetResults, setBetResults] = useState([]);
 	const { User } = useUser();
@@ -181,6 +188,8 @@ const BetProvider = ({ children }: { children: any }) => {
 		try {
 			const { error, serverResponse } = await fetchBetListAPI(1);
 			if (!error) {
+				console.log(serverResponse[0]);
+
 				setBetList(serverResponse as any);
 			} else {
 				console.log(serverResponse, "fetching all bets");
@@ -200,10 +209,10 @@ const BetProvider = ({ children }: { children: any }) => {
 				// filter results
 				const userResult = serverResponse.filter((i: any) => i.Players[0]?.userId == User._id) as any;
 
-				console.log(userResult, "this is the response after making the request ---");
+				// console.log(userResult, "this is the response after making the request ---");
 
-				setBetResults(userResult as any);
-				// setBetResults(serverResponse as any);
+				// setBetResults(userResult as any);
+				setBetResults(serverResponse as any);
 			} else {
 				console.log(serverResponse, "fetching all bets");
 			}
@@ -218,7 +227,7 @@ const BetProvider = ({ children }: { children: any }) => {
 		}
 
 		// console.log(BetImg);
-		
+
 		// return console.log(typeof BetImg);
 
 		const formData = new FormData();
@@ -287,14 +296,34 @@ const BetProvider = ({ children }: { children: any }) => {
 		}
 	}
 
+	async function fetchAllTransaction() {
+		try {
+			if (TransactiontList.length == 0) {
+				const { error, serverResponse } = await transactiontAPI(1);
+				if (!error) {
+					setTransactionList(serverResponse as any);
+				} else {
+					// console.log(serverResponse, "serverResponse");
+				}
+			}
+		} catch (error) {}
+	}
+
 	// --------USEEFFECTS
-	useEffect(() => {
+	useEffect(() =>
+	{
+		
 		if (BetList.length === 0) {
 			fetchAllActiveBets();
 		}
+
 		fetchAlllMarkets();
 
-		console.log("userContext mounted!!");
+		if (TransactiontList.length === 0) {
+			fetchAllTransaction();
+		}
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	// --------USEEFFECTS
 
@@ -321,7 +350,10 @@ const BetProvider = ({ children }: { children: any }) => {
 				BetResults,
 				fetchAllResults,
 				noImg,
-setNoImg
+				setNoImg,
+				fetchAllTransaction,
+				TransactiontList,
+				setTransactionList
 			}}
 		>
 			{children}

@@ -8,15 +8,18 @@ import DashboardLayout from "@/layouts";
 import { PlusSvg } from "@/assets";
 import Link from "next/link";
 import { useUser } from "@/context/userContext";
+import { useBet } from "@/context/betContext";
 
 function Home() {
 	const [isWithdrawing, setIsWithdrawing] = useState(false);
 	const [isDepositing, setIsDepositing] = useState(false);
 	const { push, query, pathname } = useRouter();
 	const { User } = useUser();
+	const { TransactiontList, fetchAllTransaction } = useBet();
 
 
-	const tabs = ["All", "Deposit", "Payouts", "Withdraw"];
+	const tabs = ["All"];
+	// const tabs = ["All", "Deposit", "Payouts", "Withdraw"];
 
 	// handlers--------------
 
@@ -97,9 +100,11 @@ function Home() {
 				inline: "nearest",
 			});
 		}
+		fetchAllTransaction()
 	}, [pathname]);
 	
 
+	// console.log(TransactiontList)
 
 	return (
 		<>
@@ -109,9 +114,8 @@ function Home() {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-							<div ref={topRef} className="h-[76px]  w-full md:h-0"></div>
-
-
+			
+			<div ref={topRef} className="h-[76px]  w-full md:h-0"></div>
 
 			<main className="dashboard_home bg-white w-full h-auto pb-16 ">
 				{/* ----header---- */}
@@ -208,7 +212,7 @@ function Home() {
 							{tabs.map((i, k) => (
 								<div
 									className={`tab_item px-3 hover:text-gray-700 hover:border-gray-700 border-b-2 ${
-										k == 2 ? "text-gray-700 border-gray-700 f-b " : "border-transparent text-gray-500 f-m"
+										k == 0 ? "text-gray-700 border-gray-700 f-b " : "border-transparent text-gray-500 f-m"
 									} h-full middle`}
 									key={k}
 								>
@@ -219,7 +223,7 @@ function Home() {
 
 						{/* --------tab_body----- */}
 
-						{!true ? (
+						{TransactiontList?.length == 0 ? (
 							<div className="h-auto border border-gray-100 centered">
 								<div className="column col-center p-6">
 									<div className="bg-gray-400 w-20 h-20 rounded-lg"></div>
@@ -231,28 +235,28 @@ function Home() {
 						) : (
 							<>
 								<div className="w-full  py-6 ">
-									<h1 className="t-subtitle">Tuesday</h1>
+									{/* <h1 className="t-subtitle">Tuesday</h1> */}
 
 									{/* ----transaction-list */}
 									<div className="w-full space-y-6 mt-6 ">
-										{notificationArray.map((i, k) => (
+										{TransactiontList.map((i: any, k: number) => (
 											<div key={k} className="notification_list-item flex items-center justify-between ">
 												<div className="space-x-4 md:space-x-6  middle">
-													<Image src={iconTypeHandler(i.type)} alt={""} width={40} height={40} />
+													<Image src={iconTypeHandler(i.CreditOrDebit ? "add": "money")} alt={""} width={40} height={40} />
 
 													<div className="noti_text w-[90%] md:w-full">
-														<h1 className="notify t-header1 ">{i.header}</h1>
+														<h1 className="notify t-header1 ">{i.CreditOrDebit ? "You topped up your wallet" : "Withdrawal Succesful"}</h1>
 
-														<p className="t-xs-subtitle w-[80%] md:w-full">{i.body}</p>
+														<p className="t-xs-subtitle w-[80%] md:w-full">{i.Description}</p>
 													</div>
 												</div>
 
 												<p
 													className={`txt-sm md:txt-md f-eb  w-[100px] text-right ${
-														i.type === "add" ? "text-gray-700" : "text-green-500"
+														!i.CreditOrDebit ? "text-sec" : "text-green-500"
 													}`}
 												>
-													-N5,000
+													{i.CreditOrDebit ? "+":"-" }N{i.Amount}
 												</p>
 											</div>
 										))}

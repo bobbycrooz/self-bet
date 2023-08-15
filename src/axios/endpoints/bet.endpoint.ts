@@ -20,6 +20,15 @@ export function marketListAPI(PageNumber: number): ResponsTypes {
 	});
 }
 
+export function transactiontAPI(PageNumber: number): ResponsTypes {
+	return service({
+		url: `/Transaction/List?PageNumber=${PageNumber}`,
+		method: "get",
+	});
+}
+
+// /Transaction/List?PageNumber=1
+
 export function resultAPI(PageNumber: number): ResponsTypes {
 	return service({
 		url: `/Bet/Results?PageNumber=${PageNumber}`,

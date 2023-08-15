@@ -94,6 +94,9 @@ function Home() {
 		}
 	}, [query, pathname]);
 
+	console.log(currentBet);
+	
+
 	return (
 		<>
 			<Head>
@@ -110,22 +113,24 @@ function Home() {
 					{/* --- */}
 					<main className=" w-[100%] space-y-6 pb-20 ">
 						{/* bet type banner */}
-						<div className="bet_banner w-full h-[124px] md:h-[224px] relative">
+						<div className="bet_banner w-full h-[124px] md:h-[224px] relative rounded">
 							{currentBet?.Type == "KoloBet" ? (
 								<Image
-									src={"/images/home/kolo_banner.png"}
+									src={currentBet?.BetImg ? currentBet.BetImg : "/images/home/kolo_banner.png"}
 									alt={""}
 									fill
-									className="r"
+									className="rounded bg-contain"
 									// width={300}
 									// height={128}
 								/>
 							) : (
 								<Image
-									src={"/images/home/point_banner.png"}
+										// src={"/images/home/point_banner.png"}
+									src={currentBet?.BetImg ? currentBet.BetImg : "/images/home/point_banner.png"}
+										
 									alt={""}
 									fill
-									className="r"
+									className="rounded"
 									// width={300}
 									// height={128}
 								/>

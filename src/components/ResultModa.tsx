@@ -47,43 +47,6 @@ const tabs = [
 	},
 ];
 
-const DataD = {
-	_id: "64d627b30e2acfd941e37d0f",
-	BetId: "64d62736524fb45415c19b45",
-	OutCome: [
-		[
-			{
-				Away_Score: 1,
-				Home_Score: 0,
-				H_first_score: 0,
-				H_second_score: 0,
-				A_first_score: 1,
-				A_second_score: 1,
-				Teams: {
-					Home: {
-						name: "Southampton",
-						logo: "https://media-3.api-sports.io/football/teams/41.png",
-					},
-					Away: {
-						name: "Nottingham Forest",
-						logo: "https://media-1.api-sports.io/football/teams/65.png",
-					},
-				},
-				FixtureId: 868135,
-			},
-		],
-	],
-	FixtureId: 868135,
-	Players: [
-		{
-			userId: "64d3894dde9e45bc765c76be",
-			state: "Tie",
-		},
-	],
-	Created: "2023-08-11T12:21:07.940Z",
-	__v: 0,
-};
-
 const ResultModal = ({ betType, show, data, handleShow }: PropTypes) => {
 	const [showDetails, setShowDetails] = useState<{
 		show: boolean;
@@ -129,6 +92,8 @@ const ResultModal = ({ betType, show, data, handleShow }: PropTypes) => {
 	// 			break;
 	// 	}
 	// }
+
+	console.log(data?.BetId?.Type);
 
 	function handleClickOutside(e: any) {
 		if (showCardOptions && profileRef.current && profileRef.current !== e.target) {
@@ -390,13 +355,25 @@ const ResultModal = ({ betType, show, data, handleShow }: PropTypes) => {
 							<div className="h-auto">
 								{/*  */}
 								<div className="panel_content_result  space-y-6  w-full">
-									<div className="header  w-ful">
-										<div className="details">
-											<div className="ball">
-												<BaLLSVG />
-											</div>
+										<div className="header  w-ful">
+											{/*  */}
+										<div className="flex justify-between items-center w-full">
+											<div className="details">
+												<div className="ball">
+													<BaLLSVG />
+												</div>
 
-											<h1 className="name">{data.BetId.BetName}</h1>
+												<h1 className="name">{data?.BetId?.BetName}</h1>
+											</div>
+											{data?.BetId?.Type == "KoloBet" ? (
+												<div className="badge uppercase  p-1 px-2 bg-cyan-50 rounded txt-xs f-b text-cyan-600">
+													KOLO bet
+												</div>
+											) : (
+												<div className="badge uppercase  p-1 px-2 bg-yellow-100 rounded txt-xs f-b text-yellow-600">
+													point bet
+												</div>
+											)}
 										</div>
 
 										<div className="sub_heaer  px-[64px]">
@@ -448,7 +425,7 @@ const ResultModal = ({ betType, show, data, handleShow }: PropTypes) => {
 													<div className="temas_logo  relative flex items-center">
 														<div className="logo_box z-10">
 															<Image
-																src={data.BetId.Criteria?.TeamA?.logo || data.BetId.Criteria?.TeamA?.Logo}
+																src={data?.BetId?.Criteria?.TeamA?.logo || data?.BetId?.Criteria?.TeamA?.Logo}
 																alt={""}
 																className=""
 																width={16}
@@ -458,7 +435,7 @@ const ResultModal = ({ betType, show, data, handleShow }: PropTypes) => {
 
 														<div className="logo_box -ml-2 z-20">
 															<Image
-																src={data.BetId.Criteria?.TeamB?.logo || data.BetId.Criteria?.TeamB?.Logo}
+																src={data?.BetId?.Criteria?.TeamB?.logo || data.BetId.Criteria?.TeamB?.Logo}
 																alt={""}
 																className=""
 																width={16}
