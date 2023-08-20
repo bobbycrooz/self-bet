@@ -27,7 +27,7 @@ const statusConst = {
 function Home() {
 	const { push, query, pathname } = useRouter();
 
-	const { Bet, isLoading, placing, status, handlePlaceBet, setIsLoading, setStatus, MarketList } = useBet();
+	const { Bet, isLoading, placing, status, handlePlaceBet, setIsLoading, setStatus, createdBetDetails } = useBet();
 
 	const topRef = useRef(null);
 
@@ -165,8 +165,9 @@ function Home() {
 				{/* ------process confirmation modal ------- */}
 				<PlaceBetLoader
 					show={placing}
-					handleClose={handlePlaceBet}
+					// handleClose={handlePlaceBet}
 					context={"Deposite"}
+					reason={createdBetDetails}
 					isLoading={isLoading}
 					toggleLoader={setIsLoading}
 					status={status}
@@ -277,6 +278,8 @@ function BetConditionDropdown({ Bet }: { Bet: any }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const { Criteria } = Bet;
 
+	
+
 	function handleOpen() {
 		setIsOpen((p) => !p);
 	}
@@ -330,7 +333,7 @@ function BetConditionDropdown({ Bet }: { Bet: any }) {
 				onClick={handleOpen}
 				className="card-footer-toggle w-full bg-white row-between p-4 border-t rounded-b-lg px-6"
 			>
-				<p className="subtitle">0/4 selected</p>
+				<p className="subtitle">{Bet?.Conditions?.length }/{Criteria?.Conditions?.length} selected</p>
 				<Image
 					src={"/icons/dashboard/down.svg"}
 					alt="wallet"
