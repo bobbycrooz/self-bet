@@ -37,6 +37,9 @@ function Home() {
 	};
 
 
+	console.log(BetList[0]);
+	
+
 	
 	// useEffects -------------
 	useEffect(() => {
@@ -116,9 +119,9 @@ function Home() {
 					</div>
 				</div>
 
-				<InfiniteScroll fetchData={fetchMoreActiveBets}>
+				<InfiniteScroll fetchData={fetchMoreActiveBets} list={BetList}>
 					{BetList?.length > 0 ? (
-					<div className="active_bet_wrapper pb-36 grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
+					<div className="active_bet_wrapper pb-11 grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
 						{BetList?.map((i: any, k: number) => (
 							<div className="" key={k}>
 								<BetCard betType={i.Type} data={i} />
@@ -126,7 +129,7 @@ function Home() {
 						))}
 					</div>
 				) : (
-					<div className="loading w-full ">
+					<div className="loading w-full h-screen">
 						{doneLoading ? (
 							<div className="nothing w-full centered mt-6">
 								<div className="nothing_content col-center">

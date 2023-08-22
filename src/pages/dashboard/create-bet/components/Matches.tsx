@@ -27,7 +27,6 @@ export default function SelectMatch() {
 
 	const { notify } = useToast();
 
-
 	// handlers ------------------
 	const handleMatchSelection = (i: any) => {
 		// get team names and update teams
@@ -97,8 +96,6 @@ export default function SelectMatch() {
 	}
 
 	async function fetchMoreFixturs(page: number) {
-		notify("info", `fetching by page ${page}`);
-	
 
 		// @ts-ignore
 		const { error, serverResponse } = await getAllFixturesAPI(page);
@@ -106,15 +103,12 @@ export default function SelectMatch() {
 		if (error) return console.log(error);
 
 		if (serverResponse.length === 0) {
-			
-
-			return false
+			return false;
 		} else {
 			// @ts-ignore
 			setFixtures([...fixtures, ...serverResponse]);
 
-			return true
-
+			return true;
 		}
 	}
 
@@ -165,7 +159,7 @@ export default function SelectMatch() {
 	// useEffects ------------------
 	useEffect(() => {
 		fetchAlllFixturs(1);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
@@ -287,7 +281,7 @@ export default function SelectMatch() {
 
 				{fixtures.length > 0 ? (
 					<>
-						<InfiniteScroll fetchData={fetchMoreFixturs}>
+						<InfiniteScroll fetchData={fetchMoreFixturs} list={fixtures}>
 							<div className="matched w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 gap-6 md:pt-4 ">
 								{/* --team  display baner---- */}
 								{fixtures.map((i: any, k) => {

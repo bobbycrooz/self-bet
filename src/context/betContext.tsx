@@ -214,7 +214,6 @@ const BetProvider = ({ children }: { children: any }) => {
 
 	async function fetchMoreActiveBets(page: number) {
 		try {
-			notify("info", `fetching by page ${page}`);
 		
 			
 
