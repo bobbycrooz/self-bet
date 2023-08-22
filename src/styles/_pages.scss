@@ -115,12 +115,12 @@
 .dashboard_layout {
 	&-wrapper {
 		// @apply bb;
-		@apply h-screen;
+		@apply max-h-screen;
 	}
 
 	&-body {
 		// @apply bg-green-500;
-		height: calc(100vh - 3.5rem);
+		height: calc(100vh - 4rem);
 
 		.main_page {
 			// height: calc(100vh - 56px);
@@ -128,7 +128,7 @@
 			// @apply br;
 			@include tablet {
 				//  height: calc(100vh - 76px);
-height: auto;
+				height: auto;
 				width: 100%;
 			}
 			@include smallPhone {

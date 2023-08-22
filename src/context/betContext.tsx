@@ -156,6 +156,23 @@ const BetProvider = ({ children }: { children: any }) => {
 	const [noImg, setNoImg] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 	const [placing, isPlacing] = useState(false);
+
+	const [currentPage, setCP] = useState(1);
+
+	const [createdBetDetails, setCBD] = useState({
+		status: "created",
+		reason: "succesfully",
+		betId: "",
+	});
+	const [BetDetailsData, setBetDetailsData] = useState({
+		BetName: "",
+		Amount: "",
+		Discount: "",
+		// NumberOfPeople: 0,
+	});
+
+	console.log(BetDetailsData);
+
 	const [status, setStatus] = useState(statusConst.success);
 	const { notify } = useToast();
 
@@ -165,10 +182,10 @@ const BetProvider = ({ children }: { children: any }) => {
 		setIsLoading(true);
 		placeBet();
 
-		setTimeout(() => {
-			setIsLoading(false);
-			setStatus(statusConst.success);
-		}, 5000);
+		// setTimeout(() => {
+		// 	setIsLoading(false);
+		// 	setStatus(statusConst.success);
+		// }, 5000);
 	}
 
 	async function fetchAlllMarkets() {
@@ -188,15 +205,34 @@ const BetProvider = ({ children }: { children: any }) => {
 		try {
 			const { error, serverResponse } = await fetchBetListAPI(1);
 			if (!error) {
-				console.log(serverResponse[0]);
-
 				setBetList(serverResponse as any);
 			} else {
 				console.log(serverResponse, "fetching all bets");
 			}
-		} catch (error) {
-			console.log(error, "from search endpoint");
-		}
+		} catch (error) {}
+	}
+
+	async function fetchMoreActiveBets(page: number) {
+		try {
+			notify("info", `fetching by page ${page}`);
+		
+			
+
+			// @ts-ignore
+			const { error, serverResponse } = await fetchBetListAPI(page);
+
+			if (error) return console.log(error);
+
+			if (serverResponse.length === 0) {
+				
+				return false;
+			} else {
+				// @ts-ignore
+				setBetList([...BetList, ...serverResponse]);
+
+				return true;
+			}
+		} catch (error) {}
 	}
 
 	async function fetchAllResults() {
@@ -226,14 +262,11 @@ const BetProvider = ({ children }: { children: any }) => {
 			return notify("error", "You need to select a bet type");
 		}
 
-		// console.log(BetImg);
-
-		// return console.log(typeof BetImg);
-
 		const formData = new FormData();
 
 		// @ts-ignore
 		formData.append("BetImg", noImg ? BetImg : BetImg[0]);
+		// formData.append("Type", "KoloBet");
 		formData.append("Type", Bet.Type);
 		formData.append("Teams", Bet.Teams);
 		formData.append("Leagues", Bet.Leagues);
@@ -242,13 +275,6 @@ const BetProvider = ({ children }: { children: any }) => {
 		formData.append("Criteria", JSON.stringify(Bet.Criteria));
 		formData.append("Conditions", JSON.stringify(Bet.Conditions));
 		formData.append("BetName", Bet.BetName);
-
-		// @ts-ignore
-		// for (var pair of formData.entries()) {
-		// 	console.log(pair[0], pair[1]);
-		// }
-
-		// return console.log(formData.values, "this is the form data");
 
 		try {
 			const response = await axios.post("https://13.244.65.147/Bet/Create", formData, {
@@ -281,18 +307,55 @@ const BetProvider = ({ children }: { children: any }) => {
 
 				setStatus(statusConst.success);
 
+				setIsLoading(!true);
+
+				setCBD({
+					...createdBetDetails,
+					// status: "created"
+					betId: response.data._id,
+				});
+
 				fetchAllActiveBets();
 
+				// isPlacing((p) => !p);
+
 				return notify("success", "Bet Placed Successfully");
+			} else {
+				setStatus(statusConst.failed);
+
+				setIsLoading(!true);
+
+				setCBD({
+					...createdBetDetails,
+					status: "falied",
+					// betId: response.data._id,
+					// reason: response?.message
+				});
+
+				console.log(response);
+				// @ts-ignore
 			}
 
-			setStatus(statusConst.failed);
 			return notify("error", "Bet Placed Failed");
 		} catch (error: any) {
-			notify("error", error.message);
 			setStatus(statusConst.failed);
 
-			console.log("the error also came from here ");
+			setIsLoading(!true);
+
+			notify("error", error.response.data);
+
+			// console.log(error.response.data, "this error came from not---");
+
+			isPlacing(false);
+
+			isPlacing(false);
+
+			setCBD({
+				...createdBetDetails,
+				status: "falied",
+				// betId: response.data._id,
+				// reason: response?.message
+			});
 		}
 	}
 
@@ -310,9 +373,7 @@ const BetProvider = ({ children }: { children: any }) => {
 	}
 
 	// --------USEEFFECTS
-	useEffect(() =>
-	{
-		
+	useEffect(() => {
 		if (BetList.length === 0) {
 			fetchAllActiveBets();
 		}
@@ -323,7 +384,9 @@ const BetProvider = ({ children }: { children: any }) => {
 			fetchAllTransaction();
 		}
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		console.log("fetching all active bet!");
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	// --------USEEFFECTS
 
@@ -338,6 +401,7 @@ const BetProvider = ({ children }: { children: any }) => {
 				MarketList,
 				isLoading,
 				placing,
+				isPlacing,
 				status,
 				handlePlaceBet,
 				setIsLoading,
@@ -353,7 +417,14 @@ const BetProvider = ({ children }: { children: any }) => {
 				setNoImg,
 				fetchAllTransaction,
 				TransactiontList,
-				setTransactionList
+				setTransactionList,
+				createdBetDetails,
+				BetDetailsData,
+				setBetDetailsData,
+				fetchAllActiveBets,
+				currentPage,
+				setCP,
+				fetchMoreActiveBets,
 			}}
 		>
 			{children}

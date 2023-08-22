@@ -7,6 +7,7 @@ import Button from "./Button";
 import { BetSlipDetails } from "@/pages/dashboard/create-bet/bet-details";
 import { useBet } from "@/context/betContext";
 import { useUser } from "@/context/userContext";
+import { hasToken } from "@/utils";
 
 const navItemArray = [
 	{
@@ -129,7 +130,7 @@ const Sidebar = () => {
 
 	return (
 		<>
-			<aside className="sidebar   border-r lg:flex hidden flex-col justify-between   bg-white w-[240px] p-3 pt-4">
+			<aside className="sidebar   border-r lg:flex hidden flex-col justify-between bg-white w-[240px] p-3 pt-4">
 				<ul className="nav_container w-full space-y-4">
 					{navItemArray.map((i, k) => (
 						<li
@@ -148,7 +149,7 @@ const Sidebar = () => {
 					))}
 				</ul>
 
-				<div className="w-full">
+			{hasToken() && <div className="w-full">
 						<div role="button" onClick={logOut} className="middle  justify-between border-t py-4">
 						{/* <Image src={"/icons/dashboard/olivia.svg"} alt="logo" width={40} height={40} className="" /> */}
 							<div className="w-8 h-8 bg-gray-100 rounded-full grid-center">
@@ -159,12 +160,12 @@ const Sidebar = () => {
 
 							<div className="name_box ">
 							<h1 className="name txt-md t-g9 f-eb">{User?.Username ? User?.Username : "--_--"}</h1>
-								<p className="sub_name text-sm f-n t-g6">{User?.Email ? User?.Email : "--_--"}</p>
+								{/* <p className="sub_name text-sm f-n t-g6">{User?.Email ? User?.Email : "--_--"}</p> */}
 							</div>
 
 							<Image src={"/icons/dashboard/logout.svg"} alt="logo" width={36} height={36} className="" />
 						</div>
-				</div>
+				</div>}
 				{/*  */}
 			</aside>
 		

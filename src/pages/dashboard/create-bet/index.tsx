@@ -23,16 +23,12 @@ function CreateBetPage() {
 	const [isAdding, setIsAdding] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const progressRef = useRef(null);
-	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
+	const { Bet, dispatchBet, BetDetailsData,
+setBetDetailsData } = useBet();
 	const { BetImg, setBetImg, noImg, setNoImg } = useBet();
 
 	const { notify } = useToast();
-	const [BetDetailsData, setBetDetailsData] = useState({
-		BetName: "",
-		Amount: "",
-		Discount: "",
-		NumberOfPeople: 0,
-	});
+	
 	const [currentSector, setCurrentSector] = useState({
 		Sector: "",
 		Codes: [],

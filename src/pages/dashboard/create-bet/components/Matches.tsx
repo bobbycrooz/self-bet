@@ -2,12 +2,14 @@ import Image from "next/image";
 
 import { CarretRightSvg } from "@/assets";
 import { DropDown } from "@components";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { features } from "process";
 import { useBet } from "@/context/betContext";
 import { getAllFixturesAPI, searchFixturesAPI } from "@/axios/endpoints/bet.endpoint";
 import moment from "moment";
 import { formatMatchDate } from "@/utils";
+import InfiniteScroll from "@/components/Paginator";
+import useToast from "@/hooks/useToast";
 
 const nav = ["All aleague", "Premier League", "la liga", "Seria A", "bundes liga"];
 
@@ -19,9 +21,12 @@ export default function SelectMatch() {
 		percent: false,
 		range: false,
 	});
-	const { Bet, dispatchBet } = useBet();
+	const { Bet, dispatchBet, currentPage, setCP } = useBet();
 	const [fixtures, setFixtures] = useState([]);
 	const [showFilderList, setShowFilderList] = useState(false);
+
+	const { notify } = useToast();
+
 
 	// handlers ------------------
 	const handleMatchSelection = (i: any) => {
@@ -75,13 +80,13 @@ export default function SelectMatch() {
 		});
 	};
 
-	async function fetchAlllFixturs() {
+	async function fetchAlllFixturs(page: number) {
 		if (fixtures.length > 0) return console.log("fixtures already fetched");
 
 		// fetch all fixtures from api
 
 		// @ts-ignore
-		const { error, serverResponse } = await getAllFixturesAPI(1);
+		const { error, serverResponse } = await getAllFixturesAPI(page);
 
 		if (error) return console.log(error);
 
@@ -90,6 +95,33 @@ export default function SelectMatch() {
 		// @ts-ignore
 		setFixtures(serverResponse);
 	}
+
+	async function fetchMoreFixturs(page: number) {
+		notify("info", `fetching by page ${page}`);
+	
+
+		// @ts-ignore
+		const { error, serverResponse } = await getAllFixturesAPI(page);
+
+		if (error) return console.log(error);
+
+		if (serverResponse.length === 0) {
+			
+
+			return false
+		} else {
+			// @ts-ignore
+			setFixtures([...fixtures, ...serverResponse]);
+
+			return true
+
+		}
+	}
+
+	// const fetchMoreFixturs = useCallback(async (page: number) => {
+	// 	// notify("info", `fetching by page ${page}`);
+
+	// }, [pageNumber]);
 
 	function checkIfMatchIsSelected(matchFixId: number) {
 		if (Bet.Criteria.FixtureId === matchFixId) return true;
@@ -130,12 +162,10 @@ export default function SelectMatch() {
 		// @ts-ignore
 	}
 
-
-
 	// useEffects ------------------
-
 	useEffect(() => {
-		fetchAlllFixturs();
+		fetchAlllFixturs(1);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
@@ -164,7 +194,8 @@ export default function SelectMatch() {
 					title={"All matches"}
 					show={searchMode.team}
 					setList={setFixtures}
-					toggleShow={setSearchMode} context={"Fixtures"}					
+					toggleShow={setSearchMode}
+					context={"Fixtures"}
 				/>
 				{/* <CustomSearchCard list={[]} handler={undefined}/> */}
 
@@ -251,66 +282,67 @@ export default function SelectMatch() {
 
 			{/* ------------------ */}
 
-			<div className="w-full  h-[450px] overflow-y-scroll custom-scrollbar pb-[0]  md:pb-[84px]">
+			<div className="w-full  h-[450px] overflow-y-scroll custom-scrollbar pb-[0]  md:pb-[24px]">
 				<div className={`pushDown ${showFilderList && "active"}`} />
 
 				{fixtures.length > 0 ? (
-					<div className="matched w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 gap-6 md:pt-4 ">
-						{/* --team  display baner---- */}
-						{fixtures.map((i: any, k) =>
-						{
+					<>
+						<InfiniteScroll fetchData={fetchMoreFixturs}>
+							<div className="matched w-full h-auto grid lg:grid-cols-3 md:grid-cols-2 gap-6 md:pt-4 ">
+								{/* --team  display baner---- */}
+								{fixtures.map((i: any, k) => {
+									const [time, dateR] = formatMatchDate(i.MatchDate);
 
-							const [time, dateR] = formatMatchDate(i.MatchDate)
-							
-							
-							return (
-							<div
-								key={k}
-								role="button"
-								onClick={() => handleMatchSelection(i)}
-								className={`teams_display_matches ${checkIfMatchIsSelected(i?.FixtureId) && "active"}`}
-							>
-								{/* Team A */}
-								<div className="team_caard team_caard col-center space-y-2">
-									<Image
-										className="team_logo "
-										src={i.TeamA.Logo == "TeamALogoUrl" ? "/icons/teams/chealse_logo.svg" : i.TeamA.Logo}
-										alt="chealse"
-										width={48}
-										height={48}
-									/>
-									<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamA.TeamName}</h1>
-								</div>
+									return (
+										<div
+											key={k}
+											role="button"
+											onClick={() => handleMatchSelection(i)}
+											className={`teams_display_matches ${checkIfMatchIsSelected(i?.FixtureId) && "active"}`}
+										>
+											{/* Team A */}
+											<div className="team_caard team_caard col-center space-y-2">
+												<Image
+													className="team_logo "
+													src={i.TeamA.Logo == "TeamALogoUrl" ? "/icons/teams/chealse_logo.svg" : i.TeamA.Logo}
+													alt="chealse"
+													width={48}
+													height={48}
+												/>
+												<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamA.TeamName}</h1>
+											</div>
 
-								{/* Date and time */}
-								<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
-										<h1 className="">{time}</h1>
-										<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">{dateR} </h1>
-								</div>
+											{/* Date and time */}
+											<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
+												<h1 className="">{time}</h1>
+												<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">{dateR} </h1>
+											</div>
 
-								{/* Team B */}
-								<div className="team_caard col-center  space-y-2">
-									<Image
-										className="team_logo "
-										src={i.TeamB.Logo == "TeamBLogoUrl" ? "/icons/teams/lei_logo.svg" : i.TeamB.Logo}
-										alt="chealse"
-										width={48}
-										height={48}
-									/>
-									<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamB.TeamName}</h1>
-								</div>
+											{/* Team B */}
+											<div className="team_caard col-center  space-y-2">
+												<Image
+													className="team_logo "
+													src={i.TeamB.Logo == "TeamBLogoUrl" ? "/icons/teams/lei_logo.svg" : i.TeamB.Logo}
+													alt="chealse"
+													width={48}
+													height={48}
+												/>
+												<h1 className="team_name txt-xs f-s text-gray-600 text-center">{i.TeamB.TeamName}</h1>
+											</div>
 
-								<Image
-									className="selector  absolute right-0 top-0"
-									src={"/images/create/selector.svg"}
-									alt="chealse"
-									width={32}
-									height={32}
-								/>
+											<Image
+												className="selector  absolute right-0 top-0"
+												src={"/images/create/selector.svg"}
+												alt="chealse"
+												width={32}
+												height={32}
+											/>
+										</div>
+									);
+								})}
 							</div>
-						)
-						})}
-					</div>
+						</InfiniteScroll>
+					</>
 				) : (
 					<FetchLoading />
 				)}
@@ -319,7 +351,7 @@ export default function SelectMatch() {
 	);
 }
 
-function FetchLoading() {
+export function FetchLoading() {
 	const [isEmpty, setIsEmpty] = useState(false);
 
 	useEffect(() => {
@@ -516,3 +548,11 @@ function CalenderSVG() {
 		</svg>
 	);
 }
+
+// function Paginator() {
+// 	return (
+// 		<div ref={lastItemRef} className="w-full br h-[70px] mt-8 grid place-content-center">
+// 			<FetchLoading />
+// 		</div>
+// 	);
+// }

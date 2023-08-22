@@ -73,7 +73,7 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 					placeholder="Search team name..."
 				/>
 			</form>
-			{isSearching && <div onClick={closeSearch} className="h-8 w-[70%] "></div>}
+			{isSearching && <div onClick={closeSearch} className="h-8 w-[70%] cursor-pointer"></div>}
 
 			{/* filter */}
 			<div role="button" onClick={() => setShowFilter(!showFilter)} className="home_search-filter ">

@@ -1,6 +1,6 @@
 import { InputField, Toggle } from "@components";
-import { SvgElement, UploadSvg } from "@/assets";
-import { ChangeEvent, useState } from "react";
+import { SvgElement } from "@/assets";
+import { ChangeEvent } from "react";
 import DropzoneComponent from "@/components/DropZone";
 import { useBet } from "@/context/betContext";
 // import { NextPageWithLayout } from "../_app";
@@ -31,14 +31,21 @@ export default function BetDetails({
 			});
 		} else if (name === "betAmount") {
 			// setBetAmount(e.target.value);
+			// if (typeof Number(e.target.value) !== 'number')
+			// {
+			// 	return
+			// }
+
+			
+
 			setBetDetailsData({
 				...BetDetailsData,
-				Amount: e.target.value,
+				Amount: (e.target.value),
 			});
 		} else if (name === "discount") {
 			setBetDetailsData({
 				...BetDetailsData,
-				Discount: e.target.value,
+				Discount: Number(e.target.value),
 			});
 			// setDiscount(e.target.value);
 		}
@@ -157,8 +164,8 @@ export default function BetDetails({
 function Discount({
 	discount,
 	handleBetNameChange,
-	numberOfPeople,
-	setNumberOfPeople,
+	// numberOfPeople,
+	// setNumberOfPeople,
 }: {
 	discount: string;
 	handleBetNameChange: any;
@@ -169,9 +176,9 @@ function Discount({
 		<>
 			<div className="space-y-1 mt-4">
 				<InputField
-					label={"How many percent "}
+					label={"How many percent (%)"}
 					type={"text"}
-					place={"e.g 10%"}
+					place={"e.g 10"}
 					change={handleBetNameChange}
 					value={discount}
 					filedName="discount"
@@ -180,8 +187,14 @@ function Discount({
 
 			<div className="h-6"></div>
 
-			{/*  */}
-			<div className="space-y-2 mt-2">
+		
+			
+		</>
+	);
+}
+
+
+{/* <div className="space-y-2 mt-2">
 				<h1 className="text-gray-600 txt-sm f-b ">Number of people</h1>
 
 				<div className="number_row flex gap-2  h-[48px]">
@@ -189,10 +202,10 @@ function Discount({
 						<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M4 8H12" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 						</svg>
-					</div>
+					</div> */}
 
 					{/*  */}
-					<div className="input">
+					{/* <div className="input">
 						<input
 							style={{ height: "48px" }}
 							type="text"
@@ -201,17 +214,14 @@ function Discount({
 							id=""
 							className="border rounded-lg border-gray-200 p-4 text-gray-300 text-center w-24"
 						/>
-					</div>
+					</div> */}
 
 					{/* increament button */}
-					<div role="button" onClick={() => setNumberOfPeople("increment")} className="add rounded-lg bg-gray-100 p-4 ">
+					{/* <div role="button" onClick={() => setNumberOfPeople("increment")} className="add rounded-lg bg-gray-100 p-4 ">
 						<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M4 8H12" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 							<path d="M8 12V4" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 						</svg>
 					</div>
 				</div>
-			</div>
-		</>
-	);
-}
+			</div> */}

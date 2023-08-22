@@ -220,7 +220,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 							</div>
 						</div>
 
-						<h1 className="bet_name txt-lg f-eb text-gray-600">{data?.Creator.Username}</h1>
+						<h1 className="bet_name txt-lg f-eb text-gray-600">{data?.BetName}</h1>
 					</div>
 
 					<div className="author row-between">
@@ -229,10 +229,12 @@ const BetCard = ({ betType, data }: PropTypes) => {
 						</h1>
 
 						<div className="amounts middle space-x-2">
-							<div className="">
-								<h1 className="off txt-xs f-s text-gray-500">{data?.Discount.discount}% off</h1>
-								<h1 className="off txt-xs  text-gray-300 ">/₦{data?.Amount}</h1>
-							</div>
+							{data?.Discount?.discount?.length && (
+								<div className="">
+									<h1 className="off txt-xs f-s text-gray-500">{data?.Discount.discount} off</h1>
+									<h1 className="off txt-xs  text-gray-300 ">/₦{data?.Amount}</h1>
+								</div>
+							)}
 
 							<h1 className="stake text-gray-500 txt-xl f-b">₦{data?.Amount}</h1>
 						</div>
@@ -247,7 +249,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 
 						{hasJoined ? (
 							<h1 className="name txt-md f-m text-gray-400">
-								Payout: <span className="f-s text-gray-700">N500</span>
+								Payout: <span className="f-s text-gray-700">{data?.Players.length * data?.Amount  }</span>
 							</h1>
 						) : (
 							<div
@@ -570,7 +572,13 @@ const BetCard = ({ betType, data }: PropTypes) => {
 														<h1 className="amount text-gray-400 txt-xs f-b">Bet amount</h1>
 														<h1 className="txt-md f-b text-gray-700 mt-2 mb-4">N {data?.Amount}</h1>
 														<Link href={`/dashboard/join?id=${data._id}`}>
-															<Button disabled={hasJoined} text={hasJoined ? "Joined" : "Join Bet"} type={"button"} primary full />
+															<Button
+																disabled={hasJoined}
+																text={hasJoined ? "Joined" : "Join Bet"}
+																type={"button"}
+																primary
+																full
+															/>
 															{/* <Button text={"Join bet"} type={"button"} primary /> */}
 														</Link>
 													</div>

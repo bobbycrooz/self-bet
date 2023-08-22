@@ -29,7 +29,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 	const getLayout = Component.getLayout || ((page) => page);
 	const { push, query, pathname } = useRouter();
 	const {notify} = useToast()
-	const protectedRoutes = ["/dashboard/create-bet", "/dashboard/create-bet/bet-details", "/dashboard/my-bets", "/dashboard/my-wallet", "/dashboard/profile",];
+	const protectedRoutes = ["/dashboard/settings", "/dashboard/create-bet", "/dashboard/create-bet/bet-details", "/dashboard/my-bets", "/dashboard/my-wallet", "/dashboard/profile",];
 
 	// Guarding routes
 	useEffect(() => {

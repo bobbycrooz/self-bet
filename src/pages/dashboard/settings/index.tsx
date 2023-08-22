@@ -66,7 +66,7 @@ function Home() {
 				<div className="md:pl-12 mt-[39px] w-full md:w-[462px] ">
 					<div className="profile_setting p-6  rounded-xl space-y-8 ">
 						{/* ----avatar----- */}
-						<div className="middle space-x-3">
+					{false && <div className="middle space-x-3">
 							<Image
 								src={
 									"/icons/dashboard/olivia.svg"
@@ -80,7 +80,7 @@ function Home() {
 								Update new Avatar
 							</div>
 							
-						</div>
+						</div>}
 
 						{/* ----form----- */}
 						<form

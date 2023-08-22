@@ -378,7 +378,7 @@ const ResultModal = ({ betType, show, data, handleShow }: PropTypes) => {
 
 										<div className="sub_heaer  px-[64px]">
 											<h1 className="sub_name">
-												Creator: <span>Peter Zokoro</span>
+												{/* Creator: <span>Peter Zokoro</span> */}
 											</h1>
 										</div>
 									</div>

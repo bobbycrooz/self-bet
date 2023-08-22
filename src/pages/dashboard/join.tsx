@@ -44,21 +44,36 @@ function Home() {
 	const { notify } = useToast();
 
 	const [currentBet, setCurrentBet] = useState<any>();
+	const [isFetching, setIsFetching] = useState<boolean>(false);
 
-	const { Bet, isLoading, placing, status, setIsLoading, setStatus, MarketList, BetList } = useBet();
+	const { isLoading, placing, isPlacing, status, setIsLoading, setStatus, BetList } = useBet();
 
 	const topRef = useRef(null);
 
-	async function handlePlaceBet() {
+	async function handlePlaceBet()
+	{
+		setIsLoading(true)
 		const { error, serverResponse } = await joinBetAPI(joinBetDetails);
 
-		// @ts-ignore
-		if (error) return notify("error", serverResponse);
+		if (error)
 
+		{
+
+			setIsLoading(!true)
+
+			
+			// @ts-ignore
+			return notify("error", serverResponse )
+		};
+		
 		setjoinBet({
 			...joinBetDetails,
 			Conditions: [],
 		});
+		
+		push('/dashboard/my-bets')
+		
+		setIsLoading(!true)
 
 		notify("success", "joined bet successfully");
 	}
@@ -76,6 +91,13 @@ function Home() {
 
 	useEffect(() => {
 		if (query.id) {
+			if (BetList.length == 0) {
+				// fetchAllActiveBets();
+				return setIsFetching(true)
+			} else
+			{
+				setIsFetching(false)
+			}
 			// setCurrentBetId(query.id as string);
 			// get current bet detailsBeList
 			const currentBet = BetList.find((i: any) => i._id === query.id);
@@ -89,13 +111,13 @@ function Home() {
 					FixtureId: currentBet.Criteria.FixtureId,
 				});
 			}
-		} else {
-			notify("error", "Can't find bet id");
 		}
-	}, [query, pathname]);
 
-	console.log(currentBet);
-	
+		//  else {
+		// 	notify("error", "Bet link not valid");
+		// }
+	}, [query, pathname, BetList]);
+
 
 	return (
 		<>
@@ -113,28 +135,39 @@ function Home() {
 					{/* --- */}
 					<main className=" w-[100%] space-y-6 pb-20 ">
 						{/* bet type banner */}
-						<div className="bet_banner w-full h-[124px] md:h-[224px] relative rounded">
-							{currentBet?.Type == "KoloBet" ? (
-								<Image
-									src={currentBet?.BetImg ? currentBet.BetImg : "/images/home/kolo_banner.png"}
-									alt={""}
-									fill
-									className="rounded bg-contain"
-									// width={300}
-									// height={128}
-								/>
+						<div style={{
+								backgroundImage: `url(${"/images/home/kolo_banner.png"})`,
+								// backgroundImage: `url(${currentBet.BetImg})`,
+							backgroundSize: "cover",
+							backgroundPosition: "center",
+							backgroundRepeat: "no-repeat",
+						}} className="bet_banner w-full h-[124px] md:h-[224px] relative rounded-2xl">
+							{/* {currentBet?.Type == "KoloBet" ? (
+								// <Image
+								// 	src={currentBet?.BetImg ? currentBet.BetImg : "/images/home/kolo_banner.png"}
+								// 	alt={""}
+								// 	fill
+								// 	className="rounded bg-contain"
+								// 	style={{
+								// 		backgroundPosition: "center",
+								// 		backgroundSize: "contain"
+								// 	}}
+								// 	// width={300}
+								// 	// height={128}
+								// />
+
+							<div className="img"></div>
 							) : (
 								<Image
-										// src={"/images/home/point_banner.png"}
+									// src={"/images/home/point_banner.png"}
 									src={currentBet?.BetImg ? currentBet.BetImg : "/images/home/point_banner.png"}
-										
 									alt={""}
 									fill
 									className="rounded"
 									// width={300}
 									// height={128}
 								/>
-							)}
+							)} */}
 						</div>
 
 						{/* ------bet details container------ */}
@@ -215,9 +248,7 @@ function Home() {
 										isLoading={isLoading}
 										full
 										primary
-										disabled={
-											(!hasToken() || joinBetDetails.betType.length < 1) || joinBetDetails.Conditions.length < 1
-										}
+										disabled={!hasToken() || joinBetDetails.betType.length < 1 || joinBetDetails.Conditions.length < 1}
 										click={handlePlaceBet}
 									/>
 								</div>
@@ -237,6 +268,10 @@ function Home() {
 					setStatus={setStatus}
 				/>
 			</main>
+
+			{
+				isFetching && <FetchLoader/>
+			}
 		</>
 	);
 }
@@ -326,6 +361,9 @@ function BetConditionDropdown({ Bet, joinBetDetails, setjoinBet }: any) {
 	const [isOpen, setIsOpen] = useState(false);
 	const { Criteria } = Bet;
 
+	console.log(Bet);
+
+
 	function handleOpen() {
 		setIsOpen((p) => !p);
 	}
@@ -379,7 +417,8 @@ function BetConditionDropdown({ Bet, joinBetDetails, setjoinBet }: any) {
 				onClick={handleOpen}
 				className="card-footer-toggle w-full bg-white row-between p-4 border-t rounded-b-lg px-6"
 			>
-				<p className="subtitle">0/4 selected</p>
+								<p className="subtitle">{joinBetDetails?.Conditions?.length }/{Criteria?.Conditions?.length} selected</p>
+
 				<Image
 					src={"/icons/dashboard/down.svg"}
 					alt="wallet"
@@ -479,6 +518,32 @@ function BetSelectorDetails({ sectors, joinBetDetails, setjoinBet }: any) {
 					</ol>
 				</div>
 			)}
+		</div>
+	);
+}
+
+function FetchLoader()
+{
+	const cardRef = useRef(null);
+	
+	return (
+		<div className="modal_overlay p-4 fixed top-0 left-0 w-full h-full bg-[#00000083] grid-center z-[111111]">
+			<div
+				ref={cardRef}
+				className="modal_card relative p-6 md:p-12 md:px-8 bg-white rounded-lg shadow-soft md:w-[400px] min-h-[244px]"
+			>
+				<div className="modal_card-content w-full h-auto fadeIn">
+					<div className="col-center">
+						<Image src={"/icons/loader.svg"} alt="logo" width={48} height={48} className="animate-spin" />
+
+						<div className="w-full space-y-2 mt-8 text-center">
+							<h1 className="title txt-lg f-b capitalize text-gray-900">Fetching bet detailst...</h1>
+
+							<p className="subtitle txt-sm f-n text-[##6B7280]">This will only take a few seconds</p>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }

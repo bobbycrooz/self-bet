@@ -5,15 +5,17 @@ import Button from "./Button";
 import useScreen from "@/hooks/useScreen";
 import { useRouter } from "next/router";
 import { FiCopy } from "react-icons/fi";
+import { useBet } from "@/context/betContext";
 
 interface ModalProps {
 	show?: boolean;
-	handleClose: any;
+	handleClose?: any;
 	context: "withdrawal" | "Deposite";
 	isLoading: boolean;
 	toggleLoader: any;
 	status: string;
 	setStatus: any;
+	reason?: any
 }
 
 const statusConst = {
@@ -21,8 +23,22 @@ const statusConst = {
 	failed: "FAILED",
 };
 
+const copyToClipboard = () => {
+		// Select the input element
+		const inputElement = document.getElementById("betLink");
+
+		// Select the input text
+		// @ts-ignore
+		inputElement?.select();
+		// @ts-ignore
+		inputElement?.setSelectionRange(0, 99999); // For mobile devices
+
+		// Copy the text to the clipboard
+		document.execCommand("copy");
+	};
+
 // @ts-ignore
-const PlaceBetLoader = ({ show, handleClose, context, isLoading, toggleLoader, status, setStatus }: ModalProps) => {
+const PlaceBetLoader = ({ show, handleClose, context, isLoading, toggleLoader, status, setStatus, reason }: ModalProps) => {
 	const cardRef = useRef(null);
 	// const [status, setStatus] = useState(statusConst.failed);
 
@@ -45,7 +61,7 @@ const PlaceBetLoader = ({ show, handleClose, context, isLoading, toggleLoader, s
 					{isLoading ? (
 						<Loading context={context} />
 					) : (
-						<Prompt status={status} context={context} handleClose={handleClose} />
+						<Prompt status={status} reason={reason} handleClose={handleClose} />
 					)}
 				</div>
 			</div>
@@ -67,20 +83,23 @@ function Loading(props: any) {
 	);
 }
 
-function Prompt({ status, handleClose, context }: { context: string; status: string; handleClose: any }) {
+function Prompt({ status, handleClose, reason }: { reason?: any; status: string; handleClose: any }) {
 	const { isMobile } = useScreen();
 	const { push } = useRouter();
 
-	console.log(status);
+		const {isPlacing} = useBet()
+
 	
 
 	useEffect(() => {
 		if (status === statusConst.success) {
-			setTimeout(() => {
-				// push("/dashboard/my-bets");
+			setTimeout(() =>
+			{
+				isPlacing(false)
+				push("/dashboard/my-bets");
 			}, 5000);
 		}
-	}, []);
+	},[push, status]);
 
 	return (
 		<div className="col-center">
@@ -117,12 +136,16 @@ function Prompt({ status, handleClose, context }: { context: string; status: str
 							<input
 								type="text"
 								name=""
-								id=""
+								id="betLink"
 								className="bg-transparent w-full  h-full pl-2 outline-none to-gray-400"
-								placeholder="https://selfbet.com/..."
+								value={`https://selfbet.vercel.app/dashboard/join?id=${reason?.betId}`}
+
 							/>
 
-							<button className="copy tg-5 txt-sm p-3 py-2">
+							<button
+								
+								onClick={copyToClipboard}
+								className="copy tg-5 txt-sm p-3 py-2">
 								<FiCopy className="text-gray-500" />
 							</button>
 						</div>

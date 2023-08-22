@@ -9,6 +9,8 @@ import DashboardLayout from "@/layouts";
 import Link from "next/link";
 
 import { useBet } from "@/context/betContext";
+import InfiniteScroll from "@/components/Paginator";
+import useToast from "@/hooks/useToast";
 // import {betCardType}
 
 function Home() {
@@ -16,14 +18,14 @@ function Home() {
 	const [doneLoading, setDoneLoading] = useState(true);
 	const { query, pathname } = useRouter();
 	// const { User } = useUser();
-	const { BetList } = useBet();
+	const { BetList, fetchMoreActiveBets } = useBet();
 	const topRef = useRef(null);
+	const { notify } = useToast();
 
 	// console.log();
 	
 
 	// handlers--------------
-
 	const handleFetch = () => {
 		if (BetList?.length == 0) {
 			setDoneLoading(false);
@@ -34,6 +36,8 @@ function Home() {
 		}
 	};
 
+
+	
 	// useEffects -------------
 	useEffect(() => {
 
@@ -112,7 +116,8 @@ function Home() {
 					</div>
 				</div>
 
-				{BetList?.length > 0 ? (
+				<InfiniteScroll fetchData={fetchMoreActiveBets}>
+					{BetList?.length > 0 ? (
 					<div className="active_bet_wrapper pb-36 grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
 						{BetList?.map((i: any, k: number) => (
 							<div className="" key={k}>
@@ -139,6 +144,9 @@ function Home() {
 					</div>
 				)}
 
+					</InfiniteScroll>
+
+				
 				<div className="bottom_div w-full h-12 md:h-0"></div>
 			</main>
 		</>

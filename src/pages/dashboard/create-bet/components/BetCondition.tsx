@@ -43,7 +43,7 @@ export default function BetCondition({
 				</div>
 
 				{/* ----search----- */}
-				<div
+				{/* <div
 					role="button"
 					// onClick={searchToggle}
 					className="search_container relative mt-3 md:mt-0 bg-gray-50 rounded-lg md:w-[424px] h-12"
@@ -63,7 +63,7 @@ export default function BetCondition({
 						className="bg-transparent w-full  h-full pl-9 outline-none"
 						placeholder="Search bet conditions"
 					/>
-				</div>
+				</div> */}
 			</div>
 
 			{/* ----------- */}

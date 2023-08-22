@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect, useRef, ChangeEventHandler } from "react";
+import React, { useState, useEffect, useRef, ChangeEventHandler, ChangeEvent } from "react";
 import Button from "./Button";
 import DropDown from "./DropDown";
 import InputField from "./InputField";
@@ -12,6 +12,7 @@ import CheckIcon, { AddIcon, TimesIcon } from "@/assets";
 import useScreen from "@/hooks/useScreen";
 import { useBet } from "@/context/betContext";
 import useToast from "@/hooks/useToast";
+import { SearchComponent } from "./SearchComp";
 
 interface PropTypes {
 	toggle: any;
@@ -38,6 +39,7 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 	const [isLoading, setIsLoading] = useState(true);
 	const [showSectors, setShowSectors] = useState(false);
 	const [codes, setCodes] = useState([]);
+	const [codeToD, setCodeToD] = useState(codes)
 	// const [currentSector, setCurrentSector] = useState({
 	// 	Sector: "",
 	// 	Codes: [],
@@ -50,6 +52,32 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 	const { notify } = useToast();
 
 	const [sectorLists, setSectors] = useState([]);
+	const [sectorToDisplay, setSectorTD] = useState(sectorLists);
+
+	
+
+	function searchSectorHandler(e: ChangeEvent<HTMLInputElement>)
+	{
+		const resultList = sectorLists.filter((i: string) => i.toLowerCase().includes(e.target.value))
+		
+		if (resultList.length)
+		{
+			setSectorTD(resultList)
+		}
+		
+	}
+
+
+	function searchConditionHandler(e: ChangeEvent<HTMLInputElement>)
+	{
+		const resultList = codes.filter((i: {value: string, desc: string}) => i.value.toLowerCase().includes(e.target.value) || i.desc.toLowerCase().includes(e.target.value))
+		
+		if (resultList.length)
+		{
+			setCodeToD(resultList)
+		}
+		
+	}
 
 	function processHandler() {
 		toggleShow((p) => !p);
@@ -68,6 +96,7 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 		const codes = MarketList.find((i: { Sector: string }) => i.Sector === sector);
 
 		setCodes(codes.Codes);
+		setCodeToD(codes.Codes)
 	}
 
 	function handlePickSector(sector: string) {
@@ -116,6 +145,7 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 		// console.log(sectors);
 
 		setSectors(sectors as any);
+		setSectorTD(sectors as any)
 	}
 
 	function handleSetCondition(condition: ConditionTypes) {
@@ -250,6 +280,7 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 			Codes: [],
 		});
 		setConditions([]);
+		setCodeToD([])
 
 		toggle();
 	}
@@ -565,34 +596,12 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 													className="dropdown_body space-y-1 column mt-1 transform w-full shadow-soft left-0 top-12 border-gray-100  grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
 												>
 													{/* search component */}
-													<div className="search border-b py-3 w-full p-4">
-														<div
-															role="button"
-															//   onClick={searchToggle}
-															className="search_container relative bg-gray-50 rounded-lg w-full h-10"
-														>
-															<Image
-																src={"/icons/dashboard/search.svg"}
-																alt="logo"
-																width={20}
-																height={20}
-																className=" absolute top-1/2 -translate-y-1/2 left-2 txt-sm f-m text-gray-400"
-															/>
-
-															<input
-																type="text"
-																name=""
-																id=""
-																className="bg-transparent w-full  h-full pl-9 outline-none"
-																placeholder="Search teams..."
-															/>
-														</div>
-													</div>
+													<SearchComponent onChangeHandler={searchSectorHandler}  place="Search sectors..."/>
 
 													<ol className="team_options w-full p-4 h-[230px] overflow-y-scroll">
 														<p className="txt-xs f-b text-gray-900 ">Pick a sector</p>
 														<div className="h-fullw-full">
-															{sectorLists.map((i, k) => (
+															{sectorToDisplay?.map((i, k) => (
 																<li
 																	key={k}
 																	role="button"
@@ -662,36 +671,15 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 													className="dropdown_body space-y-1 mt-1 column transform w-full shadow-soft left-0 top-12 border-gray-100  grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
 												>
 													{/* search component */}
-													<div className="search border-b py-3 w-full p-4">
-														<div
-															role="button"
-															//   onClick={searchToggle}
-															className="search_container relative bg-gray-50 rounded-lg w-full h-10"
-														>
-															<Image
-																src={"/icons/dashboard/search.svg"}
-																alt="logo"
-																width={20}
-																height={20}
-																className=" absolute top-1/2 -translate-y-1/2 left-2 txt-sm f-m text-gray-400"
-															/>
+													<SearchComponent onChangeHandler={searchConditionHandler}  place="Search conditions..."/>
 
-															<input
-																type="text"
-																name=""
-																id=""
-																className="bg-transparent w-full  h-full pl-9 outline-none"
-																placeholder="Search teams..."
-															/>
-														</div>
-													</div>
 
 													{/* ---Condition list----- */}
 													<ol className="team_options w-full px-4 p-2 space-y-2">
 														<p className="txt-xs f-b text-gray-900">Select one or more conditions</p>
 
-														{codes &&
-															codes.map((i: any, k) => (
+														{codeToD &&
+															codeToD.map((i: any, k) => (
 																<li
 																	key={k}
 																	role="button"

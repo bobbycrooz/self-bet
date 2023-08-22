@@ -15,6 +15,7 @@ import { HiOutlineUserCircle } from "react-icons/hi";
 import HomeSearch from "../HomeSearch";
 import { useRouter } from "next/router";
 import { hasToken } from "@/utils";
+import { useBet } from "@/context/betContext";
 
 interface InputProps {
 	icon?: string;
@@ -40,6 +41,8 @@ const Navbar = () => {
 	const { User, logOut } = useUser();
 	const { data: session } = useSession();
 	const { push } = useRouter();
+	const { BetList, fetchAllActiveBets } = useBet();
+
 
 	function handleShowProfile() {
 		setShowProfile((p) => !p);
@@ -60,7 +63,10 @@ const Navbar = () => {
 
 	function closeSearch() {
 		setIsSearching((p) => !p);
-		if (isSearching) {
+		if (isSearching)
+		{
+			//trigger  fetch --
+			fetchAllActiveBets()
 			return push(`/dashboard`);
 		}
 		push(`/dashboard?search=${true}`);
@@ -99,26 +105,8 @@ const Navbar = () => {
 			</Link>
 
 			{!hasToken() && (
-				<div
-					role="button"
-					onClick={searchToggle}
-					className="search_container relative bg-gray-50 rounded-lg w-[224px] h-10 hidden md:flex"
-				>
-					<Image
-						src={"/icons/dashboard/search.svg"}
-						alt="logo"
-						width={20}
-						height={20}
-						className=" absolute top-1/2 -translate-y-1/2 left-2 txt-sm f-m text-gray-400"
-					/>
-
-					<input
-						type="text"
-						name=""
-						id=""
-						className="bg-transparent w-full  h-full pl-9 outline-none"
-						placeholder="Search SelfBets..."
-					/>
+				<div className=" relative w-[700px]">
+					<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
 				</div>
 			)}
 
