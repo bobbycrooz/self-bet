@@ -106,6 +106,12 @@ function Home() {
 					betType: currentBet.Type,
 					FixtureId: currentBet.Criteria.FixtureId,
 				});
+
+				// console.log(window?.location.href);
+				
+
+				// @ts-ignore
+				localStorage.setItem("CACHED_URL", JSON.stringify(window?.location.href));
 			}
 		}
 

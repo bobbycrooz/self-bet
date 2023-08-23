@@ -70,7 +70,15 @@ export default function Home() {
 			} else if (res) {
 				setIsLoading(false);
 
-				push("/dashboard");
+				const cachedUrl = localStorage.getItem("CACHED_URL");
+
+				if (cachedUrl) {
+					push(JSON.parse(cachedUrl));
+					
+					return localStorage.removeItem("CACHED_URL");
+				} else {
+					push("/dashboard");
+				}
 			}
 
 			setIsLoading(!true);
