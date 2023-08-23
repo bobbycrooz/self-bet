@@ -54,7 +54,6 @@ const InfiniteScroll = ({ fetchData, children, list }: any) => {
 		}
 	}
 
-	console.log(list);
 
 	return (
 		<>

@@ -48,14 +48,16 @@ const UserProvider = ({ children }: { children: any }) => {
 	const { push } = useRouter();
 
 	// handlers------------------
-	async function findAndInitUser() {
+	async function findAndInitUser(userId: string) {
+		
+		// console.log(userId, "this is the user id");
 		
 
 		if (User.Email.length == 0) {
 			// fetch user
-			const { error, serverResponse } = await getUserProfile();
+			const { error, serverResponse } = await getUserProfile(userId);
 
-			console.log(serverResponse, "initiallizing the user");
+			// console.log(serverResponse, "initiallizing the user");
 
 			if (!error) {
 				return dispatch({ type: "STORE_USER", payload: serverResponse });
@@ -97,6 +99,8 @@ const UserProvider = ({ children }: { children: any }) => {
 
 				if (!error) {
 					const saveToCookie = saveToken(serverResponse.token);
+					
+					localStorage.setItem("SELFBET_USER", JSON.stringify(serverResponse._id));
 
 					dispatch({ type: "STORE_USER", payload: serverResponse });
 
@@ -132,8 +136,10 @@ const UserProvider = ({ children }: { children: any }) => {
 
 	// --------USEEFFECTS
 
-	useEffect(() => {
-		findAndInitUser();
+	useEffect(() =>
+	{
+		const rootUser = localStorage.getItem("SELFBET_USER");
+		findAndInitUser(JSON.parse(rootUser as string));
 	});
 
 	// --------USEEFFECTS

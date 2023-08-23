@@ -53,10 +53,13 @@ export function changePasswordAPI(data: any): ResponsTypes {
 	});
 }
 
-export function getUserProfile(): ResponsTypes {
+export function getUserProfile(UserId: string): ResponsTypes {
 	return service({
 		url: `/Auth/GetUser`,
 		method: "post",
+		data: {
+			UserId 
+		},
 	});
 }
 

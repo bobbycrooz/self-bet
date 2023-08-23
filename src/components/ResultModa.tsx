@@ -9,12 +9,16 @@ import { BiShareAlt } from "react-icons/bi";
 import { VscSaveAll } from "react-icons/vsc";
 import MatchCard from "./MatchCard";
 import { Label } from "./ResultCard";
+import { getUserProfile } from "@/axios/endpoints/auth.endpoint";
 
 interface PropTypes {
 	betType?: "KoloBet" | "PointBet" | undefined;
 	data: any;
 	show: boolean;
 	handleShow: any;
+	userId?: string | undefined;
+	payout?: number | undefined;
+	state?: "Won" | "Lost" | "Tie" | undefined;
 }
 
 const tabMode = {
@@ -47,7 +51,7 @@ const tabs = [
 	},
 ];
 
-const ResultModal = ({ betType, show, data, handleShow }: PropTypes) => {
+const ResultModal = ({ betType, show, data, handleShow, userId, payout, state }: PropTypes) => {
 	const [showDetails, setShowDetails] = useState<{
 		show: boolean;
 		mode: string | undefined;
@@ -56,6 +60,8 @@ const ResultModal = ({ betType, show, data, handleShow }: PropTypes) => {
 		mode: betType,
 	});
 	const [betTabMode, setBetTabMode] = useState(tabMode.MATCHES);
+
+	const [currentPlayer, setCurrentPlayer] = useState<any>();
 
 	const { isTablet, isMobile } = useScreen();
 
@@ -80,26 +86,27 @@ const ResultModal = ({ betType, show, data, handleShow }: PropTypes) => {
 		}
 	}
 
-	// function tabModeHandler() {
-	// 	switch (betTabMode) {
-	// 		case tabMode.MATCHES:
-	// 			return <Matches data={data} />;
-	// 		case tabMode.BET:
-	// 			return <Bets data={data} />;
-	// 		case tabMode.CREATOR:
-	// 			return <Creator data={data} />;
-	// 		default:
-	// 			break;
+	// function handleClickOutside(e: any) {
+	// 	if (showCardOptions && profileRef.current && profileRef.current !== e.target) {
+	// 		setShowCardOptions(false);
 	// 	}
 	// }
 
-	console.log(data?.BetId?.Type);
+	async function getPlayerDetails() {
+		const { error, serverResponse } = await getUserProfile(userId as string);
 
-	function handleClickOutside(e: any) {
-		if (showCardOptions && profileRef.current && profileRef.current !== e.target) {
-			setShowCardOptions(false);
+		if (error) {
+			console.log("error getting player details");
 		}
+
+		setCurrentPlayer(serverResponse);
 	}
+
+	useEffect(() => {
+		getPlayerDetails();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [show]);
 
 	return show ? (
 		<div className="__">
@@ -355,8 +362,8 @@ const ResultModal = ({ betType, show, data, handleShow }: PropTypes) => {
 							<div className="h-auto">
 								{/*  */}
 								<div className="panel_content_result  space-y-6  w-full">
-										<div className="header  w-ful">
-											{/*  */}
+									<div className="header  w-ful">
+										{/*  */}
 										<div className="flex justify-between items-center w-full">
 											<div className="details">
 												<div className="ball">
@@ -378,7 +385,7 @@ const ResultModal = ({ betType, show, data, handleShow }: PropTypes) => {
 
 										<div className="sub_heaer  px-[64px]">
 											<h1 className="sub_name">
-												{/* Creator: <span>Peter Zokoro</span> */}
+												Creator: <span>{currentPlayer?.Username}</span>
 											</h1>
 										</div>
 									</div>
@@ -388,19 +395,19 @@ const ResultModal = ({ betType, show, data, handleShow }: PropTypes) => {
 										<div className="ele_card">
 											<div className="amount_">
 												<p className="am_">Stake</p>
-												<h1 className="am">N {"0"}</h1>
+												<h1 className="am">N {data?.BetId.Amount}</h1>
 											</div>
 
 											<div className="amount_">
 												<p className="am_">Payout</p>
-												<h1 className="am">N {"0"}</h1>
+												<h1 className="am">N {payout}</h1>
 											</div>
 										</div>
 									</div>
 
 									{/*  --------action tab row*/}
 									<div className="w-full px-[48px] justify-between flex items-end">
-										<Label status={data.Players[0]?.state} />
+										<Label status={state} />
 
 										<p className="players text-sm font-normal text-gray-400">
 											Players: <span className="font-bold text-gray-500">{data.Players.length}</span>
@@ -481,105 +488,4 @@ function BaLLSVG() {
 		</svg>
 	);
 }
-// function Matches({ data }: any) {
-// 	return (
-// 		<MatchCard
-// 			teamData={{
-// 				TeamA: {
-// 					Logo: data.Criteria.TeamA.Logo,
-// 					TeamName: data.Criteria.TeamA.TeamName,
-// 				},
-// 				TeamB: {
-// 					Logo: data.Criteria.TeamB.Logo,
-// 					TeamName: data.Criteria.TeamB.TeamName,
-// 				},
-// 			}}
-// 		/>
-// 	);
-// }
-
-// function Bets({ data }: any) {
-// 	return (
-// 		<>
-// 			{data?.Criteria.Conditions.map((i: any, k: React.Key | null | undefined) => (
-// 				<div key={k} className="teams_display border border-gray-200 rounded-lg px-4 p-5 ">
-// 					<div className="  space-x-4 items-start flex">
-// 						<Image className="team_logo " src={"/icons/green_ball.svg"} alt="chealse" width={48} height={48} />
-// 						<div className="texts">
-// 							<h1 className="team_name txt-sm f-b text-gray-700">{i.Sector}</h1>
-// 							<p className="team_name txt-sm  text-gray-600">Predict who wins or draws</p>
-// 						</div>
-// 					</div>
-// 				</div>
-// 			))}
-// 		</>
-// 	);
-// }
-
-// function Creator({ data }: any)
-// {
-
-// 	const arrr = typeof data?.CreatorSelection?.Conditions === 'string'
-
-// 	// console.log(arrr);
-
-// 	console.log(data);
-
-// 	return (
-// 		<>
-// 			{/* --team  display baner---- */}
-// 			{!arrr &&  data?.CreatorSelection?.Conditions?.map(
-// 				(
-// 					i: {
-// 						Codes:
-// 							| string
-// 							| number
-// 							| boolean
-// 							| React.ReactElement<any, string | React.JSXElementConstructor<any>>
-// 							| React.ReactFragment
-// 							| React.ReactPortal
-// 							| null
-// 							| undefined;
-// 						Sector:
-// 							| string
-// 							| number
-// 							| boolean
-// 							| React.ReactElement<any, string | React.JSXElementConstructor<any>>
-// 							| React.ReactFragment
-// 							| React.ReactPortal
-// 							| null
-// 							| undefined;
-// 					},
-// 					k: React.Key | null | undefined
-// 				) => (
-// 					<div key={k} className="creators_card border-gray-200 rounded-lg shadow-md">
-// 						{/* header */}
-// 						<div className="h-12 w-full relative header middle ">
-// 							<h1 className="header_text txt-sm f-b text-gray-50 p-4">
-// 								{data?.Criteria?.TeamA.name || data?.Criteria?.TeamA.TeamName} - {data.Criteria.TeamB.name  || data?.Criteria?.TeamB.TeamName}
-// 							</h1>
-// 						</div>
-
-// 						<div className=" options w-full">
-// 							<div className="middle   px-6  ">
-// 								<div className=" w-full border-b border-dashed py-4 space-x-4 flex">
-// 									<Image className="team_logo " src={"/icons/ball.svg"} alt="chealse" width={24} height={32} />
-// 									<div className="texts w-full">
-// 										<div className="row-between w-full">
-// 											<h1 className="team_name txt-sm f-b text-gray-900">{i.Codes}</h1>
-
-// 											{/* ssN className="team_name txt-sm f-b text-gray-900">2.45</h1> */}
-// 										</div>
-// 										<p className="team_name txt-xs f-s  text-gray-300">{i.Sector}</p>
-// 									</div>
-// 								</div>
-// 							</div>
-// 						</div>
-// 					</div>
-// 				)
-// 			)}
-// 		</>
-// 	);
-// }
-
 export default ResultModal;

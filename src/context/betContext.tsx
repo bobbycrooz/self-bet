@@ -171,7 +171,7 @@ const BetProvider = ({ children }: { children: any }) => {
 		// NumberOfPeople: 0,
 	});
 
-	console.log(BetDetailsData);
+	// console.log(BetDetailsData);
 
 	const [status, setStatus] = useState(statusConst.success);
 	const { notify } = useToast();
@@ -206,8 +206,10 @@ const BetProvider = ({ children }: { children: any }) => {
 			const { error, serverResponse } = await fetchBetListAPI(1);
 			if (!error) {
 				setBetList(serverResponse as any);
+				// console.log(serverResponse[0], "fetching all bets");
+				
 			} else {
-				console.log(serverResponse, "fetching all bets");
+				// console.log(serverResponse, "fetching all bets");
 			}
 		} catch (error) {}
 	}
@@ -215,8 +217,6 @@ const BetProvider = ({ children }: { children: any }) => {
 	async function fetchMoreActiveBets(page: number) {
 		try {
 		
-			
-
 			// @ts-ignore
 			const { error, serverResponse } = await fetchBetListAPI(page);
 
@@ -239,20 +239,19 @@ const BetProvider = ({ children }: { children: any }) => {
 			const { error, serverResponse } = await resultAPI(1);
 
 			if (!error) {
-				console.log(serverResponse[0], "this is the response after making the request ---");
 
 				// filter results
 				const userResult = serverResponse.filter((i: any) => i.Players[0]?.userId == User._id) as any;
 
 				// console.log(userResult, "this is the response after making the request ---");
 
-				// setBetResults(userResult as any);
-				setBetResults(serverResponse as any);
+				setBetResults(userResult as any);
+				// setBetResults(serverResponse as any);
 			} else {
-				console.log(serverResponse, "fetching all bets");
+				// console.log(serverResponse, "fetching all bets");
 			}
 		} catch (error) {
-			console.log(error, "from result  endpoint");
+			// console.log(error, "from result  endpoint");
 		}
 	}
 
@@ -284,7 +283,7 @@ const BetProvider = ({ children }: { children: any }) => {
 				},
 			});
 
-			console.log(response, "this is the response after making the request ---");
+			// console.log(response, "this is the response after making the request ---");
 
 			if (response.status == 200) {
 				// reset all states
@@ -331,7 +330,7 @@ const BetProvider = ({ children }: { children: any }) => {
 					// reason: response?.message
 				});
 
-				console.log(response);
+				// console.log(response);
 				// @ts-ignore
 			}
 
@@ -383,7 +382,7 @@ const BetProvider = ({ children }: { children: any }) => {
 			fetchAllTransaction();
 		}
 
-		console.log("fetching all active bet!");
+		// console.log("fetching all active bet!");
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

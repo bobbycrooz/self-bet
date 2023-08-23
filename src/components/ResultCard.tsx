@@ -2,23 +2,48 @@ import Image from "next/image";
 
 import { CarretRightSvg } from "@/assets";
 import { DropDown } from "@components";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { features } from "process";
 import { useBet } from "@/context/betContext";
 import ResultModal from "./ResultModa";
 import { formatMatchDate } from "@/utils";
+import { useUser } from "@/context/userContext";
 
 export default function ResultCard({ result }: any) {
 	const [show, setShow] = useState(false);
+	const [currentPlayerResult, setCurrentPlayer] = useState<{
+		payout: number;
+		state: "Won" | "Lost" | "Tie" ;
+		userId: string;
+	}>();
+	const { User} = useUser()
 
 	function handleShow() {
 		setShow((p) => !p);
 	}
 
 
-	console.log(result );
 
 	const date = formatMatchDate(result.Created);
+
+	function getCurrentPlay()
+	{
+		
+
+		const user = result.Players.find((player: any) => player.userId === User?._id)
+
+		setCurrentPlayer(user);
+	}	
+
+
+	useEffect(() =>
+	{
+		getCurrentPlay();
+	}, [])
+	
+
+	console.log(currentPlayerResult, "this is the current player result");
+	
 	
 	return (
 		<>
@@ -43,7 +68,7 @@ export default function ResultCard({ result }: any) {
 						</div>
 					</div>
 
-					<Label status={result.Players[0]?.state} />
+					<Label status={currentPlayerResult?.state} />
 				</div>
 
 				<div className="stake items-center relative  flex justify-between w-full h-[60px] px-4">
@@ -60,17 +85,17 @@ export default function ResultCard({ result }: any) {
 						</svg>
 
 						<h1 className="absolute  flex st w-full text-center justify-center">
-							Stake: <span>N 0</span>
+							Stake: <span>N {result.BetId.Amount }</span>
 						</h1>
 					</div>
 
 					<h1 className="pay ">
-						Payout <span>0</span>
+						Payout <span>N {currentPlayerResult?.payout}</span>
 					</h1>
 				</div>
 			</div>
 
-			<ResultModal show={show} handleShow={handleShow} data={result} />
+			<ResultModal show={show} handleShow={handleShow} data={result} {...currentPlayerResult} />
 		</>
 	);
 }
@@ -86,7 +111,7 @@ function BallSVG() {
 	);
 }
 
-export function Label({ status }: { status: "Won" | "Lost" | "Tie" }) {
+export function Label({ status }: { status: "Won" | "Lost" | "Tie" | undefined }) {
 	if (status == "Won") {
 		return (
 			<div className="won capitalize">

@@ -22,7 +22,6 @@ function Home() {
 	const topRef = useRef(null);
 	const { notify } = useToast();
 
-	// console.log();
 	
 
 	// handlers--------------
@@ -37,7 +36,6 @@ function Home() {
 	};
 
 
-	console.log(BetList[0]);
 	
 
 	
