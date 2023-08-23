@@ -118,6 +118,7 @@ function Home() {
 		//  else {
 		// 	notify("error", "Bet link not valid");
 		// }
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query, pathname, BetList]);
 
 	return (
