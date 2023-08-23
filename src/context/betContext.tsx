@@ -201,7 +201,7 @@ const BetProvider = ({ children }: { children: any }) => {
 		} catch (error) {}
 	}
 
-	async function fetchAllActiveBets() {
+	 async  function fetchAllActiveBets() {
 		try {
 			const { error, serverResponse } = await fetchBetListAPI(1);
 			if (!error) {

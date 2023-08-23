@@ -68,7 +68,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 		// check if current usser is among the playerws
 		const yes = data?.Players.find((i: any) => i.userId === User._id);
 
-		console.log(yes);
+		// console.log(yes);
 
 		if (yes) return true;
 		return false;
@@ -249,7 +249,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 
 						{hasJoined ? (
 							<h1 className="name txt-md f-m text-gray-400">
-								Payout: <span className="f-s text-gray-700">{data?.Players.length * data?.Amount  }</span>
+								Payout: <span className="f-s text-gray-700">{data?.Players.length * data?.Amount}</span>
 							</h1>
 						) : (
 							<div
@@ -700,7 +700,7 @@ function Creator({ data }: any) {
 
 	// console.log(arrr);
 
-	console.log(data);
+	// console.log(data);
 
 	return (
 		<>

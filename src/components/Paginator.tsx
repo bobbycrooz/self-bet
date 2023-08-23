@@ -46,7 +46,6 @@ const InfiniteScroll = ({ fetchData, children, list }: any) => {
 		if (isButtonInView) {
 			const res = await fetchData(page);
 
-			console.log(res, "this is the res ----");
 
 			if (res) return setPage(page + 1);
 		} else {
