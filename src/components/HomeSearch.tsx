@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { DropDown } from ".";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { fetchBetListAPI, searchBetList, searchFixturesAPI } from "@/axios/endpoints/bet.endpoint";
 import { useBet } from "@/context/betContext";
 import useToast from "@/hooks/useToast";
+import Debounce from "@/hooks/useDebounce";
 
 export default function HomeSearch({ searchToggle, isSearching, closeSearch }: any) {
 	const [showFilter, setShowFilter] = useState(false);
@@ -42,6 +43,31 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 		setBetList(serverResponse);
 	}
 
+	async function debounceHandler() {
+
+	
+
+		// const { error, serverResponse } = await fetchBetListAPI(1);
+		const { error, serverResponse } = await searchBetList(1, searchKey, "TeamName");
+
+		if (error) {
+			notify("warn", "no result");
+			console.log(error);
+		}
+
+		setBetList(serverResponse);
+	}
+
+
+	function processCahnge(e: ChangeEvent<HTMLInputElement>)
+	{
+		
+		setSearchKey(e.target.value)
+
+		Debounce(debounceHandler, 500)()
+		
+	}
+
 	useEffect(() => {
 		!isSearching && setShowFilter(false);
 	}, [isSearching]);
@@ -67,8 +93,8 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 					name=""
 					id=""
 					value={searchKey}
-					onChange={(e) => setSearchKey(e.target.value)}
-					onBlur={(e) => setSearchKey(e.target.value)}
+					onChange={processCahnge}
+					onBlur={processCahnge}
 					className="bg-transparent w-full  h-full pl-9 outline-none"
 					placeholder="Search team name..."
 				/>

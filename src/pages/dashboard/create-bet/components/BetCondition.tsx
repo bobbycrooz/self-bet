@@ -6,7 +6,6 @@ import { useBet } from "@/context/betContext";
 
 export default function BetCondition({
 	handleAddCondition,
-	isAdding,
 	editBetConditons,
 	deleteBetConditons,
 }: {
@@ -15,21 +14,8 @@ export default function BetCondition({
 	editBetConditons: any;
 	deleteBetConditons: any;
 }) {
-	const conditions = [
-		{
-			Sector: "H_TEAM/A_TEAM/DRAW",
 
-			Codes: ["1", "2", "3"],
-		},
-
-		{
-			Sector: "H_TEAM/A_TEAM/DRAW",
-
-			Codes: ["1", "2", "3"],
-		},
-	];
-
-	const { Bet, dispatchBet, fetchAlllMarkets, MarketList } = useBet();
+	const { Bet } = useBet();
 
 	// console.log("here is the conditons in the store", Bet.Criteria.Conditions)
 

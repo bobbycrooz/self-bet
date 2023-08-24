@@ -6,6 +6,7 @@ import { TwoThumbs } from "@components";
 import { getAllFixturesAPI, searchBetList, searchFixturesAPI } from "@/axios/endpoints/bet.endpoint";
 import { useBet } from "@/context/betContext";
 import useToast from "@/hooks/useToast";
+import Debounce from "@/hooks/useDebounce";
 
 interface DropDownBtnProps {
 	type: "byTeam" | "byName" | "byRange" | "byPercent" | "byLeague" | "custom";
@@ -161,46 +162,22 @@ export default function DropdownBtn({
 }
 
 function SearchByTeamCard(props: any) {
-	const teamsArray = [
-		{
-			name: "chealse",
-			icon: "/icons/teams/chealse_logo-sm.svg",
-		},
-		{
-			name: "Arsenal",
-			icon: "/icons/teams/arsenal_logo-sm.svg",
-		},
-		{
-			name: "Leicester City",
-			icon: "/icons/teams/lei_logo-sm.svg",
-		},
-		{
-			name: "As roma",
-			icon: "/icons/teams/roma_logo-sm.svg",
-		},
-		{
-			name: "Manchester United",
-			icon: "/icons/teams/roma_logo-sm.svg",
-		},
-	];
+
 	const cardRef = useRef(null);
-	const [teams, setTeams] = useState(teamsArray);
 	const [teamName, setTeamName] = useState("");
 
 	function handleCardClick(e: any) {
-		const cardEle = e.target;
-		const cardEleRef = cardRef.current;
+	
 		return;
 
-		// console.log(cardEle, cardEleRef);
 
-		// if (cardEle !== cardEleRef) {
-		// 	props.handleShowList();
-		// }
 	}
 
 	function handleChange(e: any) {
 		setTeamName(e.target.value);
+
+		Debounce(debounceHandler, 500)()
+
 	}
 
 	async function handleSearchTeam(e: any) {
@@ -225,6 +202,30 @@ function SearchByTeamCard(props: any) {
 		}
 
 		props.handleShowList("byTeam");
+	}
+
+
+	// ---debouce handler for match search by team name
+		async function debounceHandler() {
+
+		// props.setList([]);
+
+		if (props.context === "Fixtures") {
+			const { error, serverResponse } = await searchFixturesAPI(1, "TeamName", teamName);
+
+			//  @ts-ignore
+			if (error) return console.log(error);
+
+			props.setList(serverResponse);
+		} else {
+			const { error, serverResponse } = await searchBetList(1, teamName, "TeamName");
+
+			//  @ts-ignore
+			if (error) return console.log(error);
+
+			props.setList(serverResponse);
+		}
+
 	}
 
 	return (
