@@ -168,7 +168,7 @@ const BetProvider = ({ children }: { children: any }) => {
 		BetName: "",
 		Amount: "",
 		Discount: "",
-		// NumberOfPeople: 0,
+		NumberOfPeople: 0,
 	});
 
 	// console.log(BetDetailsData);

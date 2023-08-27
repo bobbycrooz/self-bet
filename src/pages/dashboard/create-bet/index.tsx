@@ -22,10 +22,11 @@ function CreateBetPage() {
 	const { push, query, pathname } = useRouter();
 	const [isAdding, setIsAdding] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const progressRef = useRef(null);
 	const { Bet, dispatchBet, BetDetailsData,
 setBetDetailsData } = useBet();
-	const { BetImg, setBetImg, noImg, setNoImg } = useBet();
+	const { BetImg, setBetImg, MarketList, setNoImg } = useBet();
 
 	const { notify } = useToast();
 	
@@ -38,7 +39,15 @@ setBetDetailsData } = useBet();
 
 	console.log(step, "step ------------ ");
 
-	function handleAddCondition() {
+	function handleAddCondition()
+	{
+		setIsEditing(false);
+			setCurrentSector({
+			...currentSector,
+			// Sector: 'H_TEAM/A_TEAM/DRAW',
+				Codes: [],
+
+		});
 		setIsAdding((p) => !p);
 	}
 
@@ -209,14 +218,40 @@ setBetDetailsData } = useBet();
 
 	function editBetConditons(data: any) {
 		// get selected condition details to be edited
-		console.log(data);
+		setIsEditing(true)
+		console.log('editing data----');
+		
+
+		function getDesc(i: string) {
+		// get array of codes for given sector
+		const codes = MarketList.find((i: any) => i.Sector === data.Sector).Codes;
+
+		const desc = codes.find((item: any) => item.value === i).desc;
+
+		return desc;
+	}
+
+		const selectedConditons: { value: any; desc: any; }[] = []
+
+		data.Codes.map((i: any) =>
+		{
+			selectedConditons.push({
+				value: i,
+				desc: getDesc(i),
+			})
+		})
 
 		// set the current sector to the sector to e edited.
 		setCurrentSector({
 			...currentSector,
 			Sector: data.Sector,
+				Codes: selectedConditons as any,
+
 		});
-		handleAddCondition();
+
+		
+				setIsAdding((p) => !p);
+
 	}
 
 	function deleteBetConditons(data: any) {
@@ -322,8 +357,7 @@ setBetDetailsData } = useBet();
 				currentSector={currentSector}
 				setCurrentSector={setCurrentSector}
 				conditions={conditions}
-				setConditions={setConditions}
-				// deleteBetConditons={deleteBetConditons}
+				setConditions={setConditions} isEditing={isEditing}				// deleteBetConditons={deleteBetConditons}
 			/>
 		</>
 	);

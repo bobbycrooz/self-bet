@@ -62,6 +62,16 @@ export default function BetDetails({
 				...BetDetailsData,
 				NumberOfPeople: BetDetailsData.NumberOfPeople - 1,
 			});
+		} else
+		{
+			if (typeof Number(mode) !== 'number')
+			{
+				return
+			}
+			setBetDetailsData({
+				...BetDetailsData,
+				NumberOfPeople: Number(mode),
+			});
 		}
 	}
 
@@ -164,14 +174,17 @@ export default function BetDetails({
 function Discount({
 	discount,
 	handleBetNameChange,
-	// numberOfPeople,
-	// setNumberOfPeople,
+	numberOfPeople,
+	setNumberOfPeople,
 }: {
 	discount: string;
 	handleBetNameChange: any;
 	numberOfPeople: number;
 	setNumberOfPeople: any;
 }) {
+
+	console.log(numberOfPeople);
+	
 	return (
 		<>
 			<div className="space-y-1 mt-4">
@@ -185,7 +198,42 @@ function Discount({
 				/>
 			</div>
 
-			<div className="h-6"></div>
+			<div className="">
+
+				<div className="space-y-2 mt-2">
+				<h1 className="text-gray-600 txt-sm f-b ">Number of people</h1>
+
+				<div className="number_row flex gap-2  h-[48px]">
+					<div role="button" onClick={() => setNumberOfPeople("decrement")} className="add rounded-lg bg-gray-100 p-4">
+						<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M4 8H12" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+					</div> 
+
+					{/*  */}
+					<div className="input">
+						<input
+							style={{ height: "48px" }}
+							type="text"
+							name="num"
+							value={numberOfPeople}
+								id=""
+								onChange={(e) => setNumberOfPeople(e.target.value)}
+								onBlur={(e) => setNumberOfPeople(e.target.value)}
+							className="border rounded-lg border-gray-200 p-4 text-gray-500 text-center w-24"
+						/>
+					</div>
+
+					{/* increament button */}
+					<div role="button" onClick={() => setNumberOfPeople("increment")} className="add rounded-lg bg-gray-100 p-4 ">
+						<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M4 8H12" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+							<path d="M8 12V4" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+					</div>
+				</div>
+			</div>
+			</div>
 
 		
 			
@@ -194,34 +242,3 @@ function Discount({
 }
 
 
-{/* <div className="space-y-2 mt-2">
-				<h1 className="text-gray-600 txt-sm f-b ">Number of people</h1>
-
-				<div className="number_row flex gap-2  h-[48px]">
-					<div role="button" onClick={() => setNumberOfPeople("decrement")} className="add rounded-lg bg-gray-100 p-4">
-						<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M4 8H12" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-						</svg>
-					</div> */}
-
-					{/*  */}
-					{/* <div className="input">
-						<input
-							style={{ height: "48px" }}
-							type="text"
-							name="num"
-							value={numberOfPeople}
-							id=""
-							className="border rounded-lg border-gray-200 p-4 text-gray-300 text-center w-24"
-						/>
-					</div> */}
-
-					{/* increament button */}
-					{/* <div role="button" onClick={() => setNumberOfPeople("increment")} className="add rounded-lg bg-gray-100 p-4 ">
-						<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M4 8H12" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-							<path d="M8 12V4" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-						</svg>
-					</div>
-				</div>
-			</div> */}

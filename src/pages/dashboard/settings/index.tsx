@@ -94,11 +94,11 @@ function Home() {
 									required
 									place={"Enter a username"}
 								/>
-								<InputField
+								{/* <InputField
 									type={"email"}
 									label="Email"
 									place={"***@gmail.com"}
-								/>
+								/> */}
 							</div>
 
 							<Button

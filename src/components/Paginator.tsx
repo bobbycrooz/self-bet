@@ -82,7 +82,7 @@ function FetchLoading({ isEmpty, setIsEmpty }: any) {
 	}, [isEmpty]);
 
 	return isEmpty ? (
-		<div className="grid-center w-full h-full  text-sm">No more item</div>
+		<div className="grid-center w-full h-full  text-sm"></div>
 	) : (
 		<SkeletonTheme baseColor="#b1acac5c" highlightColor="#efe5e55c">
 			<div className="grid grid-cols-3 h-[auto] gap-8">

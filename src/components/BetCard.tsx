@@ -128,6 +128,8 @@ const BetCard = ({ betType, data }: PropTypes) => {
 		document.execCommand("copy");
 	};
 
+	
+
 	return (
 		<>
 			<div
@@ -550,7 +552,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 											{/* -----------second badge row-------- */}
 											<div className="w-full px-12 sticky top-0   bg-white shadow pt-4 z-20">
 												<div className="badge_container row-between ">
-													<div className="col">
+													<div className="col space-y-2">
 														<div className="row-between ">
 															{showDetails.mode === betCardType.KOLO ? (
 																<div className="badge uppercase  p-1 px-2 bg-cyan-50 rounded txt-xs f-b text-cyan-600">
@@ -563,9 +565,11 @@ const BetCard = ({ betType, data }: PropTypes) => {
 															)}
 														</div>
 
-														<h1 className="bet_name txt-lg f-eb text-gray-600">{data?.Creator.Username}</h1>
+															<h1 className="bet_name txt-lg f-eb text-gray-600">{data?.Creator.Username}</h1>
+															<h1 className="bet_name txt-xs  text-gray-400">Players: <b>{data?.Players.length}</b></h1>
+															
 
-														<Image src={"/images/home/users.png"} alt={""} className="mt-4" width={144} height={24} />
+														{/* <Image src={"/images/home/users.png"} alt={""} className="mt-4" width={144} height={24} /> */}
 													</div>
 
 													<div className="col">

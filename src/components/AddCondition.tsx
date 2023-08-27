@@ -1,12 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
-import React, { useState, useEffect, useRef, ChangeEventHandler, ChangeEvent } from "react";
+import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import Button from "./Button";
-import DropDown from "./DropDown";
 import InputField from "./InputField";
-import DropdownBtn from "./DropBtn";
-import Toggle from "./Toggle";
-import DynamicModal from "./DynamicModal";
+
 import ConfirmationModal from "./ConfirmationModal";
 import CheckIcon, { AddIcon, TimesIcon } from "@/assets";
 import useScreen from "@/hooks/useScreen";
@@ -21,6 +17,7 @@ interface PropTypes {
 	setCurrentSector: any;
 	conditions: any;
 	setConditions: any;
+	isEditing: boolean;
 }
 
 export interface ConditionTypes {
@@ -34,12 +31,12 @@ const statusConst = {
 	failed: "FAILED",
 };
 
-const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditions, setCurrentSector }: PropTypes) => {
+const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditions, setCurrentSector, isEditing }: PropTypes) => {
 	const [show, toggleShow] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [showSectors, setShowSectors] = useState(false);
 	const [codes, setCodes] = useState([]);
-	const [codeToD, setCodeToD] = useState(codes)
+	const [codeToD, setCodeToD] = useState(codes);
 	// const [currentSector, setCurrentSector] = useState({
 	// 	Sector: "",
 	// 	Codes: [],
@@ -54,29 +51,24 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 	const [sectorLists, setSectors] = useState([]);
 	const [sectorToDisplay, setSectorTD] = useState(sectorLists);
 
-	
 
-	function searchSectorHandler(e: ChangeEvent<HTMLInputElement>)
-	{
-		const resultList = sectorLists.filter((i: string) => i.toLowerCase().includes(e.target.value))
-		
-		if (resultList.length)
-		{
-			setSectorTD(resultList)
+	function searchSectorHandler(e: ChangeEvent<HTMLInputElement>) {
+		const resultList = sectorLists.filter((i: string) => i.toLowerCase().includes(e.target.value));
+
+		if (resultList.length) {
+			setSectorTD(resultList);
 		}
-		
 	}
 
+	function searchConditionHandler(e: ChangeEvent<HTMLInputElement>) {
+		const resultList = codes.filter(
+			(i: { value: string; desc: string }) =>
+				i.value.toLowerCase().includes(e.target.value) || i.desc.toLowerCase().includes(e.target.value)
+		);
 
-	function searchConditionHandler(e: ChangeEvent<HTMLInputElement>)
-	{
-		const resultList = codes.filter((i: {value: string, desc: string}) => i.value.toLowerCase().includes(e.target.value) || i.desc.toLowerCase().includes(e.target.value))
-		
-		if (resultList.length)
-		{
-			setCodeToD(resultList)
+		if (resultList.length) {
+			setCodeToD(resultList);
 		}
-		
 	}
 
 	function processHandler() {
@@ -94,9 +86,8 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 
 	function handleGetSectorCodes(sector: string) {
 		const codes = MarketList.find((i: { Sector: string }) => i.Sector === sector);
-
 		setCodes(codes.Codes);
-		setCodeToD(codes.Codes)
+		setCodeToD(codes.Codes);
 	}
 
 	function handlePickSector(sector: string) {
@@ -145,7 +136,7 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 		// console.log(sectors);
 
 		setSectors(sectors as any);
-		setSectorTD(sectors as any)
+		setSectorTD(sectors as any);
 	}
 
 	function handleSetCondition(condition: ConditionTypes) {
@@ -159,7 +150,7 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 			let existing = updatedArray.filter((i: any, a) => i.value === condition.value);
 
 			if (existing.length > 0) {
-				return console.log("there is something in the array so i left");
+				return;
 			} else {
 				// console.log("there was nothing and i added it to the array");
 
@@ -177,6 +168,31 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 			updatedArray.push(condition);
 
 			setConditions(updatedArray);
+		}
+	}
+
+	function handleSelectAllConditions() {
+		let updatedArray = [...conditions];
+
+		// find existing condition
+		if (codes.length !== updatedArray.length) {
+			// @ts-ignoreget
+			updatedArray.push(...codes);
+
+			setConditions(updatedArray);
+
+			setCurrentSector({
+				...currentSector,
+				Codes: updatedArray as any,
+			});
+		} else {
+			// remove all
+
+			setConditions([]);
+			setCurrentSector({
+				...currentSector,
+				Codes: [],
+			});
 		}
 	}
 
@@ -280,16 +296,28 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 			Codes: [],
 		});
 		setConditions([]);
-		setCodeToD([])
+		setCodeToD([]);
 
 		toggle();
 	}
 
-	console.log("this is the current sector", currentSector);
-
 	useEffect(() => {
 		fetchAlllMarkets();
 	}, [fetchAlllMarkets]);
+
+	useEffect(() =>
+	{
+			console.log('but i may be here -----', isEditing);
+
+		
+		if (currentSector.Sector && isEditing)
+		{
+			console.log('we are editing this condition -----');
+			setConditions(currentSector.Codes);
+				handleGetSectorCodes(currentSector.Sector)
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentSector.Codes, currentSector.Sector, isEditing, setConditions]);
 
 	return showNoti ? (
 		<>
@@ -435,8 +463,8 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 														ref={tabRef}
 														onClick={handleRefClic}
 														className="w-full h-full flex flex-wrap gap-2 gap-y-1"
-														>
-															{/* @ts-ignore */}
+													>
+														{/* @ts-ignore */}
 														{conditions.map((i, k) => (
 															<div
 																key={k}
@@ -596,7 +624,7 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 													className="dropdown_body space-y-1 column mt-1 transform w-full shadow-soft left-0 top-12 border-gray-100  grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
 												>
 													{/* search component */}
-													<SearchComponent onChangeHandler={searchSectorHandler}  place="Search sectors..."/>
+													<SearchComponent onChangeHandler={searchSectorHandler} place="Search sectors..." />
 
 													<ol className="team_options w-full p-4 h-[230px] overflow-y-scroll">
 														<p className="txt-xs f-b text-gray-900 ">Pick a sector</p>
@@ -671,12 +699,20 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 													className="dropdown_body space-y-1 mt-1 column transform w-full shadow-soft left-0 top-12 border-gray-100  grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
 												>
 													{/* search component */}
-													<SearchComponent onChangeHandler={searchConditionHandler}  place="Search conditions..."/>
-
+													<SearchComponent onChangeHandler={searchConditionHandler} place="Search conditions..." />
 
 													{/* ---Condition list----- */}
 													<ol className="team_options w-full px-4 p-2 space-y-2">
-														<p className="txt-xs f-b text-gray-900">Select one or more conditions</p>
+														<div className="w-full justify-between p-2 flex items-center">
+															<p className="txt-xs f-b text-gray-900">Select one or more conditions</p>
+
+															<button
+																onClick={handleSelectAllConditions}
+																className="hover:bg-gray-200 text-gray-700 font-medium p-2 px-4 text-sm rounded-xl hover:text-gray-800"
+															>
+																{codes.length == conditions.length ? "Unselect All" : "Select All"}
+															</button>
+														</div>
 
 														{codeToD &&
 															codeToD.map((i: any, k) => (
