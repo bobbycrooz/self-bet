@@ -37,7 +37,6 @@ setBetDetailsData } = useBet();
 	const [conditions, setConditions] = useState<Array<ConditionTypes>>([]);
 	const [showDiscount, setShowDiscount] = useState(true);
 
-	console.log(step, "step ------------ ");
 
 	function handleAddCondition()
 	{

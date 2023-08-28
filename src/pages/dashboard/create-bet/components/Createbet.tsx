@@ -108,7 +108,7 @@ export default function CreateBet({ stepHandler }: { stepHandler: any }) {
 							<div className="row-between">
 								<h1 className="display-xs md:display-md f-eb md:f-b text-gray-50 capitalize">Point Bet</h1>
 								{/* arrow icone ----desktop */}
-								<Image
+								{/* <Image
 									src={"/images/create/arrow.svg"}
 									alt={""}
 									width={48}
@@ -116,10 +116,10 @@ export default function CreateBet({ stepHandler }: { stepHandler: any }) {
 									role="button"
 									onClick={() => handleBetType("point")}
 									className="hidden md:block"
-								/>
+								/> */}
 
 								{/* arrow icon ----phone */}
-								<Image
+								{/* <Image
 									src={"/images/create/arrow.svg"}
 									alt={""}
 									width={32}
@@ -127,7 +127,11 @@ export default function CreateBet({ stepHandler }: { stepHandler: any }) {
 									role="button"
 									onClick={() => handleBetType("point")}
 									className=" md:hidden"
-								/>
+								/> */}
+
+								<div className="border border-white p-2 px-4 centered rounded-xl">
+									<p className="text-white txt-xs font-galano">Comming soon</p>
+								</div>
 							</div>
 
 							<hr className="border-gray-400" />

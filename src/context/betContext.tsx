@@ -201,13 +201,12 @@ const BetProvider = ({ children }: { children: any }) => {
 		} catch (error) {}
 	}
 
-	 async  function fetchAllActiveBets() {
+	async function fetchAllActiveBets() {
 		try {
 			const { error, serverResponse } = await fetchBetListAPI(1);
 			if (!error) {
 				setBetList(serverResponse as any);
 				// console.log(serverResponse[0], "fetching all bets");
-				
 			} else {
 				// console.log(serverResponse, "fetching all bets");
 			}
@@ -216,14 +215,12 @@ const BetProvider = ({ children }: { children: any }) => {
 
 	async function fetchMoreActiveBets(page: number) {
 		try {
-		
 			// @ts-ignore
 			const { error, serverResponse } = await fetchBetListAPI(page);
 
 			if (error) return console.log(error);
 
 			if (serverResponse.length === 0) {
-				
 				return false;
 			} else {
 				// @ts-ignore
@@ -239,7 +236,6 @@ const BetProvider = ({ children }: { children: any }) => {
 			const { error, serverResponse } = await resultAPI(1);
 
 			if (!error) {
-
 				// filter results
 				const userResult = serverResponse.filter((i: any) => i.Players[0]?.userId == User._id) as any;
 
@@ -255,16 +251,38 @@ const BetProvider = ({ children }: { children: any }) => {
 		}
 	}
 
+	function clearBetHistory() {
+		dispatchBet({ type: "BET_TYPE", payload: { type: "" } });
+		dispatchBet({
+			type: "REMOVE_BET_LEAGUES",
+			payload: undefined,
+		});
+		dispatchBet({ type: "BET_TEAMS", payload: { teams: [] } });
+		dispatchBet({ type: "BET_FIXTURE_ID", payload: { FixtureId: null } });
+		dispatchBet({ type: "PICK_CONDITION", payload: { condition: [] } });
+		dispatchBet({ type: "BET_DETAILS", payload: { amount: 0, discount: 0, betName: "" } });
+		dispatchBet({ type: "REMOVE_BET_CONDITIONS", payload: { conditions: [] } });
+		dispatchBet({
+			type: "BET_MATCH",
+			payload: { TeamA: { TeamName: "", Logo: "" }, TeamB: { TeamName: "", Logo: "" } },
+		});
+		dispatchBet({ type: "BET_MATCH_DATE", payload: { MatchDate: "" } });
+
+		setBetDetailsData({
+			BetName: "",
+			Amount: "",
+			Discount: "",
+			NumberOfPeople: 0,
+		});
+	}
+
 	async function placeBet() {
 		if (Bet.Type.length === 0) {
 			return notify("error", "You need to select a bet type");
 		}
 
-		console.log(noImg, "this is the no image value");
-		
 		const formData = new FormData();
-
-		// @ts-ignore
+			// @ts-ignore
 		formData.append("BetImg", noImg ? BetImg : BetImg[0]);
 		// formData.append("Type", "KoloBet");
 		formData.append("Type", Bet.Type);
@@ -285,25 +303,9 @@ const BetProvider = ({ children }: { children: any }) => {
 				},
 			});
 
-			// console.log(response, "this is the response after making the request ---");
-
 			if (response.status == 200) {
 				// reset all states
-				dispatchBet({ type: "BET_TYPE", payload: { type: "" } });
-				dispatchBet({
-					type: "REMOVE_BET_LEAGUES",
-					payload: undefined,
-				});
-				dispatchBet({ type: "BET_TEAMS", payload: { teams: [] } });
-				dispatchBet({ type: "BET_FIXTURE_ID", payload: { FixtureId: null } });
-				dispatchBet({ type: "PICK_CONDITION", payload: { condition: "" } });
-				dispatchBet({ type: "BET_DETAILS", payload: { amount: 0, discount: 0, betName: "" } });
-				dispatchBet({ type: "REMOVE_BET_CONDITIONS", payload: { conditions: [] } });
-				dispatchBet({
-					type: "BET_MATCH",
-					payload: { TeamA: { TeamName: "", Logo: "" }, TeamB: { TeamName: "", Logo: "" } },
-				});
-				dispatchBet({ type: "BET_MATCH_DATE", payload: { MatchDate: "" } });
+				clearBetHistory();
 
 				setStatus(statusConst.success);
 
@@ -425,6 +427,7 @@ const BetProvider = ({ children }: { children: any }) => {
 				currentPage,
 				setCP,
 				fetchMoreActiveBets,
+				clearBetHistory,
 			}}
 		>
 			{children}

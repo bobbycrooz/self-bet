@@ -5,6 +5,7 @@ import { promises } from "dns";
 import React, { useContext, useState, useEffect, useMemo, createContext, Children, useReducer } from "react";
 import useToast from "@/hooks/useToast";
 import { useRouter } from "next/router";
+import { useBet } from "./betContext";
 
 // import utils from 'utils';
 
@@ -46,6 +47,7 @@ const UserProvider = ({ children }: { children: any }) => {
 	const [User, dispatch] = useReducer(userReducer, initialState);
 	const { notify } = useToast();
 	const { push } = useRouter();
+	const {clearBetHistory} = useBet()
 
 	// handlers------------------
 	async function findAndInitUser(userId: string) {
@@ -82,6 +84,8 @@ const UserProvider = ({ children }: { children: any }) => {
 		removeToken();
 
 		dispatch({ type: "REMOVE_USER" });
+
+		clearBetHistory()
 
 		notify("success", "Logged out successfully!");
 

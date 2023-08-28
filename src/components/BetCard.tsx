@@ -64,6 +64,8 @@ const BetCard = ({ betType, data }: PropTypes) => {
 
 	const { User } = useUser();
 
+
+
 	function userJoined() {
 		// check if current usser is among the playerws
 		const yes = data?.Players.find((i: any) => i.userId === User._id);
@@ -94,6 +96,8 @@ const BetCard = ({ betType, data }: PropTypes) => {
 			});
 		}
 	}
+
+	
 
 	function tabModeHandler() {
 		switch (betTabMode) {
@@ -230,9 +234,9 @@ const BetCard = ({ betType, data }: PropTypes) => {
 						</h1>
 
 						<div className="amounts middle space-x-2">
-							{data?.Discount?.discount?.length && (
+							{data?.Discount?.discount !== 0 && (
 								<div className="">
-									<h1 className="off txt-xs f-s text-gray-500">{data?.Discount.discount} off</h1>
+									<h1 className="off txt-xs f-s text-gray-500">{data?.Discount.discount == '' ? '0%' : ` ${data?.Discount.discount}%`} off</h1>
 									<h1 className="off txt-xs  text-gray-300 ">/₦{data?.Amount}</h1>
 								</div>
 							)}
