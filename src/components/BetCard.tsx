@@ -667,7 +667,6 @@ const BetCard = ({ betType, data }: PropTypes) => {
 function Matches({ data }: any)
 {
 	
-	console.log(data.Criteria);
 	
 	return (
 		<MatchCard 
