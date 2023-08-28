@@ -3,6 +3,7 @@ import { Accept, useDropzone } from "react-dropzone";
 // import { uploadImage } from '../../../src/axios/apis/media';
 import { SvgElement, UploadSvg } from "@/assets";
 import useToast from "@/hooks/useToast";
+import { useBet } from "@/context/betContext";
 
 const baseStyle = {};
 
@@ -35,7 +36,7 @@ function sizeValidation(file: any) {
 
 	const maxSize = 2.0;
 
-	console.log(bytesToMB(fileSizeInBytes), "size in bytes");
+	// console.log(bytesToMB(fileSizeInBytes), "size in bytes");
 
 	if (bytesToMB(fileSizeInBytes) > maxSize) {
 		return {
@@ -49,11 +50,15 @@ function sizeValidation(file: any) {
 function DropzoneComponent({ seCurrentFile }: { seCurrentFile: any }) {
 	const [files, setfiles] = React.useState<Array<any>>();
 	const { notify } = useToast();
+	const { setNoImg} = useBet();
+
 
 	// @ts-ignore
 	const onDrop = useCallback(async (acceptedFiles) => {
 		setfiles(acceptedFiles);
+		setNoImg(false)
 		return seCurrentFile(acceptedFiles);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [seCurrentFile]);
 
 	const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, acceptedFiles, fileRejections } =

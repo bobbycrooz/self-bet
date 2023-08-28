@@ -128,7 +128,6 @@ const BetCard = ({ betType, data }: PropTypes) => {
 		document.execCommand("copy");
 	};
 
-	
 
 	return (
 		<>
@@ -547,8 +546,9 @@ const BetCard = ({ betType, data }: PropTypes) => {
 														/>
 													)}
 												</div>
-											</div>
-
+												</div>
+												
+											
 											{/* -----------second badge row-------- */}
 											<div className="w-full px-12 sticky top-0   bg-white shadow pt-4 z-20">
 												<div className="badge_container row-between ">
@@ -664,17 +664,21 @@ const BetCard = ({ betType, data }: PropTypes) => {
 	);
 };
 
-function Matches({ data }: any) {
+function Matches({ data }: any)
+{
+	
+	console.log(data.Criteria);
+	
 	return (
-		<MatchCard
+		<MatchCard 
 			teamData={{
 				TeamA: {
-					Logo: data.Criteria.TeamA.Logo,
-					TeamName: data.Criteria.TeamA.TeamName,
+					Logo: data.Criteria.TeamA.Logo || data.Criteria.TeamA.logo,
+					TeamName: data.Criteria.TeamA.TeamName || data.Criteria.TeamA.name
 				},
 				TeamB: {
-					Logo: data.Criteria.TeamB.Logo,
-					TeamName: data.Criteria.TeamB.TeamName,
+					Logo: data.Criteria.TeamB.Logo || data.Criteria.TeamB.logo,	
+					TeamName: data.Criteria.TeamB.TeamName || data.Criteria.TeamB.name
 				},
 			}}
 		/>

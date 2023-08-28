@@ -19,7 +19,11 @@ export default function MatchCard({
 			Logo: string;
 		};
 	};
-}) {
+	})
+{
+	
+	console.log(teamData, "teamData");
+	
 	return (
 		<div
 			// key={}

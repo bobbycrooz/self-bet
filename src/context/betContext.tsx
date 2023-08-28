@@ -153,7 +153,7 @@ const BetProvider = ({ children }: { children: any }) => {
 	const [BetResults, setBetResults] = useState([]);
 	const { User } = useUser();
 	const [BetImg, setBetImg] = useState(null);
-	const [noImg, setNoImg] = useState(true);
+	const [noImg, setNoImg] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [placing, isPlacing] = useState(false);
 
@@ -260,6 +260,8 @@ const BetProvider = ({ children }: { children: any }) => {
 			return notify("error", "You need to select a bet type");
 		}
 
+		console.log(noImg, "this is the no image value");
+		
 		const formData = new FormData();
 
 		// @ts-ignore

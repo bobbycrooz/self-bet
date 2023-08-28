@@ -26,7 +26,7 @@ function CreateBetPage() {
 	const progressRef = useRef(null);
 	const { Bet, dispatchBet, BetDetailsData,
 setBetDetailsData } = useBet();
-	const { BetImg, setBetImg, MarketList, setNoImg } = useBet();
+	const { BetImg, setBetImg, MarketList, setNoImg , noImg} = useBet();
 
 	const { notify } = useToast();
 	
@@ -76,6 +76,8 @@ setBetDetailsData } = useBet();
 		if (step == 4 && !hasAmount) {
 			return notify("warn", "You must specfy a bet Amount!");
 		}
+		console.log(BetImg, "BetImg", noImg);
+		
 
 		if (step == 4 && !BetImg) {
 			notify("warn", "Defualt bet image will be set!");
@@ -268,6 +270,7 @@ setBetDetailsData } = useBet();
 		if (query.step) {
 			setStep(4);
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname]);
 
 	// to focus on the progress bar
@@ -283,6 +286,7 @@ setBetDetailsData } = useBet();
 	}, [step]);
 
 	const topRef = useRef(null);
+
 	useEffect(() => {
 		if (topRef.current) {
 			// @ts-ignore
