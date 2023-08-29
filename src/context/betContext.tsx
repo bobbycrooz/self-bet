@@ -268,12 +268,14 @@ const BetProvider = ({ children }: { children: any }) => {
 		});
 		dispatchBet({ type: "BET_MATCH_DATE", payload: { MatchDate: "" } });
 
-		setBetDetailsData({
+		 setBetDetailsData({
 			BetName: "",
 			Amount: "",
 			Discount: "",
 			NumberOfPeople: 0,
-		});
+		 });
+		
+		return
 	}
 
 	async function placeBet() {

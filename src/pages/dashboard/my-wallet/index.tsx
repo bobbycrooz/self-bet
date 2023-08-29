@@ -22,6 +22,15 @@ function Home() {
 	// const tabs = ["All", "Deposit", "Payouts", "Withdraw"];
 
 	// handlers--------------
+	function round_to_2sf(number: number) {
+  // Get the decimal places of the number.
+  const decimalPlaces = 2;
+
+  // Round the number to the specified number of significant figures.
+  const roundedNumber = Math.round(number * 10 ** (decimalPlaces + 1)) / 10 ** (decimalPlaces + 1);
+
+  return roundedNumber;
+}
 
 	function iconTypeHandler(type: string): string {
 		switch (type) {
@@ -257,7 +266,7 @@ function Home() {
 														!i.CreditOrDebit ? "text-sec" : "text-green-500"
 													}`}
 												>
-													{i.CreditOrDebit ? "+":"-" }N{i.Amount}
+													{i.CreditOrDebit ? "+":"-" }N{round_to_2sf(i.Amount)}
 												</p>
 											</div>
 										))}

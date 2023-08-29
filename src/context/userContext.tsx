@@ -79,17 +79,23 @@ const UserProvider = ({ children }: { children: any }) => {
 	}
 
 	function logOut() {
-		localStorage.removeItem("user");
+		
+		
+		localStorage.removeItem("SELFBET_USER");
+
 
 		removeToken();
 
-		dispatch({ type: "REMOVE_USER" });
 
-		clearBetHistory()
+		dispatch({ type: "REMOVE_USER" });
+		
 
 		notify("success", "Logged out successfully!");
-
-		return push("/auth");
+		
+		
+		push("/auth");
+		
+		clearBetHistory()
 	}
 
 	async function handleAuth(values: UserDetailsTypes, loginMode: boolean): Promise<boolean> {

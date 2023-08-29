@@ -138,7 +138,7 @@ const Navbar = () => {
 								height={40}
 								className=""
 								role="button"
-								onClick={handleShowNotification}
+								// onClick={handleShowNotification}
 							/>
 
 							{/*Wallet  */}

@@ -150,7 +150,19 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 			let existing = updatedArray.filter((i: any, a) => i.value === condition.value);
 
 			if (existing.length > 0) {
-				return;
+			
+				// remove it 
+			// @ts-ignore
+				const updatedArray = conditions?.filter((i: any, a) => i.value !== condition.value);
+
+				setConditions(updatedArray);
+				setCurrentSector({
+					...currentSector,
+					Codes: updatedArray as any,
+				});
+
+
+
 			} else {
 				// console.log("there was nothing and i added it to the array");
 
@@ -171,13 +183,30 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 		}
 	}
 
-	function handleSelectAllConditions() {
+	function handleSelectAllConditions()
+	{
 		let updatedArray = [...conditions];
+	
+		
 
 		// find existing condition
-		if (codes.length !== updatedArray.length) {
-			// @ts-ignoreget
-			updatedArray.push(...codes);
+	
+
+			// filter codes that are not in the conditions array and add them to the conditions array
+		const filteredCodes = codes.filter((i: any) => !updatedArray.includes(i));
+		
+		
+
+		if (filteredCodes.length === 0)
+		{
+			setConditions([]);
+			setCurrentSector({
+				...currentSector,
+				Codes: []
+			});
+		} else
+		{
+				updatedArray.push(...filteredCodes);
 
 			setConditions(updatedArray);
 
@@ -185,17 +214,17 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 				...currentSector,
 				Codes: updatedArray as any,
 			});
-		} else {
-			// remove all
+		 }
+		
+		
 
-			setConditions([]);
-			setCurrentSector({
-				...currentSector,
-				Codes: [],
-			});
-		}
+		
+		
 	}
 
+		// console.log(conditions.length, "this is the conditions array", codes.length);
+
+	
 	function handleSetAll() {
 		let updatedArray = [...conditions];
 
@@ -307,12 +336,10 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 
 	useEffect(() =>
 	{
-			console.log('but i may be here -----', isEditing);
 
 		
 		if (currentSector.Sector && isEditing)
 		{
-			console.log('we are editing this condition -----');
 			setConditions(currentSector.Codes);
 				handleGetSectorCodes(currentSector.Sector)
 		}
