@@ -95,7 +95,6 @@ const UserProvider = ({ children }: { children: any }) => {
 		
 		push("/auth");
 		
-		clearBetHistory()
 	}
 
 	async function handleAuth(values: UserDetailsTypes, loginMode: boolean): Promise<boolean> {

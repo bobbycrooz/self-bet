@@ -107,6 +107,10 @@ function Home() {
 								<p className="txt-sm">Modify bet</p>
 							</Link>
 
+							<div className="w-full rounded-lg bg-blue-100 p-3 px-4 shadow-soft my-2">
+								<p className="not f-n txt-sm t-g6 "><strong>Note:</strong> do not refresh this page</p>
+							</div>
+
 							{<BetConditionDropdown Bet={Bet} />}
 						</div>
 						<div className="md:hidden w-full h-28"></div>
