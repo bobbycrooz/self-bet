@@ -57,7 +57,7 @@ setBetDetailsData } = useBet();
 		// [1] a match must be selected
 		let hasSelectedOneMatch = Bet.Criteria.TeamA?.TeamName?.length > 1;
 		let hasSelectedCondition = Bet.Criteria?.Conditions?.length > 0;
-		let hasName = BetDetailsData.BetName?.length > 4;
+		let hasName = BetDetailsData.BetName?.length !== 0;
 		let hasAmount = BetDetailsData.Amount?.length > 2;
 
 		if (step == 2 && !hasSelectedOneMatch) {
