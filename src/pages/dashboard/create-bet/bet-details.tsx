@@ -42,6 +42,14 @@ function Home() {
 		}
 	}, [pathname]);
 
+
+	useEffect(() => {
+		if(Bet.Type.length < 1)
+		{
+			push("/dashboard/create-bet?step=1")
+		}
+	}, [Bet.Type.length, pathname, push]);
+
 	return (
 		<>
 			<Head>
@@ -107,9 +115,9 @@ function Home() {
 								<p className="txt-sm">Modify bet</p>
 							</Link>
 
-							<div className="w-full rounded-lg bg-blue-100 p-3 px-4 shadow-soft my-2">
+							{/* <div className="w-full rounded-lg bg-blue-100 p-3 px-4 shadow-soft my-2">
 								<p className="not f-n txt-sm t-g6 "><strong>Note:</strong> do not refresh this page</p>
-							</div>
+							</div> */}
 
 							{<BetConditionDropdown Bet={Bet} />}
 						</div>

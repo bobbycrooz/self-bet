@@ -18,7 +18,8 @@ import { useBet } from "@/context/betContext";
 import useToast from "@/hooks/useToast";
 import { formatMatchDate, hasToken } from "@/utils";
 import Link from "next/link";
-import { joinBetAPI } from "@/axios/endpoints/bet.endpoint";
+import { getBetDetails, joinBetAPI } from "@/axios/endpoints/bet.endpoint";
+import req from "next/server";
 
 const statusConst = {
 	success: "SUCCESS",
@@ -108,7 +109,6 @@ function Home() {
 				});
 
 				// console.log(window?.location.href);
-				
 
 				// @ts-ignore
 				localStorage.setItem("CACHED_URL", JSON.stringify(window?.location.href));
@@ -118,14 +118,14 @@ function Home() {
 		//  else {
 		// 	notify("error", "Bet link not valid");
 		// }
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [query, pathname, BetList]);
 
 	return (
 		<>
 			<Head>
-				<title>Details </title>
-				<meta name="description" content="welcome to selfbet home" />
+				<title>Selfbet - {currentBet?.BetName} </title>
+				<meta name="description" content={`Join ${currentBet?.BetName}`} />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
@@ -278,6 +278,32 @@ function Home() {
 		</>
 	);
 }
+
+// export async function getServerSideProps(context: any) {
+// 	const { id } = context;
+
+// 	console.log(id);
+
+// 	try {
+// 		const { error, serverResponse } = await getBetDetails(id);
+
+// 		console.log(serverResponse);
+
+		
+		
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+
+
+// 	return {
+// 			props: {
+// 				data: "data"
+// 			}
+		
+// 		}
+// }
+
 Home.getLayout = function getLayout(page: ReactElement) {
 	return <DashboardLayout>{page}</DashboardLayout>;
 };

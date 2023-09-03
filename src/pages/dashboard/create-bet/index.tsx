@@ -264,10 +264,13 @@ setBetDetailsData } = useBet();
 		notify("success", "This sector has been deleted succesfully!");
 	}
 
+
 	// useEffects -------------
 	useEffect(() => {
-		if (query.step) {
-			setStep(4);
+		if (query.step)
+		{
+			
+			setStep(Number(query.step));
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname]);

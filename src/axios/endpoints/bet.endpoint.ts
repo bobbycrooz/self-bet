@@ -51,7 +51,6 @@ export function createBetAPI(data: any): ResponsTypes {
 	});
 }
 
-
 export function joinBetAPI(data: any): ResponsTypes {
 	return service({
 		url: "/Bet/AddPlayer",
@@ -78,20 +77,24 @@ export function fetchBetListAPI(page: number): ResponsTypes {
 	});
 }
 
-
 export function searchBetList(
 	PageNumber: number,
 	searchValue: string | number,
-	Name?: "LeagueName" | "TeamName" | "Discount" | "Amount" | "Creator",
-): ResponsTypes
-{
-	
+	Name?: "LeagueName" | "TeamName" | "Discount" | "Amount" | "Creator"
+): ResponsTypes {
 	// process search query
-	const urlWithName = `/Bet/Search?PageNumber=${PageNumber}&${Name}=${searchValue}`
-	const urlWithOutName = `/Bet/Search?PageNumber=${PageNumber}`
+	const urlWithName = `/Bet/Search?PageNumber=${PageNumber}&${Name}=${searchValue}`;
+	const urlWithOutName = `/Bet/Search?PageNumber=${PageNumber}`;
 
 	return service({
 		url: Name ? urlWithName : urlWithOutName,
+		method: "get",
+	});
+}
+
+export function getBetDetails(betId: string): ResponsTypes {
+	return service({
+		url: `/Bet/Search?PageNumber=${1}&${"BetId"}=${betId}`,
 		method: "get",
 	});
 }

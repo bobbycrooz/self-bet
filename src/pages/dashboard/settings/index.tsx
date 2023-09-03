@@ -5,22 +5,50 @@ import { BetCard, Button, Deposite, InputField, Withdraw } from "@components";
 import { ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
+import { changeUserNameAPI } from "@/axios/endpoints/auth.endpoint";
+import { useUser } from "@/context/userContext";
+import { toast } from "react-toastify";
 
 function Home() {
-	const [isWithdrawing, setIsWithdrawing] = useState(false);
-	const [isDepositing, setIsDepositing] = useState(false);
-	// const { push, query, pathname } = useRouter();
+	const [isLoading, setIsLoading] = useState(false);
+	const [name, setName] = useState('');
+	const { fetchProfileDetails } = useUser()
+	const {User} = useUser()
+	
 
-	const tabs = ["All", "Deposit", "Payouts", "Withdraw"];
 
 	// handlers--------------
 
-	function handleWithdrawal() {
-		setIsWithdrawing((p) => !p);
+	function handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
+		setName(e.target.value);
 	}
 
-	function handleDeposite() {
-		setIsDepositing((p) => !p);
+	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+		setIsLoading(true);
+		setName('');
+
+		
+		const { error, serverResponse } = await changeUserNameAPI(name);
+		
+		if (error) {
+			console.log(error);
+			toast.error("Username change failed!")
+			setIsLoading(false);
+			return;
+		}
+
+		if (serverResponse)
+		{
+			setIsLoading(false);
+			const fetchUser = fetchProfileDetails(serverResponse._id)
+			if (fetchUser)
+			{
+			toast.success("Username changed successfully!")
+			return;	
+			}
+			
+		}
 	}
 
 	// useEffects -------------
@@ -84,7 +112,7 @@ function Home() {
 
 						{/* ----form----- */}
 						<form
-							onSubmit={() => true}
+							onSubmit={handleSubmit}
 							className="w-full space-y-6"
 						>
 							<div className="space-y-4">
@@ -92,7 +120,9 @@ function Home() {
 									type={"text"}
 									label="username"
 									required
-									place={"Enter a username"}
+value={name}
+									change={handleNameChange}
+									place={User.Username}
 								/>
 								{/* <InputField
 									type={"email"}
@@ -104,7 +134,8 @@ function Home() {
 							<Button
 								text={"Save changes"}
 								type={"submit"}
-								disabled={true}
+								disabled={name.length < 3}
+								isLoading={isLoading}
                 auth
 							/>
 						</form>

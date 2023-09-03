@@ -133,6 +133,9 @@ const BetCard = ({ betType, data }: PropTypes) => {
 	};
 
 
+	// console.log(data.Players);
+	
+
 	return (
 		<>
 			<div
@@ -268,6 +271,8 @@ const BetCard = ({ betType, data }: PropTypes) => {
 					</div>
 				</footer>
 			</div>
+
+
 
 			{/* bet side bar  */}
 			{showDetails.show && (
@@ -572,6 +577,22 @@ const BetCard = ({ betType, data }: PropTypes) => {
 															<h1 className="bet_name txt-lg f-eb text-gray-600">{data?.Creator.Username}</h1>
 															<h1 className="bet_name txt-xs  text-gray-400">Players: <b>{data?.Players.length}</b></h1>
 															
+
+															<div className="temas_logo  relative flex items-center ml-4">
+																{
+																	data?.Players.map((i: any,k:number) => (
+																		<div key={i} className={`logo_box z-${10 * (k + 1)  } -ml-3`}>
+																	<div className="rounded-full font-bold text-gray-700 text-sm w-6 h-6 centered">
+																		<p>{i.userId?.slice(5,7).toUpperCase()}</p>
+																			</div>
+																			</div>
+																			
+																	))
+														}
+														
+
+														
+													</div>
 
 														{/* <Image src={"/images/home/users.png"} alt={""} className="mt-4" width={144} height={24} /> */}
 													</div>

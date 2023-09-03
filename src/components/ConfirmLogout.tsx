@@ -92,7 +92,7 @@ function Prompt({
           </p>
         </div>
 
-        <div className="button_group space-x-3">
+        <div className="button_group md:space-x-3  md:flex ">
           <Button text={"Cancel"} type={"button"} ghost />
 
       

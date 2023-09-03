@@ -1,15 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect, useRef, ChangeEventHandler } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Button from "../Button";
-import SearchModal from "../SearchModal";
 import Notification from "../Notification";
 import ConfirmLogout from "../ConfirmLogout";
 import { BellSvg, SearchSvg } from "@/assets";
-import Nav from ".";
 import useWindowSize from "@/hooks/useScreen";
 import { useUser } from "@/context/userContext";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import HomeSearch from "../HomeSearch";
@@ -17,32 +15,31 @@ import { useRouter } from "next/router";
 import { hasToken } from "@/utils";
 import { useBet } from "@/context/betContext";
 
-interface InputProps {
-	icon?: string;
-	disabled?: boolean;
-	text: string;
-	full?: boolean;
-	isLoading?: boolean;
-	primary?: boolean;
-	type: "button" | "submit" | "reset" | undefined;
-	click?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-}
+// interface InputProps {
+// 	icon?: string;
+// 	disabled?: boolean;
+// 	text: string;
+// 	full?: boolean;
+// 	isLoading?: boolean;
+// 	primary?: boolean;
+// 	type: "button" | "submit" | "reset" | undefined;
+// 	click?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+// }
 
-console.log(hasToken(), "the ");
+// console.log(hasToken(), "the ");
 
 const Navbar = () => {
 	const [showProfile, setShowProfile] = useState(false);
 	const [isSearching, setIsSearching] = useState(false);
 	const [notification, toggleNoti] = useState(false);
-	const [showMobileNotification, setMobileNotification] = useState(false);
+	// const [showMobileNotification, setMobileNotification] = useState(false);
 	const [confirmLogout, toggleConfirmLogout] = useState(false);
 	const profileRef = useRef<HTMLDivElement>(null);
 	const { isMobile } = useWindowSize();
-	const { User, logOut } = useUser();
-	const { data: session } = useSession();
-	const { push } = useRouter();
-	const { BetList, fetchAllActiveBets } = useBet();
-
+	const { User } = useUser();
+	// const { data: session } = useSession();
+	const { push, pathname } = useRouter();
+	const { fetchAllActiveBets } = useBet();
 
 	function handleShowProfile() {
 		setShowProfile((p) => !p);
@@ -63,10 +60,9 @@ const Navbar = () => {
 
 	function closeSearch() {
 		setIsSearching((p) => !p);
-		if (isSearching)
-		{
+		if (isSearching) {
 			//trigger  fetch --
-			fetchAllActiveBets()
+			fetchAllActiveBets();
 			return push(`/dashboard`);
 		}
 		push(`/dashboard?search=${true}`);
@@ -84,6 +80,10 @@ const Navbar = () => {
 			setShowProfile(false);
 		}
 	}
+
+	const showSearchComponent = ["/dashboard"].includes(pathname);
+
+	// console.log(pathname, "this is the user");
 
 	useEffect(() => {
 		document.addEventListener("click", handleProfileClick, true);
@@ -126,7 +126,9 @@ const Navbar = () => {
 					<div className="logedIn md:flex items-center space-x-6 hidden  w-[80%] justify-end relative">
 						{/* search component  */}
 
-						<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
+						{showSearchComponent && (
+							<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
+						)}
 
 						{/* User details */}
 						<div className="min-w-[350px]  justify-end  flex items-center space-x-6 order-1">

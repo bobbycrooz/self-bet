@@ -53,6 +53,20 @@ export function changePasswordAPI(data: any): ResponsTypes {
 	});
 }
 
+
+
+
+export function changeUserNameAPI(name: String): ResponsTypes {
+	return service({
+		url: `/Auth/ChangeUsername`,
+		method: "post",
+		data: {
+			Username: name,
+		},
+	});
+}
+
+
 export function getUserProfile(UserId: string): ResponsTypes {
 	return service({
 		url: `/Auth/GetUser`,

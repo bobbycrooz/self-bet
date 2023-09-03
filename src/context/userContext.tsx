@@ -47,13 +47,11 @@ const UserProvider = ({ children }: { children: any }) => {
 	const [User, dispatch] = useReducer(userReducer, initialState);
 	const { notify } = useToast();
 	const { push } = useRouter();
-	const {clearBetHistory} = useBet()
+	const { clearBetHistory } = useBet();
 
 	// handlers------------------
 	async function findAndInitUser(userId: string) {
-		
 		// console.log(userId, "this is the user id");
-		
 
 		if (User.Email.length == 0) {
 			// fetch user
@@ -70,31 +68,38 @@ const UserProvider = ({ children }: { children: any }) => {
 			// console.log("found user in storage and set it to context", parsedUser);
 
 			// return dispatch({ type: "STORE_USER", payload: parsedUser });
-		} else
+		} else {
+			console.log("there is user so i didnt fetched");
+		}
+	}
+
+	async function fetchProfileDetails(userId: string) {
+		try {
+			const { error, serverResponse } = await getUserProfile(userId);
+			if (!error) {
+				dispatch({ type: "STORE_USER", payload: serverResponse });
+				
+				return true;
+			}
+		} catch (error)
 		{
-			console.log('there is user so i didnt fetched');
+			console.log(error);
+
+			return false;
 			
 		}
-
 	}
 
 	function logOut() {
-		
-		
 		localStorage.removeItem("SELFBET_USER");
-
 
 		removeToken();
 
-
 		dispatch({ type: "REMOVE_USER" });
-		
 
 		notify("success", "Logged out successfully!");
-		
-		
+
 		push("/auth");
-		
 	}
 
 	async function handleAuth(values: UserDetailsTypes, loginMode: boolean): Promise<boolean> {
@@ -108,7 +113,7 @@ const UserProvider = ({ children }: { children: any }) => {
 
 				if (!error) {
 					const saveToCookie = saveToken(serverResponse.token);
-					
+
 					localStorage.setItem("SELFBET_USER", JSON.stringify(serverResponse._id));
 
 					dispatch({ type: "STORE_USER", payload: serverResponse });
@@ -145,8 +150,7 @@ const UserProvider = ({ children }: { children: any }) => {
 
 	// --------USEEFFECTS
 
-	useEffect(() =>
-	{
+	useEffect(() => {
 		const rootUser = localStorage.getItem("SELFBET_USER");
 		findAndInitUser(JSON.parse(rootUser as string));
 	});
@@ -155,7 +159,9 @@ const UserProvider = ({ children }: { children: any }) => {
 
 	//providing the authcontext data to the consumer component
 	return (
-		<UserContext.Provider value={{ User, dispatch, isLoading, handleAuth, logOut }}>{children}</UserContext.Provider>
+		<UserContext.Provider value={{ User, dispatch, isLoading, handleAuth, logOut, findAndInitUser, fetchProfileDetails }}>
+			{children}
+		</UserContext.Provider>
 	);
 };
 

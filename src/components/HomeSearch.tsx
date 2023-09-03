@@ -45,8 +45,6 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 
 	async function debounceHandler() {
 
-	
-
 		// const { error, serverResponse } = await fetchBetListAPI(1);
 		const { error, serverResponse } = await searchBetList(1, searchKey, "TeamName");
 
