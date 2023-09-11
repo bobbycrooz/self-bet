@@ -208,7 +208,7 @@ function SendReset({
 					<InputField type={"email"} label="Email" place={"***@gmail.com"} value={email} change={handleEmailInput} />
 				</div>
 
-				<Button text={"Reseet Password"} type={"submit"} full disabled={isLoading} primary click={handleSendLink} />
+				<Button text={"Reset Password"} type={"submit"} full disabled={isLoading} primary click={handleSendLink} />
 			</form>
 
 			<div role="button" title="back to login" onClick={() => history.back()} className="back middle mt-8 space-x-2">

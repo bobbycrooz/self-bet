@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { MoreSvg } from "@/assets";
 import { useBet } from "@/context/betContext";
+import { pickRandomItem } from "@/utils/randomItem";
 // import { NextPageWithLayout } from "../_app";
 
 export default function BetCondition({
@@ -64,7 +65,7 @@ export default function BetCondition({
 					{Bet.Criteria.Conditions.map((i, k) => (
 						<div key={k} className="teams_display  border border-gray-200 rounded-lg px-4 p-5 hover:shadow-bet-card">
 							<div className="  space-x-4 items-start flex ">
-								<Image className="team_logo " src={"/icons/red_ball.svg"} alt="chealse" width={48} height={48} />
+								<Image className="team_logo " src={pickRandomItem(['/icons/red_ball.svg','/icons/green_ball.svg',"/icons/red_ball.svg","/icons/cyan_ball.svg"])} alt="chealse" width={48} height={48} />
 								<div className="texts ">
 									<h1 className="team_name txt-md  f-m text-gray-500 text-left">{i?.Sector}</h1>
 								</div>

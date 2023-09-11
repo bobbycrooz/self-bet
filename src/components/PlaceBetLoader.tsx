@@ -87,7 +87,7 @@ function Prompt({ status, handleClose, reason }: { reason?: any; status: string;
 	const { isMobile } = useScreen();
 	const { push } = useRouter();
 
-		const {isPlacing} = useBet()
+		const {isPlacing, clearBetHistory} = useBet()
 
 	
 
@@ -96,7 +96,10 @@ function Prompt({ status, handleClose, reason }: { reason?: any; status: string;
 			setTimeout(() =>
 			{
 				isPlacing(false)
-				push("/dashboard/my-bets");
+				
+				push("/dashboard/my-bets?status=created");
+
+				// return clearBetHistory()
 			}, 5000);
 		}
 	},[push, status]);

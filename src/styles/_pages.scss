@@ -48,7 +48,7 @@
 			@apply absolute w-full;
 			transition: all 0.4s linear;
 			&.login {
-				@apply top-[0%] left-0 w-full pl-[90px] pt-[80px];
+				@apply top-[0%] left-0 w-full pl-[90px] pt-[80px] ;
 			}
 
 			&.signIn {

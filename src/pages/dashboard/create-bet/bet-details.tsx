@@ -42,11 +42,9 @@ function Home() {
 		}
 	}, [pathname]);
 
-
 	useEffect(() => {
-		if(Bet.Type.length < 1)
-		{
-			push("/dashboard/create-bet?step=1")
+		if (Bet.Type.length < 1) {
+			push("/dashboard/create-bet?step=1");
 		}
 	}, [Bet.Type.length, pathname, push]);
 
@@ -204,17 +202,9 @@ export function BetSlipDetails({ data }: { data: any }) {
 		setShowList((p) => !p);
 	}
 
-	function handleRemoveCondition()
-	{
-
-		console.log(data, "bet --------bet slip for data---- ", Bet.Conditions);
-
+	function handleRemoveCondition() {
 		const newlist = Bet.Conditions.filter((i: any) => i.Sector !== data.Sector);
 
-		console.log(newlist, "bet --------bet slip for data---- ", Bet.Conditions);
-
-
-				
 		dispatchBet({
 			type: "REMOVE_CONDITION",
 			payload: {
@@ -222,9 +212,6 @@ export function BetSlipDetails({ data }: { data: any }) {
 			},
 		});
 	}
-			
-
-
 
 	return (
 		<div className="conditon_card border rounded-lg h-auto">
@@ -262,7 +249,6 @@ export function BetSlipDetails({ data }: { data: any }) {
 								<p className="text-gray-400 txt-xs  f-s">{data?.Codes}</p>
 							</div>
 						</li>
-					
 					</ol>
 				</div>
 			)}
@@ -289,8 +275,6 @@ function CheckSVG() {
 function BetConditionDropdown({ Bet }: { Bet: any }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const { Criteria } = Bet;
-
-	
 
 	function handleOpen() {
 		setIsOpen((p) => !p);
@@ -345,7 +329,9 @@ function BetConditionDropdown({ Bet }: { Bet: any }) {
 				onClick={handleOpen}
 				className="card-footer-toggle w-full bg-white row-between p-4 border-t rounded-b-lg px-6"
 			>
-				<p className="subtitle">{Bet?.Conditions?.length }/{Criteria?.Conditions?.length} selected</p>
+				<p className="subtitle">
+					{Bet?.Conditions?.length}/{Criteria?.Conditions?.length} selected
+				</p>
 				<Image
 					src={"/icons/dashboard/down.svg"}
 					alt="wallet"
@@ -370,29 +356,27 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 		setShowList((p) => !p);
 	}
 
-	function handlePickCondition(i: any)
-	{
-		
-		
-
+	function handlePickCondition(i: any) {
 		// check if condition already exist i a specific sector
 		if (Bet.Conditions.length > 0) {
-			const allSelectedSector: any[] =  []
-			
-			Bet.Conditions.map((i: any) =>
-			{
-				return allSelectedSector.push(i.Sector)
-			})
+			const allSelectedSector: any[] = [];
 
+			Bet.Conditions.map((i: any) => {
+				return allSelectedSector.push(i.Sector);
+			});
 
-			console.log(allSelectedSector);
+			if (allSelectedSector.includes(sectors.Sector)) {
+				// remove it
+				const newlist = Bet.Conditions.filter((i: any) => i.Sector !== sectors.Sector);
 
-			
-			
-			if (allSelectedSector.includes(sectors.Sector))
-			{
-				
-				return notify("error", "You can only pick one condition per sector");
+				dispatchBet({
+					type: "REMOVE_CONDITION",
+					payload: {
+						condition: newlist,
+					},
+				});
+
+				return;
 			}
 		}
 
@@ -409,6 +393,19 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 		});
 	}
 
+	function conditionPicked(i: any) {
+		// check if condition already exist i a specific sector
+		console.log(Bet.Conditions, i, sectors.Sector);
+
+		const picked = Bet.Conditions.find((item: any) => item.Codes === i);
+
+		if (picked) {
+			return true;
+		}
+
+		return false;
+	}
+
 	function getDesc(i: string) {
 		// get array of codes for given sector
 		const codes = MarketList.find((i: any) => i.Sector === sectors.Sector).Codes;
@@ -423,7 +420,7 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 			{/* --header */}
 			<div className=" p-3 " role="button" onClick={handleShowList}>
 				<div className="row-between">
-					<h1 className="txt-sm f-b text-gray-500">⚽️{sectors.Sector}</h1>
+					<h1 className="txt-sm f-b text-gray-500">⚽️ {sectors.Sector}</h1>
 
 					<Image
 						src={"/icons/dashboard/down.svg"}
@@ -448,7 +445,9 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 								role="button"
 								onClick={() => handlePickCondition(i)}
 								key={k}
-								className="selector_item rounded-lg bg-gray-50 p-[10px] px-4"
+								className={`selector_item rounded-lg bg-gray-50 p-[10px] px-4 transition-all duration-75 ${
+									conditionPicked(i) && "ring-2"
+								}`}
 							>
 								<h1 className="f-b">
 									{i} <span className="text-gray-400 txt-sm f-m">{getDesc(i)}</span>

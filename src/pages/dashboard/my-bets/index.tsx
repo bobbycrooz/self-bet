@@ -17,6 +17,8 @@ function Home() {
 	const [tabMode, setTabMode] = useState("My Created bets");
 	const { push, query, pathname } = useRouter();
 	const [step, setStep] = useState(1);
+		const { clearBetHistory} = useBet()
+
 
 	const tabs = ["My Created bets", "Results"];
 
@@ -69,6 +71,19 @@ function Home() {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname, step, BetList]);
 
+
+		useEffect(() => {
+		
+			if (query.status == 'created')
+			{
+				clearBetHistory()
+				console.log('et cleared');
+				
+			}
+		
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<>
 			<Head>
@@ -81,6 +96,7 @@ function Home() {
 			<div ref={topRef} className="h-[76px]  w-full md:h-0"></div>
 
 			<main className="dashboard_home bg-white w-full h-auto">
+
 				{/* ----header------ */}
 				<div className="bg-gray-50 w-full space-y-4 pt-6 px-6 md:px-12 column h-[auto] middle  sticky top-0 left-0 z-10">
 					<div className="w-full">

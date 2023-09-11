@@ -307,7 +307,7 @@ const BetProvider = ({ children }: { children: any }) => {
 
 			if (response.status == 200) {
 				// reset all states
-				clearBetHistory();
+			
 
 				setStatus(statusConst.success);
 
@@ -323,7 +323,11 @@ const BetProvider = ({ children }: { children: any }) => {
 
 				// isPlacing((p) => !p);
 
-				return notify("success", "Bet Placed Successfully");
+				 notify("success", "Bet Placed Successfully");
+
+				return;
+
+				// return clearBetHistory();
 			} else {
 				setStatus(statusConst.failed);
 
@@ -352,7 +356,6 @@ const BetProvider = ({ children }: { children: any }) => {
 
 			isPlacing(false);
 
-			isPlacing(false);
 
 			setCBD({
 				...createdBetDetails,

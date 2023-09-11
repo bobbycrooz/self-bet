@@ -17,6 +17,7 @@
 
 body {
 	font-family: "Inter", sans-serif !important;
+	transition: all 0.4s linear;
 	@apply overflow-x-hidden;
 
 	&::-webkit-scrollbar {
@@ -30,6 +31,8 @@ body {
 	&::-webkit-scrollbar-thumb {
 		@apply bg-gray-600 outline-1 outline-gray-600;
 	}
+
+
 }
 
 .custom-scrollbar {

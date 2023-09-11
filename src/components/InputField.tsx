@@ -93,7 +93,7 @@ const InputField = ({
         {touched && error && (
           <div className="error text-txt-critical middle mt-2">
             <Image width={20} height={20} src={"/icons/error.svg"} alt="" />
-            <h1 className="error-text ml-2">
+            <h1 className="error-text ml-2 text-xs text-red-400">
               {error || `Please enter your ${label.toLowerCase()}`}
             </h1>
           </div>
@@ -151,7 +151,7 @@ const InputField = ({
       {touched && error && (
         <div className="error text-txt-critical middle mt-2">
           <Image width={20} height={20} src={"/icons/error.svg"} alt="" />
-          <h1 className="error-text ml-2">
+          <h1 className="error-text ml-2  text-sm  text-red-400">
             {error || `Please enter your ${label.toLowerCase()}`}
           </h1>
         </div>

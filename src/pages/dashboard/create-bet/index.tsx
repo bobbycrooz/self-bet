@@ -35,7 +35,7 @@ setBetDetailsData } = useBet();
 		Codes: [],
 	});
 	const [conditions, setConditions] = useState<Array<ConditionTypes>>([]);
-	const [showDiscount, setShowDiscount] = useState(true);
+	const [showDiscount, setShowDiscount] = useState(!true);
 
 
 	function handleAddCondition()
@@ -43,10 +43,11 @@ setBetDetailsData } = useBet();
 		setIsEditing(false);
 			setCurrentSector({
 			...currentSector,
-			// Sector: 'H_TEAM/A_TEAM/DRAW',
+			Sector: '',
 				Codes: [],
 
-		});
+			});
+		setConditions([])
 		setIsAdding((p) => !p);
 	}
 

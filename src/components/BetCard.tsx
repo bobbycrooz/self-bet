@@ -141,9 +141,9 @@ const BetCard = ({ betType, data }: PropTypes) => {
 			<div
 				ref={profileRef}
 				onClick={handleClickOutside}
-				className="bet_card shadow-bet-card bg-white border border-gray-200 rounded-lg "
+				className="bet_card shadow-bet-card bg-white border border-gray-200 rounded-lg hover:translate-y-1 hover:shadow-lg transition-all duration-200 ease-in-out"
 			>
-				<div className=" p-3 md:p-6 space-y-4">
+				<div role="button" onClick={() => handleShowDetails(betType)} className=" p-3 md:p-6 space-y-4"> 
 					<div
 						style={{
 							backgroundImage: `url(${"/images/home/bet_image.jpg"})`,
@@ -182,7 +182,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 						</div>
 					</div>
 
-					<div className="badge_container space-y-2 ">
+					<div className="badge_container space-y-2">
 						<div className="row-between">
 							{showDetails.mode == betCardType.KOLO ? (
 								<div className="badge uppercase  p-1 px-2 bg-cyan-50 rounded txt-xs f-b text-cyan-600">KOLO bet</div>
@@ -195,15 +195,15 @@ const BetCard = ({ betType, data }: PropTypes) => {
 							<div
 								role="button"
 								title="options"
-								onClick={() => setShowCardOptions((p) => !p)}
-								className="dots relative"
+								// onClick={() => setShowCardOptions((p) => !p)}
+								className="dots relative group"
 							>
 								<Image src={"/icons/dots.svg"} alt={""} width={24} height={24} className="" />
 
-								{showCardOptions && (
+								
 									<div
 										// ref={profileRef}
-										className="bet_card-dropdown dropdown_profile z-50 absolute -right-1/2 top-[30px] bg-white  w-48 rounded-lg p-6 space-y-[18px] shadow-light strictFadeIn"
+										className="bet_card-dropdown hidden dropdown_profile z-50 absolute -right-1/2 top-[20px] bg-white  w-48 rounded-lg p-6 space-y-[18px] shadow-light strictFadeIn group-hover:block"
 									>
 										{hasJoined && (
 											<div
@@ -224,7 +224,6 @@ const BetCard = ({ betType, data }: PropTypes) => {
 											<p className="item_name txt-sm f-m text-gray-700  hover:text-sec">Share</p>
 										</div>
 									</div>
-								)}
 							</div>
 						</div>
 

@@ -9,6 +9,7 @@ import useScreen from "@/hooks/useScreen";
 import { useBet } from "@/context/betContext";
 import useToast from "@/hooks/useToast";
 import { SearchComponent } from "./SearchComp";
+import { pickRandomItem } from "@/utils/randomItem";
 
 interface PropTypes {
 	toggle: any;
@@ -31,12 +32,20 @@ const statusConst = {
 	failed: "FAILED",
 };
 
-const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditions, setCurrentSector, isEditing }: PropTypes) => {
+const AddCondition = ({
+	toggle,
+	showNoti,
+	currentSector,
+	conditions,
+	setConditions,
+	setCurrentSector,
+	isEditing,
+}: PropTypes) => {
 	const [show, toggleShow] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [showSectors, setShowSectors] = useState(false);
 	const [codes, setCodes] = useState([]);
-	const [codeToD, setCodeToD] = useState(codes);
+	const [codeToD, setCodeToD] = useState([]);
 	// const [currentSector, setCurrentSector] = useState({
 	// 	Sector: "",
 	// 	Codes: [],
@@ -49,8 +58,7 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 	const { notify } = useToast();
 
 	const [sectorLists, setSectors] = useState([]);
-	const [sectorToDisplay, setSectorTD] = useState(sectorLists);
-
+	const [sectorToDisplay, setSectorTD] = useState([]);
 
 	function searchSectorHandler(e: ChangeEvent<HTMLInputElement>) {
 		const resultList = sectorLists.filter((i: string) => i.toLowerCase().includes(e.target.value));
@@ -150,9 +158,8 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 			let existing = updatedArray.filter((i: any, a) => i.value === condition.value);
 
 			if (existing.length > 0) {
-			
-				// remove it 
-			// @ts-ignore
+				// remove it
+				// @ts-ignore
 				const updatedArray = conditions?.filter((i: any, a) => i.value !== condition.value);
 
 				setConditions(updatedArray);
@@ -160,9 +167,6 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 					...currentSector,
 					Codes: updatedArray as any,
 				});
-
-
-
 			} else {
 				// console.log("there was nothing and i added it to the array");
 
@@ -183,30 +187,22 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 		}
 	}
 
-	function handleSelectAllConditions()
-	{
+	function handleSelectAllConditions() {
 		let updatedArray = [...conditions];
-	
-		
 
 		// find existing condition
-	
 
-			// filter codes that are not in the conditions array and add them to the conditions array
+		// filter codes that are not in the conditions array and add them to the conditions array
 		const filteredCodes = codes.filter((i: any) => !updatedArray.includes(i));
-		
-		
 
-		if (filteredCodes.length === 0)
-		{
+		if (filteredCodes.length === 0) {
 			setConditions([]);
 			setCurrentSector({
 				...currentSector,
-				Codes: []
+				Codes: [],
 			});
-		} else
-		{
-				updatedArray.push(...filteredCodes);
+		} else {
+			updatedArray.push(...filteredCodes);
 
 			setConditions(updatedArray);
 
@@ -214,17 +210,11 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 				...currentSector,
 				Codes: updatedArray as any,
 			});
-		 }
-		
-		
-
-		
-		
+		}
 	}
 
-		// console.log(conditions.length, "this is the conditions array", codes.length);
+	// console.log(conditions.length, "this is the conditions array", codes.length);
 
-	
 	function handleSetAll() {
 		let updatedArray = [...conditions];
 
@@ -315,6 +305,8 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 			});
 			setConditions([]);
 
+			setCodeToD([]);
+
 			return toggle();
 		}
 
@@ -330,20 +322,30 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 		toggle();
 	}
 
+	function discardConditions() {
+		setCurrentSector({
+			Sector: "",
+			Codes: [],
+		});
+		setConditions([]);
+
+		setCodeToD([]);
+
+		return toggle();
+	}
+
 	useEffect(() => {
 		fetchAlllMarkets();
 	}, [fetchAlllMarkets]);
 
-	useEffect(() =>
-	{
-
-		
-		if (currentSector.Sector && isEditing)
-		{
+	useEffect(() => {
+		if (currentSector.Sector && isEditing) {
 			setConditions(currentSector.Codes);
-				handleGetSectorCodes(currentSector.Sector)
+			handleGetSectorCodes(currentSector.Sector);
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// setConditions([]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentSector.Codes, currentSector.Sector, isEditing, setConditions]);
 
 	return showNoti ? (
@@ -663,7 +665,13 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 																	onClick={() => handlePickSector(i)}
 																	className="option middle  mt-2  w-full  h-8 space-x-3"
 																>
-																	<div className={`h-full w-1 rounded-lg bg-green-400`}></div>
+																	<div
+																		className={`h-full w-1 rounded-lg ${pickRandomItem([
+																			"bg-green-300",
+																			"bg-orange-300",
+																			"bg-blue-300",
+																		])}`}
+																	></div>
 
 																	<h1 className="text-gray-500 txt-sm f-m capitalize">{i}</h1>
 																</li>
@@ -741,7 +749,7 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 															</button>
 														</div>
 
-														{codeToD &&
+														{codeToD.length ? (
 															codeToD.map((i: any, k) => (
 																<li
 																	key={k}
@@ -757,15 +765,26 @@ const AddCondition = ({ toggle, showNoti, currentSector, conditions, setConditio
 																		<span className="text-gray-400 txt-sm f-m ml-1">{i.desc}</span>
 																	</h1>
 																</li>
-															))}
+															))
+														) : (
+															<p className="text-sm  p-2 text-center text-gray-400">No sector selected.</p>
+														)}
 													</ol>
 												</div>
 											)}
 										</div>
 
 										{/* ---save btn */}
-										<div className="mt-8">
-											<Button click={saveBetConditions} text={"Save bet Conditions"} type={"button"} primary full />
+										<div className="mt-8 space-y-2">
+											<Button
+												click={saveBetConditions}
+												text={"Save bet Conditions"}
+												type={"button"}
+												primary
+												full
+												disabled={conditions.length < 1}
+											/>
+											<Button click={discardConditions} text={"Discard"} type={"button"} ghost full />
 										</div>
 									</div>
 								</div>
