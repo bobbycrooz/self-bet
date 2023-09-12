@@ -326,7 +326,7 @@ setBetDetailsData } = useBet();
 
 					{/* progress handler */}
 					{step >= 2 && (
-						<div ref={progressRef} className=" fixed lg:static bottom-0 left-0 w-full">
+						<div ref={progressRef} className=" fixed bottom-0 left-0 w-full">
 							<div className="bar w-full h-1 bg-gray-50 transition-all">
 								<div
 									style={{

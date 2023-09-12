@@ -161,9 +161,9 @@ export default function Home() {
 						{/* google */}
 						<div
 							role="button"
-							onClick={handleGoogle}
+							// onClick={handleGoogle}
 							title="sign in with your google account"
-							className="google w-full row-center p-3 border border-[#E5E7EB] rounded-lg mt-12"
+							className="cursor-not-allowed google w-full row-center p-3 border border-[#E5E7EB] rounded-lg mt-12"
 						>
 							<Image src={"/icons/google.svg"} alt="logo" width={24} height={24} />
 							<h1 className="txt-md text-gray-600 ml-2 f-s">
@@ -292,10 +292,11 @@ export default function Home() {
 											role="button"
 											title="Login into your existing account"
 											onClick={handleAuthMode}
-											className="f-eb text-gray-900"
+											className="f-eb text-sec"
 										>
-											Log in here.
-										</strong>
+											Log in
+										</strong> {" "}
+										 here.
 									</h1>
 								) : (
 									<h1 className="info  txt-sm f-m t-g5">

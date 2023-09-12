@@ -8,6 +8,7 @@ import { BetSlipDetails } from "@/pages/dashboard/create-bet/bet-details";
 import { useBet } from "@/context/betContext";
 import { useUser } from "@/context/userContext";
 import { hasToken } from "@/utils";
+import ConfirmLogout from "./ConfirmLogout";
 
 const navItemArray = [
 	{
@@ -27,8 +28,6 @@ const navItemArray = [
 		link: "/dashboard/my-bets",
 		icon: "/icons/dashboard/bets.svg",
 	},
-
-
 
 	{
 		name: "my wallet",
@@ -104,11 +103,11 @@ const mobileNavItemArray = [
 const Sidebar = () => {
 	const { push, pathname } = useRouter();
 	const [showBetList, setShowBetList] = useState(false);
+	const [confirmLogout, toggleConfirmLogout] = useState(false);
 
 	const { isLoading, placing, status, handlePlaceBet, setIsLoading, setStatus } = useBet();
-	const { logOut } = useUser()
+	const { logOut } = useUser();
 	const { User } = useUser();
-	
 
 	function linkHandler(link: string) {
 		return push(link);
@@ -116,6 +115,11 @@ const Sidebar = () => {
 
 	function handleShowBet() {
 		setShowBetList((p) => !p);
+	}
+
+	function handleLogout() {
+		// setShowProfile(!showProfile);
+		toggleConfirmLogout((p) => !p);
 	}
 
 	function handlePlaceBetMobile() {
@@ -149,26 +153,40 @@ const Sidebar = () => {
 					))}
 				</ul>
 
-			{hasToken() && <div className="w-full">
-						<div role="button" onClick={logOut} className="middle  justify-between border-t py-4">
-						{/* <Image src={"/icons/dashboard/olivia.svg"} alt="logo" width={40} height={40} className="" /> */}
-							<div className="w-8 h-8 bg-gray-100 rounded-full grid-center">
-								<h1 className=" txt-xs  f-eb  text-gray-400">
-									{User?.Username ? User?.Username.slice(0, 2).toUpperCase() : ""}
-								</h1>
-							</div>
+				{hasToken() && (
+					<div className="w-full">
+						<div role="button" className="middle  justify-between border-t py-4">
+							{/* <Image src={"/icons/dashboard/olivia.svg"} alt="logo" width={40} height={40} className="" /> */}
+							<Link href={"profile"} className=" space-x-2 middle  justify-between">
+								<div className="w-8 h-8 bg-gray-100 rounded-full grid-center">
+									<h1 className=" txt-xs  f-eb  text-gray-400">
+										{User?.Username ? User?.Username.slice(0, 2).toUpperCase() : ""}
+									</h1>
+								</div>
 
-							<div className="name_box ">
-							<h1 className="name txt-md t-g9 f-eb">{User?.Username ? User?.Username : "--_--"}</h1>
-								{/* <p className="sub_name text-sm f-n t-g6">{User?.Email ? User?.Email : "--_--"}</p> */}
-							</div>
+								<div className="name_box ">
+									<h1 className="name txt-md t-g9 f-eb">{User?.Username ? User?.Username : "--_--"}</h1>
+									{/* <p className="sub_name text-sm f-n t-g6">{User?.Email ? User?.Email : "--_--"}</p> */}
+								</div>
+							</Link>
 
-							<Image src={"/icons/dashboard/logout.svg"} alt="logo" width={36} height={36} className="" />
+							<Image
+								src={"/icons/dashboard/logout.svg"}
+								onClick={handleLogout}
+								alt="logo"
+								width={36}
+								height={36}
+								className=""
+							/>
 						</div>
-				</div>}
+					</div>
+				)}
 				{/*  */}
 			</aside>
-		
+
+			<ConfirmLogout handleClose={handleLogout} isLoading={false} toggleLoader={undefined} show={confirmLogout} />
+
+
 			{/* ---------------mobile */}
 			{!isCreating && (
 				<div className="  lg:hidden mobile_menu    shadow-bet-card-v fixed bottom-0 left-0 w-full z-[9]">
@@ -220,11 +238,8 @@ const Sidebar = () => {
 
 // @ts-ignore
 function BetSlip({ handleShowBet, showBetList, handlePlaceBet }) {
-	// const {isLoading,
-	// 	placing,
-	// 	status,
-	// 	handlePlaceBet, setIsLoading,
-	// 	setStatus} = useBet()
+	
+
 	return (
 		<aside className={`w-full h-auto `}>
 			{/* --wrapperr--- */}

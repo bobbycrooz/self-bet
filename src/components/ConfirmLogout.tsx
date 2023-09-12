@@ -38,7 +38,7 @@ const Process = ({
   }
 
   return show ? (
-    <div className="modal_overlay fixed top-0 left-0 w-full h-full bg-[#00000083] grid-center z-50">
+    <div className="modal_overlay fixed top-0 left-0 w-full h-full bg-[#00000083] grid-center z-[99999]">
       <div
         ref={cardRef}
         className="modal_card relative p-12 px-8 bg-white rounded-lg shadow-soft w-[400px] min-h-[244px]"
@@ -97,7 +97,7 @@ function Prompt({
 
       
 
-          <Button text={"Logout"} click={logOut} type={"button"}  />
+          <Button text={"Logout"} click={logOut} type={"button"} primary  />
 
         </div>
       </div>

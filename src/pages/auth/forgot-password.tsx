@@ -6,6 +6,7 @@ import { ChangeEvent, Dispatch, SetStateAction, use, useEffect, useState } from 
 import { useRouter } from "next/router";
 import { changePasswordAPI, resetMailAPI } from "@/axios/endpoints/auth.endpoint";
 import useToast from "@/hooks/useToast";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 const stepNames = {
@@ -19,16 +20,25 @@ export default function ForgotPassword() {
 	const [currentStep, setCurrentStep] = useState(stepNames.SENDEMAIL);
 	const [isLoading, setIsLoading] = useState(false);
 	const [token, setToken] = useState("");
+	const [email, setEmail] = useState("");
 
 	const { query } = useRouter();
 
 	function handleFlow() {
 		switch (currentStep) {
 			case stepNames.SENDEMAIL:
-				return <SendReset setCurrentStep={setCurrentStep} toggleLoader={setIsLoading} isLoading={isLoading} />;
+				return (
+					<SendReset
+						setCurrentStep={setCurrentStep}
+						email={email}
+						setEmail={setEmail}
+						toggleLoader={setIsLoading}
+						isLoading={isLoading}
+					/>
+				);
 
 			case stepNames.SENTSUCCESS:
-				return <EmailSent setCurrentStep={setCurrentStep} />;
+				return <EmailSent email={email} setCurrentStep={setCurrentStep} />;
 
 			case stepNames.NEWPASSWORD:
 				return (
@@ -44,7 +54,15 @@ export default function ForgotPassword() {
 				return <ResetSuccess />;
 
 			default:
-				return <SendReset setCurrentStep={setCurrentStep} toggleLoader={setIsLoading} isLoading={isLoading} />;
+				return (
+					<SendReset
+						email={email}
+						setEmail={setEmail}
+						setCurrentStep={setCurrentStep}
+						toggleLoader={setIsLoading}
+						isLoading={isLoading}
+					/>
+				);
 		}
 	}
 
@@ -78,17 +96,17 @@ export default function ForgotPassword() {
 	);
 }
 
-function EmailSent({ setCurrentStep }: { setCurrentStep: Dispatch<SetStateAction<string>> }) {
+function EmailSent({ setCurrentStep, email }: { email: string; setCurrentStep: Dispatch<SetStateAction<string>> }) {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	function handleRedirect() {
-		setTimeout(() => {
-			setCurrentStep(stepNames.NEWPASSWORD);
-		}, 3000);
-	}
+	// function handleRedirect() {
+	// 	setTimeout(() => {
+	// 		setCurrentStep(stepNames.NEWPASSWORD);
+	// 	}, 3000);
+	// }
 
-	useEffect(() => {
-		handleRedirect();
-	}, [handleRedirect]);
+	// useEffect(() => {
+	// 	handleRedirect();
+	// }, [handleRedirect]);
 
 	return (
 		<div className="w-full column items-center">
@@ -101,12 +119,15 @@ function EmailSent({ setCurrentStep }: { setCurrentStep: Dispatch<SetStateAction
 			<p className="text-md text-gray-500 mt-3 text-center">
 				A password reset link has been sent to
 				<br />
-				<strong>emmanuelogbonna@gmail.com</strong>
+				<strong>{email}</strong>
 			</p>
 
 			<div className="google w-full space-x-2 row-center p-3 border border-[#E5E7EB] rounded-lg mt-8">
 				<Image src={"/icons/mail-googel.svg"} alt="logo" width={24} height={24} />
+				<Link href={"https://mail.google.com/#search/eogbonna098"} target="_blank">
+				
 				<h1 className="txt-md text-gray-600 ml-2 f-s">Open Gmail</h1>
+				</Link>
 				<Image src={"/icons/send.svg"} alt="logo" width={24} height={24} />
 			</div>
 
@@ -122,18 +143,20 @@ function SendReset({
 	setCurrentStep,
 	isLoading,
 	toggleLoader,
+	email,
+	setEmail,
 }: {
 	setCurrentStep: Dispatch<SetStateAction<string>>;
 	isLoading: boolean;
 	toggleLoader: Dispatch<SetStateAction<boolean>>;
-	})
-{
-	
+	email: string;
+	setEmail: Dispatch<SetStateAction<string>>;
+}) {
 	const { notify } = useToast();
+
 	async function handleSendLink(e: { preventDefault: () => void }) {
 		e.preventDefault();
-
-		console.log(email, "email");
+		toggleLoader(true);
 
 		if (!validateEmail()) return;
 
@@ -143,33 +166,27 @@ function SendReset({
 			Email: email,
 		});
 
-		if (error)
-		{
+		if (error) {
 			// @ts-ignore
-			notify("error", serverResponse );
-			
+			notify("error", serverResponse);
+			toggleLoader(false);
 		} else {
-			toggleLoader(true);
-
 			// console.log(serverResponse, "email has been sent succesfully");
 			// @ts-ignore
-			notify("success", serverResponse );
-
+			notify("success", serverResponse);
 
 			setTimeout(() => {
 				toggleLoader(false);
 
 				setCurrentStep(stepNames.SENTSUCCESS);
-			}, 3000);
+			}, 2000);
 		}
 	}
 
 	// colect email
-	const [email, setEmail] = useState("");
 
 	// email validation
 	const [emailError, setEmailError] = useState("");
-	console.log(emailError);
 
 	function validateEmail() {
 		if (email === "") {
@@ -208,7 +225,15 @@ function SendReset({
 					<InputField type={"email"} label="Email" place={"***@gmail.com"} value={email} change={handleEmailInput} />
 				</div>
 
-				<Button text={"Reset Password"} type={"submit"} full disabled={isLoading} primary click={handleSendLink} />
+				<Button
+					text={"Reset Password"}
+					type={"submit"}
+					full
+					disabled={isLoading}
+					primary
+					click={handleSendLink}
+					isLoading={isLoading}
+				/>
 			</form>
 
 			<div role="button" title="back to login" onClick={() => history.back()} className="back middle mt-8 space-x-2">
@@ -237,7 +262,7 @@ function NewPassword({
 	const [isBtnLoading, setIsLoading] = useState(false);
 
 	const [confirmPassword, confirmPasswordSetPassword] = useState("");
-	
+
 	const router = useRouter();
 
 	// email validation
@@ -248,11 +273,9 @@ function NewPassword({
 		e.preventDefault();
 		setIsLoading(true);
 
-
-		if (!validatePassword())
-		{
-			setIsLoading(false);	
-			return notify("error", "Password does not match!" );
+		if (!validatePassword()) {
+			setIsLoading(false);
+			return notify("error", "Password does not match!");
 		}
 
 		// send email
@@ -269,25 +292,23 @@ function NewPassword({
 			token,
 		});
 
-		if (error)
-		{
-			setIsLoading(false);	
+		if (error) {
+			setIsLoading(false);
 
-			 // @ts-ignore
+			// @ts-ignore
 			notify("error", serverResponse);
-			
 		} else {
 			toggleLoader(true);
-			
+
 			// @ts-ignore
-			notify("success", "Password successfully changed!" );
+			notify("success", "Password successfully changed!");
 
 			setTimeout(() => {
 				toggleLoader(false);
 
 				setCurrentStep(stepNames.SENTSUCCESS);
 
-				router.push('/auth')
+				router.push("/auth");
 			}, 3000);
 		}
 	}

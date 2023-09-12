@@ -176,7 +176,7 @@ const Navbar = () => {
 								{showProfile && (
 									<div
 										ref={profileRef}
-										className="dropdown_profile z-50 absolute right-0 top-10 bg-white  w-48 rounded-lg p-6 space-y-[18px] shadow-light strictFadeIn"
+										className="dropdown_profile z-[99999] absolute right-0 top-10 bg-white  w-48 rounded-lg p-6 space-y-[18px] shadow-light strictFadeIn"
 									>
 										<Link
 											role="button"
