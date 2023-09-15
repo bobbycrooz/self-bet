@@ -11,21 +11,19 @@ import { useUser } from "@/context/userContext";
 import { useBet } from "@/context/betContext";
 
 
-function Home()
-{
+function Home() {
 	const { BetList } = useBet();
 	const { User } = useUser();
 	const [isWithdrawing, setIsWithdrawing] = useState(false);
 	const [isDepositing, setIsDepositing] = useState(false);
-		const [currentlist, setCurrentList] = useState(BetList);
+	const [currentlist, setCurrentList] = useState(BetList);
 	const [tabMode, setTabMode] = useState("All Bets");
 	const { push, query, pathname } = useRouter();
 
-		const tabs = ["All Bets", "My Created"];
-
+	const tabs = ["All Bets", "My Created"];
 
 	// handlers--------------
-		function handleTabClick(value: "My Created" | "All Bets") {
+	function handleTabClick(value: "My Created" | "All Bets") {
 		setTabMode(value);
 
 		if (value == "My Created") {
@@ -142,7 +140,9 @@ function Home()
 
 							<div className="">
 								<p className="text-gray-400 txt-xs f-m ">Wallet balance</p>
-								<h1 className="notify text-xl f-eb text-gray-900  ">N {User?.Balance ? User?.Balance.toLocaleString() : "--_--"}</h1>
+								<h1 className="notify text-xl f-eb text-gray-900  ">
+									N {User?.Balance ? User?.Balance.toLocaleString() : "--_--"}
+								</h1>
 							</div>
 						</div>
 
@@ -216,9 +216,9 @@ function Home()
 							{/* <Image src={"/icons/dashboard/olivia.svg"} alt="logo" width={40} height={40} className="" /> */}
 
 							<div className="w-12 h-12 bg-gray-100 rounded-full grid-center">
-								<h1 className=" txt-md  f-eb  text-gray-400">{User?.Username ? User?.Username.slice(0,2).toUpperCase() : ""}</h1>
-
-
+								<h1 className=" txt-md  f-eb  text-gray-400">
+									{User?.Username ? User?.Username.slice(0, 2).toUpperCase() : ""}
+								</h1>
 							</div>
 
 							<div className="name_box">
@@ -258,9 +258,9 @@ function Home()
 					</div> */}
 
 					{/* --------active bet listing----- */}
-			 <div className="w-full h-auto px-4  pt-1/2 ">
-					{/* -----bet list------ */}
-					{/* {currentlist?.length > 0 ? (
+					<div className="w-full h-auto px-4  pt-1/2 ">
+						{/* -----bet list------ */}
+						{/* {currentlist?.length > 0 ? (
 						<div className="active_bet_wrapper pb-36 grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
 							{currentlist?.map((i: any, k: number) => (
 								<div className="" key={k}>
@@ -279,7 +279,7 @@ function Home()
 							<h1 className="txt-md f-b t-g5 md:txt-sm mt-3">Join bet</h1>
 						</div>
 					)} */}
-				</div> 
+					</div>
 				</div>
 
 				{/* -----withdrawal pane------- */}

@@ -109,6 +109,10 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 			{/* Dropdowns */}
 
 			{showFilter && (
+
+				<>
+					<div onClick={() => setShowFilter(false)} className="fixed top-0 left-0 w-full h-full bg-transparent bg-opacity-50 z-50"/>
+					
 				<div className="absolute  w-full  bg-white left-0 top-11 filter_dropdown">
 					<DropDown
 						type={"byTeam"}
@@ -141,7 +145,9 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 
 						show={searchMode.percent}
 						toggleShow={setSearchMode} context={"Bets"}					/>
-				</div>
+					</div>
+				</>
+					
 			)}
 		</div>
 	);

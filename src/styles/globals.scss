@@ -262,3 +262,18 @@ background: #FFF;
 /* Shadow/md */
 box-shadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px rgba(16, 24, 40, 0.10);
 }
+
+
+.settings_bg{
+	background: url('/images/settings_banner.png');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	
+}
+
+
+.uploadedImgBg{
+background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.48) 0.01%, rgba(0, 0, 0, 0.00) 48.68%, rgba(0, 0, 0, 0.00) 49.5%, rgba(0, 0, 0, 0.48) 100%);
+
+}

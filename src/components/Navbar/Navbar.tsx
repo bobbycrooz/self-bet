@@ -30,10 +30,10 @@ import { useBet } from "@/context/betContext";
 
 const Navbar = () => {
 	const [showProfile, setShowProfile] = useState(false);
+	const [confirmLogout, toggleConfirmLogout] = useState(false);
 	const [isSearching, setIsSearching] = useState(false);
 	const [notification, toggleNoti] = useState(false);
 	// const [showMobileNotification, setMobileNotification] = useState(false);
-	const [confirmLogout, toggleConfirmLogout] = useState(false);
 	const profileRef = useRef<HTMLDivElement>(null);
 	const { isMobile } = useWindowSize();
 	const { User } = useUser();

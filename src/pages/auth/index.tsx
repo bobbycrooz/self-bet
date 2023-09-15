@@ -93,7 +93,7 @@ export default function Home() {
 		onSubmit,
 	});
 
-	console.log(errors);
+	// console.log(errors);
 	
 
 	// useEffects -------------
