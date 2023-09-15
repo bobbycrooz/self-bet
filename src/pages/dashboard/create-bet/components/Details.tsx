@@ -128,7 +128,7 @@ export default function BetDetails({
 
 						{/*  */}
 
-						<DropzoneComponent seCurrentFile={setBetImg} />
+						<DropzoneComponent seCurrentFile={setBetImg} isAvatar={false} />
 					</div>
 				</div>
 

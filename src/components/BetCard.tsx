@@ -9,6 +9,7 @@ import { BiShareAlt } from "react-icons/bi";
 import { VscSaveAll } from "react-icons/vsc";
 import MatchCard from "./MatchCard";
 import { useUser } from "@/context/userContext";
+import { getUserProfile } from "@/axios/endpoints/auth.endpoint";
 
 interface PropTypes {
 	betType: "KoloBet" | "PointBet" | undefined;
@@ -64,8 +65,6 @@ const BetCard = ({ betType, data }: PropTypes) => {
 
 	const { User } = useUser();
 
-
-
 	function userJoined() {
 		// check if current usser is among the playerws
 		const yes = data?.Players.find((i: any) => i.userId === User._id);
@@ -96,8 +95,6 @@ const BetCard = ({ betType, data }: PropTypes) => {
 			});
 		}
 	}
-
-	
 
 	function tabModeHandler() {
 		switch (betTabMode) {
@@ -132,9 +129,15 @@ const BetCard = ({ betType, data }: PropTypes) => {
 		document.execCommand("copy");
 	};
 
+	async function getName(id: string) {
+		// GET PLAYER DETAILS
+		const { error, serverResponse } = await getUserProfile(id);
 
+		if (error) console.log(serverResponse);
+
+		return serverResponse.Username.slice(0, 2).toUpperCase();
+	}
 	// console.log(data.Players);
-	
 
 	return (
 		<>
@@ -143,7 +146,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 				onClick={handleClickOutside}
 				className="bet_card shadow-bet-card bg-white border border-gray-200 rounded-lg hover:translate-y-1 hover:shadow-lg transition-all duration-200 ease-in-out"
 			>
-				<div role="button" onClick={() => handleShowDetails(betType)} className=" p-3 md:p-6 space-y-4"> 
+				<div role="button" onClick={() => handleShowDetails(betType)} className=" p-3 md:p-6 space-y-4">
 					<div
 						style={{
 							backgroundImage: `url(${"/images/home/bet_image.jpg"})`,
@@ -200,30 +203,29 @@ const BetCard = ({ betType, data }: PropTypes) => {
 							>
 								<Image src={"/icons/dots.svg"} alt={""} width={24} height={24} className="" />
 
-								
-									<div
-										// ref={profileRef}
-										className="bet_card-dropdown hidden dropdown_profile z-50 absolute -right-1/2 top-[20px] bg-white  w-48 rounded-lg p-6 space-y-[18px] shadow-light strictFadeIn group-hover:block"
-									>
-										{hasJoined && (
-											<div
-												role="button"
-												onClick={() => handleShowDetails(betType)}
-												className="profile_item middle space-x-4"
-												// href={"/dashboard/profile"}
-											>
-												<VscSaveAll className=" profile_item-icon" />
+								<div
+									// ref={profileRef}
+									className="bet_card-dropdown hidden dropdown_profile z-50 absolute -right-1/2 top-[20px] bg-white  w-48 rounded-lg p-6 space-y-[18px] shadow-light strictFadeIn group-hover:block"
+								>
+									{hasJoined && (
+										<div
+											role="button"
+											onClick={() => handleShowDetails(betType)}
+											className="profile_item middle space-x-4"
+											// href={"/dashboard/profile"}
+										>
+											<VscSaveAll className=" profile_item-icon" />
 
-												<p className="item_name txt-sm f-m text-gray-700 hover:text-sec">View</p>
-											</div>
-										)}
-
-										<div role="button" onClick={handleCopy} className="profile_logout middle space-x-4">
-											<BiShareAlt className="profile_logout-icon" />
-
-											<p className="item_name txt-sm f-m text-gray-700  hover:text-sec">Share</p>
+											<p className="item_name txt-sm f-m text-gray-700 hover:text-sec">View</p>
 										</div>
+									)}
+
+									<div role="button" onClick={handleCopy} className="profile_logout middle space-x-4">
+										<BiShareAlt className="profile_logout-icon" />
+
+										<p className="item_name txt-sm f-m text-gray-700  hover:text-sec">Share</p>
 									</div>
+								</div>
 							</div>
 						</div>
 
@@ -238,7 +240,9 @@ const BetCard = ({ betType, data }: PropTypes) => {
 						<div className="amounts middle space-x-2">
 							{data?.Discount?.discount !== 0 && (
 								<div className="">
-									<h1 className="off txt-xs f-s text-gray-500">{data?.Discount.discount == '' ? '0%' : ` ${data?.Discount.discount}%`} off</h1>
+									<h1 className="off txt-xs f-s text-gray-500">
+										{data?.Discount.discount == "" ? "0%" : ` ${data?.Discount.discount}%`} off
+									</h1>
 									<h1 className="off txt-xs  text-gray-300 ">/₦{data?.Amount}</h1>
 								</div>
 							)}
@@ -270,8 +274,6 @@ const BetCard = ({ betType, data }: PropTypes) => {
 					</div>
 				</footer>
 			</div>
-
-
 
 			{/* bet side bar  */}
 			{showDetails.show && (
@@ -554,9 +556,8 @@ const BetCard = ({ betType, data }: PropTypes) => {
 														/>
 													)}
 												</div>
-												</div>
-												
-											
+											</div>
+
 											{/* -----------second badge row-------- */}
 											<div className="w-full px-12 sticky top-0   bg-white shadow pt-4 z-20">
 												<div className="badge_container row-between ">
@@ -573,25 +574,18 @@ const BetCard = ({ betType, data }: PropTypes) => {
 															)}
 														</div>
 
-															<h1 className="bet_name txt-lg f-eb text-gray-600">{data?.Creator.Username}</h1>
-															<h1 className="bet_name txt-xs  text-gray-400">Players: <b>{data?.Players.length}</b></h1>
-															
+														<h1 className="bet_name txt-lg f-eb text-gray-600">{data?.Creator.Username}</h1>
+														<h1 className="bet_name txt-xs  text-gray-400">
+															Players: <b>{data?.Players.length}</b>
+														</h1>
 
-															<div className="temas_logo  relative flex items-center ml-4">
-																{
-																	data?.Players.map((i: any,k:number) => (
-																		<div key={i} className={`logo_box z-${10 * (k + 1)  } -ml-3`}>
-																	<div className="rounded-full font-bold text-gray-700 text-sm w-6 h-6 centered">
-																		<p>{i.userId?.slice(5,7).toUpperCase()}</p>
-																			</div>
-																			</div>
-																			
-																	))
-														}
-														
-
-														
-													</div>
+														<div className="temas_logo  relative flex items-center ml-4">
+															{data?.Players.map((i: any, k: number) => (
+																<div key={i} className={`logo_box z-${10 * (k + 1)} -ml-3`}>
+																	<PlayerAvatar id={i.userId} />
+																</div>
+															))}
+														</div>
 
 														{/* <Image src={"/images/home/users.png"} alt={""} className="mt-4" width={144} height={24} /> */}
 													</div>
@@ -651,7 +645,7 @@ const BetCard = ({ betType, data }: PropTypes) => {
 			)}
 
 			{copy && (
-				<div className="modal top-0 left-0 strictFadeIn fixed w-full h-full bg-[#0000003e] grid place-content-center z-30">
+				<div className="modal top-0 left-0 strictFadeIn fixed w-full h-full bg-[#0000003e] grid place-content-center z-[99999]">
 					<div className=" bg-white rounded p-4 py-8 FadeIn space-y-2 relative w-[400px]">
 						<div role="button" onClick={() => handleCopy()} className="cancle_btn absolute -right-11  -top-11">
 							<Image
@@ -688,20 +682,17 @@ const BetCard = ({ betType, data }: PropTypes) => {
 	);
 };
 
-function Matches({ data }: any)
-{
-	
-	
+function Matches({ data }: any) {
 	return (
-		<MatchCard 
+		<MatchCard
 			teamData={{
 				TeamA: {
 					Logo: data.Criteria.TeamA.Logo || data.Criteria.TeamA.logo,
-					TeamName: data.Criteria.TeamA.TeamName || data.Criteria.TeamA.name
+					TeamName: data.Criteria.TeamA.TeamName || data.Criteria.TeamA.name,
 				},
 				TeamB: {
-					Logo: data.Criteria.TeamB.Logo || data.Criteria.TeamB.logo,	
-					TeamName: data.Criteria.TeamB.TeamName || data.Criteria.TeamB.name
+					Logo: data.Criteria.TeamB.Logo || data.Criteria.TeamB.logo,
+					TeamName: data.Criteria.TeamB.TeamName || data.Criteria.TeamB.name,
 				},
 			}}
 		/>
@@ -789,6 +780,32 @@ function Creator({ data }: any) {
 					)
 				)}
 		</>
+	);
+}
+
+function PlayerAvatar({ id }: any) {
+	const [playerNme, setPlayerName] = useState("");
+
+	async function getName(id: string) {
+		// GET PLAYER DETAILS
+		const { error, serverResponse } = await getUserProfile(id);
+
+		// console.log(serverResponse, "paer details");
+
+		return setPlayerName(serverResponse.Username);
+
+		// return serverResponse.Username.slice(0, 2).toUpperCase();
+	}
+
+	useEffect(() => {
+	getName(id)
+	}, [])
+	
+	return (
+		<div className="rounded-full font-bold text-gray-700 text-sm w-6 h-6 centered">
+			{/* <p>{i.userId?.slice(5, 7).toUpperCase()}</p> */}
+			<p>{playerNme?.slice(0, 2).toUpperCase()}</p>
+		</div>
 	);
 }
 

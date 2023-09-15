@@ -18,10 +18,9 @@ function Home() {
 	const { fetchProfileDetails } = useUser();
 	const { User } = useUser();
 	const [currentImageData, setCurrentImg] = useState<string>();
-		const [showProfile, setShowProfile] = useState(false);
+	const [showProfile, setShowProfile] = useState(false);
 	const [confirmLogout, toggleConfirmLogout] = useState(false);
 	const [avatarSrc, setAvatarSrc] = useState<string>();
-
 
 	const dataValues = {
 		Username: "",
@@ -57,7 +56,7 @@ function Home() {
 		onSubmit,
 	});
 
-		function handleLogout() {
+	function handleLogout() {
 		setShowProfile(!showProfile);
 		toggleConfirmLogout((p) => !p);
 	}
@@ -90,8 +89,6 @@ function Home() {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-
-
 
 			<main className="dashboard_home bg-white w-full h-auto md:pb-16 ">
 				{/* ----header---- */}
@@ -198,8 +195,6 @@ function Home() {
 										{/* dropzone */}
 										<div className=" w-full ">
 											<DropzoneComponent seCurrentFile={setCurrentImg} setDataurl={setAvatarSrc} isAvatar={true} />
-
-											
 										</div>
 									</div>
 								</div>
@@ -254,10 +249,7 @@ function Home() {
 										error={errors.Email}
 										blur={handleBlur}
 									/>
-								
 								</div>
-
-							
 							</div>
 							{/* FOOTER */}
 							<div className="action border-t rounded-b-xl  flex items-center justify-end w-full">
@@ -269,7 +261,7 @@ function Home() {
 						</div>
 					</div>
 
-						{/* ROW THREE */}
+					{/* ROW THREE */}
 					<div className="flex justify-between space-x-8 mt-8 ">
 						<div className="w-[300px]">
 							<div className="name_box">
@@ -279,20 +271,17 @@ function Home() {
 
 						<div className="w-full flex shadow flex-col items-start border rounded-xl h-auto p-6">
 							{/* BODY */}
-						<div role="button" onClick={handleLogout} className="profile_logout middle space-x-4">
-											<RiLogoutCircleRLine className="text-gray-500 " />
+							<div role="button" onClick={handleLogout} className="profile_logout middle space-x-4">
+								<RiLogoutCircleRLine className="text-gray-500 " />
 
-											<p className="item_name  f-b text-gray-500  hover:text-sec">LOG OUT</p>
-										</div>
-						
+								<p className="item_name  f-b text-gray-500  hover:text-sec">LOG OUT</p>
+							</div>
 						</div>
 					</div>
 				</div>
 			</main>
 
-
 			<ConfirmLogout handleClose={handleLogout} isLoading={false} toggleLoader={undefined} show={confirmLogout} />
-
 		</>
 	);
 

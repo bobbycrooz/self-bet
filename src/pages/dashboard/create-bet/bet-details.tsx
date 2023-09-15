@@ -446,7 +446,7 @@ function BetSelectorDetails({ sectors }: { sectors: any }) {
 								onClick={() => handlePickCondition(i)}
 								key={k}
 								className={`selector_item rounded-lg bg-gray-50 p-[10px] px-4 transition-all duration-75 ${
-									conditionPicked(i) && "ring-2 ring-sec"
+									conditionPicked(i) && "bg-gray-900 text-white"
 								}`}
 							>
 								<h1 className="f-b">
