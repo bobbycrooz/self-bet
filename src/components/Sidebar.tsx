@@ -157,7 +157,7 @@ const Sidebar = () => {
 					<div className="w-full">
 						<div role="button" className="middle  justify-between border-t py-4">
 							{/* <Image src={"/icons/dashboard/olivia.svg"} alt="logo" width={40} height={40} className="" /> */}
-							<Link href={"profile"} className=" space-x-2 middle  justify-between">
+							<Link href={"dashboard/profile"} className=" space-x-2 middle  justify-between">
 								<div className="w-8 h-8 bg-gray-100 rounded-full grid-center">
 									<h1 className=" txt-xs  f-eb  text-gray-400">
 										{User?.Username ? User?.Username.slice(0, 2).toUpperCase() : ""}
