@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { changeUserNameAPI } from "@/axios/endpoints/auth.endpoint";
 import { useUser } from "@/context/userContext";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useFormik } from "formik";
 import DropzoneComponent from "@/components/DropZone";
 import { RiLogoutCircleRLine } from "react-icons/ri";

@@ -7,8 +7,8 @@ import UserProvider from "@/context/userContext";
 import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 import BetProvider from "@/context/betContext";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "react-hot-toast";
+// import "react-hot-toast/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import { hasToken } from "@/utils";
 import useToast from "@/hooks/useToast";
@@ -54,7 +54,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 				<SessionProvider session={pageProps.session}>
 					<UserProvider>
 						<BetProvider>{getLayout(<Component {...pageProps} />)}</BetProvider>
-						<ToastContainer />
+						<Toaster />
 					</UserProvider>
 				</SessionProvider>
 			</main>

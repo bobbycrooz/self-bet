@@ -1,6 +1,6 @@
 import useToast from "@/hooks/useToast";
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 

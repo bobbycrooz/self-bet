@@ -3,7 +3,7 @@ import Button from "./Button";
 import DynamicModal from "./DynamicModal";
 import Navbar from "./Navbar/Navbar";
 import Sidebar from "./Sidebar";
-import BetCard from "./BetCard";
+import BetCard from "./BetCardTabs/BetCard";
 import SearchModal from "./SearchModal";
 import TwoThumbs from "./Range";
 import Notification from "./Notification";

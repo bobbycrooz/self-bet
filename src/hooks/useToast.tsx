@@ -1,6 +1,6 @@
 import React from 'react';
-import { ToastOptions, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import toast from 'react-hot-toast';
+// import 'react-hot-toast/dist/ReactToastify.css';
 
 const useToast = () =>
 {
@@ -19,16 +19,16 @@ const useToast = () =>
             
 		if (type === 'error')
 		{
-			toast.error(message, toastConfig as ToastOptions<{}>);
+			toast.error(message);
 		} else if (type === 'success')
 		{
-			toast.success(message, toastConfig as ToastOptions<{}>);
+			toast.success(message);
 		} else if (type === 'warn')
 		{
-			toast.warn(message, toastConfig as ToastOptions<{}>);
+			toast(message);
 		} else
 		{
-			toast(message, toastConfig as ToastOptions<{}>);
+			toast(message);
 		}
 	};
 
