@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { useFormik } from "formik";
 import DropzoneComponent from "@/components/DropZone";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import Meta from "@/utils/Meta";
 
 function Home() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -61,46 +62,22 @@ function Home() {
 		toggleConfirmLogout((p) => !p);
 	}
 
-	// handlers--------------
-
-	// function handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
-	// 	setName(e.target.value);
-	// }
-
-	// useEffects -------------
-	// useEffect(() => {
-	//   if (query.login) {
-	//     setLoginMode(true);
-	//   }
-	// }, [pathname, query.login]);
-	{
-		/* <Image src={"/icons/dashboard/settings.svg"} alt={""} width={48} height={48} /> */
-	}
-
-	{
-		/* <h1 className="notify display-xs f-b text-gray-700  ">Settings</h1> */
-	}
-
 	return (
 		<>
-			<Head>
-				<title>My Settings</title>
-				<meta name="description" content="welcome to selfbet home" />
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
+			<Meta title={"Settings"} description={""} />
 
-			<main className="dashboard_home bg-white w-full h-auto md:pb-16 ">
+			<main className="dashboard_home bg-white w-full h-auto pt-16 sm:pt-0 md:pb-16 ">
 				{/* ----header---- */}
-				<div className="bg-gray-50 w-full h-[112px] middle p-4 md:p-12 relative  settings_bg">
-					<div className="space-x-4 middle  absolute ring-4 ring-gray-200 w-40 h-40 bg-gray-50 left-8 -bottom-20 rounded-full"></div>
+				<div className="bg-gray-50 w-full h-[112px] middle p-4 md:p-12 relative  settings_bg mt-8 br">
+					<div className="space-x-4 middle  absolute ring-4 ring-gray-200 w-24 h-24  sm:w-40 sm:h-40 bg-gray-50 sm:left-8 -bottom-12 sm:-bottom-20 rounded-full"></div>
 				</div>
 
-				<div className="details  w-full flex pl-[40px] h-[60px] mt-6 pr-8">
-					<div className="w-[200px]"></div>
-					<div className="w-full flex justify-between items-center">
+				{/* NAME */}
+				<div className="details  w-full flex p-4  sm:pl-[40px] sm:h-[60px] mt-16 sm:mt-6 pr-8  ">
+					<div className="sm:w-[200px]"></div>
+					<div className="w-full flex sm:justify-between sm:items-center flex-col  sm:flex-row space-y-6  sm:space-y-0">
 						<div className="name_box">
-							<h1 className="name txt-md t-g9 f-eb">{User?.Username ? User?.Username : "--_--"}</h1>
+							<h1 className="name text-[24px] sm:txt-md t-g9 f-eb">{User?.Username ? User?.Username : "--_--"}</h1>
 							<p className="sub_name text-sm f-n t-g6">{User?.Email ? User?.Email : "--_--"}</p>
 						</div>
 
@@ -109,21 +86,23 @@ function Home() {
 				</div>
 
 				{/*-------- body------ */}
-				<div className="md:p-8 mt-[39px] w-full  border-t">
+				<div className="md:p-8 mt-[39px] w-full  border-t p-4">
 					{/* ROW ONE */}
-					<div className="flex justify-between space-x-8">
-						<div className="w-[300px]">
+					<div className="flex flex-col sm:flex-row sm:justify-between sm:space-x-8 space-y-8 sm:space-y-0">
+						{/* COL ONE */}
+						<div className="sm:w-[300px]">
 							<div className="name_box">
 								<h1 className="name txt-md t-g9 f-eb">{"Personal info"}</h1>
 								<p className="sub_name text-xs t-g5">{"Update your photo and personal details."}</p>
 							</div>
 						</div>
 
-						<div className="w-full flex  flex-col items-start border rounded-xl shadow h-auto">
+						{/* COL TWO */}
+						<div className="w-full flex  flex-col sm:flex-row sm:items-start border rounded-xl shadow h-auto">
 							{/* BODY */}
-							<div className="content w-full p-6">
+							<div className="content w-full sm:p-6">
 								{/* FORM GRID */}
-								<div className="w-full grid grid-cols-2 gap-6">
+								<div className="w-full grid sm:grid-cols-2 gap-6 py-6 sm:py-0 p-4">
 									<InputField
 										filedName="Username"
 										type={"text"}
@@ -180,14 +159,14 @@ function Home() {
 
 								{/* AVATAR  SECTION */}
 
-								<div className=" w-full mt-6">
+								<div className="w-full mt-6 p-4 sm:p-0">
 									<div className="name_box">
 										<h1 className="name text-xs t-g6 f-eb">{"Avatar"}</h1>
 										<p className="sub_name text-xs text-gray-400">{"Change or delete your profile picture."}</p>
 									</div>
 
 									{/* PICTURE ROLE */}
-									<div className="w-full flex items-start space-x-3 mt-4">
+									<div className="w-full flex flex-col sm:flex-row items-center  sm:items-start space-y-3 sm:space-y-0  sm:space-x-3 mt-4">
 										<div className="avatar rounded-full bg-gray-300">
 											<Image src={avatarSrc as string} alt={"avatar"} className="rounded-full" height={64} width={64} />
 										</div>
@@ -200,17 +179,24 @@ function Home() {
 								</div>
 							</div>
 							{/* FOOTER */}
-							<div className="action border-t rounded-b-xl flex items-center justify-end w-full">
-								<div className="button_group flex space-x-4 px-6 p-4">
+							<div className="action border-t rounded-b-xl flex items-center sm:justify-end w-full">
+								<div className="button_group  space-x-4 px-6 p-4 hidden sm:flex">
 									<Button text={"Cancel"} type={undefined} ghost />
 									<Button text={"Save changes"} type={undefined} primary disabled={true} />
+								</div>
+
+								<div className="button_group grid-cols-3  w-full gap-4   grid px-6 p-4  sm:hidden">
+									<Button text={"Cancel"} type={undefined} ghost />
+									<div className="col-span-2">
+										<Button full text={"Save changes"} type={undefined} primary disabled={true} />
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 
 					{/* ROW TWO */}
-					<div className="flex justify-between space-x-8 mt-8 ">
+					<div className="flex flex-col sm:flex-row md:justify-between space-y-8 sm:space-x-8 mt-8 ">
 						<div className="w-[300px]">
 							<div className="name_box">
 								<h1 className="name txt-md t-g9 f-eb">{"Password"}</h1>
@@ -222,12 +208,12 @@ function Home() {
 							{/* BODY */}
 							<div className="content w-full p-6">
 								{/* FORM GRID */}
-								<div className="w-full grid grid-cols-2 gap-6">
+								<div className="w-full grid md:grid-cols-2 gap-6">
 									<InputField
 										filedName="Username"
-										type={"text"}
-										label="Username"
-										place={"***@gmail.com"}
+										type={"password"}
+										label="Current Password"
+										place={"****"}
 										change={handleChange}
 										// @ts-ignore
 										value={values.Username}
@@ -238,9 +224,9 @@ function Home() {
 									/>
 									<InputField
 										filedName="Email"
-										type={"email"}
-										label="Email"
-										place={"***@gmail.com"}
+										type={"password"}
+										label="New Password"
+										place={"****"}
 										change={handleChange}
 										// @ts-ignore
 										value={values.Email}
@@ -253,16 +239,23 @@ function Home() {
 							</div>
 							{/* FOOTER */}
 							<div className="action border-t rounded-b-xl  flex items-center justify-end w-full">
-								<div className="button_group flex space-x-4 px-6 p-4">
+								<div className="button_group  space-x-4 px-6 p-4 hidden sm:flex">
 									<Button text={"Cancel"} type={undefined} ghost />
 									<Button text={"Save changes"} type={undefined} primary disabled={true} />
+								</div>
+
+								<div className="button_group grid-cols-3  w-full gap-4   grid px-6 p-4  sm:hidden">
+									<Button text={"Cancel"} type={undefined} ghost />
+									<div className="col-span-2">
+										<Button full text={"Save changes"} type={undefined} primary disabled={true} />
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 
 					{/* ROW THREE */}
-					<div className="flex justify-between space-x-8 mt-8 ">
+					<div className="flex sm:flex-row flex-col justify-between space-y-8 sm:space-y-0 sm:space-x-8 mt-8 ">
 						<div className="w-[300px]">
 							<div className="name_box">
 								<h1 className="name txt-md t-g9 f-eb">{"Others"}</h1>
@@ -278,46 +271,14 @@ function Home() {
 							</div>
 						</div>
 					</div>
+
+					<div className="space h-20 sm:hidden"></div>
 				</div>
 			</main>
 
 			<ConfirmLogout handleClose={handleLogout} isLoading={false} toggleLoader={undefined} show={confirmLogout} />
 		</>
 	);
-
-	// <div className="profile_setting p-6  rounded-xl space-y-8 ">
-	// 					{/* ----avatar----- */}
-	// 					{false && (
-	// 						<div className="middle space-x-3">
-	// 							<Image src={"/icons/dashboard/olivia.svg"} alt={""} width={48} height={48} />
-
-	// 							<div className="txt-sm f-s t-g9 bg-gray-100 rounded-lg md:px-3 p-[10px] px-4 md:p-1">
-	// 								Update new Avatar
-	// 							</div>
-	// 						</div>
-	// 					)}
-
-	// 					{/* ----form----- */}
-	// 					<form onSubmit={handleSubmit} className="w-full space-y-6">
-	// 						<div className="space-y-4">
-	// 							<InputField
-	// 								type={"text"}
-	// 								label="username"
-	// 								required
-	// 								value={name}
-	// 								change={handleNameChange}
-	// 								place={User.Username}
-	// 							/>
-	// 							{/* <InputField
-	// 								type={"email"}
-	// 								label="Email"
-	// 								place={"***@gmail.com"}
-	// 							/> */}
-	// 						</div>
-
-	// 						<Button text={"Save changes"} type={"submit"} disabled={name.length < 3} isLoading={isLoading} auth />
-	// 					</form>
-	// 				</div>
 }
 Home.getLayout = function getLayout(page: ReactElement) {
 	return <DashboardLayout>{page}</DashboardLayout>;

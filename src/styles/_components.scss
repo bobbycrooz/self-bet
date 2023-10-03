@@ -363,12 +363,23 @@
 
 		/* Shadow/md */
 		box-shadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px rgba(16, 24, 40, 0.1);
+	
+		@include smallPhone{
+		gap: 8px;
+		padding: 8px 12px;
+
+
+		}
 	}
 
 	&.active {
 		transition: all 0.2s ease-in-out;
 
 		width: 80%;
+
+		@include smallPhone {
+			width: 100%;
+		}
 		// width: 100%;
 
 		.home_search-filter {

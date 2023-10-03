@@ -9,6 +9,7 @@ import { PlusSvg } from "@/assets";
 import Link from "next/link";
 import { useUser } from "@/context/userContext";
 import { useBet } from "@/context/betContext";
+import Meta from "@/utils/Meta";
 
 function Home() {
 	const [isWithdrawing, setIsWithdrawing] = useState(false);
@@ -118,12 +119,9 @@ function Home() {
 
 	return (
 		<>
-			<Head>
-				<title>my wallet</title>
-				<meta name="description" content="welcome to selfbet home" />
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
+
+
+			<Meta title={"my wallet"} description={"welcome to selfbet home"}/>
 			
 			<div ref={topRef} className="h-[76px]  w-full md:h-0"></div>
 
@@ -166,7 +164,7 @@ function Home() {
 					<div className="absolute coulumn lg:hidden p-4 space-y-6 amount_box w-[90%] md:w-[80%] h-auto bg-white shadow-light  left-1/2 -translate-x-1/2 rounded-lg -bottom-[140%]">
 						<div className=" text-center">
 							<p className="text-gray-400 txt-sm f-m">Wallet balance</p>
-							<h1 className="notify display-sm f-eb text-gray-700  ">N 40,000</h1>
+							<h1 className="notify display-sm f-eb text-gray-700  ">N {User?.Balance ? User?.Balance.toLocaleString() : "--_--"}</h1>
 						</div>
 
 						{/* 0--------------- */}

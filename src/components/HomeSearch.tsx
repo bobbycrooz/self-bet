@@ -44,7 +44,6 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 	}
 
 	async function debounceHandler() {
-
 		// const { error, serverResponse } = await fetchBetListAPI(1);
 		const { error, serverResponse } = await searchBetList(1, searchKey, "TeamName");
 
@@ -56,14 +55,10 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 		setBetList(serverResponse);
 	}
 
+	function processCahnge(e: ChangeEvent<HTMLInputElement>) {
+		setSearchKey(e.target.value);
 
-	function processCahnge(e: ChangeEvent<HTMLInputElement>)
-	{
-		
-		setSearchKey(e.target.value)
-
-		Debounce(debounceHandler, 500)()
-		
+		Debounce(debounceHandler, 500)();
 	}
 
 	useEffect(() => {
@@ -71,7 +66,7 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 	}, [isSearching]);
 
 	return (
-		<div className={`w-[600px] home_search  flex items-center justify-between ${isSearching && "active"}`}>
+		<div className={` sm:w-[600px] home_search  flex items-center justify-between ${isSearching && "active"}`}>
 			<form
 				role="button"
 				onClick={searchToggle}
@@ -109,45 +104,64 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 			{/* Dropdowns */}
 
 			{showFilter && (
-
 				<>
-					<div onClick={() => setShowFilter(false)} className="fixed top-0 left-0 w-full h-full bg-transparent bg-opacity-50 z-50"/>
-					
-				<div className="absolute  w-full  bg-white left-0 top-11 filter_dropdown">
-					<DropDown
-						type={"byTeam"}
-						lists={[]}
-						title="Team"
-						show={searchMode.team}
-						toggleShow={setSearchMode}
-						setList={setBetList}
-						context={"Bets"}
+					<div
+						onClick={() => setShowFilter(false)}
+						className="fixed top-0 left-0 w-full h-full bg-transparent bg-opacity-50 z-50"
 					/>
+					
 
-					<DropDown type={"byLeague"} setList={setBetList} lists={[]} title={"League"} show={searchMode.league} toggleShow={setSearchMode} context={"Bets"} />
+					<div className="fixed sm:absolute  w-full  bg-white left-0 top-16 sm:top-11 filter_dropdown">
+						<DropDown
+							type={"byTeam"}
+							lists={[]}
+							title="Team"
+							show={searchMode.team}
+							toggleShow={setSearchMode}
+							setList={setBetList}
+							context={"Bets"}
+						/>
 
-					<DropDown type={"byName"} lists={[]} title={"Creator"} show={searchMode.name} toggleShow={setSearchMode} context={"Bets"} />
+						<DropDown
+							type={"byLeague"}
+							setList={setBetList}
+							lists={[]}
+							title={"League"}
+							show={searchMode.league}
+							toggleShow={setSearchMode}
+							context={"Bets"}
+						/>
 
-					<DropDown
-						type={"byRange"}
-						lists={[]}
-						title={"Bet Amount"}
-						show={searchMode.range}
-						setList={setBetList}
+						<DropDown
+							type={"byName"}
+							lists={[]}
+							title={"Creator"}
+							show={searchMode.name}
+							toggleShow={setSearchMode}
+							context={"Bets"}
+						/>
 
-						toggleShow={setSearchMode} context={"Bets"}					/>
+						<DropDown
+							type={"byRange"}
+							lists={[]}
+							title={"Bet Amount"}
+							show={searchMode.range}
+							setList={setBetList}
+							toggleShow={setSearchMode}
+							context={"Bets"}
+						/>
 
-					<DropDown
-						type={"byPercent"}
-						lists={[]}
-						title={"Bet Discount"}
-						setList={setBetList}
-
-						show={searchMode.percent}
-						toggleShow={setSearchMode} context={"Bets"}					/>
+						<DropDown
+							type={"byPercent"}
+							lists={[]}
+							title={"Bet Discount"}
+							setList={setBetList}
+							show={searchMode.percent}
+							toggleShow={setSearchMode}
+							context={"Bets"}
+						/>
 					</div>
 				</>
-					
 			)}
 		</div>
 	);

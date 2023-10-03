@@ -9,7 +9,7 @@ import Link from "next/link";
 import DepositeMobile from "@/components/DepositeMobile";
 import { useUser } from "@/context/userContext";
 import { useBet } from "@/context/betContext";
-
+import Meta from "@/utils/Meta";
 
 function Home() {
 	const { BetList } = useBet();
@@ -121,12 +121,7 @@ function Home() {
 
 	return (
 		<>
-			<Head>
-				<title>my profile</title>
-				<meta name="description" content="welcome to selfbet home" />
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
+			<Meta title={"my profile"} description={"welcome to selfbet home"} />
 
 			<div ref={topRef} className="h-[76px]  w-full md:h-0"></div>
 
@@ -175,19 +170,16 @@ function Home() {
 
 								<div className="">
 									<p className="text-gray-400 txt-xs f-m ">Wallet balance</p>
-									<h1 className="notify text-xl f-eb text-gray-900  ">N 40,000</h1>
+									<h1 className="notify text-xl f-eb text-gray-900  ">
+
+										N {User?.Balance ? User?.Balance.toLocaleString() : "--_--"}
+									</h1>
 								</div>
 							</div>
 
 							{/* button */}
 							<div className="">
-								{/* <Button
-									text="Deposite"
-									type={"button"}
-									primary
-                  full
-									click={handleDeposite}
-								/> */}
+						
 
 								<button onClick={handleDeposite} className="txt-sm f-b text-white rounded-lg bg-sec p-3 w-full">
 									Deposit
