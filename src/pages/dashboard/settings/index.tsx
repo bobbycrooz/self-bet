@@ -68,7 +68,7 @@ function Home() {
 
 			<main className="dashboard_home bg-white w-full h-auto pt-16 sm:pt-0 md:pb-16 ">
 				{/* ----header---- */}
-				<div className="bg-gray-50 w-full h-[112px] middle p-4 md:p-12 relative  settings_bg mt-8 br">
+				<div className="bg-gray-50 w-full h-[112px] middle p-4 md:p-12 relative  settings_bg mt-3">
 					<div className="space-x-4 middle  absolute ring-4 ring-gray-200 w-24 h-24  sm:w-40 sm:h-40 bg-gray-50 sm:left-8 -bottom-12 sm:-bottom-20 rounded-full"></div>
 				</div>
 

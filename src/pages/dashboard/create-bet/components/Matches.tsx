@@ -24,7 +24,7 @@ export default function SelectMatch() {
 	const { Bet, dispatchBet, currentPage, setCP } = useBet();
 	const [fixtures, setFixtures] = useState([]);
 	const [showFilderList, setShowFilderList] = useState(false);
-	const [currentTab, setCurrentTab] = useState("All aleague");	
+	const [currentTab, setCurrentTab] = useState("All aleague");
 
 	const { notify } = useToast();
 
@@ -97,7 +97,6 @@ export default function SelectMatch() {
 	}
 
 	async function fetchMoreFixturs(page: number) {
-
 		// @ts-ignore
 		const { error, serverResponse } = await getAllFixturesAPI(page);
 
@@ -199,10 +198,9 @@ export default function SelectMatch() {
 					{nav.map((i, k) => (
 						<div
 							role="button"
-							onClick={() =>
-							{
-								searchByName(1, "LeagueName", i)
-								setCurrentTab(i)
+							onClick={() => {
+								searchByName(1, "LeagueName", i);
+								setCurrentTab(i);
 							}}
 							key={k}
 							className={`nav_item ${
@@ -301,6 +299,7 @@ export default function SelectMatch() {
 										>
 											{/* Team A */}
 											<div className="team_caard team_caard col-center space-y-2">
+												 {/* eslint-disable-next-line @next/next/no-img-element */}
 												<Image
 													className="team_logo "
 													src={i.TeamA.Logo == "TeamALogoUrl" ? "/icons/teams/chealse_logo.svg" : i.TeamA.Logo}
@@ -319,6 +318,7 @@ export default function SelectMatch() {
 
 											{/* Team B */}
 											<div className="team_caard col-center  space-y-2">
+												 {/* eslint-disable-next-line @next/next/no-img-element */}
 												<Image
 													className="team_logo "
 													src={i.TeamB.Logo == "TeamBLogoUrl" ? "/icons/teams/lei_logo.svg" : i.TeamB.Logo}

@@ -350,7 +350,7 @@ const BetProvider = ({ children }: { children: any }) => {
 
 			setIsLoading(!true);
 
-			notify("error", error.response.data);
+			notify("error", error?.response?.data);
 
 			// console.log(error.response.data, "this error came from not---");
 
