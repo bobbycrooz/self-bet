@@ -29,52 +29,28 @@ const statusConst = {
 function Home() {
 	const { push, query, pathname } = useRouter();
 
-	const [joinBetDetails, setjoinBet] = useState({
-		betId: "",
-		betType: "",
-		Conditions: [
-			// {
-			// 	Sector: "H_TEAM/A_TEAM/DRAW",
-			// 	Codes: "1",
-			// 	FixtureId: 868135,
-			// },
-		],
-		FixtureId: 0,
-	});
-
 	const { notify } = useToast();
 
-	const [currentBet, setCurrentBet] = useState<any>();
 	const [isFetching, setIsFetching] = useState<boolean>(false);
 
-	const { isLoading, placing, fetchAllActiveBets, status, setIsLoading, setStatus, BetList } = useBet();
+	const {
+		isLoading,
+		placing,
+		fetchAllActiveBets,
+		status,
+		setIsLoading,
+		setStatus,
+		BetList,
+		joinBetDetails,
+		currentBet,
+		setCurrentBet,
+		setjoinBet,
+		handleJoinBet
+	} = useBet();
 
 	const topRef = useRef(null);
 
-	async function handlePlaceBet() {
-		setIsLoading(true);
-		const { error, serverResponse } = await joinBetAPI(joinBetDetails);
-
-		if (error) {
-			setIsLoading(!true);
-
-			// @ts-ignore
-			return notify("error", serverResponse);
-		}
-
-		fetchAllActiveBets();
-
-		setjoinBet({
-			...joinBetDetails,
-			Conditions: [],
-		});
-
-		push("/dashboard/my-bets");
-
-		setIsLoading(!true);
-
-		notify("success", "joined bet successfully");
-	}
+	
 
 	useEffect(() => {
 		if (topRef.current) {
@@ -228,7 +204,12 @@ function Home() {
 								{/* ----bets */}
 								{joinBetDetails.Conditions.map((i: any, k: number) => (
 									<div key={k} className="space-y-2">
-										<BetSlipDetails data={i} bet={currentBet} joinBetDetails={joinBetDetails} setjoinBet={setjoinBet} />
+										<BetSlipDetailsJoin
+											data={i}
+											bet={currentBet}
+											joinBetDetails={joinBetDetails}
+											setjoinBet={setjoinBet}
+										/>
 									</div>
 								))}
 
@@ -254,7 +235,7 @@ function Home() {
 										full
 										primary
 										disabled={!hasToken() || joinBetDetails.betType.length < 1 || joinBetDetails.Conditions.length < 1}
-										click={handlePlaceBet}
+										click={handleJoinBet}
 									/>
 								</div>
 							</div>
@@ -265,7 +246,7 @@ function Home() {
 				{/* ------process confirmation modal ------- */}
 				<PlaceBetLoader
 					show={placing}
-					handleClose={handlePlaceBet}
+					handleClose={handleJoinBet}
 					context={"Deposite"}
 					isLoading={isLoading}
 					toggleLoader={setIsLoading}
@@ -289,18 +270,15 @@ function Home() {
 
 // 		console.log(serverResponse);
 
-		
-		
 // 	} catch (error) {
 // 		console.log(error);
 // 	}
-
 
 // 	return {
 // 			props: {
 // 				data: "data"
 // 			}
-		
+
 // 		}
 // }
 
@@ -308,7 +286,7 @@ Home.getLayout = function getLayout(page: ReactElement) {
 	return <DashboardLayout>{page}</DashboardLayout>;
 };
 
-export function BetSlipDetails({ data, joinBetDetails, setjoinBet, bet }: any) {
+export function BetSlipDetailsJoin({ data, joinBetDetails, setjoinBet, bet }: any) {
 	const { Bet, dispatchBet } = useBet();
 
 	const [sowList, setShowList] = useState(false);

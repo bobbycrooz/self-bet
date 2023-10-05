@@ -41,7 +41,7 @@ const Process = ({
     <div className="modal_overlay fixed top-0 left-0 w-full h-full bg-[#00000083] grid-center z-[99999]">
       <div
         ref={cardRef}
-        className="modal_card relative p-12 px-8 bg-white rounded-lg shadow-soft w-[400px] min-h-[244px]"
+        className="modal_card relative p-12 px-8 bg-white rounded-lg shadow-soft w-[95%] mx-auto sm:w-[400px] min-h-[244px] centered"
       >
         <Prompt  handleClose={handleClose}  />
       </div>
@@ -63,7 +63,7 @@ function Prompt({
 
   return (
     <div className="col-center ">
-      <div className="cancle_btn absolute -right-10 -top-10">
+      <div className="cancle_btn absolute sm:-right-10 -top-11">
         <Image
           src={"/icons/dashboard/cancleBtn.svg"}
           alt={""}
@@ -92,8 +92,8 @@ function Prompt({
           </p>
         </div>
 
-        <div className="button_group md:space-x-3  md:flex ">
-          <Button text={"Cancel"} type={"button"} ghost />
+        <div className="button_group space-x-3   flex ">
+          <Button text={"Cancel"} type={"button"}  click={handleClose} ghost />
 
       
 

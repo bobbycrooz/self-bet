@@ -82,7 +82,7 @@ function DropzoneComponent({
 			return seCurrentFile(acceptedFiles);
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		},
-		[seCurrentFile]
+		[seCurrentFile, setDataurl, setNoImg]
 	);
 
 	const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, acceptedFiles, fileRejections } =

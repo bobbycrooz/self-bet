@@ -60,7 +60,51 @@
 	&:disabled {
 		@apply bg-gray-200 text-gray-50 border border-gray-50  space-x-6  cursor-not-allowed;
 	}
+
+	&.copy {
+		display: flex;
+		width: 126px;
+		padding: 12px 0px;
+		justify-content: center;
+		align-items: center;
+		gap: 12px;
+		align-self: stretch;
+
+		border-radius: 0px 8px 8px 0px;
+		// background: var(--primary-50, #FEF8F3);
+
+		color: #ff4b00;
+
+		/* Text sm/Bold */
+		font-family: Inter;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 20px; /* 142.857% */
+	}
 }
+
+.btn-copy {
+		display: flex;
+		width: 156px;
+		padding: 12px 6px;
+		justify-content: center;
+		align-items: center;
+		gap: 12px;
+		align-self: stretch;
+
+		border-radius: 0px 8px 8px 0px;
+		background: #FEF8F3;
+
+		color: #ff4b00;
+
+		/* Text sm/Bold */
+		font-family: Inter;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 20px; /* 142.857% */
+	}
 
 /* 
 -------------------------------------------
@@ -363,12 +407,10 @@
 
 		/* Shadow/md */
 		box-shadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px rgba(16, 24, 40, 0.1);
-	
-		@include smallPhone{
-		gap: 8px;
-		padding: 8px 12px;
 
-
+		@include smallPhone {
+			gap: 8px;
+			padding: 8px 12px;
 		}
 	}
 
@@ -452,8 +494,6 @@
 				line-height: 16px; /* 133.333% */
 			}
 		}
-
-	
 	}
 
 	.stake {

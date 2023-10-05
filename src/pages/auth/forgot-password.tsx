@@ -77,7 +77,7 @@ export default function ForgotPassword() {
 			setToken(token as string);
 			setCurrentStep(stepNames.NEWPASSWORD);
 		}
-	});
+	}, [query]);
 
 	return (
 		<>

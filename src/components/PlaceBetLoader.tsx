@@ -102,6 +102,7 @@ function Prompt({ status, handleClose, reason }: { reason?: any; status: string;
 				// return clearBetHistory()
 			}, 5000);
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[push, status]);
 
 	return (

@@ -14,7 +14,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import DropDown from "./DropBtn";
 import ConfirmLogout from "./ConfirmLogout"
 import PlaceBetLoader from "./PlaceBetLoader";
-import AddCondition from "./AddCondition";
+import AddCondition from "./AddConditionModal/AddCondition";
 
 export {
   DropDown,

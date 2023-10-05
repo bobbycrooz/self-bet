@@ -39,6 +39,7 @@ export default function ResultCard({ result }: any) {
 	useEffect(() =>
 	{
 		getCurrentPlay();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 	
 

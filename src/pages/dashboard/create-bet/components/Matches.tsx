@@ -259,10 +259,13 @@ export default function SelectMatch() {
 						{nav.map((i, k) => (
 							<div
 								role="button"
-								onClick={() => searchByName(1, "LeagueName", i)}
+									onClick={() => {
+								searchByName(1, "LeagueName", i);
+								setCurrentTab(i);
+							}}
 								key={k}
 								className={`nav_item ${
-									k == 0 ? "bg-gray-50 f-b" : "f-m"
+									i == currentTab ? "bg-gray-50 f-b" : "f-m"
 								}   p-[10px] px-3 hover:bg-gray-50  f-m hover:f-b  rounded-lg hover:text-gray-700`}
 							>
 								<p className="txt-sm text-gray-500">{i}</p>

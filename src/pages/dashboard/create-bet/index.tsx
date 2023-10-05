@@ -12,7 +12,7 @@ import BetDetails from "./components/Details";
 import SelectMatch from "./components/Matches";
 import { useBet } from "@/context/betContext";
 import useToast from "@/hooks/useToast";
-import { ConditionTypes } from "@/components/AddCondition";
+import { ConditionTypes } from "@/components/AddConditionModal/AddCondition";
 import { hasToken } from "@/utils";
 // import { NextPageWithLayout } from "../_app";
 
@@ -24,12 +24,11 @@ function CreateBetPage() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const progressRef = useRef(null);
-	const { Bet, dispatchBet, BetDetailsData,
-setBetDetailsData } = useBet();
-	const { BetImg, setBetImg, MarketList, setNoImg , noImg} = useBet();
+	const { Bet, dispatchBet, BetDetailsData, setBetDetailsData } = useBet();
+	const { BetImg, setBetImg, MarketList, setNoImg, noImg } = useBet();
 
 	const { notify } = useToast();
-	
+
 	const [currentSector, setCurrentSector] = useState({
 		Sector: "",
 		Codes: [],
@@ -37,17 +36,14 @@ setBetDetailsData } = useBet();
 	const [conditions, setConditions] = useState<Array<ConditionTypes>>([]);
 	const [showDiscount, setShowDiscount] = useState(!true);
 
-
-	function handleAddCondition()
-	{
+	function handleAddCondition() {
 		setIsEditing(false);
-			setCurrentSector({
+		setCurrentSector({
 			...currentSector,
-			Sector: '',
-				Codes: [],
-
-			});
-		setConditions([])
+			Sector: "",
+			Codes: [],
+		});
+		setConditions([]);
 		setIsAdding((p) => !p);
 	}
 
@@ -77,7 +73,6 @@ setBetDetailsData } = useBet();
 			return notify("warn", "You must specfy a bet Amount!");
 		}
 		console.log(BetImg, "BetImg", noImg);
-		
 
 		if (step == 4 && !BetImg) {
 			notify("warn", "Defualt bet image will be set!");
@@ -220,40 +215,35 @@ setBetDetailsData } = useBet();
 
 	function editBetConditons(data: any) {
 		// get selected condition details to be edited
-		setIsEditing(true)
-		console.log('editing data----');
-		
+		setIsEditing(true);
+		console.log("editing data----");
 
 		function getDesc(i: string) {
-		// get array of codes for given sector
-		const codes = MarketList.find((i: any) => i.Sector === data.Sector).Codes;
+			// get array of codes for given sector
+			const codes = MarketList.find((i: any) => i.Sector === data.Sector).Codes;
 
-		const desc = codes.find((item: any) => item.value === i).desc;
+			const desc = codes.find((item: any) => item.value === i).desc;
 
-		return desc;
-	}
+			return desc;
+		}
 
-		const selectedConditons: { value: any; desc: any; }[] = []
+		const selectedConditons: { value: any; desc: any }[] = [];
 
-		data.Codes.map((i: any) =>
-		{
+		data.Codes.map((i: any) => {
 			selectedConditons.push({
 				value: i,
 				desc: getDesc(i),
-			})
-		})
+			});
+		});
 
 		// set the current sector to the sector to e edited.
 		setCurrentSector({
 			...currentSector,
 			Sector: data.Sector,
-				Codes: selectedConditons as any,
-
+			Codes: selectedConditons as any,
 		});
 
-		
-				setIsAdding((p) => !p);
-
+		setIsAdding((p) => !p);
 	}
 
 	function deleteBetConditons(data: any) {
@@ -265,15 +255,12 @@ setBetDetailsData } = useBet();
 		notify("success", "This sector has been deleted succesfully!");
 	}
 
-
 	// useEffects -------------
 	useEffect(() => {
-		if (query.step)
-		{
-			
+		if (query.step) {
 			setStep(Number(query.step));
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname]);
 
 	// to focus on the progress bar
@@ -364,7 +351,8 @@ setBetDetailsData } = useBet();
 				currentSector={currentSector}
 				setCurrentSector={setCurrentSector}
 				conditions={conditions}
-				setConditions={setConditions} isEditing={isEditing}				// deleteBetConditons={deleteBetConditons}
+				setConditions={setConditions}
+				isEditing={isEditing} // deleteBetConditons={deleteBetConditons}
 			/>
 		</>
 	);

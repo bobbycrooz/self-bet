@@ -18,6 +18,7 @@ import { useBet } from "@/context/betContext";
 import useToast from "@/hooks/useToast";
 import { formatMatchDate } from "@/utils";
 import Link from "next/link";
+import Meta from "@/utils/Meta";
 
 const statusConst = {
 	success: "SUCCESS",
@@ -50,12 +51,7 @@ function Home() {
 
 	return (
 		<>
-			<Head>
-				<title>Details </title>
-				<meta name="description" content="welcome to selfbet home" />
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
+			<Meta title={"Details"} description={"welcome to selfbet home"} />
 
 			<div ref={topRef} className="h-[76px] md:h-0  w-full "></div>
 
@@ -122,6 +118,7 @@ function Home() {
 						<div className="md:hidden w-full h-28"></div>
 					</main>
 
+					{/* BET SLIP */}
 					<aside className="hidden md:flex  w-[286px] h-auto sticky top-6">
 						{/* ----- */}
 						<div className="create_aside border-gray-200 w-full rounded-lg shadow-md bg-white ">

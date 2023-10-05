@@ -2,6 +2,7 @@ import { loginAPI, registerAPI } from "@/axios/endpoints/auth.endpoint";
 import {
 	createBetAPI,
 	fetchBetListAPI,
+	joinBetAPI,
 	marketListAPI,
 	resultAPI,
 	transactiontAPI,
@@ -13,6 +14,7 @@ import axios from "axios";
 import { promises } from "dns";
 import React, { useContext, useState, useEffect, useMemo, createContext, Children, useReducer } from "react";
 import { useUser } from "./userContext";
+import { useRouter } from "next/router";
 // import utils from 'utils';
 
 interface propsTypes {
@@ -156,6 +158,7 @@ const BetProvider = ({ children }: { children: any }) => {
 	const [noImg, setNoImg] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [placing, isPlacing] = useState(false);
+	const {push} = useRouter()
 
 	const [currentPage, setCP] = useState(1);
 
@@ -170,6 +173,21 @@ const BetProvider = ({ children }: { children: any }) => {
 		Discount: "",
 		NumberOfPeople: 0,
 	});
+
+	const [joinBetDetails, setjoinBet] = useState({
+		betId: "",
+		betType: "",
+		Conditions: [
+			// {
+			// 	Sector: "H_TEAM/A_TEAM/DRAW",
+			// 	Codes: "1",
+			// 	FixtureId: 868135,
+			// },
+		],
+		FixtureId: 0,
+	});
+
+	const [currentBet, setCurrentBet] = useState<any>();
 
 	// console.log(BetDetailsData);
 
@@ -186,6 +204,31 @@ const BetProvider = ({ children }: { children: any }) => {
 		// 	setIsLoading(false);
 		// 	setStatus(statusConst.success);
 		// }, 5000);
+	}
+
+	async function handleJoinBet() {
+		setIsLoading(true);
+		const { error, serverResponse } = await joinBetAPI(joinBetDetails);
+
+		if (error) {
+			setIsLoading(!true);
+
+			// @ts-ignore
+			return notify("error", serverResponse);
+		}
+
+		fetchAllActiveBets();
+
+		setjoinBet({
+			...joinBetDetails,
+			Conditions: [],
+		});
+
+		push("/dashboard/my-bets");
+
+		setIsLoading(!true);
+
+		notify("success", "joined bet successfully");
 	}
 
 	async function fetchAlllMarkets() {
@@ -268,14 +311,14 @@ const BetProvider = ({ children }: { children: any }) => {
 		});
 		dispatchBet({ type: "BET_MATCH_DATE", payload: { MatchDate: "" } });
 
-		 setBetDetailsData({
+		setBetDetailsData({
 			BetName: "",
 			Amount: "",
 			Discount: "",
 			NumberOfPeople: 0,
-		 });
-		
-		return
+		});
+
+		return;
 	}
 
 	async function placeBet() {
@@ -284,7 +327,7 @@ const BetProvider = ({ children }: { children: any }) => {
 		}
 
 		const formData = new FormData();
-			// @ts-ignore
+		// @ts-ignore
 		formData.append("BetImg", noImg ? BetImg : BetImg[0]);
 		// formData.append("Type", "KoloBet");
 		formData.append("Type", Bet.Type);
@@ -297,7 +340,7 @@ const BetProvider = ({ children }: { children: any }) => {
 		formData.append("BetName", Bet.BetName);
 
 		try {
-			const response = await axios.post("https://13.244.65.147/Bet/Create", formData, {
+			const response = await axios.post("https://52.91.25.228/Bet/Create", formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 					Authorization: `Bearer ${String(getToken())}`,
@@ -307,7 +350,6 @@ const BetProvider = ({ children }: { children: any }) => {
 
 			if (response.status == 200) {
 				// reset all states
-			
 
 				setStatus(statusConst.success);
 
@@ -323,7 +365,7 @@ const BetProvider = ({ children }: { children: any }) => {
 
 				// isPlacing((p) => !p);
 
-				 notify("success", "Bet Placed Successfully");
+				notify("success", "Bet Placed Successfully");
 
 				return;
 
@@ -355,7 +397,6 @@ const BetProvider = ({ children }: { children: any }) => {
 			// console.log(error.response.data, "this error came from not---");
 
 			isPlacing(false);
-
 
 			setCBD({
 				...createdBetDetails,
@@ -433,6 +474,11 @@ const BetProvider = ({ children }: { children: any }) => {
 				setCP,
 				fetchMoreActiveBets,
 				clearBetHistory,
+				joinBetDetails,
+				setjoinBet,
+				currentBet,
+				setCurrentBet,
+				handleJoinBet
 			}}
 		>
 			{children}

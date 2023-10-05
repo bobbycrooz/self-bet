@@ -15,8 +15,6 @@ import { useRouter } from "next/router";
 import { hasToken } from "@/utils";
 import { useBet } from "@/context/betContext";
 
-
-
 const Navbar = () => {
 	const [showProfile, setShowProfile] = useState(false);
 	const [confirmLogout, toggleConfirmLogout] = useState(false);
@@ -83,13 +81,15 @@ const Navbar = () => {
 	return (
 		<nav className=" w-full  fixed lg:static top-0 z-10  md:h-16 h-[76px] bg-white flex items-center justify-between px-6 p-2 border-b">
 			{/* logo */}
-		{<Link href={"/dashboard"}>
-				<div className="menu_logo middle space-x-4 hidden ">
-					<Image src={"/icons/logo-2.svg"} alt="logo" width={120} height={26} className="block md:hidden" />
+			{
+				<Link href={"/dashboard"}>
+					<div className="menu_logo middle space-x-4 hidden  w-[120px]">
+						<Image src={"/icons/logo-2.svg"} alt="logo" width={120} height={26} className="block md:hidden" />
 
-					<Image src={"/icons/logo-2.svg"} alt="logo" width={140} height={46} className="hidden md:block" />
-				</div>
-			</Link>}
+						<Image src={"/icons/logo-2.svg"} alt="logo" width={140} height={46} className="hidden md:block" />
+					</div>
+				</Link>
+			}
 
 			{!hasToken() && (
 				<div className=" relative w-[700px]">
@@ -188,7 +188,7 @@ const Navbar = () => {
 				)
 			)}
 
-		 {isMobile && (
+			{false && hasToken() &&  isMobile  && (
 				<div className="search space-x-2 middle  ">
 					{/* <div role="button" onClick={searchToggle} className="notification">
 						<SearchSvg />
@@ -203,11 +203,9 @@ const Navbar = () => {
 						{showSearchComponent && (
 							<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
 						)}
-
-					
 					</div>
 				</div>
-			)} 
+			)}
 
 			<ConfirmLogout handleClose={handleLogout} isLoading={false} toggleLoader={undefined} show={confirmLogout} />
 			{/* <SearchModal isSearching={isSearching} setIsSearching={searchToggle} /> */}

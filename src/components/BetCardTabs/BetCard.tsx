@@ -11,6 +11,9 @@ import MatchCard from "../MatchCard";
 import { useUser } from "@/context/userContext";
 import { getUserProfile } from "@/axios/endpoints/auth.endpoint";
 import { Bets, Creator, Matches } from ".";
+import { MobileModal } from "./MobileModal";
+import { DesktopModal } from "./DesktopModal";
+import { FiCopy } from "react-icons/fi";
 
 interface PropTypes {
 	betType: "KoloBet" | "PointBet" | undefined;
@@ -280,436 +283,134 @@ const BetCard = ({ betType, data }: PropTypes) => {
 			{showDetails.show && (
 				<div className="__ ">
 					{isMobile || isTablet ? (
-						<div className="betInfo overlay z-[999999999999] fixed top-0 flex items-end left-0  w-full h-full bg-[#0000005c]">
-							{true ? (
-								<div
-									className={`overlay_pane-mobile-deposite  info_panel relative w-full fadeIn-d   ${
-										showDetails.show ? "active" : ""
-									}  bg-white`}
-								>
-									{/*  */}
-
-									<div
-										role="button"
-										onClick={() => handleShowDetails()}
-										className="cancle_btn absolute left-1/2 -top-16 -translate-x-1/2"
-									>
-										<Image
-											src={"/icons/dashboard/cancleBtn.svg"}
-											alt={""}
-											width={48}
-											height={48}
-											//  onClick={toggle}
-											role="button"
-										/>
-									</div>
-
-									{/* --------bet type details---------- */}
-									<div className="content relative overflow-y-scroll custom-scrollbar h-screen">
-										<div className="h-auto">
-											{/*  */}
-											<div className="panel_content  space-y-6  w-full">
-												{/* -----------banner row-------- */}
-
-												<div className="p-4 w-full">
-													<div className="bet_banner w-full h-[120px] relative">
-														{showDetails.mode === betCardType.KOLO ? (
-															<Image
-																src={"/images/home/kolo_banner.png"}
-																alt={""}
-																fill
-																className="r"
-																// width={300}
-																// height={128}
-															/>
-														) : (
-															<Image
-																src={"/images/home/point_banner.png"}
-																alt={""}
-																fill
-																className="r"
-																// width={300}
-																// height={128}
-															/>
-														)}
-													</div>
-												</div>
-
-												{/* -----------second badge row-------- */}
-												<div className="w-full px-4 sticky top-0   bg-white shadow pt-4 z-20">
-													{/* bet details name and bages------------ */}
-													<div className="badge_container row-between ">
-														<div className="col">
-															<div className="row-between ">
-																{showDetails.mode === betCardType.KOLO ? (
-																	<div className="badge uppercase  p-1 px-2 bg-cyan-50 rounded txt-xs f-b text-cyan-600">
-																		KOLO bet
-																	</div>
-																) : (
-																	<div className="badge uppercase  p-1 px-2 bg-yellow-100 rounded txt-xs f-b text-yellow-600">
-																		point bet
-																	</div>
-																)}
-															</div>
-
-															<h1 className="bet_name txt-lg f-eb text-gray-600">Battle of best banterers</h1>
-
-															<Image src={"/images/home/users.png"} alt={""} className="mt-4" width={144} height={24} />
-														</div>
-
-														<div className="col">
-															<h1 className="amount text-gray-400 txt-xs f-b">Bet amount:</h1>
-															<h1 className="txt-md f-b text-gray-700 mt-2 mb-4 text-right">N5000</h1>
-														</div>
-													</div>
-
-													<div className="mt-4">
-														<Link href={"/dashboard/create-bet/bet-details"}>
-															<Button text={hasJoined ? "Joined" : "Join Bet"} type={"button"} primary full />
-														</Link>
-													</div>
-
-													{/*  --------action tab row-------*/}
-													<div className="active_tab w-full   h-[35px] mt-8  overflow-x-scroll custom-scrollbar">
-														<div className="w-[400px]  active_tab    h-[35px]  middle space-x-3">
-															{tabs.map((i, k) => (
-																<div
-																	role="button"
-																	onClick={() => setBetTabMode(i.tabMode)}
-																	className={`tab_item px-3  hover:text-gray-700 border-b-2 space-x-2 ${
-																		betTabMode == i.tabMode
-																			? "text-gray-700 border-gray-700  "
-																			: "border-transparent text-gray-500"
-																	} h-full middle`}
-																	key={k}
-																>
-																	<p className={`txt-sm f-m`}> {i.name}</p>{" "}
-																	{i.badge && (
-																		<p
-																			className={`rounded bg-gray-500  px-2 p-[2px] text-white txt-xs f-m ${
-																				betTabMode == i.tabMode ? " bg-gray-700 border-gray-700 " : " text-gray-500"
-																			}  `}
-																		>
-																			{i.badge}
-																		</p>
-																	)}
-																</div>
-															))}
-														</div>
-													</div>
-												</div>
-
-												<div className="px-4 w-full space-y-4  pb-[200px] ]">
-													{/* ------be list --------for each tab */}
-													<div className="det_details grid   md:grid-cols-2 gap-6">{tabModeHandler()}</div>
-													{/*  */}
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							) : (
-								<div
-									className={`overlay_pane-mobile-deposite  info_panel relative w-full fadeIn-d   ${
-										showDetails.show ? "active" : ""
-									}  bg-white`}
-								>
-									{/*  */}
-
-									<div
-										role="button"
-										onClick={() => handleShowDetails()}
-										className="cancle_btn absolute left-1/2 -top-16 -translate-x-1/2"
-									>
-										<Image
-											src={"/icons/dashboard/cancleBtn.svg"}
-											alt={""}
-											width={48}
-											height={48}
-											//  onClick={toggle}
-											role="button"
-										/>
-									</div>
-
-									{/* --------bet type details---------- */}
-									<div className="content relative overflow-y-scroll custom-scrollbar h-screen">
-										<div className="h-auto">
-											{/*  */}
-											<div className="panel_content  w-full">
-												{/* Header --details */}
-												<div className="card_header h-[120px] bg-gray-50 w-full p-4 space-y-3">
-													<div className="row_one middle space-x-3">
-														<BallSvg />
-														<h1 className="bet_name txt-lg f-b text-gray-600">Battle of best banterers</h1>
-
-														{showDetails.mode === betCardType.KOLO ? (
-															<div className="badge uppercase  p-1 px-2 bg-cyan-50 rounded txt-xs f-b text-cyan-600">
-																KOLO bet
-															</div>
-														) : (
-															<div className="badge uppercase  p-1 px-2 bg-yellow-100 rounded txt-xs f-b text-yellow-600">
-																point bet
-															</div>
-														)}
-													</div>
-
-													{/* name row */}
-
-													<div className="row_two  space-x-0 ml-12">
-														<h1 className="amount text-gray-400 txt-sm f-b">
-															Creator: <span className="txt-sm f-b text-gray-700">Peter Zokoro</span>{" "}
-														</h1>
-													</div>
-												</div>
-
-												{/* -----------result  row-------- */}
-
-												<div className="w-full   p-4 sticky top-0 bg-white z-50 ">
-													<div className="result_card rounded-lg shadow-bet-card p-6 flex justify-around w-full">
-														<div className="col ">
-															<h1 className=" text-gray-400 txt-xs f-m">state</h1>
-															<h1 className="display-xs  f-eb text-gray-700 ">N4000</h1>
-														</div>
-
-														<div className="col ">
-															<h1 className=" text-gray-400 txt-xs f-m">Potential Payout</h1>
-															<h1 className="display-xs  f-eb text-gray-700 ">N50,000</h1>
-														</div>
-													</div>
-
-													{/* -----------won section and players avatar list row-------- */}
-
-													<div className="won  w-full row-between mt-6 ">
-														<div className="badge uppercase p-1 px-2 bg-[#ECFDF3] rounded txt-sm f-m text-[#027A48]">
-															won
-														</div>
-														<div className="">
-															<Image src={"/images/home/users.png"} alt={""} className="" width={144} height={24} />
-														</div>
-													</div>
-
-													{/* -----------reslut list row-------- */}
-
-													{/* header */}
-													<div className="create_aside mt-[46px]">
-														<div
-															role="button"
-															// onClick={handleShowBet}
-															className="h-[46px]    w-full relative header rounded-t-lg middle "
-														>
-															<div className="middle">
-																<h1 className="header_text txt-sm f-b text-gray-50 p-4">Results</h1>
-
-																<p className="rounded bg-gray-400 px-2 p-[2px] text-white txt-xs f-m">{8}</p>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<div className="px-4 w-full space-y-4 mt-6  pb-[200px] ]">
-													{/* ------be list --------for each tab */}
-													<div className="det_details   grid gap-6">{tabModeHandler()}</div>
-													{/*  */}
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							)}
-						</div>
+						<MobileModal
+							showDetails={showDetails}
+							handleShowDetails={handleShowDetails}
+							betCardType={betCardType}
+							hasJoined={hasJoined}
+							tabs={tabs}
+							setBetTabMode={setBetTabMode}
+							betTabMode={betTabMode}
+							tabModeHandler={tabModeHandler}
+							handleCopy={handleCopy}
+							data={data}
+						/>
 					) : (
-						// ----desktop----
-						<div className="betInfo overlay z-[70] fixed top-0 flex justify-end left-0 strictFadeIn w-full h-full bg-[#0000005c]">
-							<div className="info_panel slideInLeft  relative w-[50%]    h-screen bg-white">
-								{/*  */}
-								<div
-									role="button"
-									onClick={() => handleShowDetails()}
-									className="cancle_btn absolute -left-16 top-1/2 -translate-y-1/2"
-								>
-									<Image src={"/icons/dashboard/cancleBtn.svg"} alt={""} width={48} height={48} />
-								</div>
-
-								{/* --------bet type details---------- */}
-								<div className="content relative overflow-y-scroll custom-scrollbar h-screen">
-									<div className="h-auto">
-										{/*  */}
-										<div className="panel_content  space-y-6  w-full">
-											<div className=" w-full p-6">
-												<div className="bet_banner w-full h-[192px] relative">
-													{showDetails.mode === betCardType.KOLO ? (
-														<Image
-															src={"/images/home/kolo_banner.png"}
-															alt={""}
-															fill
-															className="r"
-															// width={300}
-															// height={128}
-														/>
-													) : (
-														<Image
-															src={"/images/home/point_banner.png"}
-															alt={""}
-															fill
-															className="r"
-															// width={300}
-															// height={128}
-														/>
-													)}
-												</div>
-											</div>
-
-											{/* -----------second badge row-------- */}
-											<div className="w-full px-12 sticky top-0   bg-white shadow pt-4 z-20">
-												<div className="badge_container row-between ">
-													<div className="col space-y-2">
-														<div className="row-between ">
-															{showDetails.mode === betCardType.KOLO ? (
-																<div className="badge uppercase  p-1 px-2 bg-cyan-50 rounded txt-xs f-b text-cyan-600">
-																	KOLO bet
-																</div>
-															) : (
-																<div className="badge uppercase  p-1 px-2 bg-yellow-100 rounded txt-xs f-b text-yellow-600">
-																	point bet
-																</div>
-															)}
-														</div>
-
-														<h1 className="bet_name txt-lg f-eb text-gray-600">{data?.Creator.Username}</h1>
-														<h1 className="bet_name txt-xs  text-gray-400">
-															Players: <b>{data?.Players.length}</b>
-														</h1>
-
-														<div className="temas_logo  relative flex items-center ml-4">
-															{data?.Players.map((i: any, k: number) => (
-																<div key={i} className={`logo_box z-${10 * (k + 1)} -ml-3`}>
-																	<PlayerAvatar id={i.userId} />
-																</div>
-															))}
-														</div>
-
-														{/* <Image src={"/images/home/users.png"} alt={""} className="mt-4" width={144} height={24} /> */}
-													</div>
-
-													<div className="col">
-														<h1 className="amount text-gray-400 txt-xs f-b">Bet amount</h1>
-														<h1 className="txt-md f-b text-gray-700 mt-2 mb-4">N {data?.Amount}</h1>
-														<Link href={`/dashboard/join?id=${data._id}`}>
-															<Button
-																disabled={hasJoined}
-																text={hasJoined ? "Joined" : "Join Bet"}
-																type={"button"}
-																primary
-																full
-															/>
-															{/* <Button text={"Join bet"} type={"button"} primary /> */}
-														</Link>
-													</div>
-												</div>
-
-												{/*  --------action tab row*/}
-
-												<div className="active_tab w-full   h-[35px] mt-8  middle space-x-3">
-													{tabs.map((i, k) => (
-														<div
-															role="button"
-															onClick={() => setBetTabMode(i.tabMode)}
-															className={`tab_item px-3  hover:text-gray-700  border-b-2 space-x-2 ${
-																betTabMode == i.tabMode
-																	? "text-gray-700 border-gray-700  "
-																	: "border-transparent text-gry-500"
-															} h-full middle`}
-															key={k}
-														>
-															<p className={`txt-sm  ${betTabMode == i.tabMode ? "f-b" : "f-m"}`}> {i.name}</p>{" "}
-															{i.badge && (
-																<p className="rounded bg-gray-600 px-2 p-[2px] text-white txt-xs f-m">{i.badge}</p>
-															)}
-														</div>
-													))}
-												</div>
-											</div>
-
-											<div className="px-12 w-full space-y-4">
-												{/* ------be list --------for each tab */}
-												<div className="det_details   grid grid-cols-2 gap-6">{tabModeHandler()}</div>
-												<div className="w-full h-6 invisible"></div>
-												{/*  */}
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+						<DesktopModal
+							showDetails={showDetails}
+							handleShowDetails={handleShowDetails}
+							betCardType={betCardType}
+							hasJoined={hasJoined}
+							tabs={tabs}
+							setBetTabMode={setBetTabMode}
+							betTabMode={betTabMode}
+							tabModeHandler={tabModeHandler}
+							data={data}
+							handleCopy={handleCopy}
+						/>
 					)}
 				</div>
 			)}
 
 			{copy && (
-				<div className="modal top-0 left-0 strictFadeIn fixed w-full h-full bg-[#0000003e] grid place-content-center z-[99999]">
-					<div className=" bg-white rounded p-4 py-8 FadeIn space-y-2 relative w-[400px]">
-						<div role="button" onClick={() => handleCopy()} className="cancle_btn absolute -right-11  -top-11">
-							<Image
-								src={"/icons/dashboard/cancleBtn.svg"}
-								alt={""}
-								width={48}
-								height={48}
-								//  onClick={toggle}
-								role="button"
-							/>
-						</div>
-
-						<h1 className="txt-sm text-gray-600 f-n">Bet link</h1>
-
-						<div className="w-full relative">
-							<input
-								id="betLink"
-								type="text"
-								className="rounded border p-2 text-sm text-gray-400 font-medium w-full"
-								value={`https://selfbet.vercel.app/dashboard/join?id=${data?._id}`}
-							/>
-
-							<button
-								onClick={copyToClipboard}
-								className="bg-sec text-white copy absolute right-0  top-0 rounded p-2 px-4 capitalize text-sm "
-							>
-								copy
-							</button>
-						</div>
-					</div>
+				<div className="modal top-0 left-0 strictFadeIn fixed w-screen h-screen bg-[#0000003e] grid place-content-center z-[99999]">
+					<CopyLink copyToClipboard={copyToClipboard} data={data} handleCopy={ handleCopy} />
 				</div>
 			)}
 		</>
 	);
 };
 
-
-
-function PlayerAvatar({ id }: any) {
-	const [playerNme, setPlayerName] = useState("");
-
-	async function getName(id: string) {
-		// GET PLAYER DETAILS
-		const { error, serverResponse } = await getUserProfile(id);
-
-		// console.log(serverResponse, "paer details");
-
-		return setPlayerName(serverResponse.Username);
-
-		// return serverResponse.Username.slice(0, 2).toUpperCase();
-	}
-
-	useEffect(() => {
-	getName(id)
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
-	
+function CopyLink({ toggle, handleCopy, copyToClipboard, data }: any) {
 	return (
-		<div className="rounded-full font-bold text-gray-700 text-sm w-6 h-6 centered">
-			{/* <p>{i.userId?.slice(5, 7).toUpperCase()}</p> */}
-			<p>{playerNme?.slice(0, 2).toUpperCase()}</p>
+		<div className=" bg-white rounded-xl p-4 py-8 sm:py-12 w-[95%]  FadeIn space-y-2 relative sm:w-[400px] mx-auto">
+			<div role="button" onClick={() => handleCopy()} className="cancle_btn absolute right-1/2 translate-x-1/2  sm:-right-11  -top-11">
+				<Image
+					src={"/icons/dashboard/cancleBtn.svg"}
+					alt={""}
+					width={48}
+					height={48}
+					//  onClick={toggle}
+					role="button"
+				/>
+			</div>
+
+			<div className="w-full col-center space-y-3 bg-white">
+				<Image src={"/icons/share.svg"} alt="logo" width={48} height={48} className="animate-pulse" />
+
+				<div className="w-full space-y-2   text-center">
+					<h1 className="title txt-lg f-b text-gray-900">Share bet</h1>
+
+					<p className="subtitle txt-sm f-n text-[##6B7280]">Share with your friends and community</p>
+				</div>
+
+				<div className="w-full rounded-lg p-3 col-centered ">
+					{/* copy bet link element */}
+					<div className="w-full border rounded-lg flex items-center justify-between">
+						<input
+							type="text"
+							name=""
+							id="betLink"
+							className="bg-transparent w-full  h-full pl-2 outline-none to-gray-400"
+							value={`https://selfbet.vercel.app/dashboard/join?id=${data?._id}`}
+						/>
+
+						<button onClick={copyToClipboard} className="btn-copy">
+							<p className="copy">Copy link</p>
+							<FiCopy className="text-[#ff4b00] font-bold " />
+						</button>
+					</div>
+				</div>
+
+				<div className="row  space-x-3 ">
+					<Link href={"/dashboard/my-bets"}>
+						<Image src={"/icons/share-i.svg"} alt="logo" width={40} height={40}  />
+					</Link>
+
+					<Link href={"/dashboard/my-bets"}>
+						<Image src={"/icons/share-t.svg"} alt="logo" width={40} height={40}  />
+					</Link>
+
+					<Link href={"/dashboard/my-bets"}>
+						<Image src={"/icons/share-w.svg"} alt="logo" width={40} height={40}  />
+					</Link>
+				</div>
+			</div>
 		</div>
 	);
 }
 
 export default BetCard;
+
+{
+	/* <div className=" bg-white rounded p-4 py-8 FadeIn space-y-2 relative sm:w-[400px]">
+	<div role="button" onClick={() => handleCopy()} className="cancle_btn absolute -right-11  -top-11">
+		<Image
+			src={"/icons/dashboard/cancleBtn.svg"}
+			alt={""}
+			width={48}
+			height={48}
+			//  onClick={toggle}
+			role="button"
+		/>
+	</div>
+
+	<h1 className="txt-sm text-gray-600 f-n">Bet link</h1>
+
+	<div className="w-full relative">
+		<input
+			id="betLink"
+			type="text"
+			className="rounded border p-2 text-sm text-gray-400 font-medium w-full"
+			value={`https://selfbet.vercel.app/dashboard/join?id=${data?._id}`}
+		/>
+
+		<button
+			onClick={copyToClipboard}
+			className="bg-sec text-white copy absolute right-0  top-0 rounded p-2 px-4 capitalize text-sm "
+		>
+			copy
+		</button>
+	</div>
+</div>; */
+}

@@ -49,6 +49,7 @@ export default function CreateBet({ stepHandler }: { stepHandler: any }) {
 
 				<p className="subtitle mt-2">Please select your desired bet below</p>
 			</div>
+			
 
 			{/* card--types */}
 			<div className="bet_types grid lg:grid-cols-2 gap-4 md:gap-8 ">
@@ -99,6 +100,8 @@ export default function CreateBet({ stepHandler }: { stepHandler: any }) {
 						</div>
 					</div>
 				</div>
+
+				
 
 				{/* -----Ponit banner------ */}
 				<div className=" w-full rounded-lg h-[291px] md:h-[520px] relative ">
