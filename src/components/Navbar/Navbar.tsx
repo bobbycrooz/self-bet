@@ -101,7 +101,7 @@ const Navbar = () => {
 				</Link>
 			}
 
-			{!hasToken() && isMobile ? (
+			{ isMobile ? (
 				<>
 					{mobileSearchMode ? (
 						<div className=" relative sm:w-[700px]">
@@ -114,7 +114,7 @@ const Navbar = () => {
 					)}
 				</>
 			) : (
-				<div className=" relative w-[700px] br">
+				!hasToken() && <div className=" relative w-[700px]">
 					<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
 				</div>
 			)}

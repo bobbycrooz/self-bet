@@ -38,7 +38,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 		{
 			notify('info', 'You need to Sign in first')
 
-			push("/dashboard");
+			push("/auth");
 		}
 		
 	});

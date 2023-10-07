@@ -26,7 +26,7 @@ export default function Home() {
 	let errorList: string[] = [];
 
 	const registerSchema = {
-		Email: "bobby@mail.com",
+		Email: "",
 		Username: "",
 		Password: "",
 	};
