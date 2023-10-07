@@ -104,7 +104,7 @@ const Navbar = () => {
 			{!hasToken() && isMobile ? (
 				<>
 					{mobileSearchMode ? (
-						<div className=" relative sm:w-[700px] br">
+						<div className=" relative sm:w-[700px]">
 							<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
 						</div>
 					) : (
