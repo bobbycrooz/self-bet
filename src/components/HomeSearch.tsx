@@ -67,6 +67,9 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 
 	return (
 		<div className={` sm:w-[600px] home_search  flex items-center justify-between ${isSearching && "active"}`}>
+
+
+			
 			<form
 				role="button"
 				onClick={searchToggle}

@@ -20,14 +20,20 @@ const Navbar = () => {
 	const [confirmLogout, toggleConfirmLogout] = useState(false);
 	const [isSearching, setIsSearching] = useState(false);
 	const [notification, toggleNoti] = useState(false);
+	const [mobileSearchMode, setMobileSearchMode] = useState(false);
 	const profileRef = useRef<HTMLDivElement>(null);
 	const { isMobile } = useWindowSize();
 	const { User } = useUser();
 	const { push, pathname } = useRouter();
 	const { fetchAllActiveBets } = useBet();
+	
 
 	function handleShowProfile() {
 		setShowProfile((p) => !p);
+	}
+
+	function handleMobileSearch() {
+		setMobileSearchMode((p) => !p);
 	}
 
 	function handleShowNotification() {
@@ -43,8 +49,12 @@ const Navbar = () => {
 		push(`/dashboard?search=${true}`);
 	}
 
-	function closeSearch() {
+	function closeSearch()
+	{
+		
 		setIsSearching((p) => !p);
+		isMobile &&  handleMobileSearch()
+
 		if (isSearching) {
 			//trigger  fetch --
 			fetchAllActiveBets();
@@ -83,16 +93,28 @@ const Navbar = () => {
 			{/* logo */}
 			{
 				<Link href={"/dashboard"}>
-					<div className="menu_logo middle space-x-4 hidden  w-[120px]">
-						<Image src={"/icons/logo-2.svg"} alt="logo" width={120} height={26} className="block md:hidden" />
+					<div className="menu_logo middle space-x-4 hidden  sm:w-[120px]">
+					{isMobile && !mobileSearchMode && <Image src={"/icons/logo-2.svg"} alt="logo" width={120} height={26} className="block md:hidden" />}
 
 						<Image src={"/icons/logo-2.svg"} alt="logo" width={140} height={46} className="hidden md:block" />
 					</div>
 				</Link>
 			}
 
-			{!hasToken() && (
-				<div className=" relative w-[700px]">
+			{!hasToken() && isMobile ? (
+				<>
+					{mobileSearchMode ? (
+						<div className=" relative sm:w-[700px] br">
+							<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
+						</div>
+					) : (
+						<div role="button" onClick={handleMobileSearch} className="notification">
+							<SearchSvg />
+						</div>
+					)}
+				</>
+			) : (
+				<div className=" relative w-[700px] br">
 					<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
 				</div>
 			)}
@@ -188,11 +210,9 @@ const Navbar = () => {
 				)
 			)}
 
-			{false && hasToken() &&  isMobile  && (
+			{false && hasToken() && isMobile && (
 				<div className="search space-x-2 middle  ">
-					{/* <div role="button" onClick={searchToggle} className="notification">
-						<SearchSvg />
-					</div>
+					{/*
 
 					<div role="button" onClick={handleShowNotification} className="notification">
 						<BellSvg />

@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useBet } from "@/context/betContext";
 import InfiniteScroll from "@/components/Paginator";
 import useToast from "@/hooks/useToast";
+import useWindowSize from "@/hooks/useScreen";
 // import {betCardType}
 
 function Home() {
@@ -21,6 +22,8 @@ function Home() {
 	const { BetList, fetchMoreActiveBets } = useBet();
 	const topRef = useRef(null);
 	const { notify } = useToast();
+	const { isMobile } = useWindowSize();
+
 
 	
 
@@ -131,9 +134,9 @@ function Home() {
 						{doneLoading ? (
 							<div className="nothing w-full centered mt-6">
 								<div className="nothing_content col-center">
-									<Image src={"/images/home/nothing.svg"} alt="" width={200} height={200} />
+									<Image src={"/images/home/nothing.svg"} alt="" width={!isMobile ? 200 : 90} height={!isMobile ? 200 : 90}  />
 
-									<p className="nothing_text mt-8 w-[500px]">
+									<p className="nothing_text mt-8 sm:w-[500px]">
 										No bets matched your search. Try using <span>search options</span> such as bet creator, team, bet
 										amount and more.
 									</p>
