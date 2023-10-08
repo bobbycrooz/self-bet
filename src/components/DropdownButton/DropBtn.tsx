@@ -136,7 +136,7 @@ export default function DropdownBtn({
 			<div
 				role="button"
 				onClick={() => handleShowList(type)}
-				className={` p-4 flex px-3 row-between h-[40px] space-x-4 w-full border  border-gray-100 rounded-lg `}
+				className={` p-4 flex px-3 row-between h-[40px] space-x-4 w-full border  border-gray-100 rounded-lg`}
 			>
 				<h1 className="bet_condition_name txt-sm f-m text-gray-500 ">{title}</h1>
 				<Image
@@ -150,7 +150,7 @@ export default function DropdownBtn({
 			</div>
 
 			{show && (
-				<>
+				<div>
 					<div onClick={handleCardClick} className="bg-[#00000021] fixed w-screen h-screen left-0 top-0 z-[999]" />
 					<div
 						ref={cardRef}
@@ -163,7 +163,7 @@ export default function DropdownBtn({
 						{dropDownCardHandler(type)}
 						{/* <div className="bg-[#00000048] absolute w-screen h-screen " /> */}
 					</div>
-				</>
+				</div>
 			)}
 			{/* {show && <div className="z-[99999] bg-white">{dropDownCardHandler(type)}</div>} */}
 		</div>

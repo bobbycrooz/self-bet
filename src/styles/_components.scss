@@ -85,26 +85,26 @@
 }
 
 .btn-copy {
-		display: flex;
-		width: 156px;
-		padding: 12px 6px;
-		justify-content: center;
-		align-items: center;
-		gap: 12px;
-		align-self: stretch;
+	display: flex;
+	width: 156px;
+	padding: 12px 6px;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+	align-self: stretch;
 
-		border-radius: 0px 8px 8px 0px;
-		background: #FEF8F3;
+	border-radius: 0px 8px 8px 0px;
+	background: #fef8f3;
 
-		color: #ff4b00;
+	color: #ff4b00;
 
-		/* Text sm/Bold */
-		font-family: Inter;
-		font-size: 14px;
-		font-style: normal;
-		font-weight: 700;
-		line-height: 20px; /* 142.857% */
-	}
+	/* Text sm/Bold */
+	font-family: Inter;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 20px; /* 142.857% */
+}
 
 /* 
 -------------------------------------------
@@ -413,9 +413,7 @@
 		@include smallPhone {
 			gap: 8px;
 			padding: 8px 12px;
-		width: 700px;
-		
-
+			width: 700px;
 		}
 	}
 
