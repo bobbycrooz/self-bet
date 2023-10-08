@@ -76,6 +76,9 @@ function Home() {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [BetList]);
 
+
+	
+
 	return (
 		<>
 			<Head>
@@ -121,7 +124,8 @@ function Home() {
 				</div>
 
 				<InfiniteScroll fetchData={fetchMoreActiveBets} list={BetList}>
-					{BetList?.length > 0 ? (
+					{/* @ts-ignore */}
+					{  BetList?.length > 0 ? (
 					<div className="active_bet_wrapper pb-11 grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full  h-auto mt-6 ">
 						{BetList?.map((i: any, k: number) => (
 							<div className="" key={k}>

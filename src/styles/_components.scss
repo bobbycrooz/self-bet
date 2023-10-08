@@ -384,6 +384,7 @@
 	width: 230px;
 	transition: all 0.2s ease-in-out;
 	background: #f9fafb;
+	transform-origin: 0%;
 
 	&-filter {
 		display: none;
@@ -411,6 +412,9 @@
 		@include smallPhone {
 			gap: 8px;
 			padding: 8px 12px;
+		width: 700px;
+		
+
 		}
 	}
 

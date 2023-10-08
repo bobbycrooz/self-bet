@@ -5,8 +5,9 @@ import { fetchBetListAPI, searchBetList, searchFixturesAPI } from "@/axios/endpo
 import { useBet } from "@/context/betContext";
 import useToast from "@/hooks/useToast";
 import Debounce from "@/hooks/useDebounce";
+import toast from "react-hot-toast";
 
-export default function HomeSearch({ searchToggle, isSearching, closeSearch }: any) {
+export default function HomeSearch({ isMobile, searchToggle, isSearching, closeSearch }: any) {
 	const [showFilter, setShowFilter] = useState(false);
 	const [searchKey, setSearchKey] = useState("");
 	const { BetList, setBetList } = useBet();
@@ -36,7 +37,7 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 
 		if (error) {
 			notify("warn", "no result");
-			console.log(error);
+			return console.log(error);
 		}
 		console.log(serverResponse, "here is the reponse");
 
@@ -49,9 +50,10 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 
 		if (error) {
 			notify("warn", "no result");
-			console.log(error);
+			return console.log(error);
 		}
 
+		// toast.error("error from here oo");
 		setBetList(serverResponse);
 	}
 
@@ -66,10 +68,7 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 	}, [isSearching]);
 
 	return (
-		<div className={` sm:w-[600px] home_search  flex items-center justify-between ${isSearching && "active"}`}>
-
-
-			
+		<div className={` sm:w-[600px] home_search flex items-center justify-between ${isSearching && "active"}`}>
 			<form
 				role="button"
 				onClick={searchToggle}
@@ -95,10 +94,10 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 					placeholder="Search team name..."
 				/>
 			</form>
-			{isSearching && <div onClick={closeSearch} className="h-8 w-[70%] cursor-pointer"></div>}
+			{isSearching && <div title="Close" onClick={closeSearch} className="h-8 w-[70%] cursor-pointer"></div>}
 
 			{/* filter */}
-			<div role="button" onClick={() => setShowFilter(!showFilter)} className="home_search-filter ">
+			<div role="button" onClick={() => setShowFilter(!showFilter)} className="home_search-filter">
 				<span>
 					<FilterSVG />
 				</span>
@@ -110,60 +109,114 @@ export default function HomeSearch({ searchToggle, isSearching, closeSearch }: a
 				<>
 					<div
 						onClick={() => setShowFilter(false)}
-						className="fixed top-0 left-0 w-full h-full bg-transparent bg-opacity-50 z-50"
+						className="fixed top-0 left-0 w-full h-full bg-transparent bg-opacity-50 z-50 "
 					/>
-					
 
-					<div className="fixed sm:absolute  w-full  bg-white left-0 top-16 sm:top-11 filter_dropdown">
-						<DropDown
-							type={"byTeam"}
-							lists={[]}
-							title="Team"
-							show={searchMode.team}
-							toggleShow={setSearchMode}
-							setList={setBetList}
-							context={"Bets"}
-						/>
+					{isMobile ? (
+						<div className="fixed sm:absolute  w-full  bg-white left-0 top-16 sm:top-11 overflow-x-scroll overflow-y-hidden z-[99] custom-scrollbar">
+							<div className="scrollable_ele filter_dropdown ">
+								<DropDown
+								type={"byTeam"}
+								lists={[]}
+								title="Team"
+								show={searchMode.team}
+								toggleShow={setSearchMode}
+								setList={setBetList}
+								context={"Bets"}
+							/>
 
-						<DropDown
-							type={"byLeague"}
-							setList={setBetList}
-							lists={[]}
-							title={"League"}
-							show={searchMode.league}
-							toggleShow={setSearchMode}
-							context={"Bets"}
-						/>
+							<DropDown
+								type={"byLeague"}
+								setList={setBetList}
+								lists={[]}
+								title={"League"}
+								show={searchMode.league}
+								toggleShow={setSearchMode}
+								context={"Bets"}
+							/>
 
-						<DropDown
-							type={"byName"}
-							lists={[]}
-							title={"Creator"}
-							show={searchMode.name}
-							toggleShow={setSearchMode}
-							context={"Bets"}
-						/>
+							<DropDown
+								type={"byName"}
+								lists={[]}
+								title={"Creator"}
+								show={searchMode.name}
+								toggleShow={setSearchMode}
+								context={"Bets"}
+							/>
 
-						<DropDown
-							type={"byRange"}
-							lists={[]}
-							title={"Bet Amount"}
-							show={searchMode.range}
-							setList={setBetList}
-							toggleShow={setSearchMode}
-							context={"Bets"}
-						/>
+							<DropDown
+								type={"byRange"}
+								lists={[]}
+								title={"Bet Amount"}
+								show={searchMode.range}
+								setList={setBetList}
+								toggleShow={setSearchMode}
+								context={"Bets"}
+							/>
 
-						<DropDown
-							type={"byPercent"}
-							lists={[]}
-							title={"Bet Discount"}
-							setList={setBetList}
-							show={searchMode.percent}
-							toggleShow={setSearchMode}
-							context={"Bets"}
-						/>
-					</div>
+							<DropDown
+								type={"byPercent"}
+								lists={[]}
+								title={"Bet Discount"}
+								setList={setBetList}
+								show={searchMode.percent}
+								toggleShow={setSearchMode}
+								context={"Bets"}
+							/>
+							</div>
+						</div>
+					) : (
+						<div className="fixed sm:absolute  w-full  bg-white left-0 top-16 sm:top-11 filter_dropdown">
+							<DropDown
+								type={"byTeam"}
+								lists={[]}
+								title="Team"
+								show={searchMode.team}
+								toggleShow={setSearchMode}
+								setList={setBetList}
+								context={"Bets"}
+							/>
+
+							<DropDown
+								type={"byLeague"}
+								setList={setBetList}
+								lists={[]}
+								title={"League"}
+								show={searchMode.league}
+								toggleShow={setSearchMode}
+								context={"Bets"}
+							/>
+
+							<DropDown
+								type={"byName"}
+								lists={[]}
+								title={"Creator"}
+								show={searchMode.name}
+								toggleShow={setSearchMode}
+								context={"Bets"}
+							/>
+
+							<DropDown
+								type={"byRange"}
+								lists={[]}
+								title={"Bet Amount"}
+								show={searchMode.range}
+								setList={setBetList}
+								toggleShow={setSearchMode}
+								context={"Bets"}
+							/>
+
+							<DropDown
+								type={"byPercent"}
+								lists={[]}
+								title={"Bet Discount"}
+								setList={setBetList}
+								show={searchMode.percent}
+								toggleShow={setSearchMode}
+								context={"Bets"}
+							/>
+						</div>
+					)}
 				</>
 			)}
 		</div>

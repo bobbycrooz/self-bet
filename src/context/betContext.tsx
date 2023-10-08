@@ -15,6 +15,7 @@ import { promises } from "dns";
 import React, { useContext, useState, useEffect, useMemo, createContext, Children, useReducer } from "react";
 import { useUser } from "./userContext";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 // import utils from 'utils';
 
 interface propsTypes {
@@ -247,13 +248,23 @@ const BetProvider = ({ children }: { children: any }) => {
 	async function fetchAllActiveBets() {
 		try {
 			const { error, serverResponse } = await fetchBetListAPI(1);
+
+	console.log(error, serverResponse ,'this is the just logged slip');
+
 			if (!error) {
 				setBetList(serverResponse as any);
+
 				// console.log(serverResponse[0], "fetching all bets");
 			} else {
 				// console.log(serverResponse, "fetching all bets");
+
+				setBetList([])
+
 			}
-		} catch (error) {}
+		} catch (error)
+		{
+			// toast.error('error from try catch')
+		}
 	}
 
 	async function fetchMoreActiveBets(page: number) {
@@ -265,7 +276,10 @@ const BetProvider = ({ children }: { children: any }) => {
 
 			if (serverResponse.length === 0) {
 				return false;
-			} else {
+			} else
+			{
+			toast.error('error from fetch more active')
+				
 				// @ts-ignore
 				setBetList([...BetList, ...serverResponse]);
 

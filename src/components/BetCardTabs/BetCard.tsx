@@ -31,24 +31,7 @@ export const betCardType = {
 	POINT: "PointBet",
 };
 
-const tabs = [
-	{
-		name: "Matches",
-		badge: "9",
-		tabMode: tabMode.MATCHES,
-	},
 
-	{
-		name: "Bet conditions",
-		badge: "1",
-		tabMode: tabMode.BET,
-	},
-
-	{
-		name: "Creator’s Bet",
-		tabMode: tabMode.CREATOR,
-	},
-];
 
 const BetCard = ({ betType, data }: PropTypes) => {
 	const [showDetails, setShowDetails] = useState<{
@@ -68,6 +51,25 @@ const BetCard = ({ betType, data }: PropTypes) => {
 	const profileRef = useRef<HTMLDivElement>(null);
 
 	const { User } = useUser();
+
+	const tabs = [
+	{
+		name: "Matches",
+		badge: "1",
+		tabMode: tabMode.MATCHES,
+	},
+
+	{
+		name: "Bet conditions",
+		badge: data?.Criteria.Conditions.length,
+		tabMode: tabMode.BET,
+	},
+
+	{
+		name: "Creator’s Bet",
+		tabMode: tabMode.CREATOR,
+	},
+];
 
 	function userJoined() {
 		// check if current usser is among the playerws

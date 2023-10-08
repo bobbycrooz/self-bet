@@ -37,12 +37,10 @@ export function Bets({ data }: any) {
 	);
 }
 
-export function Creator({ data }: any) {
+export function Creator({ data }: any)
+{
+	
 	const arrr = typeof data?.CreatorSelection?.Conditions === "string";
-
-	// console.log(arrr);
-
-	// console.log(data);
 
 	return (
 		<>
@@ -50,26 +48,7 @@ export function Creator({ data }: any) {
 			{!arrr &&
 				data?.CreatorSelection?.Conditions?.map(
 					(
-						i: {
-							Codes:
-								| string
-								| number
-								| boolean
-								| React.ReactElement<any, string | React.JSXElementConstructor<any>>
-								| React.ReactFragment
-								| React.ReactPortal
-								| null
-								| undefined;
-							Sector:
-								| string
-								| number
-								| boolean
-								| React.ReactElement<any, string | React.JSXElementConstructor<any>>
-								| React.ReactFragment
-								| React.ReactPortal
-								| null
-								| undefined;
-						},
+						i:any,
 						k: React.Key | null | undefined
 					) => (
 						<div key={k} className="creators_card border-gray-200 rounded-lg shadow-md">

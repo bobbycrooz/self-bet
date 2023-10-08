@@ -90,7 +90,7 @@ const Navbar = () => {
 
 	return (
 		<nav className=" w-full  fixed lg:static top-0 z-10  md:h-16 h-[76px] bg-white flex items-center justify-between px-6 p-2 border-b">
-			{/* logo */}
+			{/* responsive --logo */}
 			{
 				<Link href={"/dashboard"}>
 					<div className="menu_logo middle space-x-4 hidden  sm:w-[120px]">
@@ -101,11 +101,13 @@ const Navbar = () => {
 				</Link>
 			}
 
+
+			{/* search mode for mobile screen no- auth */}
 			{ isMobile ? (
 				<>
 					{mobileSearchMode ? (
 						<div className=" relative sm:w-[700px]">
-							<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
+							<HomeSearch isMobile={isMobile} searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
 						</div>
 					) : (
 						<div role="button" onClick={handleMobileSearch} className="notification">
@@ -114,12 +116,13 @@ const Navbar = () => {
 					)}
 				</>
 			) : (
+					// search mode for desktop --no auth
 				!hasToken() && <div className=" relative w-[700px]">
-					<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
+					<HomeSearch isMobile={isMobile} searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
 				</div>
 			)}
 
-			{/* not logged in user  */}
+			{/* CTO BUTTONS for non-auth user  */}
 			{!hasToken() ? (
 				<div className="auth_container space-x-4 md:middle hidden md:flex m-2">
 					<Link href={"/auth"}>
@@ -131,11 +134,12 @@ const Navbar = () => {
 					</Link>
 				</div>
 			) : (
+					// nav widget for logged in user desktop only
 				!isMobile && (
 					<div className="logedIn md:flex items-center space-x-6 hidden  w-[80%] justify-end relative">
 						{/* search component  */}
 						{showSearchComponent && (
-							<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
+							<HomeSearch isMobile={isMobile} searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
 						)}
 
 						{/* User details */}
@@ -221,7 +225,7 @@ const Navbar = () => {
 					<div className="relative ">
 						{/* search component  */}
 						{showSearchComponent && (
-							<HomeSearch searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
+							<HomeSearch isMobile={isMobile} searchToggle={searchToggle} isSearching={isSearching} closeSearch={closeSearch} />
 						)}
 					</div>
 				</div>

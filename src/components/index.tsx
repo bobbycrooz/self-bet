@@ -11,7 +11,7 @@ import Withdraw from "./Withdraw";
 import Deposite from "./Deposite";
 import Toggle from "./Toggle";
 import ConfirmationModal from "./ConfirmationModal";
-import DropDown from "./DropBtn";
+import DropDown from "./DropdownButton/DropBtn";
 import ConfirmLogout from "./ConfirmLogout"
 import PlaceBetLoader from "./PlaceBetLoader";
 import AddCondition from "./AddConditionModal/AddCondition";
