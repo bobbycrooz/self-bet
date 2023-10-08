@@ -12,6 +12,7 @@ import { useFormik } from "formik";
 import DropzoneComponent from "@/components/DropZone";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import Meta from "@/utils/Meta";
+import Link from "next/link";
 
 function Home() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -83,7 +84,9 @@ function Home() {
 							<p className="sub_name text-sm f-n t-g6">{User?.Email ? User?.Email : "--_--"}</p>
 						</div>
 
-						<Button text={"View Profile"} primary type={undefined} />
+						<Link href="/dashboard/profile">
+							<Button text={"View Profile"} primary type={undefined} />
+						</Link>
 					</div>
 				</div>
 
@@ -100,7 +103,7 @@ function Home() {
 						</div>
 
 						{/* COL TWO */}
-						<div className="w-full flex  flex-col sm:flex-row sm:items-start border rounded-xl shadow h-auto">
+						<div className="w-full flex  flex-col sm:items-start border rounded-xl shadow h-auto">
 							{/* BODY */}
 							<div className="content w-full sm:p-6">
 								{/* FORM GRID */}
@@ -187,6 +190,7 @@ function Home() {
 									<Button text={"Save changes"} type={undefined} primary disabled={true} />
 								</div>
 
+								{/* mobile - buton */}
 								<div className="button_group grid-cols-3  w-full gap-4   grid px-6 p-4  sm:hidden">
 									<Button text={"Cancel"} type={undefined} ghost />
 									<div className="col-span-2">
