@@ -128,6 +128,7 @@
 
 		.dropdown_body {
 			@apply bg-white z-[9999] rounded-lg border-gray-100;
+			border-radius: 8px !important;
 		}
 	}
 }
