@@ -67,6 +67,15 @@ export default function HomeSearch({ isMobile, searchToggle, isSearching, closeS
 		!isSearching && setShowFilter(false);
 	}, [isSearching]);
 
+	// useEffect(() => {
+	// 	// console.log(, "rrfgklrgmerklgmlkrglkdfklgnkdlf rferklgklrnklg rkrngkrgklnrk");
+	// 	if (document.getElementById("searchCardEle"))
+	// 	{
+	// 		const scrolableEle = document.getElementById("searchCardEle")
+	// 		scrolableEle?.classList.toggle('dynamicCondition')
+	// 	}
+	// }, [setSearchMode, searchMode]);
+
 	return (
 		<div className={` sm:w-[600px] home_search flex items-center justify-between ${isSearching && "active"}`}>
 			<form
@@ -113,56 +122,59 @@ export default function HomeSearch({ isMobile, searchToggle, isSearching, closeS
 					/>
 
 					{isMobile ? (
-						<div className="fixed md:absolute  w-full  bg-white left-0 top-16 sm:top-11 overflow-x-scroll overflow-y-hidden z-[99] custom-scrollbar scroll-wrapper-">
+						<div
+							id="conditionalScrol"
+							className="fixed md:absolute  w-full  bg-white left-0 top-16 sm:top-11 overflow-x-scroll overflow-y-visible z-[99] custom-scrollbar scroll-wrapper-"
+						>
 							<div className="scrollable_ele filter_dropdown ">
 								<DropDown
-								type={"byTeam"}
-								lists={[]}
-								title="Team"
-								show={searchMode.team}
-								toggleShow={setSearchMode}
-								setList={setBetList}
-								context={"Bets"}
-							/>
+									type={"byTeam"}
+									lists={[]}
+									title="Team"
+									show={searchMode.team}
+									toggleShow={setSearchMode}
+									setList={setBetList}
+									context={"Bets"}
+								/>
 
-							<DropDown
-								type={"byLeague"}
-								setList={setBetList}
-								lists={[]}
-								title={"League"}
-								show={searchMode.league}
-								toggleShow={setSearchMode}
-								context={"Bets"}
-							/>
+								<DropDown
+									type={"byLeague"}
+									setList={setBetList}
+									lists={[]}
+									title={"League"}
+									show={searchMode.league}
+									toggleShow={setSearchMode}
+									context={"Bets"}
+								/>
 
-							<DropDown
-								type={"byName"}
-								lists={[]}
-								title={"Creator"}
-								show={searchMode.name}
-								toggleShow={setSearchMode}
-								context={"Bets"}
-							/>
+								<DropDown
+									type={"byName"}
+									lists={[]}
+									title={"Creator"}
+									show={searchMode.name}
+									toggleShow={setSearchMode}
+									context={"Bets"}
+								/>
 
-							<DropDown
-								type={"byRange"}
-								lists={[]}
-								title={"Bet Amount"}
-								show={searchMode.range}
-								setList={setBetList}
-								toggleShow={setSearchMode}
-								context={"Bets"}
-							/>
+								<DropDown
+									type={"byRange"}
+									lists={[]}
+									title={"Bet Amount"}
+									show={searchMode.range}
+									setList={setBetList}
+									toggleShow={setSearchMode}
+									context={"Bets"}
+								/>
 
-							<DropDown
-								type={"byPercent"}
-								lists={[]}
-								title={"Bet Discount"}
-								setList={setBetList}
-								show={searchMode.percent}
-								toggleShow={setSearchMode}
-								context={"Bets"}
-							/>
+								<DropDown
+									type={"byPercent"}
+									lists={[]}
+									title={"Bet Discount"}
+									setList={setBetList}
+									show={searchMode.percent}
+									toggleShow={setSearchMode}
+									context={"Bets"}
+								/>
 							</div>
 						</div>
 					) : (

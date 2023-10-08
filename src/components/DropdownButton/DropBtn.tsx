@@ -151,33 +151,24 @@ export default function DropdownBtn({
 
 			{show && (
 				<>
+					<div onClick={handleCardClick} className="bg-[#00000021] fixed w-screen h-screen left-0 top-0 z-[999]" />
 					<div
 						ref={cardRef}
 						// style={{
 						// 	position: "fixed"
 						// }}
+						id="searchCardEle"
 						className="fixed left-1/2 -translate-x-1/2  md:absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft z-[999]"
 					>
 						{dropDownCardHandler(type)}
 						{/* <div className="bg-[#00000048] absolute w-screen h-screen " /> */}
 					</div>
-					<div onClick={handleCardClick} className="bg-[#00000021] fixed w-screen h-screen left-0 top-0 z-[999]" />
 				</>
 			)}
 			{/* {show && <div className="z-[99999] bg-white">{dropDownCardHandler(type)}</div>} */}
 		</div>
 	);
 }
-
-
-
-
-
-
-
-
-
-	
 
 function CustomSearchCard({ list, handler }: { list: Array<string>; handler: any }) {
 	const cardRef = useRef(null);
