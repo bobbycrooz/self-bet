@@ -71,7 +71,7 @@ const MobileView = ({
 
 							<h1 className="t-header mt-4">Customize Your Bet</h1>
 
-							<p className="txt-sm mt-2 w-[430px]">
+							<p className="txt-sm mt-2 w-full">
 								Add conditions to make your bet more exciting. Choose from a range of options to create a unique
 								challenge
 							</p>
