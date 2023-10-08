@@ -113,7 +113,7 @@ export default function HomeSearch({ isMobile, searchToggle, isSearching, closeS
 					/>
 
 					{isMobile ? (
-						<div className="fixed sm:absolute  w-full  bg-white left-0 top-16 sm:top-11 overflow-x-scroll overflow-y-hidden z-[99] custom-scrollbar">
+						<div className="fixed md:absolute  w-full  bg-white left-0 top-16 sm:top-11 overflow-x-scroll overflow-y-hidden z-[99] custom-scrollbar scroll-wrapper-">
 							<div className="scrollable_ele filter_dropdown ">
 								<DropDown
 								type={"byTeam"}

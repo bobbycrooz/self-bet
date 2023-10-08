@@ -16,6 +16,11 @@
 	// @apply br;
 }
 
+
+.scroll-wrapper-nav{
+	transform: translateZ(0)
+}
+
 body {
 	font-family: "Inter", sans-serif !important;
 	transition: all 0.4s linear;

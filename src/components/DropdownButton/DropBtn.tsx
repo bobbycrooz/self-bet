@@ -153,7 +153,10 @@ export default function DropdownBtn({
 				<>
 					<div
 						ref={cardRef}
-						className="fixed left-1/2 -translate-x-1/2  sm:absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft z-[999] bg"
+						// style={{
+						// 	position: "fixed"
+						// }}
+						className="fixed left-1/2 -translate-x-1/2  md:absolute dropdown_body space-y-4 column transform w-[328px] shadow-soft z-[999]"
 					>
 						{dropDownCardHandler(type)}
 						{/* <div className="bg-[#00000048] absolute w-screen h-screen " /> */}

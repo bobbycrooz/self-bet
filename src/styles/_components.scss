@@ -12,7 +12,7 @@
 	}
 
 	input {
-		@apply mt-2 border border-gray-200 rounded-lg px-4 p-3 txt-sm f-m text-[#4B5563];
+		@apply mt-2 border border-gray-200 rounded-lg px-4 p-3 text-[16px] f-m text-[#4B5563];
 
 		&:focus {
 			outline: none;

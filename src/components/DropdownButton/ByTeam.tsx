@@ -81,7 +81,7 @@ export default function SearchByTeamCard(props: any)
 		<div
 			ref={cardRef}
 			onClick={handleCardClick}
-			className="dropdown_body w-full   space-y-4 column md:left-0 top-[140px]  md:top-12  border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg br"
+			className="dropdown_body w-full   space-y-4 column md:left-0 top-[140px]  md:top-12  border-gray-100  p-4 grid grid-cols-3 gap-2 border-x border-2 rounded-lg"
 		>
 			{/* search component */}
 			<form onSubmit={handleSearchTeam} className="search">
