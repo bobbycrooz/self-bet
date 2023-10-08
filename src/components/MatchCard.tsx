@@ -5,9 +5,11 @@ import { DropDown } from "@components";
 import { useEffect, useRef, useState } from "react";
 import { features } from "process";
 import { useBet } from "@/context/betContext";
+import { formatMatchDate } from "@/utils";
 
 export default function MatchCard({
 	teamData,
+	date
 }: {
 	teamData: {
 		TeamA: {
@@ -18,9 +20,13 @@ export default function MatchCard({
 			TeamName: string;
 			Logo: string;
 		};
-	};
+		};
+	date: string
 	})
 {
+
+	const [time, dateR] = formatMatchDate(date);
+
 	
 	
 	return (
@@ -44,8 +50,8 @@ export default function MatchCard({
 
 			{/* Date and time */}
 			<div className="event_time txt-xs text-center space-y-1 f-m text-gray-400">
-				<h1 className="">Sat, 3 Dec</h1>
-				<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">8:30</h1>
+				<h1 className="">{time}</h1>
+												<h1 className="bg-gray-50 txt-xs f-s rounded-lg px-4 p-1 text-gray-500">{dateR} </h1>
 			</div>
 
 			{/* Team B */}

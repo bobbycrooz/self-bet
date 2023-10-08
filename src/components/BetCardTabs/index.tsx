@@ -2,9 +2,15 @@ import MatchCard from "../MatchCard";
 import Image from "next/image";
 
 
-export function Matches({ data }: any) {
+export function Matches({ data }: any)
+{
+	console.log(
+		data, 'match dtata'
+	);
+	
 	return (
 		<MatchCard
+			date={data.Criteria.MatchDate}
 			teamData={{
 				TeamA: {
 					Logo: data.Criteria.TeamA.Logo || data.Criteria.TeamA.logo,

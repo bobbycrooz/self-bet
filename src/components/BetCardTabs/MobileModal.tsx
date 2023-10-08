@@ -166,6 +166,7 @@ export function MobileModal({
 									{/* ------be list --------for each tab */}
 									<div className="det_details grid   md:grid-cols-2 gap-6">{tabModeHandler()}</div>
 									{/*  */}
+									<div className="w-full h-11"></div>
 								</div>
 							</div>
 						</div>
