@@ -85,10 +85,10 @@ function FetchLoading({ isEmpty, setIsEmpty }: any) {
 		<div className="grid-center w-full h-full  text-sm"></div>
 	) : (
 		<SkeletonTheme baseColor="#b1acac5c" highlightColor="#efe5e55c">
-			<div className="grid grid-cols-3 h-[auto] gap-8">
+			<div className="grid sm:grid-cols-3 h-[auto] gap-8">
 				{[1, 1, 1].map((i, k) => (
 					<div key={k} className="rounded-xl flex flex-col items-start justify-start p-4 border">
-						<Skeleton className="rounded-2xl" width={200} />
+						<Skeleton className="rounded-2xl " width={200} />
 						<Skeleton className="rounded-2xl" width={100} />
 						<Skeleton className="rounded-2xl" width={100} />
 					</div>
