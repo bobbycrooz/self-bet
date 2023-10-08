@@ -21,6 +21,8 @@ export default function HomeSearch({ isMobile, searchToggle, isSearching, closeS
 		range: false,
 	});
 
+	const iosFix = searchMode.league || searchMode.name || searchMode.percent || searchMode.range || searchMode.team
+
 	// handlers
 
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -124,7 +126,7 @@ export default function HomeSearch({ isMobile, searchToggle, isSearching, closeS
 					{isMobile ? (
 						<div
 							id="conditionalScrol"
-							className="fixed md:absolute  w-full  bg-white left-0 top-16 sm:top-11  overflow-y-visible z-[99] custom-scrollbar scroll-wrapper-"
+							className={`fixed md:absolute  w-full  bg-white left-0 top-16 sm:top-11 ${!iosFix && "overflow-x-scroll "} overflow-y-visible z-[99] custom-scrollbar scroll-wrapper-`}
 						>
 							<div className="scrollable_ele filter_dropdown ">
 								<DropDown
