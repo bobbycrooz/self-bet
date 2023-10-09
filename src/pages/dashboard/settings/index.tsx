@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { BetCard, Button, ConfirmLogout, Deposite, InputField, Withdraw } from "@components";
-import { ReactElement, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, ReactElement, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import DashboardLayout from "@/layouts";
 import { changeUserNameAPI } from "@/axios/endpoints/auth.endpoint";
@@ -26,14 +26,14 @@ function Home() {
 
 	const dataValues = {
 		Username: "",
-		Firstname: "",
-		Email: "",
-		Lastname: "",
+		// Firstname: "",
+		// Email: "",
+		// Lastname: "",
 	};
 
-	async function onSubmit(values: any, actiona: any) {
+	async function onSubmit() {
 		setIsLoading(true);
-		setName("");
+		// setName("");
 
 		const { error, serverResponse } = await changeUserNameAPI(name);
 
@@ -53,10 +53,7 @@ function Home() {
 			}
 		}
 	}
-	const { handleChange, errors, touched, handleSubmit, values, handleBlur } = useFormik({
-		initialValues: dataValues,
-		onSubmit,
-	});
+
 
 	function handleLogout() {
 		setShowProfile(!showProfile);
@@ -112,54 +109,14 @@ function Home() {
 										filedName="Username"
 										type={"text"}
 										label="Username"
-										place={"***@gmail.com"}
-										change={handleChange}
+										place={"e.g bob"}
+										change={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
 										// @ts-ignore
-										value={values.Username}
+										value={name}
 										name="Username"
-										touched={touched.Username}
-										error={errors.Username}
-										blur={handleBlur}
+										
 									/>
-									<InputField
-										filedName="Email"
-										type={"email"}
-										label="Email"
-										place={"***@gmail.com"}
-										change={handleChange}
-										// @ts-ignore
-										value={values.Email}
-										name="Email"
-										touched={touched.Email}
-										error={errors.Email}
-										blur={handleBlur}
-									/>
-									<InputField
-										filedName="Firstname"
-										type={"text"}
-										label="Firstname"
-										place={"***@gmail.com"}
-										change={handleChange}
-										// @ts-ignore
-										value={values.Firstname}
-										name="Firstname"
-										touched={touched.Firstname}
-										error={errors.Firstname}
-										blur={handleBlur}
-									/>
-									<InputField
-										filedName="Lastname"
-										type={"text"}
-										label="Last name"
-										place={""}
-										change={handleChange}
-										// @ts-ignore
-										value={values.Lastname}
-										name="Lastname"
-										touched={touched.Lastname}
-										error={errors.Lastname}
-										blur={handleBlur}
-									/>
+							
 								</div>
 
 								{/* AVATAR  SECTION */}
@@ -170,7 +127,6 @@ function Home() {
 									// 		<h1 className="name text-xs t-g6 f-eb">{"Avatar"}</h1>
 									// 		<p className="sub_name text-xs text-gray-400">{"Change or delete your profile picture."}</p>
 									// 	</div>
-
 									// 	{/* PICTURE ROLE */}
 									// 	<div className="w-full flex flex-col sm:flex-row items-center  sm:items-start space-y-3 sm:space-y-0  sm:space-x-3 mt-4">
 									// 		<div className="avatar rounded-full bg-gray-300">
@@ -182,7 +138,6 @@ function Home() {
 									// 				width={64}
 									// 			/>
 									// 		</div>
-
 									// 		{/* dropzone */}
 									// 		<div className=" w-full ">
 									// 			<DropzoneComponent seCurrentFile={setCurrentImg} setDataurl={setAvatarSrc} isAvatar={true} />
@@ -195,78 +150,80 @@ function Home() {
 							<div className="action border-t rounded-b-xl flex items-center sm:justify-end w-full">
 								<div className="button_group  space-x-4 px-6 p-4 hidden sm:flex">
 									<Button text={"Cancel"} type={undefined} ghost />
-									<Button text={"Save changes"} type={undefined} primary disabled={true} />
+									<Button text={"Save changes"} type={'button'} primary disabled={isLoading} click={onSubmit} />
 								</div>
 
 								{/* mobile - buton */}
 								<div className="button_group grid-cols-3  w-full gap-4   grid px-6 p-4  sm:hidden">
 									<Button text={"Cancel"} type={undefined} ghost />
 									<div className="col-span-2">
-										<Button full text={"Save changes"} type={undefined} primary disabled={true} />
+										<Button full text={"Save changes"} type={'button'} primary disabled={isLoading} click={onSubmit} />
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					{/* ROW TWO */}
-					<div className="flex flex-col sm:flex-row md:justify-between space-y-8 sm:space-x-8 mt-8 ">
-						<div className="w-[300px]">
-							<div className="name_box">
-								<h1 className="name txt-md t-g9 f-eb">{"Password"}</h1>
-								<p className="sub_name text-xs t-g5">{"Change your password"}</p>
-							</div>
-						</div>
+					{
+					// 	<div className="flex flex-col sm:flex-row md:justify-between space-y-8 sm:space-x-8 mt-8 ">
+					// 	<div className="w-[300px]">
+					// 		<div className="name_box">
+					// 			<h1 className="name txt-md t-g9 f-eb">{"Password"}</h1>
+					// 			<p className="sub_name text-xs t-g5">{"Change your password"}</p>
+					// 		</div>
+					// 	</div>
 
-						<div className="w-full flex shadow flex-col items-start border rounded-xl h-auto">
-							{/* BODY */}
-							<div className="content w-full p-6">
-								{/* FORM GRID */}
-								<div className="w-full grid md:grid-cols-2 gap-6">
-									<InputField
-										filedName="Username"
-										type={"password"}
-										label="Current Password"
-										place={"****"}
-										change={handleChange}
-										// @ts-ignore
-										value={values.Username}
-										name="Username"
-										touched={touched.Username}
-										error={errors.Username}
-										blur={handleBlur}
-									/>
-									<InputField
-										filedName="Email"
-										type={"password"}
-										label="New Password"
-										place={"****"}
-										change={handleChange}
-										// @ts-ignore
-										value={values.Email}
-										name="Email"
-										touched={touched.Email}
-										error={errors.Email}
-										blur={handleBlur}
-									/>
-								</div>
-							</div>
-							{/* FOOTER */}
-							<div className="action border-t rounded-b-xl  flex items-center justify-end w-full">
-								<div className="button_group  space-x-4 px-6 p-4 hidden sm:flex">
-									<Button text={"Cancel"} type={undefined} ghost />
-									<Button text={"Save changes"} type={undefined} primary disabled={true} />
-								</div>
+					// 	<div className="w-full flex shadow flex-col items-start border rounded-xl h-auto">
+					// 		{/* BODY */}
+					// 		<div className="content w-full p-6">
+					// 			{/* FORM GRID */}
+					// 			<div className="w-full grid md:grid-cols-2 gap-6">
+					// 				<InputField
+					// 					filedName="Username"
+					// 					type={"password"}
+					// 					label="Current Password"
+					// 					place={"****"}
+					// 					change={handleChange}
+					// 					// @ts-ignore
+					// 					value={values.Username}
+					// 					name="Username"
+					// 					touched={touched.Username}
+					// 					error={errors.Username}
+					// 					blur={handleBlur}
+					// 				/>
+					// 				<InputField
+					// 					filedName="Email"
+					// 					type={"password"}
+					// 					label="New Password"
+					// 					place={"****"}
+					// 					change={handleChange}
+					// 					// @ts-ignore
+					// 					value={values.Email}
+					// 					name="Email"
+					// 					touched={touched.Email}
+					// 					error={errors.Email}
+					// 					blur={handleBlur}
+					// 				/>
+					// 			</div>
+					// 		</div>
+					// 		{/* FOOTER */}
+					// 		<div className="action border-t rounded-b-xl  flex items-center justify-end w-full">
+					// 			<div className="button_group  space-x-4 px-6 p-4 hidden sm:flex">
+					// 				<Button text={"Cancel"} type={undefined} ghost />
+					// 				<Button text={"Save changes"} type={undefined} primary disabled={true} />
+					// 			</div>
 
-								<div className="button_group grid-cols-3  w-full gap-4   grid px-6 p-4  sm:hidden">
-									<Button text={"Cancel"} type={undefined} ghost />
-									<div className="col-span-2">
-										<Button full text={"Save changes"} type={undefined} primary disabled={true} />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					// 			<div className="button_group grid-cols-3  w-full gap-4   grid px-6 p-4  sm:hidden">
+					// 				<Button text={"Cancel"} type={undefined} ghost />
+					// 				<div className="col-span-2">
+					// 					<Button full text={"Save changes"} type={undefined} primary disabled={true} />
+					// 				</div>
+					// 			</div>
+					// 		</div>
+					// 	</div>
+					// </div>
+					
+					}
 
 					{/* ROW THREE */}
 					<div className="flex sm:flex-row flex-col justify-between space-y-8 sm:space-y-0 sm:space-x-8 mt-8 ">
