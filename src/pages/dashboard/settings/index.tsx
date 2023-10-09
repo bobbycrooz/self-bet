@@ -164,24 +164,32 @@ function Home() {
 
 								{/* AVATAR  SECTION */}
 
-								<div className="w-full mt-6 p-4 sm:p-0">
-									<div className="name_box">
-										<h1 className="name text-xs t-g6 f-eb">{"Avatar"}</h1>
-										<p className="sub_name text-xs text-gray-400">{"Change or delete your profile picture."}</p>
-									</div>
+								{
+									// <div className="w-full mt-6 p-4 sm:p-0">
+									// 	<div className="name_box">
+									// 		<h1 className="name text-xs t-g6 f-eb">{"Avatar"}</h1>
+									// 		<p className="sub_name text-xs text-gray-400">{"Change or delete your profile picture."}</p>
+									// 	</div>
 
-									{/* PICTURE ROLE */}
-									<div className="w-full flex flex-col sm:flex-row items-center  sm:items-start space-y-3 sm:space-y-0  sm:space-x-3 mt-4">
-										<div className="avatar rounded-full bg-gray-300">
-											<Image src={avatarSrc as string} alt={"avatar"} className="rounded-full" height={64} width={64} />
-										</div>
+									// 	{/* PICTURE ROLE */}
+									// 	<div className="w-full flex flex-col sm:flex-row items-center  sm:items-start space-y-3 sm:space-y-0  sm:space-x-3 mt-4">
+									// 		<div className="avatar rounded-full bg-gray-300">
+									// 			<Image
+									// 				src={avatarSrc as string}
+									// 				alt={"avatar"}
+									// 				className="rounded-full"
+									// 				height={64}
+									// 				width={64}
+									// 			/>
+									// 		</div>
 
-										{/* dropzone */}
-										<div className=" w-full ">
-											<DropzoneComponent seCurrentFile={setCurrentImg} setDataurl={setAvatarSrc} isAvatar={true} />
-										</div>
-									</div>
-								</div>
+									// 		{/* dropzone */}
+									// 		<div className=" w-full ">
+									// 			<DropzoneComponent seCurrentFile={setCurrentImg} setDataurl={setAvatarSrc} isAvatar={true} />
+									// 		</div>
+									// 	</div>
+									// </div>
+								}
 							</div>
 							{/* FOOTER */}
 							<div className="action border-t rounded-b-xl flex items-center sm:justify-end w-full">
